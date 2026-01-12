@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, real, timestamp, jsonb } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -25,19 +25,53 @@ export const timelineEvents = pgTable("timeline_events", {
   event: text("event").notNull(),
 });
 
+// Advanced Financial Metrics
+export const financialMetrics = pgTable("financial_metrics", {
+  id: serial("id").primaryKey(),
+  initialInvestment: real("initial_investment").notNull(),
+  annualOpex: real("annual_opex").notNull(),
+  yieldPerSchool: real("yield_per_school").notNull(),
+  foodPricePerKg: real("food_price_per_kg").notNull(),
+  discountRate: real("discount_rate").notNull(),
+  npv10yr: real("npv_10yr").notNull(),
+  roi10yrPct: real("roi_10yr_pct").notNull(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Climate and Yield Metrics
+export const climateMetrics = pgTable("climate_metrics", {
+  id: serial("id").primaryKey(),
+  avgTemp: real("avg_temp").notNull(),
+  growingSeasonDays: integer("growing_season_days").notNull(),
+  co2Ppm: integer("co2_ppm").notNull(),
+  annualTons: real("annual_tons").notNull(),
+  studentMealsAnnual: text("student_meals_annual").notNull(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Slide Deck for Ballot Initiative
+export const slideDeck = pgTable("slide_deck", {
+  id: serial("id").primaryKey(),
+  slideNumber: integer("slide_number").notNull(),
+  title: text("title").notNull(),
+  content: text("content").notNull(),
+  chartData: jsonb("chart_data"),
+});
+
 // === INSERT SCHEMAS ===
 
 export const insertPilotStatsSchema = createInsertSchema(pilotStats).omit({ id: true });
 export const insertEndowmentStatsSchema = createInsertSchema(endowmentStats).omit({ id: true });
 export const insertTimelineEventSchema = createInsertSchema(timelineEvents).omit({ id: true });
+export const insertFinancialMetricsSchema = createInsertSchema(financialMetrics).omit({ id: true, updatedAt: true });
+export const insertClimateMetricsSchema = createInsertSchema(climateMetrics).omit({ id: true, updatedAt: true });
+export const insertSlideSchema = createInsertSchema(slideDeck).omit({ id: true });
 
 // === TYPES ===
 
 export type PilotStats = typeof pilotStats.$inferSelect;
-export type InsertPilotStats = z.infer<typeof insertPilotStatsSchema>;
-
 export type EndowmentStats = typeof endowmentStats.$inferSelect;
-export type InsertEndowmentStats = z.infer<typeof insertEndowmentStatsSchema>;
-
 export type TimelineEvent = typeof timelineEvents.$inferSelect;
-export type InsertTimelineEvent = z.infer<typeof insertTimelineEventSchema>;
+export type FinancialMetric = typeof financialMetrics.$inferSelect;
+export type ClimateMetric = typeof climateMetrics.$inferSelect;
+export type Slide = typeof slideDeck.$inferSelect;

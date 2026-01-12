@@ -103,6 +103,26 @@ export async function registerRoutes(
     res.status(204).send();
   });
 
+  // === Financial Metrics ===
+  app.get(api.financials.get.path, async (_req, res) => {
+    const metrics = await storage.getFinancialMetrics();
+    if (!metrics) return res.status(404).json({ message: "Metrics not found" });
+    res.json(metrics);
+  });
+
+  // === Climate Metrics ===
+  app.get(api.climate.get.path, async (_req, res) => {
+    const metrics = await storage.getClimateMetrics();
+    if (!metrics) return res.status(404).json({ message: "Metrics not found" });
+    res.json(metrics);
+  });
+
+  // === Slide Deck ===
+  app.get(api.slides.list.path, async (_req, res) => {
+    const slides = await storage.getSlides();
+    res.json(slides);
+  });
+
   // === Seed Data ===
   await seedDatabase();
 
@@ -114,8 +134,7 @@ async function seedDatabase() {
   if (isEmpty) {
     console.log("Seeding database...");
     
-    // Seed Pilot - Data from Gaia v4.2 Endowment Master
-    // Updated per user request: 6 schools, 5640 students, 44950 sqft
+    // Seed Pilot
     await storage.updatePilotStats({
       students: 5640,
       sqft: 44950,
@@ -123,17 +142,49 @@ async function seedDatabase() {
       status: "live"
     });
 
-    // Seed Endowment - v4.2 Locked Model
-    // Financials updated per v3.1 Master Production Suite:
-    // $5M investment, $1M opex, $2.5/kg food price
-    // We maintain the 2.1B target but update annual figures or annotations if needed
+    // Seed Endowment
     await storage.updateEndowmentStats({
       size: "2.1B",
-      annual: "63M", // 3% of 2.1B
+      annual: "63M",
       greenhouses: 275
     });
 
-    // Seed Timeline - v4.2 Deliverables
+    // Seed Financials (v3.1)
+    await storage.updateFinancialMetrics({
+      initialInvestment: 5000000,
+      annualOpex: 1000000,
+      yieldPerSchool: 8000,
+      foodPricePerKg: 2.5,
+      discountRate: 0.05,
+      npv10yr: 1250000000,
+      roi10yrPct: 250
+    });
+
+    // Seed Climate (v5.0)
+    await storage.updateClimateMetrics({
+      avgTemp: 45.8,
+      growingSeasonDays: 165,
+      co2Ppm: 425,
+      annualTons: 22550,
+      studentMealsAnnual: "175,000,000"
+    });
+
+    // Seed Slides
+    const slides = [
+      { n: 1, title: "The Problem", text: "875k MN kids face food insecurity" },
+      { n: 2, title: "The Solution", text: "275 greenhouses = 875,000 meals/day" },
+      { n: 3, title: "Endowment Engine", text: "0.27% tax → $2.1B PERPETUAL" },
+      { n: 20, title: "Vote Yes on Gaia", text: "Forever Funding" }
+    ];
+    for (const s of slides) {
+      await storage.createSlide({
+        slideNumber: s.n,
+        title: s.title,
+        content: s.text
+      });
+    }
+
+    // Seed Timeline
     await storage.createTimelineEvent({ year: "2026 Q1", event: "St. Paul/Mendota Pilots Live" });
     await storage.createTimelineEvent({ year: "2026 Q4", event: "Ballot Signature Drive" });
     await storage.createTimelineEvent({ year: "2028", event: "$2.1B Funded" });
