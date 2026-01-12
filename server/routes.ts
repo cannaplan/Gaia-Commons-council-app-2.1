@@ -115,14 +115,11 @@ async function seedDatabase() {
     console.log("Seeding database...");
     
     // Seed Pilot - Data from Gaia v4.2 Endowment Master
-    // ST_PAUL: 3816 students, 26550 sqft
-    // MENDOTA: 3262 students, 22700 sqft
-    // Total students: 7078
-    // Total sqft: 49250
+    // Updated per user request: 6 schools, 5640 students, 44950 sqft
     await storage.updatePilotStats({
-      students: 7078,
-      sqft: 49250,
-      schools: 17, // Keeping school count as 17 from previous v5 context unless specified
+      students: 5640,
+      sqft: 44950,
+      schools: 6,
       status: "live"
     });
 
