@@ -114,30 +114,30 @@ async function seedDatabase() {
   if (isEmpty) {
     console.log("Seeding database...");
     
-    // Seed Pilot
-    // Data from Gaia v5.0: enrollments SPA(952) + Highland(1456) + Groveland(910) + STA(588) + Visitation(601) + Two_Rivers(1648) = 6155
-    // Actually the script mentions SPA, Highland, Groveland are St. Paul. STA, Visitation, Two Rivers are Mendota.
-    // Total students: 952+1456+910+588+601+1648 = 6155
-    // Wait, the Tableau export mentions: st_paul_students: 3816, mendota_students: 3262. Total: 7078.
-    // Let's use the explicit KPI values from Tableau dashboard section in the script for better accuracy.
+    // Seed Pilot - Data from Gaia v4.2 Endowment Master
+    // ST_PAUL: 3816 students, 26550 sqft
+    // MENDOTA: 3262 students, 22700 sqft
+    // Total students: 7078
+    // Total sqft: 49250
     await storage.updatePilotStats({
-      students: 7078, // 3816 (St. Paul) + 3262 (Mendota)
-      sqft: 7078 * 8, // sqft_target is enrollment * 8 in the script
-      schools: 17,
+      students: 7078,
+      sqft: 49250,
+      schools: 17, // Keeping school count as 17 from previous v5 context unless specified
       status: "live"
     });
 
-    // Seed Endowment
+    // Seed Endowment - v4.2 Locked Model
     await storage.updateEndowmentStats({
       size: "2.1B",
-      annual: "63M",
+      annual: "63M", // 3% of 2.1B
       greenhouses: 275
     });
 
-    // Seed Timeline
-    await storage.createTimelineEvent({ year: "2020", event: "Pilot start" });
-    await storage.createTimelineEvent({ year: "2026", event: "Ballot initiative" });
-    await storage.createTimelineEvent({ year: "2030", event: "Statewide deployment" });
+    // Seed Timeline - v4.2 Deliverables
+    await storage.createTimelineEvent({ year: "2026 Q1", event: "St. Paul/Mendota Pilots Live" });
+    await storage.createTimelineEvent({ year: "2026 Q4", event: "Ballot Signature Drive" });
+    await storage.createTimelineEvent({ year: "2028", event: "$2.1B Funded" });
+    await storage.createTimelineEvent({ year: "2030", event: "275 Greenhouses Deployed" });
     
     console.log("Database seeded successfully");
   }
