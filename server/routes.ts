@@ -115,9 +115,14 @@ async function seedDatabase() {
     console.log("Seeding database...");
     
     // Seed Pilot
+    // Data from Gaia v5.0: enrollments SPA(952) + Highland(1456) + Groveland(910) + STA(588) + Visitation(601) + Two_Rivers(1648) = 6155
+    // Actually the script mentions SPA, Highland, Groveland are St. Paul. STA, Visitation, Two Rivers are Mendota.
+    // Total students: 952+1456+910+588+601+1648 = 6155
+    // Wait, the Tableau export mentions: st_paul_students: 3816, mendota_students: 3262. Total: 7078.
+    // Let's use the explicit KPI values from Tableau dashboard section in the script for better accuracy.
     await storage.updatePilotStats({
-      students: 6155,
-      sqft: 49250,
+      students: 7078, // 3816 (St. Paul) + 3262 (Mendota)
+      sqft: 7078 * 8, // sqft_target is enrollment * 8 in the script
       schools: 17,
       status: "live"
     });
