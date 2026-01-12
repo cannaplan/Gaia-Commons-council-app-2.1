@@ -124,6 +124,9 @@ async function seedDatabase() {
     });
 
     // Seed Endowment - v4.2 Locked Model
+    // Financials updated per v3.1 Master Production Suite:
+    // $5M investment, $1M opex, $2.5/kg food price
+    // We maintain the 2.1B target but update annual figures or annotations if needed
     await storage.updateEndowmentStats({
       size: "2.1B",
       annual: "63M", // 3% of 2.1B
