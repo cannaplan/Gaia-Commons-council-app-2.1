@@ -28,13 +28,20 @@ export const timelineEvents = pgTable("timeline_events", {
 // Advanced Financial Metrics
 export const financialMetrics = pgTable("financial_metrics", {
   id: serial("id").primaryKey(),
+  schoolCount: integer("school_count").notNull(),
   initialInvestment: real("initial_investment").notNull(),
   annualOpex: real("annual_opex").notNull(),
   yieldPerSchool: real("yield_per_school").notNull(),
-  foodPricePerKg: real("food_price_per_kg").notNull(),
+  foodPricePerLb: real("food_price_per_lb").notNull(),
   discountRate: real("discount_rate").notNull(),
   npv10yr: real("npv_10yr").notNull(),
   roi10yrPct: real("roi_10yr_pct").notNull(),
+  investmentPerSchool: real("investment_per_school").notNull(),
+  opexPerSchool: real("opex_per_school").notNull(),
+  annualRevenuePerSchool: real("annual_revenue_per_school").notNull(),
+  totalAnnualYield: real("total_annual_yield").notNull(),
+  totalAnnualRevenue: real("total_annual_revenue").notNull(),
+  paybackYears: real("payback_years").notNull(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 

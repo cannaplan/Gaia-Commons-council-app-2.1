@@ -153,41 +153,76 @@ export default function Dashboard() {
             <Card className="glass-panel card-hover h-full" data-testid="card-financials">
               <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-2">
                 <Calculator className="h-5 w-5 text-primary" />
-                <CardTitle className="text-lg font-semibold">Financial Engine (v3.1)</CardTitle>
+                <CardTitle className="text-lg font-semibold">Financial Engine v3.1</CardTitle>
+                {financials && (
+                  <Badge variant="secondary" className="ml-auto">{financials.schoolCount} Schools</Badge>
+                )}
               </CardHeader>
               <CardContent>
                 {financials && (
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/30 dark:to-emerald-950/30 p-4 rounded-xl border border-green-100 dark:border-green-900/50">
-                      <div className="flex items-center gap-2 mb-2">
-                        <DollarSign className="h-4 w-4 text-green-600" />
-                        <span className="text-xs font-medium text-green-800 dark:text-green-400 uppercase tracking-wide">NPV (10yr)</span>
+                  <div className="space-y-4">
+                    {/* Program Totals */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/30 dark:to-emerald-950/30 p-4 rounded-xl border border-green-100 dark:border-green-900/50">
+                        <div className="flex items-center gap-2 mb-2">
+                          <DollarSign className="h-4 w-4 text-green-600" />
+                          <span className="text-xs font-medium text-green-800 dark:text-green-400 uppercase tracking-wide">NPV (10yr)</span>
+                        </div>
+                        <p className="text-2xl font-bold text-green-700 dark:text-green-300" data-testid="text-npv">
+                          ${(financials.npv10yr / 1e6).toFixed(2)}M
+                        </p>
                       </div>
-                      <p className="text-2xl font-bold text-green-700 dark:text-green-300" data-testid="text-npv">
-                        ${(financials.npv10yr / 1e9).toFixed(2)}B
-                      </p>
-                    </div>
-                    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 p-4 rounded-xl border border-blue-100 dark:border-blue-900/50">
-                      <div className="flex items-center gap-2 mb-2">
-                        <TrendingUp className="h-4 w-4 text-blue-600" />
-                        <span className="text-xs font-medium text-blue-800 dark:text-blue-400 uppercase tracking-wide">ROI</span>
+                      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 p-4 rounded-xl border border-blue-100 dark:border-blue-900/50">
+                        <div className="flex items-center gap-2 mb-2">
+                          <TrendingUp className="h-4 w-4 text-blue-600" />
+                          <span className="text-xs font-medium text-blue-800 dark:text-blue-400 uppercase tracking-wide">10yr ROI</span>
+                        </div>
+                        <p className="text-2xl font-bold text-blue-700 dark:text-blue-300" data-testid="text-roi">
+                          {financials.roi10yrPct}%
+                        </p>
                       </div>
-                      <p className="text-2xl font-bold text-blue-700 dark:text-blue-300" data-testid="text-roi">
-                        {financials.roi10yrPct}%
-                      </p>
                     </div>
-                    <div className="col-span-2 grid grid-cols-3 gap-3 mt-2">
+
+                    {/* Program Overview */}
+                    <div className="grid grid-cols-4 gap-3">
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <p className="text-xs text-muted-foreground">Investment</p>
-                        <p className="font-semibold text-foreground" data-testid="text-investment">${(financials.initialInvestment / 1e6).toFixed(0)}M</p>
+                        <p className="text-xs text-muted-foreground">Total Investment</p>
+                        <p className="font-semibold text-foreground" data-testid="text-investment">${(financials.initialInvestment / 1e6).toFixed(1)}M</p>
                       </div>
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
                         <p className="text-xs text-muted-foreground">Annual OPEX</p>
-                        <p className="font-semibold text-foreground">${(financials.annualOpex / 1e6).toFixed(0)}M</p>
+                        <p className="font-semibold text-foreground">${(financials.annualOpex / 1e3).toFixed(0)}K</p>
                       </div>
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <p className="text-xs text-muted-foreground">Yield/School</p>
-                        <p className="font-semibold text-foreground">{financials.yieldPerSchool.toLocaleString()} lbs</p>
+                        <p className="text-xs text-muted-foreground">Annual Revenue</p>
+                        <p className="font-semibold text-foreground">${(financials.totalAnnualRevenue / 1e3).toFixed(0)}K</p>
+                      </div>
+                      <div className="text-center p-3 bg-muted/50 rounded-lg">
+                        <p className="text-xs text-muted-foreground">Payback</p>
+                        <p className="font-semibold text-foreground">{financials.paybackYears} yrs</p>
+                      </div>
+                    </div>
+
+                    {/* Per-School Economics */}
+                    <div className="border-t border-border/50 pt-4">
+                      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Per-School Economics</p>
+                      <div className="grid grid-cols-4 gap-3">
+                        <div className="text-center p-3 bg-primary/5 rounded-lg border border-primary/10">
+                          <p className="text-xs text-muted-foreground">Investment</p>
+                          <p className="font-semibold text-primary" data-testid="text-investment-per-school">${(financials.investmentPerSchool / 1e3).toFixed(0)}K</p>
+                        </div>
+                        <div className="text-center p-3 bg-primary/5 rounded-lg border border-primary/10">
+                          <p className="text-xs text-muted-foreground">Annual OPEX</p>
+                          <p className="font-semibold text-primary">${(financials.opexPerSchool / 1e3).toFixed(0)}K</p>
+                        </div>
+                        <div className="text-center p-3 bg-primary/5 rounded-lg border border-primary/10">
+                          <p className="text-xs text-muted-foreground">Yield</p>
+                          <p className="font-semibold text-primary">{financials.yieldPerSchool.toLocaleString()} lbs</p>
+                        </div>
+                        <div className="text-center p-3 bg-primary/5 rounded-lg border border-primary/10">
+                          <p className="text-xs text-muted-foreground">Revenue</p>
+                          <p className="font-semibold text-primary">${(financials.annualRevenuePerSchool / 1e3).toFixed(1)}K</p>
+                        </div>
                       </div>
                     </div>
                   </div>
