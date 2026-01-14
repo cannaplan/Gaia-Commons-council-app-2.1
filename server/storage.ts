@@ -6,6 +6,7 @@ import {
   transparencyFeatures, accountabilityMechanisms, tribalPartnerships,
   implementationTimeline, politicalRoadmap, stressTests,
   tieredCarbonPricing, regenerativeAgriculture, nationwideFoodSecurity, laborTransition, politicalCoalition, globalRegenerationSummary,
+  planetaryBoundaries, calibrationTargets, modelMaturity, historicalClimateData,
   type PilotStats, type InsertPilotStats,
   type EndowmentStats, type InsertEndowmentStats,
   type TimelineEvent, type InsertTimelineEvent,
@@ -35,7 +36,11 @@ import {
   type NationwideFoodSecurityType, type InsertNationwideFoodSecurity,
   type LaborTransitionType, type InsertLaborTransition,
   type PoliticalCoalitionType, type InsertPoliticalCoalition,
-  type GlobalRegenerationSummaryType, type InsertGlobalRegenerationSummary
+  type GlobalRegenerationSummaryType, type InsertGlobalRegenerationSummary,
+  type PlanetaryBoundaryType, type InsertPlanetaryBoundary,
+  type CalibrationTargetType, type InsertCalibrationTarget,
+  type ModelMaturityType, type InsertModelMaturity,
+  type HistoricalClimateDataType, type InsertHistoricalClimateData
 } from "@shared/schema";
 import { eq, asc } from "drizzle-orm";
 
@@ -102,6 +107,14 @@ export interface IStorage {
   createPoliticalCoalition(item: InsertPoliticalCoalition): Promise<PoliticalCoalitionType>;
   getGlobalRegenerationSummary(): Promise<GlobalRegenerationSummaryType | undefined>;
   createGlobalRegenerationSummary(item: InsertGlobalRegenerationSummary): Promise<GlobalRegenerationSummaryType>;
+  getPlanetaryBoundaries(): Promise<PlanetaryBoundaryType[]>;
+  createPlanetaryBoundary(item: InsertPlanetaryBoundary): Promise<PlanetaryBoundaryType>;
+  getCalibrationTargets(): Promise<CalibrationTargetType[]>;
+  createCalibrationTarget(item: InsertCalibrationTarget): Promise<CalibrationTargetType>;
+  getModelMaturity(): Promise<ModelMaturityType[]>;
+  createModelMaturity(item: InsertModelMaturity): Promise<ModelMaturityType>;
+  getHistoricalClimateData(): Promise<HistoricalClimateDataType[]>;
+  createHistoricalClimateData(item: InsertHistoricalClimateData): Promise<HistoricalClimateDataType>;
   isEmpty(): Promise<boolean>;
 }
 
@@ -349,6 +362,34 @@ export class DatabaseStorage implements IStorage {
   async createGlobalRegenerationSummary(item: InsertGlobalRegenerationSummary): Promise<GlobalRegenerationSummaryType> {
     const [g] = await db.insert(globalRegenerationSummary).values(item).returning();
     return g;
+  }
+  async getPlanetaryBoundaries(): Promise<PlanetaryBoundaryType[]> {
+    return await db.select().from(planetaryBoundaries);
+  }
+  async createPlanetaryBoundary(item: InsertPlanetaryBoundary): Promise<PlanetaryBoundaryType> {
+    const [p] = await db.insert(planetaryBoundaries).values(item).returning();
+    return p;
+  }
+  async getCalibrationTargets(): Promise<CalibrationTargetType[]> {
+    return await db.select().from(calibrationTargets);
+  }
+  async createCalibrationTarget(item: InsertCalibrationTarget): Promise<CalibrationTargetType> {
+    const [c] = await db.insert(calibrationTargets).values(item).returning();
+    return c;
+  }
+  async getModelMaturity(): Promise<ModelMaturityType[]> {
+    return await db.select().from(modelMaturity);
+  }
+  async createModelMaturity(item: InsertModelMaturity): Promise<ModelMaturityType> {
+    const [m] = await db.insert(modelMaturity).values(item).returning();
+    return m;
+  }
+  async getHistoricalClimateData(): Promise<HistoricalClimateDataType[]> {
+    return await db.select().from(historicalClimateData).orderBy(asc(historicalClimateData.year));
+  }
+  async createHistoricalClimateData(item: InsertHistoricalClimateData): Promise<HistoricalClimateDataType> {
+    const [h] = await db.insert(historicalClimateData).values(item).returning();
+    return h;
   }
   async isEmpty(): Promise<boolean> {
     const [stats] = await db.select().from(pilotStats).limit(1);

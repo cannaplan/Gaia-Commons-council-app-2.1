@@ -34,7 +34,11 @@ import {
   nationwideFoodSecurity,
   laborTransition,
   politicalCoalition,
-  globalRegenerationSummary
+  globalRegenerationSummary,
+  planetaryBoundaries,
+  calibrationTargets,
+  modelMaturity,
+  historicalClimateData
 } from './schema';
 
 export const errorSchemas = {
@@ -133,6 +137,18 @@ export const api = {
   },
   globalRegenerationSummary: {
     get: { method: 'GET' as const, path: '/api/global-regeneration-summary', responses: { 200: z.custom<typeof globalRegenerationSummary.$inferSelect>(), 404: errorSchemas.notFound } },
+  },
+  planetaryBoundaries: {
+    list: { method: 'GET' as const, path: '/api/planetary-boundaries', responses: { 200: z.array(z.custom<typeof planetaryBoundaries.$inferSelect>()) } },
+  },
+  calibrationTargets: {
+    list: { method: 'GET' as const, path: '/api/calibration-targets', responses: { 200: z.array(z.custom<typeof calibrationTargets.$inferSelect>()) } },
+  },
+  modelMaturity: {
+    list: { method: 'GET' as const, path: '/api/model-maturity', responses: { 200: z.array(z.custom<typeof modelMaturity.$inferSelect>()) } },
+  },
+  historicalClimateData: {
+    list: { method: 'GET' as const, path: '/api/historical-climate-data', responses: { 200: z.array(z.custom<typeof historicalClimateData.$inferSelect>()) } },
   },
   health: {
     get: { method: 'GET' as const, path: '/health', responses: { 200: z.object({ status: z.string(), version: z.string(), service: z.string() }) } },

@@ -394,6 +394,62 @@ export const insertLaborTransitionSchema = createInsertSchema(laborTransition).o
 export const insertPoliticalCoalitionSchema = createInsertSchema(politicalCoalition).omit({ id: true });
 export const insertGlobalRegenerationSummarySchema = createInsertSchema(globalRegenerationSummary).omit({ id: true });
 
+// Planetary Boundaries (Steffen et al. 2015, updated Richardson et al. 2023)
+export const planetaryBoundaries = pgTable("planetary_boundaries", {
+  id: serial("id").primaryKey(),
+  boundary: text("boundary").notNull(),
+  currentValue: real("current_value").notNull(),
+  safeLimit: real("safe_limit").notNull(),
+  criticalLimit: real("critical_limit").notNull(),
+  unit: text("unit").notNull(),
+  source: text("source").notNull(),
+  status: text("status").notNull(), // safe, caution, danger
+  description: text("description").notNull(),
+});
+
+// Calibration Targets for model validation
+export const calibrationTargets = pgTable("calibration_targets", {
+  id: serial("id").primaryKey(),
+  parameter: text("parameter").notNull(),
+  dataSource: text("data_source").notNull(),
+  targetAccuracy: real("target_accuracy").notNull(),
+  actualAccuracy: real("actual_accuracy").notNull(),
+  validationPeriodStart: integer("validation_period_start").notNull(),
+  validationPeriodEnd: integer("validation_period_end").notNull(),
+  status: text("status").notNull(), // passed, warning, failed
+  description: text("description").notNull(),
+});
+
+// Model Maturity Levels
+export const modelMaturity = pgTable("model_maturity", {
+  id: serial("id").primaryKey(),
+  subsystem: text("subsystem").notNull(),
+  maturityLevel: text("maturity_level").notNull(), // sandbox, calibrated, validated
+  description: text("description").notNull(),
+  dataSourcesCount: integer("data_sources_count").notNull(),
+  validationTests: integer("validation_tests").notNull(),
+  lastUpdated: text("last_updated").notNull(),
+});
+
+// Historical Climate Data (2015-2024 for validation charts)
+export const historicalClimateData = pgTable("historical_climate_data", {
+  id: serial("id").primaryKey(),
+  year: integer("year").notNull(),
+  tempAnomaly: real("temp_anomaly").notNull(),
+  co2Ppm: real("co2_ppm").notNull(),
+  seaLevelMm: real("sea_level_mm").notNull(),
+  arcticIceExtent: real("arctic_ice_extent").notNull(),
+  renewableShare: real("renewable_share").notNull(),
+  globalGdpTrillion: real("global_gdp_trillion").notNull(),
+  povertyRate: real("poverty_rate").notNull(),
+  carbonIntensity: real("carbon_intensity").notNull(),
+});
+
+export const insertPlanetaryBoundariesSchema = createInsertSchema(planetaryBoundaries).omit({ id: true });
+export const insertCalibrationTargetsSchema = createInsertSchema(calibrationTargets).omit({ id: true });
+export const insertModelMaturitySchema = createInsertSchema(modelMaturity).omit({ id: true });
+export const insertHistoricalClimateDataSchema = createInsertSchema(historicalClimateData).omit({ id: true });
+
 // === TYPES ===
 
 // Select types
@@ -427,6 +483,10 @@ export type NationwideFoodSecurityType = typeof nationwideFoodSecurity.$inferSel
 export type LaborTransitionType = typeof laborTransition.$inferSelect;
 export type PoliticalCoalitionType = typeof politicalCoalition.$inferSelect;
 export type GlobalRegenerationSummaryType = typeof globalRegenerationSummary.$inferSelect;
+export type PlanetaryBoundaryType = typeof planetaryBoundaries.$inferSelect;
+export type CalibrationTargetType = typeof calibrationTargets.$inferSelect;
+export type ModelMaturityType = typeof modelMaturity.$inferSelect;
+export type HistoricalClimateDataType = typeof historicalClimateData.$inferSelect;
 
 // Insert types
 export type InsertPilotStats = z.infer<typeof insertPilotStatsSchema>;
@@ -459,3 +519,7 @@ export type InsertNationwideFoodSecurity = z.infer<typeof insertNationwideFoodSe
 export type InsertLaborTransition = z.infer<typeof insertLaborTransitionSchema>;
 export type InsertPoliticalCoalition = z.infer<typeof insertPoliticalCoalitionSchema>;
 export type InsertGlobalRegenerationSummary = z.infer<typeof insertGlobalRegenerationSummarySchema>;
+export type InsertPlanetaryBoundary = z.infer<typeof insertPlanetaryBoundariesSchema>;
+export type InsertCalibrationTarget = z.infer<typeof insertCalibrationTargetsSchema>;
+export type InsertModelMaturity = z.infer<typeof insertModelMaturitySchema>;
+export type InsertHistoricalClimateData = z.infer<typeof insertHistoricalClimateDataSchema>;

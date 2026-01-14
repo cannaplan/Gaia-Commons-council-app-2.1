@@ -373,3 +373,51 @@ export function useGlobalRegenerationSummary() {
     },
   });
 }
+
+// Planetary Boundaries
+export function usePlanetaryBoundaries() {
+  return useQuery({
+    queryKey: [api.planetaryBoundaries.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.planetaryBoundaries.list.path);
+      if (!res.ok) throw new Error("Failed to fetch planetary boundaries");
+      return api.planetaryBoundaries.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Calibration Targets
+export function useCalibrationTargets() {
+  return useQuery({
+    queryKey: [api.calibrationTargets.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.calibrationTargets.list.path);
+      if (!res.ok) throw new Error("Failed to fetch calibration targets");
+      return api.calibrationTargets.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Model Maturity
+export function useModelMaturity() {
+  return useQuery({
+    queryKey: [api.modelMaturity.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.modelMaturity.list.path);
+      if (!res.ok) throw new Error("Failed to fetch model maturity");
+      return api.modelMaturity.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Historical Climate Data
+export function useHistoricalClimateData() {
+  return useQuery({
+    queryKey: [api.historicalClimateData.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.historicalClimateData.list.path);
+      if (!res.ok) throw new Error("Failed to fetch historical climate data");
+      return api.historicalClimateData.list.responses[200].parse(await res.json());
+    },
+  });
+}

@@ -36,7 +36,11 @@ import {
   useNationwideFoodSecurity,
   useLaborTransition,
   usePoliticalCoalitionData,
-  useGlobalRegenerationSummary
+  useGlobalRegenerationSummary,
+  usePlanetaryBoundaries,
+  useCalibrationTargets,
+  useModelMaturity,
+  useHistoricalClimateData
 } from "@/hooks/use-gaia";
 import {
   LineChart,
@@ -113,7 +117,15 @@ import {
   Wheat,
   Utensils,
   HardHat,
-  Vote as VoteIcon
+  Vote as VoteIcon,
+  Gauge,
+  FlaskConical,
+  Database,
+  Waypoints,
+  CircleDot,
+  AlertCircle,
+  CheckCircle,
+  XCircle
 } from "lucide-react";
 
 const SCALE_LABELS: Record<string, string> = {
@@ -177,6 +189,10 @@ export default function Dashboard() {
   const { data: laborTransition } = useLaborTransition();
   const { data: politicalCoalitionData } = usePoliticalCoalitionData();
   const { data: globalRegenerationSummary } = useGlobalRegenerationSummary();
+  const { data: planetaryBoundaries } = usePlanetaryBoundaries();
+  const { data: calibrationTargets } = useCalibrationTargets();
+  const { data: modelMaturity } = useModelMaturity();
+  const { data: historicalClimateData } = useHistoricalClimateData();
   const { data: legalFramework, isLoading: loadingLegal } = useLegalFramework();
 
   const isLoading = loadingPilot || loadingEndowment || loadingTimeline || loadingFinancials || 
@@ -1442,6 +1458,173 @@ export default function Dashboard() {
                     </div>
                   ))}
                 </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Model Calibration & Validation Section */}
+        {(planetaryBoundaries && planetaryBoundaries.length > 0) && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.59 }} className="mb-8">
+            <Card className="glass-panel bg-gradient-to-r from-blue-50/50 to-purple-50/50 dark:from-blue-950/20 dark:to-purple-950/20" data-testid="card-model-validation">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <FlaskConical className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Model Calibration & Validation — Why You Can Trust These Projections</CardTitle>
+                <Badge variant="secondary" className="ml-auto">Real-World Data</Badge>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-6">
+                  All projections are grounded in empirical data from NASA, NOAA, IEA, World Bank, and peer-reviewed science. 
+                  Our models are continuously calibrated against real-world observations.
+                </p>
+
+                {/* Model Maturity Levels */}
+                {modelMaturity && modelMaturity.length > 0 && (
+                  <div className="mb-6">
+                    <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                      <Gauge className="h-4 w-4 text-primary" />
+                      Model Maturity Levels
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                      {modelMaturity.map((m) => (
+                        <div key={m.id} className="p-3 bg-background/60 rounded-lg border border-border/50" data-testid={`maturity-${m.id}`}>
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="font-medium text-foreground">{m.subsystem}</span>
+                            <Badge 
+                              variant="outline" 
+                              className={`text-xs ${
+                                m.maturityLevel === 'validated' ? 'border-emerald-500 text-emerald-700 dark:text-emerald-400' :
+                                m.maturityLevel === 'calibrated' ? 'border-blue-500 text-blue-700 dark:text-blue-400' :
+                                'border-amber-500 text-amber-700 dark:text-amber-400'
+                              }`}
+                            >
+                              {m.maturityLevel === 'validated' && <CheckCircle className="h-3 w-3 mr-1" />}
+                              {m.maturityLevel === 'calibrated' && <CircleDot className="h-3 w-3 mr-1" />}
+                              {m.maturityLevel === 'sandbox' && <AlertCircle className="h-3 w-3 mr-1" />}
+                              {m.maturityLevel}
+                            </Badge>
+                          </div>
+                          <p className="text-xs text-muted-foreground mb-2">{m.description}</p>
+                          <div className="flex gap-4 text-xs text-muted-foreground">
+                            <span><Database className="h-3 w-3 inline mr-1" />{m.dataSourcesCount} sources</span>
+                            <span><CheckCircle2 className="h-3 w-3 inline mr-1" />{m.validationTests} tests</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Calibration Targets */}
+                {calibrationTargets && calibrationTargets.length > 0 && (
+                  <div className="mb-6">
+                    <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                      <Target className="h-4 w-4 text-primary" />
+                      Calibration Accuracy ({calibrationTargets.filter(t => t.status === 'passed').length}/{calibrationTargets.length} Passed)
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                      {calibrationTargets.map((t) => (
+                        <div key={t.id} className="p-3 bg-background/60 rounded-lg border border-border/50" data-testid={`calibration-${t.id}`}>
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="font-medium text-foreground text-sm">{t.parameter}</span>
+                            <Badge 
+                              variant="outline" 
+                              className={`text-xs ${
+                                t.status === 'passed' ? 'border-emerald-500 text-emerald-700 dark:text-emerald-400' :
+                                t.status === 'warning' ? 'border-amber-500 text-amber-700 dark:text-amber-400' :
+                                'border-red-500 text-red-700 dark:text-red-400'
+                              }`}
+                            >
+                              {t.status === 'passed' && <CheckCircle className="h-3 w-3 mr-1" />}
+                              {t.status === 'warning' && <AlertCircle className="h-3 w-3 mr-1" />}
+                              {t.status === 'failed' && <XCircle className="h-3 w-3 mr-1" />}
+                              {(t.actualAccuracy * 100).toFixed(1)}% error
+                            </Badge>
+                          </div>
+                          <p className="text-xs text-muted-foreground">{t.dataSource}</p>
+                          <p className="text-xs text-muted-foreground">Validated: {t.validationPeriodStart}-{t.validationPeriodEnd}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Planetary Boundaries */}
+                <div>
+                  <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <Globe className="h-4 w-4 text-primary" />
+                    Planetary Boundaries Status (Steffen et al. 2015, Richardson et al. 2023)
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {planetaryBoundaries.map((b) => (
+                      <div key={b.id} className="p-3 bg-background/60 rounded-lg border border-border/50" data-testid={`boundary-${b.id}`}>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-medium text-foreground text-sm">{b.boundary}</span>
+                          <Badge 
+                            variant="outline" 
+                            className={`text-xs ${
+                              b.status === 'safe' ? 'border-emerald-500 text-emerald-700 dark:text-emerald-400' :
+                              b.status === 'caution' ? 'border-amber-500 text-amber-700 dark:text-amber-400' :
+                              'border-red-500 text-red-700 dark:text-red-400'
+                            }`}
+                          >
+                            {b.status === 'safe' && <CheckCircle className="h-3 w-3 mr-1" />}
+                            {b.status === 'caution' && <AlertCircle className="h-3 w-3 mr-1" />}
+                            {b.status === 'danger' && <XCircle className="h-3 w-3 mr-1" />}
+                            {b.status}
+                          </Badge>
+                        </div>
+                        <div className="mb-2">
+                          <div className="flex justify-between text-xs text-muted-foreground mb-1">
+                            <span>Current: {b.currentValue} {b.unit}</span>
+                            <span>Safe: {b.safeLimit}</span>
+                          </div>
+                          <div className="h-2 bg-muted rounded-full overflow-hidden">
+                            <div 
+                              className={`h-full rounded-full ${
+                                b.status === 'safe' ? 'bg-emerald-500' :
+                                b.status === 'caution' ? 'bg-amber-500' :
+                                'bg-red-500'
+                              }`}
+                              style={{ width: `${Math.min(100, (b.currentValue / b.criticalLimit) * 100)}%` }}
+                            />
+                          </div>
+                        </div>
+                        <p className="text-xs text-muted-foreground">{b.source}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Historical Climate Data Chart */}
+                {historicalClimateData && historicalClimateData.length > 0 && (
+                  <div className="mt-6">
+                    <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                      <Thermometer className="h-4 w-4 text-primary" />
+                      Historical Validation Data (2015-2024)
+                    </h4>
+                    <div className="h-64 w-full">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <LineChart data={historicalClimateData}>
+                          <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                          <XAxis dataKey="year" tick={{ fontSize: 11 }} />
+                          <YAxis yAxisId="temp" orientation="left" tick={{ fontSize: 11 }} domain={[0.8, 1.3]} />
+                          <YAxis yAxisId="co2" orientation="right" tick={{ fontSize: 11 }} domain={[395, 430]} />
+                          <Tooltip 
+                            contentStyle={{ 
+                              backgroundColor: 'hsl(var(--background))', 
+                              border: '1px solid hsl(var(--border))',
+                              borderRadius: '8px'
+                            }}
+                          />
+                          <Legend />
+                          <Line yAxisId="temp" type="monotone" dataKey="tempAnomaly" stroke="#ef4444" name="Temp Anomaly (°C)" strokeWidth={2} dot={{ r: 3 }} />
+                          <Line yAxisId="co2" type="monotone" dataKey="co2Ppm" stroke="#3b82f6" name="CO2 (ppm)" strokeWidth={2} dot={{ r: 3 }} />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </motion.div>
