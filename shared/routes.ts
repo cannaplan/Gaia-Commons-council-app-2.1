@@ -43,7 +43,8 @@ import {
   scenarioComparisons,
   optimizationParams,
   sensitivityAnalysis,
-  greenhouseLocations
+  greenhouseLocations,
+  globalRegenerationRegions
 } from './schema';
 
 export const errorSchemas = {
@@ -169,6 +170,9 @@ export const api = {
   },
   greenhouseLocations: {
     list: { method: 'GET' as const, path: '/api/greenhouse-locations', responses: { 200: z.array(z.custom<typeof greenhouseLocations.$inferSelect>()) } },
+  },
+  globalRegenerationRegions: {
+    list: { method: 'GET' as const, path: '/api/global-regeneration-regions', responses: { 200: z.array(z.custom<typeof globalRegenerationRegions.$inferSelect>()) } },
   },
   health: {
     get: { method: 'GET' as const, path: '/health', responses: { 200: z.object({ status: z.string(), version: z.string(), service: z.string() }) } },

@@ -250,6 +250,12 @@ export async function registerRoutes(
     res.json(data);
   });
 
+  // === Global Regeneration Regions (World Map) ===
+  app.get(api.globalRegenerationRegions.list.path, async (_req, res) => {
+    const data = await storage.getGlobalRegenerationRegions();
+    res.json(data);
+  });
+
   // === Seed Data ===
   await seedDatabase();
 
@@ -1093,5 +1099,35 @@ async function seedDatabase() {
     }
     
     console.log("Greenhouse locations data seeded successfully");
+  }
+
+  // Seed Global Regeneration Regions for World Map
+  const globalRegionsData = await storage.getGlobalRegenerationRegions();
+  if (globalRegionsData.length === 0) {
+    console.log("Seeding global regeneration regions data...");
+    
+    const regions = [
+      { regionName: "Great Plains USA", countryCode: "US", latitude: 41.5, longitude: -99.8, category: "Regenerative Agriculture", projectName: "Great Plains Hemp & Grain Initiative", description: "Industrial hemp and diversified grain production on restored farmland", greenhouseFacilities: 450, jobsCreated: 285000, annualCarbonSequestrationTons: 45000000, peopleFed: 25000000, acresRestored: 28800000, waterSavedGallons: 850000000000, investmentMillions: 42000, status: "Active", impactHighlight: "Largest regenerative transition in US history" },
+      { regionName: "California Central Valley", countryCode: "US", latitude: 36.7, longitude: -119.8, category: "Market Gardens", projectName: "Valley Food Forest Network", description: "Diversified market gardens and agroforestry replacing monoculture", greenhouseFacilities: 380, jobsCreated: 195000, annualCarbonSequestrationTons: 18000000, peopleFed: 18000000, acresRestored: 12500000, waterSavedGallons: 1200000000000, investmentMillions: 28000, status: "Active", impactHighlight: "80% reduction in water usage vs conventional" },
+      { regionName: "Amazon Basin", countryCode: "BR", latitude: -3.4, longitude: -62.2, category: "Forest Restoration", projectName: "Amazon Agroforestry Alliance", description: "Reforestation with integrated food production systems", greenhouseFacilities: 120, jobsCreated: 450000, annualCarbonSequestrationTons: 120000000, peopleFed: 8000000, acresRestored: 45000000, waterSavedGallons: 0, investmentMillions: 18000, status: "Active", impactHighlight: "45M acres restored, carbon-negative by 2030" },
+      { regionName: "Sahel Region", countryCode: "SN", latitude: 14.5, longitude: -14.5, category: "Desert Restoration", projectName: "Great Green Wall Initiative", description: "Combating desertification through regenerative practices", greenhouseFacilities: 85, jobsCreated: 380000, annualCarbonSequestrationTons: 35000000, peopleFed: 12000000, acresRestored: 30000000, waterSavedGallons: 450000000000, investmentMillions: 12000, status: "Active", impactHighlight: "Reversing desertification across 8,000km" },
+      { regionName: "Northern Europe", countryCode: "DE", latitude: 51.2, longitude: 10.5, category: "Indoor Agriculture", projectName: "EU Climate-Smart Greenhouse Network", description: "High-tech greenhouse facilities for year-round production", greenhouseFacilities: 850, jobsCreated: 125000, annualCarbonSequestrationTons: 8500000, peopleFed: 35000000, acresRestored: 2500000, waterSavedGallons: 280000000000, investmentMillions: 35000, status: "Active", impactHighlight: "90% less water, zero pesticides" },
+      { regionName: "Indo-Gangetic Plains", countryCode: "IN", latitude: 28.6, longitude: 77.2, category: "Regenerative Agriculture", projectName: "Bharat Regenerative Farming Mission", description: "Transitioning smallholder farms to regenerative practices", greenhouseFacilities: 220, jobsCreated: 2500000, annualCarbonSequestrationTons: 65000000, peopleFed: 180000000, acresRestored: 85000000, waterSavedGallons: 2100000000000, investmentMillions: 45000, status: "Active", impactHighlight: "180M people fed through regenerative systems" },
+      { regionName: "East Africa", countryCode: "KE", latitude: -1.3, longitude: 36.8, category: "Food Security", projectName: "East African Food Sovereignty Network", description: "Community-owned greenhouse and permaculture systems", greenhouseFacilities: 165, jobsCreated: 520000, annualCarbonSequestrationTons: 22000000, peopleFed: 28000000, acresRestored: 18000000, waterSavedGallons: 380000000000, investmentMillions: 8500, status: "Active", impactHighlight: "28M food-secure, community ownership" },
+      { regionName: "Southeast Asia", countryCode: "VN", latitude: 16.0, longitude: 108.0, category: "Agroforestry", projectName: "Mekong Regenerative Zone", description: "Rice-fish-tree integrated systems replacing monoculture", greenhouseFacilities: 180, jobsCreated: 680000, annualCarbonSequestrationTons: 42000000, peopleFed: 45000000, acresRestored: 25000000, waterSavedGallons: 680000000000, investmentMillions: 15000, status: "Active", impactHighlight: "45M people fed, 42M tons CO2 sequestered" },
+      { regionName: "Australia Outback", countryCode: "AU", latitude: -25.3, longitude: 134.5, category: "Silvopasture", projectName: "Regenerative Rangelands Australia", description: "Holistic managed grazing with tree integration", greenhouseFacilities: 45, jobsCreated: 85000, annualCarbonSequestrationTons: 28000000, peopleFed: 5000000, acresRestored: 55000000, waterSavedGallons: 180000000000, investmentMillions: 9500, status: "Planning", impactHighlight: "55M acres restored, drought-resilient" },
+      { regionName: "Mediterranean Basin", countryCode: "ES", latitude: 40.4, longitude: -3.7, category: "Drought-Resilient", projectName: "Mediterranean Food Forest Alliance", description: "Drought-resistant perennial food systems", greenhouseFacilities: 280, jobsCreated: 145000, annualCarbonSequestrationTons: 15000000, peopleFed: 22000000, acresRestored: 12000000, waterSavedGallons: 420000000000, investmentMillions: 18500, status: "Active", impactHighlight: "Climate adaptation model for dry regions" },
+      { regionName: "Midwest USA", countryCode: "US", latitude: 46.0, longitude: -94.0, category: "School Greenhouses", projectName: "Minnesota Gaia Commons Pilot", description: "School-integrated greenhouse network feeding students", greenhouseFacilities: 275, jobsCreated: 1430, annualCarbonSequestrationTons: 24750, peopleFed: 875000, acresRestored: 0, waterSavedGallons: 2800000000, investmentMillions: 2100, status: "Active", impactHighlight: "Model for nationwide school food security" },
+      { regionName: "Southern Africa", countryCode: "ZA", latitude: -33.9, longitude: 18.4, category: "Water Security", projectName: "Cape Water-Food Nexus", description: "Integrated water harvesting and food production", greenhouseFacilities: 95, jobsCreated: 175000, annualCarbonSequestrationTons: 12000000, peopleFed: 15000000, acresRestored: 8500000, waterSavedGallons: 850000000000, investmentMillions: 11000, status: "Planning", impactHighlight: "Water-positive food production" },
+      { regionName: "Central America", countryCode: "GT", latitude: 14.6, longitude: -90.5, category: "Indigenous Systems", projectName: "Mesoamerican Milpa Revival", description: "Traditional polyculture with modern enhancements", greenhouseFacilities: 65, jobsCreated: 280000, annualCarbonSequestrationTons: 18000000, peopleFed: 12000000, acresRestored: 9500000, waterSavedGallons: 220000000000, investmentMillions: 6500, status: "Active", impactHighlight: "Indigenous knowledge driving regeneration" },
+      { regionName: "Eastern Europe", countryCode: "UA", latitude: 48.4, longitude: 31.2, category: "Soil Restoration", projectName: "Black Earth Revival", description: "Restoring degraded chernozem soils through regenerative practices", greenhouseFacilities: 185, jobsCreated: 320000, annualCarbonSequestrationTons: 38000000, peopleFed: 35000000, acresRestored: 28000000, waterSavedGallons: 480000000000, investmentMillions: 22000, status: "Planning", impactHighlight: "World's most fertile soils restored" },
+      { regionName: "China Northeast", countryCode: "CN", latitude: 45.8, longitude: 126.5, category: "Carbon Farming", projectName: "Manchurian Carbon Initiative", description: "Large-scale carbon farming with food production", greenhouseFacilities: 520, jobsCreated: 850000, annualCarbonSequestrationTons: 85000000, peopleFed: 120000000, acresRestored: 45000000, waterSavedGallons: 1500000000000, investmentMillions: 55000, status: "Active", impactHighlight: "85M tons CO2 annually, 120M fed" }
+    ];
+    
+    for (const region of regions) {
+      await storage.createGlobalRegenerationRegion(region);
+    }
+    
+    console.log("Global regeneration regions data seeded successfully");
   }
 }

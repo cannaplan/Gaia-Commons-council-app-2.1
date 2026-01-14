@@ -47,7 +47,9 @@ import {
   type OptimizationParamType, type InsertOptimizationParam,
   type SensitivityAnalysisType, type InsertSensitivityAnalysis,
   greenhouseLocations,
-  type GreenhouseLocationType, type InsertGreenhouseLocation
+  type GreenhouseLocationType, type InsertGreenhouseLocation,
+  globalRegenerationRegions,
+  type GlobalRegenerationRegionType, type InsertGlobalRegenerationRegion
 } from "@shared/schema";
 import { eq, asc } from "drizzle-orm";
 
@@ -132,6 +134,8 @@ export interface IStorage {
   createSensitivityAnalysis(item: InsertSensitivityAnalysis): Promise<SensitivityAnalysisType>;
   getGreenhouseLocations(): Promise<GreenhouseLocationType[]>;
   createGreenhouseLocation(item: InsertGreenhouseLocation): Promise<GreenhouseLocationType>;
+  getGlobalRegenerationRegions(): Promise<GlobalRegenerationRegionType[]>;
+  createGlobalRegenerationRegion(item: InsertGlobalRegenerationRegion): Promise<GlobalRegenerationRegionType>;
   isEmpty(): Promise<boolean>;
 }
 
@@ -442,6 +446,13 @@ export class DatabaseStorage implements IStorage {
   async createGreenhouseLocation(item: InsertGreenhouseLocation): Promise<GreenhouseLocationType> {
     const [g] = await db.insert(greenhouseLocations).values(item).returning();
     return g;
+  }
+  async getGlobalRegenerationRegions(): Promise<GlobalRegenerationRegionType[]> {
+    return await db.select().from(globalRegenerationRegions);
+  }
+  async createGlobalRegenerationRegion(item: InsertGlobalRegenerationRegion): Promise<GlobalRegenerationRegionType> {
+    const [r] = await db.insert(globalRegenerationRegions).values(item).returning();
+    return r;
   }
   async isEmpty(): Promise<boolean> {
     const [stats] = await db.select().from(pilotStats).limit(1);

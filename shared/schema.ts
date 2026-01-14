@@ -521,6 +521,29 @@ export const greenhouseLocations = pgTable("greenhouse_locations", {
 
 export const insertGreenhouseLocationSchema = createInsertSchema(greenhouseLocations).omit({ id: true });
 
+// Global Regeneration Regions - World Map Data
+export const globalRegenerationRegions = pgTable("global_regeneration_regions", {
+  id: serial("id").primaryKey(),
+  regionName: text("region_name").notNull(),
+  countryCode: text("country_code").notNull(),
+  latitude: real("latitude").notNull(),
+  longitude: real("longitude").notNull(),
+  category: text("category").notNull(),
+  projectName: text("project_name").notNull(),
+  description: text("description").notNull(),
+  greenhouseFacilities: integer("greenhouse_facilities").notNull(),
+  jobsCreated: integer("jobs_created").notNull(),
+  annualCarbonSequestrationTons: real("annual_carbon_sequestration_tons").notNull(),
+  peopleFed: integer("people_fed").notNull(),
+  acresRestored: real("acres_restored").notNull(),
+  waterSavedGallons: real("water_saved_gallons").notNull(),
+  investmentMillions: real("investment_millions").notNull(),
+  status: text("status").notNull(),
+  impactHighlight: text("impact_highlight").notNull(),
+});
+
+export const insertGlobalRegenerationRegionSchema = createInsertSchema(globalRegenerationRegions).omit({ id: true });
+
 export const insertPlanetaryBoundariesSchema = createInsertSchema(planetaryBoundaries).omit({ id: true });
 export const insertCalibrationTargetsSchema = createInsertSchema(calibrationTargets).omit({ id: true });
 export const insertModelMaturitySchema = createInsertSchema(modelMaturity).omit({ id: true });
@@ -572,6 +595,7 @@ export type ScenarioComparisonType = typeof scenarioComparisons.$inferSelect;
 export type OptimizationParamType = typeof optimizationParams.$inferSelect;
 export type SensitivityAnalysisType = typeof sensitivityAnalysis.$inferSelect;
 export type GreenhouseLocationType = typeof greenhouseLocations.$inferSelect;
+export type GlobalRegenerationRegionType = typeof globalRegenerationRegions.$inferSelect;
 
 // Insert types
 export type InsertPilotStats = z.infer<typeof insertPilotStatsSchema>;
@@ -613,3 +637,4 @@ export type InsertScenarioComparison = z.infer<typeof insertScenarioComparisonsS
 export type InsertOptimizationParam = z.infer<typeof insertOptimizationParamsSchema>;
 export type InsertSensitivityAnalysis = z.infer<typeof insertSensitivityAnalysisSchema>;
 export type InsertGreenhouseLocation = z.infer<typeof insertGreenhouseLocationSchema>;
+export type InsertGlobalRegenerationRegion = z.infer<typeof insertGlobalRegenerationRegionSchema>;
