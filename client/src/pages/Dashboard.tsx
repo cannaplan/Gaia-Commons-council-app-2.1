@@ -694,15 +694,82 @@ export default function Dashboard() {
               <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-2">
                 <Thermometer className="h-5 w-5 text-primary" />
                 <CardTitle className="text-lg font-semibold">Year-Round Aquaponics & Climate Control v5.0</CardTitle>
+                <UITooltip>
+                  <TooltipTrigger asChild>
+                    <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-sm">
+                    <p>Minnesota winters average -10°F. Our integrated climate systems maintain 72°F growing conditions 365 days/year, enabling continuous food production.</p>
+                  </TooltipContent>
+                </UITooltip>
               </CardHeader>
               <CardContent>
                 {climate && (
                   <div className="space-y-4">
+                    {/* Explanation */}
+                    <p className="text-sm text-muted-foreground">
+                      Despite Minnesota's extreme climate (-30°F winters to 95°F summers), our integrated heating/cooling systems maintain optimal growing conditions year-round, transforming a 120-day outdoor season into 365 productive days.
+                    </p>
+
+                    {/* Temperature Comparison Chart */}
+                    <div className="bg-muted/30 rounded-xl p-3 border border-border/50">
+                      <div className="flex items-center gap-2 mb-2">
+                        <BarChart3 className="h-4 w-4 text-primary" />
+                        <span className="text-xs font-semibold text-foreground uppercase">Monthly Temperature: Outdoor vs Greenhouse</span>
+                      </div>
+                      <div className="h-32">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <BarChart data={[
+                            { month: 'Jan', outdoor: 15, greenhouse: 72 },
+                            { month: 'Feb', outdoor: 20, greenhouse: 72 },
+                            { month: 'Mar', outdoor: 33, greenhouse: 72 },
+                            { month: 'Apr', outdoor: 47, greenhouse: 72 },
+                            { month: 'May', outdoor: 59, greenhouse: 72 },
+                            { month: 'Jun', outdoor: 68, greenhouse: 72 },
+                            { month: 'Jul', outdoor: 73, greenhouse: 72 },
+                            { month: 'Aug', outdoor: 71, greenhouse: 72 },
+                            { month: 'Sep', outdoor: 62, greenhouse: 72 },
+                            { month: 'Oct', outdoor: 49, greenhouse: 72 },
+                            { month: 'Nov', outdoor: 33, greenhouse: 72 },
+                            { month: 'Dec', outdoor: 19, greenhouse: 72 },
+                          ]} barGap={0} barCategoryGap="15%">
+                            <CartesianGrid strokeDasharray="3 3" className="stroke-muted" vertical={false} />
+                            <XAxis dataKey="month" tick={{ fontSize: 10 }} className="text-xs" />
+                            <YAxis tick={{ fontSize: 10 }} domain={[0, 80]} tickFormatter={(v) => `${v}°`} />
+                            <Tooltip 
+                              formatter={(value: number, name: string) => [`${value}°F`, name === 'outdoor' ? 'Outdoor Avg' : 'Greenhouse']}
+                              contentStyle={{ fontSize: '12px' }}
+                            />
+                            <Bar dataKey="outdoor" name="outdoor" fill="#94a3b8" radius={[2, 2, 0, 0]} />
+                            <Bar dataKey="greenhouse" name="greenhouse" fill="#22c55e" radius={[2, 2, 0, 0]} />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </div>
+                      <div className="flex items-center justify-center gap-4 mt-2 text-xs">
+                        <span className="flex items-center gap-1.5">
+                          <span className="w-3 h-3 rounded-sm bg-slate-400"></span>
+                          <span className="text-muted-foreground">MN Outdoor Avg</span>
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <span className="w-3 h-3 rounded-sm bg-emerald-500"></span>
+                          <span className="text-muted-foreground">Greenhouse (Controlled)</span>
+                        </span>
+                      </div>
+                    </div>
+
                     <div className="grid grid-cols-2 gap-4">
                       <div className="bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-950/30 dark:to-amber-950/30 p-4 rounded-xl border border-orange-100 dark:border-orange-900/50">
                         <div className="flex items-center gap-2 mb-2">
                           <Thermometer className="h-4 w-4 text-orange-600" />
                           <span className="text-xs font-medium text-orange-800 dark:text-orange-400 uppercase">Internal Temp</span>
+                          <UITooltip>
+                            <TooltipTrigger asChild>
+                              <HelpCircle className="h-3 w-3 text-orange-400 cursor-help" />
+                            </TooltipTrigger>
+                            <TooltipContent className="max-w-xs">
+                              <p>Optimal temperature for leafy greens and vegetables. Maintained via geothermal + HVAC integration.</p>
+                            </TooltipContent>
+                          </UITooltip>
                         </div>
                         <p className="text-2xl font-bold text-orange-700 dark:text-orange-300">{climate.avgTemp}°F</p>
                       </div>
@@ -710,25 +777,58 @@ export default function Dashboard() {
                         <div className="flex items-center gap-2 mb-2">
                           <Wind className="h-4 w-4 text-slate-600" />
                           <span className="text-xs font-medium text-slate-800 dark:text-slate-400 uppercase">CO2 Enrichment</span>
+                          <UITooltip>
+                            <TooltipTrigger asChild>
+                              <HelpCircle className="h-3 w-3 text-slate-400 cursor-help" />
+                            </TooltipTrigger>
+                            <TooltipContent className="max-w-xs">
+                              <p>Plants grow 20-30% faster with elevated CO2. We capture CO2 from school HVAC systems for enrichment.</p>
+                            </TooltipContent>
+                          </UITooltip>
                         </div>
                         <p className="text-2xl font-bold text-slate-700 dark:text-slate-300">{climate.co2Ppm} ppm</p>
                       </div>
                     </div>
+
+                    {/* Technology Badges with Tooltips */}
                     <div className="grid grid-cols-3 gap-2">
-                      <div className="text-center p-2 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-100 dark:border-amber-900/50">
-                        <span className="text-xs font-medium text-amber-700 dark:text-amber-400">HVAC Integration</span>
-                      </div>
-                      <div className="text-center p-2 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg border border-emerald-100 dark:border-emerald-900/50">
-                        <span className="text-xs font-medium text-emerald-700 dark:text-emerald-400">Geothermal</span>
-                      </div>
-                      <div className="text-center p-2 bg-sky-50 dark:bg-sky-950/30 rounded-lg border border-sky-100 dark:border-sky-900/50">
-                        <span className="text-xs font-medium text-sky-700 dark:text-sky-400">Passive Solar</span>
-                      </div>
+                      <UITooltip>
+                        <TooltipTrigger asChild>
+                          <div className="text-center p-2 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-100 dark:border-amber-900/50 cursor-help">
+                            <span className="text-xs font-medium text-amber-700 dark:text-amber-400">HVAC Integration</span>
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs">
+                          <p>Greenhouse connects to school's existing heating/cooling, recovering waste heat and reducing energy costs by 40%.</p>
+                        </TooltipContent>
+                      </UITooltip>
+                      <UITooltip>
+                        <TooltipTrigger asChild>
+                          <div className="text-center p-2 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg border border-emerald-100 dark:border-emerald-900/50 cursor-help">
+                            <span className="text-xs font-medium text-emerald-700 dark:text-emerald-400">Geothermal</span>
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs">
+                          <p>Ground-source heat pumps use Earth's constant 55°F temperature for efficient heating in winter and cooling in summer.</p>
+                        </TooltipContent>
+                      </UITooltip>
+                      <UITooltip>
+                        <TooltipTrigger asChild>
+                          <div className="text-center p-2 bg-sky-50 dark:bg-sky-950/30 rounded-lg border border-sky-100 dark:border-sky-900/50 cursor-help">
+                            <span className="text-xs font-medium text-sky-700 dark:text-sky-400">Passive Solar</span>
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs">
+                          <p>South-facing glazing captures free solar heat. Thermal mass stores warmth for nighttime, reducing energy needs by 30%.</p>
+                        </TooltipContent>
+                      </UITooltip>
                     </div>
+
                     <div className="grid grid-cols-3 gap-3">
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
                         <p className="text-xs text-muted-foreground">Growing Days</p>
                         <p className="font-semibold text-foreground">{climate.growingSeasonDays}</p>
+                        <p className="text-[10px] text-muted-foreground">vs 120 outdoor</p>
                       </div>
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
                         <p className="text-xs text-muted-foreground">Annual Harvest</p>
