@@ -65,30 +65,30 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           {/* Pilot Stats */}
           <StatsCard 
-            title="Pilot Program" 
+            title="Minnesota School Greenhouse Pilot" 
             icon={<Sprout className="h-5 w-5" />}
             delay={0.1}
           >
             {pilot && (
               <>
                 <StatItem 
-                  label="Active Students" 
+                  label="Students Served by Program" 
                   value={pilot.students.toLocaleString()} 
                   trend="+12%"
                   trendUp={true}
                 />
                 <StatItem 
-                  label="Participating Schools" 
+                  label="School Districts Participating" 
                   value={pilot.schools} 
                 />
                 <StatItem 
-                  label="Total Square Footage" 
+                  label="Total Greenhouse Square Footage" 
                   value={`${(pilot.sqft / 1000).toFixed(1)}k sqft`} 
                 />
                 <div className="pt-2">
                   <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20" data-testid="badge-status">
                     <Activity className="w-3 h-3 mr-1.5" />
-                    Status: {pilot.status}
+                    Pilot Status: {pilot.status}
                   </Badge>
                 </div>
               </>
@@ -97,34 +97,34 @@ export default function Dashboard() {
 
           {/* Endowment Stats */}
           <StatsCard 
-            title="Endowment Fund" 
+            title="Gaia Commons Perpetual Endowment" 
             icon={<Landmark className="h-5 w-5" />}
             delay={0.2}
           >
             {endowment && (
               <>
                 <StatItem 
-                  label="Total Fund Size" 
+                  label="Total Endowment Principal" 
                   value={endowment.size} 
                   trend="Stable"
                   trendUp={true}
                 />
                 <StatItem 
-                  label="Annual Distribution" 
+                  label="Annual 3% Distribution" 
                   value={endowment.annual} 
                 />
                 <StatItem 
-                  label="Greenhouses Funded" 
+                  label="Greenhouses Fully Funded" 
                   value={endowment.greenhouses} 
                 />
                 <div className="mt-4 grid grid-cols-2 gap-2">
                    <div className="bg-emerald-50 dark:bg-emerald-950/30 p-3 rounded-lg border border-emerald-100 dark:border-emerald-900/50 text-center">
                       <Trees className="w-5 h-5 text-emerald-600 mx-auto mb-1" />
-                      <span className="text-xs text-emerald-800 dark:text-emerald-400 font-medium">Eco Impact</span>
+                      <span className="text-xs text-emerald-800 dark:text-emerald-400 font-medium">Carbon Neutral</span>
                    </div>
                    <div className="bg-amber-50 dark:bg-amber-950/30 p-3 rounded-lg border border-amber-100 dark:border-amber-900/50 text-center">
                       <TrendingUp className="w-5 h-5 text-amber-600 mx-auto mb-1" />
-                      <span className="text-xs text-amber-800 dark:text-amber-400 font-medium">Growth</span>
+                      <span className="text-xs text-amber-800 dark:text-amber-400 font-medium">Perpetual Growth</span>
                    </div>
                 </div>
               </>
@@ -153,9 +153,9 @@ export default function Dashboard() {
             <Card className="glass-panel card-hover h-full" data-testid="card-financials">
               <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-2">
                 <Calculator className="h-5 w-5 text-primary" />
-                <CardTitle className="text-lg font-semibold">Financial Engine v3.1</CardTitle>
+                <CardTitle className="text-lg font-semibold">Financial Projection Engine v3.1 — Pilot Program ROI Model</CardTitle>
                 {financials && (
-                  <Badge variant="secondary" className="ml-auto">{financials.schoolCount} Schools</Badge>
+                  <Badge variant="secondary" className="ml-auto">{financials.schoolCount} School Pilot</Badge>
                 )}
               </CardHeader>
               <CardContent>
@@ -166,7 +166,7 @@ export default function Dashboard() {
                       <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/30 dark:to-emerald-950/30 p-4 rounded-xl border border-green-100 dark:border-green-900/50">
                         <div className="flex items-center gap-2 mb-2">
                           <DollarSign className="h-4 w-4 text-green-600" />
-                          <span className="text-xs font-medium text-green-800 dark:text-green-400 uppercase tracking-wide">NPV (10yr)</span>
+                          <span className="text-xs font-medium text-green-800 dark:text-green-400 uppercase tracking-wide">Net Present Value (10-Year Horizon)</span>
                         </div>
                         <p className="text-2xl font-bold text-green-700 dark:text-green-300" data-testid="text-npv">
                           ${(financials.npv10yr / 1e6).toFixed(2)}M
@@ -175,7 +175,7 @@ export default function Dashboard() {
                       <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 p-4 rounded-xl border border-blue-100 dark:border-blue-900/50">
                         <div className="flex items-center gap-2 mb-2">
                           <TrendingUp className="h-4 w-4 text-blue-600" />
-                          <span className="text-xs font-medium text-blue-800 dark:text-blue-400 uppercase tracking-wide">10yr ROI</span>
+                          <span className="text-xs font-medium text-blue-800 dark:text-blue-400 uppercase tracking-wide">Return on Investment (10-Year)</span>
                         </div>
                         <p className="text-2xl font-bold text-blue-700 dark:text-blue-300" data-testid="text-roi">
                           {financials.roi10yrPct}%
@@ -184,43 +184,44 @@ export default function Dashboard() {
                     </div>
 
                     {/* Program Overview */}
+                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mt-4 mb-2">Total Pilot Program Investment & Returns</p>
                     <div className="grid grid-cols-4 gap-3">
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <p className="text-xs text-muted-foreground">Total Investment</p>
+                        <p className="text-xs text-muted-foreground">Capital Investment</p>
                         <p className="font-semibold text-foreground" data-testid="text-investment">${(financials.initialInvestment / 1e6).toFixed(1)}M</p>
                       </div>
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <p className="text-xs text-muted-foreground">Annual OPEX</p>
+                        <p className="text-xs text-muted-foreground">Annual Operating Cost</p>
                         <p className="font-semibold text-foreground">${(financials.annualOpex / 1e3).toFixed(0)}K</p>
                       </div>
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <p className="text-xs text-muted-foreground">Annual Revenue</p>
+                        <p className="text-xs text-muted-foreground">Annual Gross Revenue</p>
                         <p className="font-semibold text-foreground">${(financials.totalAnnualRevenue / 1e3).toFixed(0)}K</p>
                       </div>
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <p className="text-xs text-muted-foreground">Payback</p>
+                        <p className="text-xs text-muted-foreground">Investment Payback Period</p>
                         <p className="font-semibold text-foreground">{financials.paybackYears} yrs</p>
                       </div>
                     </div>
 
                     {/* Per-School Economics */}
-                    <div className="border-t border-border/50 pt-4">
-                      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Per-School Economics</p>
+                    <div className="border-t border-border/50 pt-4 mt-4">
+                      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Individual School Greenhouse Economics</p>
                       <div className="grid grid-cols-4 gap-3">
                         <div className="text-center p-3 bg-primary/5 rounded-lg border border-primary/10">
-                          <p className="text-xs text-muted-foreground">Investment</p>
+                          <p className="text-xs text-muted-foreground">Greenhouse Build Cost</p>
                           <p className="font-semibold text-primary" data-testid="text-investment-per-school">${(financials.investmentPerSchool / 1e3).toFixed(0)}K</p>
                         </div>
                         <div className="text-center p-3 bg-primary/5 rounded-lg border border-primary/10">
-                          <p className="text-xs text-muted-foreground">Annual OPEX</p>
+                          <p className="text-xs text-muted-foreground">Annual Operating Cost</p>
                           <p className="font-semibold text-primary">${(financials.opexPerSchool / 1e3).toFixed(0)}K</p>
                         </div>
                         <div className="text-center p-3 bg-primary/5 rounded-lg border border-primary/10">
-                          <p className="text-xs text-muted-foreground">Yield</p>
+                          <p className="text-xs text-muted-foreground">Annual Produce Yield</p>
                           <p className="font-semibold text-primary">{financials.yieldPerSchool.toLocaleString()} lbs</p>
                         </div>
                         <div className="text-center p-3 bg-primary/5 rounded-lg border border-primary/10">
-                          <p className="text-xs text-muted-foreground">Revenue</p>
+                          <p className="text-xs text-muted-foreground">Annual Revenue Generated</p>
                           <p className="font-semibold text-primary">${(financials.annualRevenuePerSchool / 1e3).toFixed(1)}K</p>
                         </div>
                       </div>
@@ -240,40 +241,59 @@ export default function Dashboard() {
             <Card className="glass-panel card-hover h-full" data-testid="card-climate">
               <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-2">
                 <Thermometer className="h-5 w-5 text-primary" />
-                <CardTitle className="text-lg font-semibold">Climate & Yield (v5.0)</CardTitle>
+                <CardTitle className="text-lg font-semibold">Year-Round Climate Control & Aquaponics Yield Model v5.0</CardTitle>
               </CardHeader>
               <CardContent>
                 {climate && (
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-950/30 dark:to-amber-950/30 p-4 rounded-xl border border-orange-100 dark:border-orange-900/50">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Thermometer className="h-4 w-4 text-orange-600" />
-                        <span className="text-xs font-medium text-orange-800 dark:text-orange-400 uppercase tracking-wide">Avg Temp</span>
+                  <div className="space-y-4">
+                    {/* Climate Control Features */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-950/30 dark:to-amber-950/30 p-4 rounded-xl border border-orange-100 dark:border-orange-900/50">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Thermometer className="h-4 w-4 text-orange-600" />
+                          <span className="text-xs font-medium text-orange-800 dark:text-orange-400 uppercase tracking-wide">Greenhouse Internal Temp (Winter Avg)</span>
+                        </div>
+                        <p className="text-2xl font-bold text-orange-700 dark:text-orange-300" data-testid="text-temp">
+                          {climate.avgTemp}°F
+                        </p>
                       </div>
-                      <p className="text-2xl font-bold text-orange-700 dark:text-orange-300" data-testid="text-temp">
-                        {climate.avgTemp}°F
-                      </p>
+                      <div className="bg-gradient-to-br from-slate-50 to-gray-50 dark:from-slate-950/30 dark:to-gray-950/30 p-4 rounded-xl border border-slate-100 dark:border-slate-900/50">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Wind className="h-4 w-4 text-slate-600" />
+                          <span className="text-xs font-medium text-slate-800 dark:text-slate-400 uppercase tracking-wide">CO2 Enrichment Level</span>
+                        </div>
+                        <p className="text-2xl font-bold text-slate-700 dark:text-slate-300" data-testid="text-co2">
+                          {climate.co2Ppm} ppm
+                        </p>
+                      </div>
                     </div>
-                    <div className="bg-gradient-to-br from-slate-50 to-gray-50 dark:from-slate-950/30 dark:to-gray-950/30 p-4 rounded-xl border border-slate-100 dark:border-slate-900/50">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Wind className="h-4 w-4 text-slate-600" />
-                        <span className="text-xs font-medium text-slate-800 dark:text-slate-400 uppercase tracking-wide">CO2</span>
+
+                    {/* Heating Systems */}
+                    <div className="grid grid-cols-3 gap-2">
+                      <div className="text-center p-2 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-100 dark:border-amber-900/50">
+                        <span className="text-xs font-medium text-amber-700 dark:text-amber-400">School HVAC Integration</span>
                       </div>
-                      <p className="text-2xl font-bold text-slate-700 dark:text-slate-300" data-testid="text-co2">
-                        {climate.co2Ppm} ppm
-                      </p>
+                      <div className="text-center p-2 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg border border-emerald-100 dark:border-emerald-900/50">
+                        <span className="text-xs font-medium text-emerald-700 dark:text-emerald-400">Geothermal Heat Pumps</span>
+                      </div>
+                      <div className="text-center p-2 bg-sky-50 dark:bg-sky-950/30 rounded-lg border border-sky-100 dark:border-sky-900/50">
+                        <span className="text-xs font-medium text-sky-700 dark:text-sky-400">Passive Solar Design</span>
+                      </div>
                     </div>
-                    <div className="col-span-2 grid grid-cols-3 gap-3 mt-2">
+
+                    {/* Production Metrics */}
+                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mt-2">Year-Round Aquaponics Production Output</p>
+                    <div className="grid grid-cols-3 gap-3">
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <p className="text-xs text-muted-foreground">Growing Days</p>
-                        <p className="font-semibold text-foreground">{climate.growingSeasonDays}</p>
+                        <p className="text-xs text-muted-foreground">Growing Season (MN Winter-Proof)</p>
+                        <p className="font-semibold text-foreground">{climate.growingSeasonDays} days</p>
                       </div>
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <p className="text-xs text-muted-foreground">Annual Tons</p>
-                        <p className="font-semibold text-foreground">{climate.annualTons.toLocaleString()}</p>
+                        <p className="text-xs text-muted-foreground">Annual Harvest (6 Schools)</p>
+                        <p className="font-semibold text-foreground">{climate.annualTons.toLocaleString()} tons</p>
                       </div>
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <p className="text-xs text-muted-foreground">Meals/Year</p>
+                        <p className="text-xs text-muted-foreground">Student Meals Produced Annually</p>
                         <p className="font-semibold text-foreground">{climate.studentMealsAnnual}</p>
                       </div>
                     </div>
@@ -294,7 +314,7 @@ export default function Dashboard() {
           <Card className="glass-panel" data-testid="card-slides">
             <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
               <Presentation className="h-5 w-5 text-primary" />
-              <CardTitle className="text-lg font-semibold">Ballot Slide Deck (20 Slides)</CardTitle>
+              <CardTitle className="text-lg font-semibold">2028 Ballot Initiative Presentation Deck — Gaia Commons Amendment</CardTitle>
               <Badge variant="secondary" className="ml-auto">Vote Yes on Gaia</Badge>
             </CardHeader>
             <CardContent>
@@ -336,9 +356,9 @@ export default function Dashboard() {
               <Users className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="font-semibold text-foreground">Community Led</h3>
+              <h3 className="font-semibold text-foreground">Community-Led Democratic Governance</h3>
               <p className="text-sm text-muted-foreground mt-1">
-                Governance distributed across student councils and faculty boards.
+                Distributed governance across student councils, faculty boards, and local food policy councils.
               </p>
             </div>
           </div>
@@ -348,9 +368,9 @@ export default function Dashboard() {
               <Leaf className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="font-semibold text-foreground">Sustainable Model</h3>
+              <h3 className="font-semibold text-foreground">Perpetual Sustainability with Planetary Boundaries</h3>
               <p className="text-sm text-muted-foreground mt-1">
-                Perpetual endowment with 3% annual draw and planetary boundaries clause.
+                Constitutional endowment with 3% annual distribution and planetary boundaries clause protecting future generations.
               </p>
             </div>
           </div>
@@ -360,9 +380,9 @@ export default function Dashboard() {
               <Target className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="font-semibold text-foreground">2028 Ballot Ready</h3>
+              <h3 className="font-semibold text-foreground">2028 Statewide Ballot Initiative — Vote Yes on Gaia</h3>
               <p className="text-sm text-muted-foreground mt-1">
-                Full deployment to 275 greenhouses serving 875k students statewide.
+                Full deployment to 275 school greenhouses serving 875,000 students across Minnesota.
               </p>
             </div>
           </div>
