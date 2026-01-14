@@ -17,7 +17,12 @@ import {
   scaleProjections,
   environmentalImpact,
   jobCreation,
-  legalFramework
+  legalFramework,
+  endowmentProjections,
+  expandedJobs,
+  k12Curriculum,
+  coalitionPartners,
+  fundingSources
 } from './schema';
 
 export const errorSchemas = {
@@ -65,6 +70,21 @@ export const api = {
   },
   legalFramework: {
     get: { method: 'GET' as const, path: '/api/legal-framework', responses: { 200: z.custom<typeof legalFramework.$inferSelect>(), 404: errorSchemas.notFound } },
+  },
+  endowmentProjections: {
+    list: { method: 'GET' as const, path: '/api/endowment-projections', responses: { 200: z.array(z.custom<typeof endowmentProjections.$inferSelect>()) } },
+  },
+  expandedJobs: {
+    list: { method: 'GET' as const, path: '/api/expanded-jobs', responses: { 200: z.array(z.custom<typeof expandedJobs.$inferSelect>()) } },
+  },
+  k12Curriculum: {
+    list: { method: 'GET' as const, path: '/api/k12-curriculum', responses: { 200: z.array(z.custom<typeof k12Curriculum.$inferSelect>()) } },
+  },
+  coalitionPartners: {
+    list: { method: 'GET' as const, path: '/api/coalition-partners', responses: { 200: z.array(z.custom<typeof coalitionPartners.$inferSelect>()) } },
+  },
+  fundingSources: {
+    list: { method: 'GET' as const, path: '/api/funding-sources', responses: { 200: z.array(z.custom<typeof fundingSources.$inferSelect>()) } },
   },
   health: {
     get: { method: 'GET' as const, path: '/health', responses: { 200: z.object({ status: z.string(), version: z.string(), service: z.string() }) } },

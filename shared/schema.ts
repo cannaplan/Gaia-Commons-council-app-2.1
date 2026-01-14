@@ -143,6 +143,57 @@ export const slideDeck = pgTable("slide_deck", {
   chartData: jsonb("chart_data"),
 });
 
+// 50-Year Endowment Growth Projections
+export const endowmentProjections = pgTable("endowment_projections", {
+  id: serial("id").primaryKey(),
+  year: integer("year").notNull(),
+  corpus: real("corpus").notNull(),
+  annualDraw: real("annual_draw").notNull(),
+  inflationAdjusted: real("inflation_adjusted"),
+});
+
+// Expanded Job Creation (includes internships, volunteers)
+export const expandedJobs = pgTable("expanded_jobs", {
+  id: serial("id").primaryKey(),
+  scale: text("scale").notNull(),
+  fteJobs: integer("fte_jobs").notNull(),
+  studentInternships: integer("student_internships").notNull(),
+  volunteerPositions: integer("volunteer_positions").notNull(),
+  hourlyWage: real("hourly_wage").notNull(),
+  directWages: real("direct_wages").notNull(),
+  economicMultiplier: real("economic_multiplier").notNull(),
+});
+
+// K-12 NGSS Curriculum
+export const k12Curriculum = pgTable("k12_curriculum", {
+  id: serial("id").primaryKey(),
+  gradeRange: text("grade_range").notNull(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  durationWeeks: integer("duration_weeks").notNull(),
+  standards: text("standards").notNull(),
+});
+
+// Coalition Partners
+export const coalitionPartners = pgTable("coalition_partners", {
+  id: serial("id").primaryKey(),
+  tier: integer("tier").notNull(),
+  name: text("name").notNull(),
+  category: text("category").notNull(),
+  memberCount: integer("member_count"),
+  focus: text("focus"),
+});
+
+// Funding Sources Breakdown
+export const fundingSources = pgTable("funding_sources", {
+  id: serial("id").primaryKey(),
+  sourceType: text("source_type").notNull(),
+  description: text("description").notNull(),
+  targetAmount: real("target_amount").notNull(),
+  percentage: real("percentage"),
+  entities: text("entities"),
+});
+
 // Historical Financial Data for Trend Analysis
 export const historicalFinancials = pgTable("historical_financials", {
   id: serial("id").primaryKey(),
@@ -172,6 +223,11 @@ export const insertScaleProjectionSchema = createInsertSchema(scaleProjections).
 export const insertEnvironmentalImpactSchema = createInsertSchema(environmentalImpact).omit({ id: true });
 export const insertJobCreationSchema = createInsertSchema(jobCreation).omit({ id: true });
 export const insertLegalFrameworkSchema = createInsertSchema(legalFramework).omit({ id: true });
+export const insertEndowmentProjectionSchema = createInsertSchema(endowmentProjections).omit({ id: true });
+export const insertExpandedJobsSchema = createInsertSchema(expandedJobs).omit({ id: true });
+export const insertK12CurriculumSchema = createInsertSchema(k12Curriculum).omit({ id: true });
+export const insertCoalitionPartnerSchema = createInsertSchema(coalitionPartners).omit({ id: true });
+export const insertFundingSourceSchema = createInsertSchema(fundingSources).omit({ id: true });
 
 // === TYPES ===
 
@@ -189,6 +245,11 @@ export type ScaleProjection = typeof scaleProjections.$inferSelect;
 export type EnvironmentalImpactType = typeof environmentalImpact.$inferSelect;
 export type JobCreationType = typeof jobCreation.$inferSelect;
 export type LegalFrameworkType = typeof legalFramework.$inferSelect;
+export type EndowmentProjection = typeof endowmentProjections.$inferSelect;
+export type ExpandedJobs = typeof expandedJobs.$inferSelect;
+export type K12Curriculum = typeof k12Curriculum.$inferSelect;
+export type CoalitionPartner = typeof coalitionPartners.$inferSelect;
+export type FundingSource = typeof fundingSources.$inferSelect;
 
 // Insert types
 export type InsertPilotStats = z.infer<typeof insertPilotStatsSchema>;
@@ -204,3 +265,8 @@ export type InsertScaleProjection = z.infer<typeof insertScaleProjectionSchema>;
 export type InsertEnvironmentalImpact = z.infer<typeof insertEnvironmentalImpactSchema>;
 export type InsertJobCreation = z.infer<typeof insertJobCreationSchema>;
 export type InsertLegalFramework = z.infer<typeof insertLegalFrameworkSchema>;
+export type InsertEndowmentProjection = z.infer<typeof insertEndowmentProjectionSchema>;
+export type InsertExpandedJobs = z.infer<typeof insertExpandedJobsSchema>;
+export type InsertK12Curriculum = z.infer<typeof insertK12CurriculumSchema>;
+export type InsertCoalitionPartner = z.infer<typeof insertCoalitionPartnerSchema>;
+export type InsertFundingSource = z.infer<typeof insertFundingSourceSchema>;

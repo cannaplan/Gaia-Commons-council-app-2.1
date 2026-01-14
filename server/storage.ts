@@ -2,6 +2,7 @@ import { db } from "./db";
 import {
   pilotStats, endowmentStats, timelineEvents, financialMetrics, climateMetrics, slideDeck, historicalFinancials,
   schoolClusters, schools, scaleProjections, environmentalImpact, jobCreation, legalFramework,
+  endowmentProjections, expandedJobs, k12Curriculum, coalitionPartners, fundingSources,
   type PilotStats, type InsertPilotStats,
   type EndowmentStats, type InsertEndowmentStats,
   type TimelineEvent, type InsertTimelineEvent,
@@ -14,7 +15,12 @@ import {
   type ScaleProjection, type InsertScaleProjection,
   type EnvironmentalImpactType, type InsertEnvironmentalImpact,
   type JobCreationType, type InsertJobCreation,
-  type LegalFrameworkType, type InsertLegalFramework
+  type LegalFrameworkType, type InsertLegalFramework,
+  type EndowmentProjection, type InsertEndowmentProjection,
+  type ExpandedJobs, type InsertExpandedJobs,
+  type K12Curriculum, type InsertK12Curriculum,
+  type CoalitionPartner, type InsertCoalitionPartner,
+  type FundingSource, type InsertFundingSource
 } from "@shared/schema";
 import { eq, asc } from "drizzle-orm";
 
@@ -47,6 +53,16 @@ export interface IStorage {
   createJobCreation(job: InsertJobCreation): Promise<JobCreationType>;
   getLegalFramework(): Promise<LegalFrameworkType | undefined>;
   createLegalFramework(legal: InsertLegalFramework): Promise<LegalFrameworkType>;
+  getEndowmentProjections(): Promise<EndowmentProjection[]>;
+  createEndowmentProjection(proj: InsertEndowmentProjection): Promise<EndowmentProjection>;
+  getExpandedJobs(): Promise<ExpandedJobs[]>;
+  createExpandedJobs(job: InsertExpandedJobs): Promise<ExpandedJobs>;
+  getK12Curriculum(): Promise<K12Curriculum[]>;
+  createK12Curriculum(curr: InsertK12Curriculum): Promise<K12Curriculum>;
+  getCoalitionPartners(): Promise<CoalitionPartner[]>;
+  createCoalitionPartner(partner: InsertCoalitionPartner): Promise<CoalitionPartner>;
+  getFundingSources(): Promise<FundingSource[]>;
+  createFundingSource(source: InsertFundingSource): Promise<FundingSource>;
   isEmpty(): Promise<boolean>;
 }
 
@@ -173,6 +189,41 @@ export class DatabaseStorage implements IStorage {
   async createLegalFramework(legal: InsertLegalFramework): Promise<LegalFrameworkType> {
     const [l] = await db.insert(legalFramework).values(legal).returning();
     return l;
+  }
+  async getEndowmentProjections(): Promise<EndowmentProjection[]> {
+    return await db.select().from(endowmentProjections).orderBy(asc(endowmentProjections.year));
+  }
+  async createEndowmentProjection(proj: InsertEndowmentProjection): Promise<EndowmentProjection> {
+    const [p] = await db.insert(endowmentProjections).values(proj).returning();
+    return p;
+  }
+  async getExpandedJobs(): Promise<ExpandedJobs[]> {
+    return await db.select().from(expandedJobs);
+  }
+  async createExpandedJobs(job: InsertExpandedJobs): Promise<ExpandedJobs> {
+    const [j] = await db.insert(expandedJobs).values(job).returning();
+    return j;
+  }
+  async getK12Curriculum(): Promise<K12Curriculum[]> {
+    return await db.select().from(k12Curriculum);
+  }
+  async createK12Curriculum(curr: InsertK12Curriculum): Promise<K12Curriculum> {
+    const [c] = await db.insert(k12Curriculum).values(curr).returning();
+    return c;
+  }
+  async getCoalitionPartners(): Promise<CoalitionPartner[]> {
+    return await db.select().from(coalitionPartners).orderBy(asc(coalitionPartners.tier));
+  }
+  async createCoalitionPartner(partner: InsertCoalitionPartner): Promise<CoalitionPartner> {
+    const [p] = await db.insert(coalitionPartners).values(partner).returning();
+    return p;
+  }
+  async getFundingSources(): Promise<FundingSource[]> {
+    return await db.select().from(fundingSources);
+  }
+  async createFundingSource(source: InsertFundingSource): Promise<FundingSource> {
+    const [s] = await db.insert(fundingSources).values(source).returning();
+    return s;
   }
   async isEmpty(): Promise<boolean> {
     const [stats] = await db.select().from(pilotStats).limit(1);

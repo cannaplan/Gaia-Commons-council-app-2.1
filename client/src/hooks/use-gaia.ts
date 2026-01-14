@@ -169,3 +169,63 @@ export function useLegalFramework() {
     },
   });
 }
+
+// 50-Year Endowment Projections
+export function useEndowmentProjections() {
+  return useQuery({
+    queryKey: [api.endowmentProjections.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.endowmentProjections.list.path);
+      if (!res.ok) throw new Error("Failed to fetch endowment projections");
+      return api.endowmentProjections.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Expanded Jobs (FTE + Internships + Volunteers)
+export function useExpandedJobs() {
+  return useQuery({
+    queryKey: [api.expandedJobs.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.expandedJobs.list.path);
+      if (!res.ok) throw new Error("Failed to fetch expanded jobs");
+      return api.expandedJobs.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// K-12 NGSS Curriculum
+export function useK12Curriculum() {
+  return useQuery({
+    queryKey: [api.k12Curriculum.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.k12Curriculum.list.path);
+      if (!res.ok) throw new Error("Failed to fetch K-12 curriculum");
+      return api.k12Curriculum.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Coalition Partners
+export function useCoalitionPartners() {
+  return useQuery({
+    queryKey: [api.coalitionPartners.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.coalitionPartners.list.path);
+      if (!res.ok) throw new Error("Failed to fetch coalition partners");
+      return api.coalitionPartners.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Funding Sources
+export function useFundingSources() {
+  return useQuery({
+    queryKey: [api.fundingSources.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.fundingSources.list.path);
+      if (!res.ok) throw new Error("Failed to fetch funding sources");
+      return api.fundingSources.list.responses[200].parse(await res.json());
+    },
+  });
+}

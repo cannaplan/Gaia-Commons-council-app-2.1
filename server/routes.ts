@@ -104,6 +104,36 @@ export async function registerRoutes(
     res.json(legal);
   });
 
+  // === Endowment Projections ===
+  app.get(api.endowmentProjections.list.path, async (_req, res) => {
+    const projections = await storage.getEndowmentProjections();
+    res.json(projections);
+  });
+
+  // === Expanded Jobs ===
+  app.get(api.expandedJobs.list.path, async (_req, res) => {
+    const jobs = await storage.getExpandedJobs();
+    res.json(jobs);
+  });
+
+  // === K-12 Curriculum ===
+  app.get(api.k12Curriculum.list.path, async (_req, res) => {
+    const curriculum = await storage.getK12Curriculum();
+    res.json(curriculum);
+  });
+
+  // === Coalition Partners ===
+  app.get(api.coalitionPartners.list.path, async (_req, res) => {
+    const partners = await storage.getCoalitionPartners();
+    res.json(partners);
+  });
+
+  // === Funding Sources ===
+  app.get(api.fundingSources.list.path, async (_req, res) => {
+    const sources = await storage.getFundingSources();
+    res.json(sources);
+  });
+
   // === Seed Data ===
   await seedDatabase();
 
@@ -403,7 +433,143 @@ async function seedDatabase() {
     for (const h of historicalData) {
       await storage.createHistoricalFinancial(h);
     }
+
+    // Seed 50-Year Endowment Projections (from ballot deck slide 5)
+    const endowmentYears = [
+      { year: 2027, corpus: 2100000000, annualDraw: 73500000, inflationAdjusted: 73500000 },
+      { year: 2032, corpus: 2800000000, annualDraw: 98000000, inflationAdjusted: 85000000 },
+      { year: 2037, corpus: 3950000000, annualDraw: 121200000, inflationAdjusted: 95000000 },
+      { year: 2047, corpus: 7850000000, annualDraw: 274750000, inflationAdjusted: 165000000 },
+      { year: 2057, corpus: 17380000000, annualDraw: 520700000, inflationAdjusted: 245000000 },
+      { year: 2067, corpus: 39500000000, annualDraw: 1185000000, inflationAdjusted: 430000000 },
+      { year: 2077, corpus: 89590000000, annualDraw: 2660000000, inflationAdjusted: 750000000 }
+    ];
+    for (const e of endowmentYears) {
+      await storage.createEndowmentProjection(e);
+    }
+
+    // Seed Expanded Jobs Data (FTE + Internships + Volunteers from ballot deck)
+    await storage.createExpandedJobs({
+      scale: "pilot",
+      fteJobs: 36,
+      studentInternships: 144,
+      volunteerPositions: 66,
+      hourlyWage: 15,
+      directWages: 1420000,
+      economicMultiplier: 2.4
+    });
+    await storage.createExpandedJobs({
+      scale: "statewide",
+      fteJobs: 1430,
+      studentInternships: 6600,
+      volunteerPositions: 3025,
+      hourlyWage: 15,
+      directWages: 65000000,
+      economicMultiplier: 2.4
+    });
+    await storage.createExpandedJobs({
+      scale: "national",
+      fteJobs: 67500,
+      studentInternships: 312000,
+      volunteerPositions: 143000,
+      hourlyWage: 15,
+      directWages: 3070000000,
+      economicMultiplier: 2.4
+    });
+    await storage.createExpandedJobs({
+      scale: "global",
+      fteJobs: 520000,
+      studentInternships: 2400000,
+      volunteerPositions: 1100000,
+      hourlyWage: 12,
+      directWages: 18700000000,
+      economicMultiplier: 2.2
+    });
+
+    // Seed K-12 NGSS Curriculum (from ballot deck slide 9)
+    await storage.createK12Curriculum({
+      gradeRange: "K-2",
+      title: "Life Cycles",
+      description: "Plant growth, responsibility, soil science. Students learn the basics of how plants grow and their importance in ecosystems.",
+      durationWeeks: 8,
+      standards: "NGSS: K-LS1-1, K-ESS2-2, K-ESS3-1"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "3-5",
+      title: "Ecosystems",
+      description: "Data collection, carbon cycle, environmental science. Students analyze real greenhouse data and understand nutrient cycling.",
+      durationWeeks: 12,
+      standards: "NGSS: 3-LS4-3, 4-LS1-1, 5-LS2-1"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "6-8",
+      title: "Sustainability",
+      description: "Hydroponics, soil health, regenerative agriculture. Students design and manage aquaponic systems.",
+      durationWeeks: 16,
+      standards: "NGSS: MS-LS2-1, MS-LS2-3, MS-ESS3-3"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "9-12",
+      title: "Policy + Systems",
+      description: "Climate modeling, ballot initiatives, food policy design. Semester-long capstone project with real policy analysis.",
+      durationWeeks: 18,
+      standards: "NGSS: HS-LS2-7, HS-ESS3-4, HS-ETS1-3"
+    });
+
+    // Seed Coalition Partners (from ballot deck slide 11)
+    // Tier 1 - Essential
+    await storage.createCoalitionPartner({ tier: 1, name: "Minnesota Education Association", category: "Labor", memberCount: 200000, focus: "Teacher support, curriculum" });
+    await storage.createCoalitionPartner({ tier: 1, name: "Minnesota AFL-CIO", category: "Labor", memberCount: 300000, focus: "Job creation, fair wages" });
+    await storage.createCoalitionPartner({ tier: 1, name: "Sierra Club Minnesota", category: "Environmental", memberCount: 25000, focus: "Climate action, sustainability" });
+    await storage.createCoalitionPartner({ tier: 1, name: "Minnesota Farmers Union", category: "Agriculture", memberCount: 20000, focus: "Local food systems" });
+    // Tier 2 - Amplification
+    await storage.createCoalitionPartner({ tier: 2, name: "NAACP Minnesota", category: "Equity", memberCount: 5000, focus: "Food equity, access" });
+    await storage.createCoalitionPartner({ tier: 2, name: "Minnesota Council of Churches", category: "Faith", memberCount: 50000, focus: "Community outreach" });
+    await storage.createCoalitionPartner({ tier: 2, name: "University of Minnesota", category: "Academic", memberCount: 70000, focus: "Research, ag extension" });
+    await storage.createCoalitionPartner({ tier: 2, name: "Mayo Clinic", category: "Health", memberCount: 73000, focus: "Nutrition, public health" });
+    // Tier 3 - Business
+    await storage.createCoalitionPartner({ tier: 3, name: "Target Corporation", category: "Retail", memberCount: null, focus: "Corporate sponsorship, supply chain" });
+    await storage.createCoalitionPartner({ tier: 3, name: "Cargill", category: "Agriculture", memberCount: null, focus: "Ag technology, distribution" });
+    await storage.createCoalitionPartner({ tier: 3, name: "3M Company", category: "Manufacturing", memberCount: null, focus: "Sustainability tech, materials" });
+    await storage.createCoalitionPartner({ tier: 3, name: "Minneapolis Chamber of Commerce", category: "Business", memberCount: 1200, focus: "Economic development" });
+
+    // Seed Funding Sources (from ballot deck slides 2, 5.5, 6)
+    await storage.createFundingSource({
+      sourceType: "Fortune 500",
+      description: "0.27% pre-tax profit redirect from Minnesota Fortune 500 companies",
+      targetAmount: 1890000000,
+      percentage: 0.27,
+      entities: "Target, UnitedHealth, Best Buy, 3M, General Mills, US Bancorp, Xcel Energy, CHS, Land O'Lakes, Hormel, Polaris, Fastenal, Patterson, CH Robinson, Graco, Pentair, Donaldson"
+    });
+    await storage.createFundingSource({
+      sourceType: "Billionaires & Sports",
+      description: "Voluntary large-gift contributions from MN billionaires and pro sports teams",
+      targetAmount: 200000000,
+      percentage: null,
+      entities: "Glen Taylor, Whitney MacMillan, Stanley Hubbard, Vikings, Twins, Timberwolves, Wild"
+    });
+    await storage.createFundingSource({
+      sourceType: "Out-of-Country Mining",
+      description: "1% surcharge on out-of-country mining corporations operating in Minnesota",
+      targetAmount: 400000000,
+      percentage: 1.0,
+      entities: "Codelco, Antofagasta, Vale, SQM, Glencore, Rio Tinto, BHP, Anglo American"
+    });
+    await storage.createFundingSource({
+      sourceType: "Out-of-State Corporations",
+      description: "0.5% surcharge on out-of-state corps with >$1B MN revenue",
+      targetAmount: 240000000,
+      percentage: 0.5,
+      entities: "Major insurers, banks, retailers, ag-conglomerates with significant MN presence"
+    });
+    await storage.createFundingSource({
+      sourceType: "Data Center Giants",
+      description: "1% surcharge on major tech companies with MN data center operations",
+      targetAmount: 170000000,
+      percentage: 1.0,
+      entities: "Amazon, Microsoft, Google, Meta, Apple"
+    });
     
-    console.log("Database seeded successfully with GAIA v4.1 MASTER PLATFORM data");
+    console.log("Database seeded successfully with GAIA v4.1 MASTER PLATFORM data + expanded ballot initiative data");
   }
 }

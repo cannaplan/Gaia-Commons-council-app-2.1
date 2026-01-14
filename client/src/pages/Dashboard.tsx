@@ -19,7 +19,12 @@ import {
   useScaleProjections,
   useEnvironmentalImpact,
   useJobCreation,
-  useLegalFramework
+  useLegalFramework,
+  useEndowmentProjections,
+  useExpandedJobs,
+  useK12Curriculum,
+  useCoalitionPartners,
+  useFundingSources
 } from "@/hooks/use-gaia";
 import {
   LineChart,
@@ -76,7 +81,13 @@ import {
   GraduationCap,
   Globe2,
   Map,
-  Building
+  Building,
+  BookOpen,
+  Users2,
+  Banknote,
+  HandCoins,
+  Handshake,
+  Clock
 } from "lucide-react";
 
 const SCALE_LABELS: Record<string, string> = {
@@ -123,6 +134,11 @@ export default function Dashboard() {
   const { data: scaleProjections, isLoading: loadingScales } = useScaleProjections();
   const { data: envImpacts, isLoading: loadingEnv } = useEnvironmentalImpact();
   const { data: jobData, isLoading: loadingJobs } = useJobCreation();
+  const { data: endowmentProjections } = useEndowmentProjections();
+  const { data: expandedJobs } = useExpandedJobs();
+  const { data: curriculum } = useK12Curriculum();
+  const { data: coalition } = useCoalitionPartners();
+  const { data: fundingSources } = useFundingSources();
   const { data: legalFramework, isLoading: loadingLegal } = useLegalFramework();
 
   const isLoading = loadingPilot || loadingEndowment || loadingTimeline || loadingFinancials || 
@@ -614,13 +630,250 @@ export default function Dashboard() {
           </motion.div>
         )}
 
+        {/* 50-Year Endowment Growth Chart */}
+        {endowmentProjections && endowmentProjections.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.46 }} className="mb-8">
+            <Card className="glass-panel" data-testid="card-endowment-projections">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <TrendingUp className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">50-Year Endowment Growth — 3.5% Annual Draw</CardTitle>
+                <Badge variant="secondary" className="ml-auto">2027–2077</Badge>
+              </CardHeader>
+              <CardContent>
+                <div className="h-72">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={endowmentProjections}>
+                      <defs>
+                        <linearGradient id="colorCorpus" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#22c55e" stopOpacity={0.3}/>
+                          <stop offset="95%" stopColor="#22c55e" stopOpacity={0}/>
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                      <XAxis dataKey="year" className="text-xs" />
+                      <YAxis className="text-xs" tickFormatter={(v) => formatLargeNumber(v)} />
+                      <Tooltip 
+                        formatter={(value: number, name: string) => [
+                          formatLargeNumber(value), 
+                          name === 'corpus' ? 'Corpus' : name === 'annualDraw' ? 'Annual Draw' : 'Inflation-Adjusted'
+                        ]} 
+                      />
+                      <Legend />
+                      <Area type="monotone" dataKey="corpus" name="Endowment Corpus" stroke="#22c55e" fillOpacity={1} fill="url(#colorCorpus)" />
+                      <Line type="monotone" dataKey="annualDraw" name="Annual Draw (3.5%)" stroke="#8b5cf6" strokeWidth={2} dot={false} />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                  <div className="text-center p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg border border-emerald-100 dark:border-emerald-900/50">
+                    <p className="text-xs text-emerald-700 dark:text-emerald-400 font-medium">Year 1 (2027)</p>
+                    <p className="font-semibold text-emerald-800 dark:text-emerald-300">{formatLargeNumber(endowmentProjections[0]?.corpus || 0)}</p>
+                  </div>
+                  <div className="text-center p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-100 dark:border-blue-900/50">
+                    <p className="text-xs text-blue-700 dark:text-blue-400 font-medium">Year 20 (2047)</p>
+                    <p className="font-semibold text-blue-800 dark:text-blue-300">{formatLargeNumber(endowmentProjections.find(e => e.year === 2047)?.corpus || 0)}</p>
+                  </div>
+                  <div className="text-center p-3 bg-purple-50 dark:bg-purple-950/30 rounded-lg border border-purple-100 dark:border-purple-900/50">
+                    <p className="text-xs text-purple-700 dark:text-purple-400 font-medium">Year 40 (2067)</p>
+                    <p className="font-semibold text-purple-800 dark:text-purple-300">{formatLargeNumber(endowmentProjections.find(e => e.year === 2067)?.corpus || 0)}</p>
+                  </div>
+                  <div className="text-center p-3 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-100 dark:border-amber-900/50">
+                    <p className="text-xs text-amber-700 dark:text-amber-400 font-medium">Year 50 (2077)</p>
+                    <p className="font-semibold text-amber-800 dark:text-amber-300">{formatLargeNumber(endowmentProjections[endowmentProjections.length - 1]?.corpus || 0)}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Expanded Jobs: FTE + Internships + Volunteers */}
+        {expandedJobs && expandedJobs.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.47 }} className="mb-8">
+            <Card className="glass-panel" data-testid="card-expanded-jobs">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <Briefcase className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Job Creation — FTE, Internships & Volunteers</CardTitle>
+                <Badge variant="secondary" className="ml-auto">2.4× Economic Multiplier</Badge>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {expandedJobs.map((job) => (
+                    <div key={job.id} className="p-4 bg-muted/30 rounded-xl border border-border/50" data-testid={`job-scale-${job.scale}`}>
+                      <div className="flex items-center gap-2 mb-3">
+                        <Badge className={SCALE_COLORS[job.scale as keyof typeof SCALE_COLORS]}>{SCALE_LABELS[job.scale]}</Badge>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground flex items-center gap-1">
+                            <Users className="h-3 w-3" /> FTE Jobs
+                          </span>
+                          <span className="font-semibold text-foreground">{job.fteJobs.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground flex items-center gap-1">
+                            <GraduationCap className="h-3 w-3" /> Internships
+                          </span>
+                          <span className="font-semibold text-foreground">{job.studentInternships.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground flex items-center gap-1">
+                            <Handshake className="h-3 w-3" /> Volunteers
+                          </span>
+                          <span className="font-semibold text-foreground">{job.volunteerPositions.toLocaleString()}</span>
+                        </div>
+                        <div className="pt-2 mt-2 border-t border-border/30">
+                          <div className="flex justify-between items-center">
+                            <span className="text-xs text-muted-foreground">Direct Wages</span>
+                            <span className="text-sm font-semibold text-primary">{formatLargeNumber(job.directWages)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 p-3 bg-primary/5 rounded-lg border border-primary/10 flex items-center gap-2">
+                  <DollarSign className="h-4 w-4 text-primary" />
+                  <span className="text-sm text-muted-foreground">Student internships pay</span>
+                  <span className="font-semibold text-foreground">${expandedJobs[0]?.hourlyWage || 15}/hr</span>
+                  <span className="text-sm text-muted-foreground ml-2">| Economic multiplier effect:</span>
+                  <span className="font-semibold text-primary">{expandedJobs[0]?.economicMultiplier || 2.4}×</span>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* K-12 NGSS Curriculum & Coalition Partners Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          {/* K-12 Curriculum */}
+          {curriculum && curriculum.length > 0 && (
+            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.48 }}>
+              <Card className="glass-panel h-full" data-testid="card-curriculum">
+                <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                  <BookOpen className="h-5 w-5 text-primary" />
+                  <CardTitle className="text-lg font-semibold">K-12 NGSS Curriculum</CardTitle>
+                  <Badge variant="secondary" className="ml-auto">Standards-Aligned</Badge>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {curriculum.map((unit) => (
+                      <div key={unit.id} className="p-3 bg-muted/30 rounded-lg border border-border/50" data-testid={`curriculum-${unit.gradeRange}`}>
+                        <div className="flex items-center justify-between mb-2">
+                          <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">{unit.gradeRange}</Badge>
+                          <span className="text-xs text-muted-foreground flex items-center gap-1">
+                            <Clock className="h-3 w-3" /> {unit.durationWeeks} weeks
+                          </span>
+                        </div>
+                        <h4 className="font-semibold text-foreground">{unit.title}</h4>
+                        <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{unit.description}</p>
+                        <p className="text-xs text-muted-foreground/70 mt-2 italic">{unit.standards}</p>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+
+          {/* Coalition Partners */}
+          {coalition && coalition.length > 0 && (
+            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.49 }}>
+              <Card className="glass-panel h-full" data-testid="card-coalition">
+                <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                  <Users2 className="h-5 w-5 text-primary" />
+                  <CardTitle className="text-lg font-semibold">Coalition Partners</CardTitle>
+                  <Badge variant="secondary" className="ml-auto">400K+ Members</Badge>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {[1, 2, 3].map(tier => {
+                      const tierPartners = coalition.filter(p => p.tier === tier);
+                      if (tierPartners.length === 0) return null;
+                      return (
+                        <div key={tier}>
+                          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">
+                            Tier {tier} {tier === 1 ? '— Core' : tier === 2 ? '— Strategic' : '— Corporate'}
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {tierPartners.map(partner => (
+                              <Badge 
+                                key={partner.id} 
+                                variant="outline" 
+                                className={`${tier === 1 ? 'bg-emerald-50 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300' : tier === 2 ? 'bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300' : 'bg-purple-50 dark:bg-purple-950/30 border-purple-200 dark:border-purple-800 text-purple-700 dark:text-purple-300'}`}
+                                data-testid={`partner-${partner.id}`}
+                              >
+                                {partner.name}
+                                {partner.memberCount && partner.memberCount > 0 && (
+                                  <span className="ml-1 opacity-70">({formatNumber(partner.memberCount)})</span>
+                                )}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+        </div>
+
+        {/* Funding Sources */}
+        {fundingSources && fundingSources.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.495 }} className="mb-8">
+            <Card className="glass-panel" data-testid="card-funding">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <Banknote className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Endowment Funding Sources — $2.1B Target</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {fundingSources.map((source, idx) => (
+                    <div key={source.id} className="p-4 bg-muted/30 rounded-xl border border-border/50" data-testid={`funding-source-${source.id}`}>
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-semibold text-foreground">{source.sourceType}</h4>
+                        {source.percentage && (
+                          <Badge variant="outline" className="text-xs">{source.percentage}%</Badge>
+                        )}
+                      </div>
+                      <p className="text-2xl font-bold text-primary mb-2">{formatLargeNumber(source.targetAmount)}</p>
+                      <p className="text-sm text-muted-foreground line-clamp-2">{source.description}</p>
+                      {source.entities && (
+                        <p className="text-xs text-muted-foreground/70 mt-2 italic line-clamp-2">{source.entities}</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg border border-emerald-100 dark:border-emerald-900/50 flex items-center gap-3">
+                    <PiggyBank className="h-5 w-5 text-emerald-600" />
+                    <div>
+                      <p className="text-xs text-emerald-700 dark:text-emerald-400 font-medium">Total Endowment Target</p>
+                      <p className="font-semibold text-emerald-800 dark:text-emerald-300">$2.1 Billion</p>
+                    </div>
+                  </div>
+                  <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-100 dark:border-blue-900/50 flex items-center gap-3">
+                    <TrendingUp className="h-5 w-5 text-blue-600" />
+                    <div>
+                      <p className="text-xs text-blue-700 dark:text-blue-400 font-medium">Year 1 Draw (3.5%)</p>
+                      <p className="font-semibold text-blue-800 dark:text-blue-300">$73.5 Million</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
         {/* Timeline & Endowment Row */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           <StatsCard title="Perpetual Endowment" icon={<Landmark className="h-5 w-5" />} delay={0.5}>
             {endowment && (
               <>
                 <StatItem label="Total Principal" value={endowment.size} trend="Stable" trendUp={true} />
-                <StatItem label="Annual Draw (3%)" value={endowment.annual} />
+                <StatItem label="Annual Draw (3.5%)" value={endowment.annual} />
                 <StatItem label="Greenhouses Funded" value={endowment.greenhouses} />
               </>
             )}
@@ -649,7 +902,7 @@ export default function Dashboard() {
           <Card className="glass-panel" data-testid="card-slides">
             <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
               <Presentation className="h-5 w-5 text-primary" />
-              <CardTitle className="text-lg font-semibold">2028 Ballot Initiative Deck — Vote Yes on Gaia</CardTitle>
+              <CardTitle className="text-lg font-semibold">2026 Ballot Initiative Deck — One Vote, Forever Fed</CardTitle>
               <Badge variant="secondary" className="ml-auto">{slides?.length || 0} Slides</Badge>
             </CardHeader>
             <CardContent>
@@ -695,8 +948,8 @@ export default function Dashboard() {
               <Vote className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="font-semibold text-foreground">2028 Ballot Initiative</h3>
-              <p className="text-sm text-muted-foreground mt-1">Constitutional amendment for perpetual school food funding.</p>
+              <h3 className="font-semibold text-foreground">2026 Ballot Initiative</h3>
+              <p className="text-sm text-muted-foreground mt-1">One Vote, Forever Fed — Constitutional amendment for perpetual school food funding.</p>
             </div>
           </div>
         </motion.div>
