@@ -115,9 +115,9 @@ async function seedDatabase() {
   if (isEmpty) {
     console.log("Seeding database with GAIA v4.1 MASTER PLATFORM data...");
     
-    // Seed Pilot - 6 schools, 6155 students, 49250 sqft (from Python PILOT_SUMMARY)
+    // Seed Pilot - 6 schools, 5630 students (corrected), 49250 sqft (from Python PILOT_SUMMARY)
     await storage.updatePilotStats({
-      students: 6155,
+      students: 5630,
       sqft: 49250,
       schools: 6,
       status: "live"
@@ -158,13 +158,14 @@ async function seedDatabase() {
     });
 
     // Seed School Clusters (St. Paul and Mendota Heights from Python)
+    // St. Paul: SPA 952 + Highland Park 1456 + Groveland 385 = 2793
     const stPaulCluster = await storage.createSchoolCluster({
       name: "Saint Paul",
       region: "St. Paul, MN",
-      totalStudents: 3318,
-      totalSqft: 26550,
+      totalStudents: 2793,
+      totalSqft: 22350,
       greenhouses: 3,
-      yr5Students: 3816,
+      yr5Students: 3212,
       co2TonsSequestered: 123000
     });
     
@@ -181,7 +182,7 @@ async function seedDatabase() {
     // Seed Individual Schools (from Python ST_PAUL_CLUSTER and MENDOTA_CLUSTER)
     await storage.createSchool({ clusterId: stPaulCluster.id, name: "Saint Paul Academy (SPA)", enrollment: 952, grades: "PK-12", sqftTarget: 7600 });
     await storage.createSchool({ clusterId: stPaulCluster.id, name: "Highland Park High School", enrollment: 1456, grades: "9-12", sqftTarget: 11650 });
-    await storage.createSchool({ clusterId: stPaulCluster.id, name: "Groveland Elementary", enrollment: 910, grades: "K-5", sqftTarget: 7300 });
+    await storage.createSchool({ clusterId: stPaulCluster.id, name: "Groveland Elementary", enrollment: 385, grades: "K-5", sqftTarget: 3100 });
     await storage.createSchool({ clusterId: mendotaCluster.id, name: "Saint Thomas Academy (STA)", enrollment: 588, grades: "6-12", sqftTarget: 4700 });
     await storage.createSchool({ clusterId: mendotaCluster.id, name: "Visitation School", enrollment: 601, grades: "PK-12", sqftTarget: 4800 });
     await storage.createSchool({ clusterId: mendotaCluster.id, name: "Two Rivers High School", enrollment: 1648, grades: "9-12", sqftTarget: 13200 });
@@ -190,9 +191,9 @@ async function seedDatabase() {
     await storage.createScaleProjection({
       scale: "pilot",
       schools: 6,
-      students: 6155,
+      students: 5630,
       greenhouses: 6,
-      sqft: 49250,
+      sqft: 45050,
       capex: 2950000,
       annualRevenue: 3660000,
       annualOpex: 360000,
@@ -202,7 +203,7 @@ async function seedDatabase() {
       endowmentYr15: 15400000,
       jobs: 36,
       co2TonsAnnual: 246,
-      mealsPerDay: 17000
+      mealsPerDay: 15500
     });
 
     await storage.createScaleProjection({
@@ -354,11 +355,11 @@ async function seedDatabase() {
 
     // Seed Ballot Slide Deck (15 slides from Python + extended)
     const slides = [
-      { n: 1, title: "Executive Summary", text: "6,155 Students | $12.8M NPV | 6 Greenhouses" },
+      { n: 1, title: "Executive Summary", text: "5,630 Students | $12.8M NPV | 6 Greenhouses" },
       { n: 2, title: "The Problem", text: "875k MN kids face food insecurity annually" },
       { n: 3, title: "The Solution", text: "275 greenhouses = 875,000 meals/day, year-round" },
       { n: 4, title: "Endowment Engine", text: "0.27% tax → $2.1B PERPETUAL endowment" },
-      { n: 5, title: "St. Paul Cluster", text: "3,318 → 3,816 students | SPA, Highland Park, Groveland" },
+      { n: 5, title: "St. Paul Cluster", text: "2,793 → 3,212 students | SPA, Highland Park, Groveland" },
       { n: 6, title: "Mendota Cluster", text: "2,837 → 3,262 students | STA, Visitation, Two Rivers" },
       { n: 7, title: "Financial Model", text: "CAPEX $2.95M | 5-Yr NPV $12.8M | 435% ROI" },
       { n: 8, title: "Year-Round Production", text: "365-day HVAC/geothermal/passive solar aquaponics" },
@@ -384,17 +385,20 @@ async function seedDatabase() {
     await storage.createTimelineEvent({ year: "2035", event: "National Rollout - 50 States" });
     await storage.createTimelineEvent({ year: "2040", event: "Global Deployment Initiated" });
 
-    // Seed Historical Financials for Trend Analysis
+    // Seed Historical Financials for Trend Analysis (starting 2026)
     const historicalData = [
-      { year: 2024, quarter: 1, schoolCount: 1, totalRevenue: 75000, totalOpex: 45000, totalYieldLbs: 30000, endowmentValue: 500000000, studentsServed: 940 },
-      { year: 2024, quarter: 2, schoolCount: 1, totalRevenue: 85000, totalOpex: 48000, totalYieldLbs: 34000, endowmentValue: 550000000, studentsServed: 940 },
-      { year: 2024, quarter: 3, schoolCount: 2, totalRevenue: 165000, totalOpex: 95000, totalYieldLbs: 66000, endowmentValue: 650000000, studentsServed: 1880 },
-      { year: 2024, quarter: 4, schoolCount: 2, totalRevenue: 180000, totalOpex: 98000, totalYieldLbs: 72000, endowmentValue: 800000000, studentsServed: 1880 },
-      { year: 2025, quarter: 1, schoolCount: 3, totalRevenue: 270000, totalOpex: 145000, totalYieldLbs: 108000, endowmentValue: 1000000000, studentsServed: 2820 },
-      { year: 2025, quarter: 2, schoolCount: 4, totalRevenue: 380000, totalOpex: 195000, totalYieldLbs: 152000, endowmentValue: 1300000000, studentsServed: 3760 },
-      { year: 2025, quarter: 3, schoolCount: 5, totalRevenue: 425000, totalOpex: 240000, totalYieldLbs: 170000, endowmentValue: 1600000000, studentsServed: 4700 },
-      { year: 2025, quarter: 4, schoolCount: 6, totalRevenue: 450000, totalOpex: 260000, totalYieldLbs: 180000, endowmentValue: 1900000000, studentsServed: 5640 },
-      { year: 2026, quarter: 1, schoolCount: 6, totalRevenue: 480000, totalOpex: 270000, totalYieldLbs: 192000, endowmentValue: 2100000000, studentsServed: 6155 },
+      { year: 2026, quarter: 1, schoolCount: 6, totalRevenue: 915000, totalOpex: 90000, totalYieldLbs: 180000, endowmentValue: 5000000, studentsServed: 5630 },
+      { year: 2026, quarter: 2, schoolCount: 6, totalRevenue: 915000, totalOpex: 90000, totalYieldLbs: 180000, endowmentValue: 5250000, studentsServed: 5630 },
+      { year: 2026, quarter: 3, schoolCount: 6, totalRevenue: 915000, totalOpex: 90000, totalYieldLbs: 180000, endowmentValue: 5512000, studentsServed: 5630 },
+      { year: 2026, quarter: 4, schoolCount: 6, totalRevenue: 915000, totalOpex: 90000, totalYieldLbs: 180000, endowmentValue: 5788000, studentsServed: 5630 },
+      { year: 2027, quarter: 1, schoolCount: 25, totalRevenue: 3812500, totalOpex: 375000, totalYieldLbs: 750000, endowmentValue: 25000000, studentsServed: 23460 },
+      { year: 2027, quarter: 2, schoolCount: 50, totalRevenue: 7625000, totalOpex: 750000, totalYieldLbs: 1500000, endowmentValue: 75000000, studentsServed: 46920 },
+      { year: 2027, quarter: 3, schoolCount: 100, totalRevenue: 15250000, totalOpex: 1500000, totalYieldLbs: 3000000, endowmentValue: 175000000, studentsServed: 93840 },
+      { year: 2027, quarter: 4, schoolCount: 150, totalRevenue: 22875000, totalOpex: 2250000, totalYieldLbs: 4500000, endowmentValue: 350000000, studentsServed: 140760 },
+      { year: 2028, quarter: 1, schoolCount: 200, totalRevenue: 30500000, totalOpex: 3000000, totalYieldLbs: 6000000, endowmentValue: 700000000, studentsServed: 187680 },
+      { year: 2028, quarter: 2, schoolCount: 225, totalRevenue: 34312500, totalOpex: 3375000, totalYieldLbs: 6750000, endowmentValue: 1050000000, studentsServed: 211140 },
+      { year: 2028, quarter: 3, schoolCount: 250, totalRevenue: 38125000, totalOpex: 3750000, totalYieldLbs: 7500000, endowmentValue: 1400000000, studentsServed: 234600 },
+      { year: 2028, quarter: 4, schoolCount: 275, totalRevenue: 41937500, totalOpex: 4125000, totalYieldLbs: 8250000, endowmentValue: 2100000000, studentsServed: 875000 },
     ];
     for (const h of historicalData) {
       await storage.createHistoricalFinancial(h);
