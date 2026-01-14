@@ -85,3 +85,15 @@ export function useSlides() {
     },
   });
 }
+
+// Historical Financials for Trend Analysis
+export function useHistoricalFinancials() {
+  return useQuery({
+    queryKey: [api.historicalFinancials.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.historicalFinancials.list.path);
+      if (!res.ok) throw new Error("Failed to fetch historical financials");
+      return api.historicalFinancials.list.responses[200].parse(await res.json());
+    },
+  });
+}
