@@ -10,7 +10,8 @@ import {
   timelineEvents,
   financialMetrics,
   climateMetrics,
-  slideDeck
+  slideDeck,
+  historicalFinancials
 } from './schema';
 
 export const errorSchemas = {
@@ -37,6 +38,9 @@ export const api = {
   },
   slides: {
     list: { method: 'GET' as const, path: '/api/slides', responses: { 200: z.array(z.custom<typeof slideDeck.$inferSelect>()) } },
+  },
+  historicalFinancials: {
+    list: { method: 'GET' as const, path: '/api/historical-financials', responses: { 200: z.array(z.custom<typeof historicalFinancials.$inferSelect>()) } },
   },
   health: {
     get: { method: 'GET' as const, path: '/health', responses: { 200: z.object({ status: z.string(), version: z.string(), service: z.string() }) } },

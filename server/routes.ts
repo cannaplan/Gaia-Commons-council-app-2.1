@@ -61,6 +61,12 @@ export async function registerRoutes(
     res.json(slides);
   });
 
+  // === Historical Financials ===
+  app.get(api.historicalFinancials.list.path, async (_req, res) => {
+    const data = await storage.getHistoricalFinancials();
+    res.json(data);
+  });
+
   // === Seed Data ===
   await seedDatabase();
 
@@ -87,15 +93,22 @@ async function seedDatabase() {
       greenhouses: 275
     });
 
-    // Seed Financials (v3.1 Master Production Suite)
+    // Seed Financials (v3.1 Master Production Suite - 6 schools)
     await storage.updateFinancialMetrics({
-      initialInvestment: 5000000,
-      annualOpex: 1000000,
-      yieldPerSchool: 8000,
-      foodPricePerKg: 2.5,
+      schoolCount: 6,
+      initialInvestment: 3000000,
+      annualOpex: 360000,
+      yieldPerSchool: 120000,
+      foodPricePerLb: 2.5,
       discountRate: 0.05,
-      npv10yr: 1250000000,
-      roi10yrPct: 250
+      npv10yr: 8640000,
+      roi10yrPct: 288,
+      investmentPerSchool: 500000,
+      opexPerSchool: 60000,
+      annualRevenuePerSchool: 300000,
+      totalAnnualYield: 720000,
+      totalAnnualRevenue: 1800000,
+      paybackYears: 2.1
     });
 
     // Seed Climate (v5.0 ETL)
@@ -143,6 +156,22 @@ async function seedDatabase() {
     await storage.createTimelineEvent({ year: "2026 Q4", event: "Ballot Signature Drive" });
     await storage.createTimelineEvent({ year: "2028", event: "$2.1B Funded" });
     await storage.createTimelineEvent({ year: "2030", event: "275 Greenhouses Deployed" });
+
+    // Seed Historical Financials for Trend Analysis (quarterly data from 2024-2026)
+    const historicalData = [
+      { year: 2024, quarter: 1, schoolCount: 1, totalRevenue: 75000, totalOpex: 45000, totalYieldLbs: 30000, endowmentValue: 500000000, studentsServed: 940 },
+      { year: 2024, quarter: 2, schoolCount: 1, totalRevenue: 85000, totalOpex: 48000, totalYieldLbs: 34000, endowmentValue: 550000000, studentsServed: 940 },
+      { year: 2024, quarter: 3, schoolCount: 2, totalRevenue: 165000, totalOpex: 95000, totalYieldLbs: 66000, endowmentValue: 650000000, studentsServed: 1880 },
+      { year: 2024, quarter: 4, schoolCount: 2, totalRevenue: 180000, totalOpex: 98000, totalYieldLbs: 72000, endowmentValue: 800000000, studentsServed: 1880 },
+      { year: 2025, quarter: 1, schoolCount: 3, totalRevenue: 270000, totalOpex: 145000, totalYieldLbs: 108000, endowmentValue: 1000000000, studentsServed: 2820 },
+      { year: 2025, quarter: 2, schoolCount: 4, totalRevenue: 380000, totalOpex: 195000, totalYieldLbs: 152000, endowmentValue: 1300000000, studentsServed: 3760 },
+      { year: 2025, quarter: 3, schoolCount: 5, totalRevenue: 425000, totalOpex: 240000, totalYieldLbs: 170000, endowmentValue: 1600000000, studentsServed: 4700 },
+      { year: 2025, quarter: 4, schoolCount: 6, totalRevenue: 450000, totalOpex: 260000, totalYieldLbs: 180000, endowmentValue: 1900000000, studentsServed: 5640 },
+      { year: 2026, quarter: 1, schoolCount: 6, totalRevenue: 480000, totalOpex: 270000, totalYieldLbs: 192000, endowmentValue: 2100000000, studentsServed: 5640 },
+    ];
+    for (const h of historicalData) {
+      await storage.createHistoricalFinancial(h);
+    }
     
     console.log("Database seeded successfully with complete GAIA platform data");
   }

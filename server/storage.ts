@@ -1,14 +1,15 @@
 import { db } from "./db";
 import {
-  pilotStats, endowmentStats, timelineEvents, financialMetrics, climateMetrics, slideDeck,
+  pilotStats, endowmentStats, timelineEvents, financialMetrics, climateMetrics, slideDeck, historicalFinancials,
   type PilotStats, type InsertPilotStats,
   type EndowmentStats, type InsertEndowmentStats,
   type TimelineEvent, type InsertTimelineEvent,
   type FinancialMetric, type InsertFinancialMetrics,
   type ClimateMetric, type InsertClimateMetrics,
-  type Slide, type InsertSlide
+  type Slide, type InsertSlide,
+  type HistoricalFinancial, type InsertHistoricalFinancial
 } from "@shared/schema";
-import { eq } from "drizzle-orm";
+import { eq, asc } from "drizzle-orm";
 
 export interface IStorage {
   getPilotStats(): Promise<PilotStats | undefined>;
@@ -23,6 +24,8 @@ export interface IStorage {
   updateClimateMetrics(metrics: InsertClimateMetrics): Promise<ClimateMetric>;
   getSlides(): Promise<Slide[]>;
   createSlide(slide: InsertSlide): Promise<Slide>;
+  getHistoricalFinancials(): Promise<HistoricalFinancial[]>;
+  createHistoricalFinancial(data: InsertHistoricalFinancial): Promise<HistoricalFinancial>;
   isEmpty(): Promise<boolean>;
 }
 
@@ -92,6 +95,13 @@ export class DatabaseStorage implements IStorage {
   async createSlide(slide: InsertSlide): Promise<Slide> {
     const [s] = await db.insert(slideDeck).values(slide).returning();
     return s;
+  }
+  async getHistoricalFinancials(): Promise<HistoricalFinancial[]> {
+    return await db.select().from(historicalFinancials).orderBy(asc(historicalFinancials.year), asc(historicalFinancials.quarter));
+  }
+  async createHistoricalFinancial(data: InsertHistoricalFinancial): Promise<HistoricalFinancial> {
+    const [h] = await db.insert(historicalFinancials).values(data).returning();
+    return h;
   }
   async isEmpty(): Promise<boolean> {
     const [stats] = await db.select().from(pilotStats).limit(1);

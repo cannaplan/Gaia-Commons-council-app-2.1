@@ -65,6 +65,20 @@ export const slideDeck = pgTable("slide_deck", {
   chartData: jsonb("chart_data"),
 });
 
+// Historical Financial Data for Trend Analysis
+export const historicalFinancials = pgTable("historical_financials", {
+  id: serial("id").primaryKey(),
+  year: integer("year").notNull(),
+  quarter: integer("quarter").notNull(),
+  schoolCount: integer("school_count").notNull(),
+  totalRevenue: real("total_revenue").notNull(),
+  totalOpex: real("total_opex").notNull(),
+  totalYieldLbs: real("total_yield_lbs").notNull(),
+  endowmentValue: real("endowment_value").notNull(),
+  studentsServed: integer("students_served").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // === INSERT SCHEMAS ===
 
 export const insertPilotStatsSchema = createInsertSchema(pilotStats).omit({ id: true });
@@ -73,6 +87,7 @@ export const insertTimelineEventSchema = createInsertSchema(timelineEvents).omit
 export const insertFinancialMetricsSchema = createInsertSchema(financialMetrics).omit({ id: true, updatedAt: true });
 export const insertClimateMetricsSchema = createInsertSchema(climateMetrics).omit({ id: true, updatedAt: true });
 export const insertSlideSchema = createInsertSchema(slideDeck).omit({ id: true });
+export const insertHistoricalFinancialsSchema = createInsertSchema(historicalFinancials).omit({ id: true, createdAt: true });
 
 // === TYPES ===
 
@@ -83,6 +98,7 @@ export type TimelineEvent = typeof timelineEvents.$inferSelect;
 export type FinancialMetric = typeof financialMetrics.$inferSelect;
 export type ClimateMetric = typeof climateMetrics.$inferSelect;
 export type Slide = typeof slideDeck.$inferSelect;
+export type HistoricalFinancial = typeof historicalFinancials.$inferSelect;
 
 // Insert types
 export type InsertPilotStats = z.infer<typeof insertPilotStatsSchema>;
@@ -91,3 +107,4 @@ export type InsertTimelineEvent = z.infer<typeof insertTimelineEventSchema>;
 export type InsertFinancialMetrics = z.infer<typeof insertFinancialMetricsSchema>;
 export type InsertClimateMetrics = z.infer<typeof insertClimateMetricsSchema>;
 export type InsertSlide = z.infer<typeof insertSlideSchema>;
+export type InsertHistoricalFinancial = z.infer<typeof insertHistoricalFinancialsSchema>;
