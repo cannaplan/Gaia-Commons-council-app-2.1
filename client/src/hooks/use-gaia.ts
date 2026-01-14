@@ -421,3 +421,51 @@ export function useHistoricalClimateData() {
     },
   });
 }
+
+// Monte Carlo Simulations
+export function useMonteCarloSimulations() {
+  return useQuery({
+    queryKey: [api.monteCarloSimulations.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.monteCarloSimulations.list.path);
+      if (!res.ok) throw new Error("Failed to fetch monte carlo simulations");
+      return api.monteCarloSimulations.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Scenario Comparisons
+export function useScenarioComparisons() {
+  return useQuery({
+    queryKey: [api.scenarioComparisons.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.scenarioComparisons.list.path);
+      if (!res.ok) throw new Error("Failed to fetch scenario comparisons");
+      return api.scenarioComparisons.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Optimization Parameters
+export function useOptimizationParams() {
+  return useQuery({
+    queryKey: [api.optimizationParams.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.optimizationParams.list.path);
+      if (!res.ok) throw new Error("Failed to fetch optimization params");
+      return api.optimizationParams.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Sensitivity Analysis
+export function useSensitivityAnalysis() {
+  return useQuery({
+    queryKey: [api.sensitivityAnalysis.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.sensitivityAnalysis.list.path);
+      if (!res.ok) throw new Error("Failed to fetch sensitivity analysis");
+      return api.sensitivityAnalysis.list.responses[200].parse(await res.json());
+    },
+  });
+}

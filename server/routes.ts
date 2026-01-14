@@ -223,6 +223,27 @@ export async function registerRoutes(
     res.json(data);
   });
 
+  // === Advanced Modeling ===
+  app.get(api.monteCarloSimulations.list.path, async (_req, res) => {
+    const data = await storage.getMonteCarloSimulations();
+    res.json(data);
+  });
+
+  app.get(api.scenarioComparisons.list.path, async (_req, res) => {
+    const data = await storage.getScenarioComparisons();
+    res.json(data);
+  });
+
+  app.get(api.optimizationParams.list.path, async (_req, res) => {
+    const data = await storage.getOptimizationParams();
+    res.json(data);
+  });
+
+  app.get(api.sensitivityAnalysis.list.path, async (_req, res) => {
+    const data = await storage.getSensitivityAnalysis();
+    res.json(data);
+  });
+
   // === Seed Data ===
   await seedDatabase();
 
@@ -972,5 +993,66 @@ async function seedDatabase() {
     }
 
     console.log("Calibration and validation data seeded successfully");
+  }
+
+  // Seed Advanced Modeling data if empty
+  const monteCarloData = await storage.getMonteCarloSimulations();
+  if (monteCarloData.length === 0) {
+    console.log("Seeding advanced modeling data...");
+    
+    // Monte Carlo Simulations - uncertainty analysis for key projections
+    const monteCarloSims = [
+      { parameter: "CO2 Sequestration", scale: "statewide", baselineValue: 24750, p10Value: 19800, p25Value: 22000, p50Value: 24750, p75Value: 27500, p90Value: 29700, iterations: 10000, confidenceLevel: 0.95, unit: "tons/year", description: "Annual CO2 sequestration from 275 greenhouses with yield uncertainty" },
+      { parameter: "Job Creation", scale: "statewide", baselineValue: 1430, p10Value: 1143, p25Value: 1287, p50Value: 1430, p75Value: 1573, p90Value: 1716, iterations: 10000, confidenceLevel: 0.95, unit: "FTE jobs", description: "Direct employment with economic multiplier effects" },
+      { parameter: "Endowment Growth", scale: "statewide", baselineValue: 3200000000, p10Value: 2400000000, p25Value: 2800000000, p50Value: 3200000000, p75Value: 3600000000, p90Value: 4000000000, iterations: 10000, confidenceLevel: 0.95, unit: "USD", description: "15-year endowment projection with market volatility" },
+      { parameter: "Student Meals Served", scale: "statewide", baselineValue: 875000, p10Value: 787500, p25Value: 831250, p50Value: 875000, p75Value: 918750, p90Value: 962500, iterations: 10000, confidenceLevel: 0.95, unit: "meals/day", description: "Daily meals with participation rate uncertainty" },
+      { parameter: "Greenhouse Yield", scale: "statewide", baselineValue: 4950000, p10Value: 4207500, p25Value: 4578750, p50Value: 4950000, p75Value: 5321250, p90Value: 5692500, iterations: 10000, confidenceLevel: 0.95, unit: "lbs/year", description: "Annual produce yield with seasonal and pest variation" },
+      { parameter: "Revenue Generation", scale: "national", baselineValue: 19500000000, p10Value: 15600000000, p25Value: 17550000000, p50Value: 19500000000, p75Value: 21450000000, p90Value: 23400000000, iterations: 10000, confidenceLevel: 0.95, unit: "USD/year", description: "National revenue with food price and demand uncertainty" }
+    ];
+    for (const mc of monteCarloSims) {
+      await storage.createMonteCarloSimulation(mc);
+    }
+
+    // Scenario Comparisons - baseline vs optimistic vs conservative
+    const scenarios = [
+      { metric: "Schools Deployed", category: "Infrastructure", baselineValue: 275, optimisticValue: 325, conservativeValue: 225, unit: "schools", description: "Number of schools with greenhouse installations", keyAssumptions: "Baseline: current plan; Optimistic: accelerated adoption; Conservative: regulatory delays" },
+      { metric: "Year 5 Endowment", category: "Financial", baselineValue: 3200000000, optimisticValue: 4100000000, conservativeValue: 2400000000, unit: "USD", description: "Endowment value after 5 years of operation", keyAssumptions: "Baseline: 7% return; Optimistic: 10% return; Conservative: 5% return + higher costs" },
+      { metric: "CO2 Reduction", category: "Climate", baselineValue: 24750, optimisticValue: 35000, conservativeValue: 18000, unit: "tons/year", description: "Annual CO2 sequestration and avoided emissions", keyAssumptions: "Baseline: standard yields; Optimistic: enhanced practices; Conservative: weather challenges" },
+      { metric: "Jobs Created", category: "Economic", baselineValue: 1430, optimisticValue: 1850, conservativeValue: 1100, unit: "FTE", description: "Full-time equivalent employment", keyAssumptions: "Baseline: standard staffing; Optimistic: expanded services; Conservative: automation" },
+      { metric: "Food Miles Saved", category: "Environmental", baselineValue: 12500000, optimisticValue: 18000000, conservativeValue: 9000000, unit: "miles/year", description: "Transportation emissions avoided through local production", keyAssumptions: "Baseline: current sourcing; Optimistic: full local; Conservative: partial implementation" },
+      { metric: "Voter Support", category: "Political", baselineValue: 0.62, optimisticValue: 0.72, conservativeValue: 0.52, unit: "approval rate", description: "Expected ballot initiative approval", keyAssumptions: "Baseline: current polling; Optimistic: successful outreach; Conservative: opposition campaign" },
+      { metric: "Implementation Speed", category: "Operations", baselineValue: 24, optimisticValue: 18, conservativeValue: 36, unit: "months to full scale", description: "Time to reach 275-school deployment", keyAssumptions: "Baseline: standard timeline; Optimistic: streamlined permits; Conservative: supply chain issues" }
+    ];
+    for (const s of scenarios) {
+      await storage.createScenarioComparison(s);
+    }
+
+    // Optimization Parameters - target-seeking analysis
+    const optimizations = [
+      { targetMetric: "Net Zero Carbon", optimizationType: "minimize", currentValue: 24750, targetValue: 50000, optimalValue: 48500, constraintName: "Budget Cap", constraintValue: 2100000000, unit: "tons CO2/year", feasibility: "achievable", description: "Maximize carbon sequestration within budget constraints" },
+      { targetMetric: "ROI Maximization", optimizationType: "maximize", currentValue: 0.12, targetValue: 0.18, optimalValue: 0.165, constraintName: "Risk Tolerance", constraintValue: 0.15, unit: "annual return", feasibility: "achievable", description: "Optimize endowment returns within risk parameters" },
+      { targetMetric: "Jobs per Dollar", optimizationType: "maximize", currentValue: 0.68, targetValue: 1.0, optimalValue: 0.85, constraintName: "Wage Floor", constraintValue: 18, unit: "jobs per $1M", feasibility: "partially achievable", description: "Maximize employment while maintaining living wages" },
+      { targetMetric: "Student Coverage", optimizationType: "maximize", currentValue: 875000, targetValue: 950000, optimalValue: 920000, constraintName: "Greenhouse Capacity", constraintValue: 275, unit: "students/day", feasibility: "achievable", description: "Maximize student participation within infrastructure" },
+      { targetMetric: "Food Waste", optimizationType: "minimize", currentValue: 0.12, targetValue: 0.05, optimalValue: 0.06, constraintName: "Quality Standards", constraintValue: 0.95, unit: "waste fraction", feasibility: "achievable", description: "Minimize food waste while maintaining quality" }
+    ];
+    for (const o of optimizations) {
+      await storage.createOptimizationParam(o);
+    }
+
+    // Sensitivity Analysis - parameter impact ranking
+    const sensitivities = [
+      { inputParameter: "Carbon Price", outputMetric: "Project NPV", baselineInput: 50, perturbationPct: 0.20, outputChange: 0.35, elasticity: 1.75, rank: 1, description: "Carbon pricing has highest impact on project value" },
+      { inputParameter: "Endowment Return Rate", outputMetric: "Year 15 Value", baselineInput: 0.07, perturbationPct: 0.20, outputChange: 0.28, elasticity: 1.40, rank: 2, description: "Investment returns significantly affect long-term endowment" },
+      { inputParameter: "Food Price Index", outputMetric: "Annual Revenue", baselineInput: 1.0, perturbationPct: 0.20, outputChange: 0.22, elasticity: 1.10, rank: 3, description: "Food prices directly impact greenhouse revenue" },
+      { inputParameter: "Labor Costs", outputMetric: "Operating Margin", baselineInput: 18, perturbationPct: 0.20, outputChange: -0.18, elasticity: -0.90, rank: 4, description: "Wage increases reduce margins but support workers" },
+      { inputParameter: "Energy Costs", outputMetric: "Operating Costs", baselineInput: 0.12, perturbationPct: 0.20, outputChange: 0.08, elasticity: 0.40, rank: 5, description: "Energy costs have moderate impact on operations" },
+      { inputParameter: "Greenhouse Yield", outputMetric: "Meals Served", baselineInput: 18000, perturbationPct: 0.20, outputChange: 0.16, elasticity: 0.80, rank: 6, description: "Yield variation affects food security outcomes" },
+      { inputParameter: "Student Participation", outputMetric: "Program Impact", baselineInput: 0.85, perturbationPct: 0.20, outputChange: 0.12, elasticity: 0.60, rank: 7, description: "Participation rates affect educational outcomes" }
+    ];
+    for (const s of sensitivities) {
+      await storage.createSensitivityAnalysis(s);
+    }
+
+    console.log("Advanced modeling data seeded successfully");
   }
 }

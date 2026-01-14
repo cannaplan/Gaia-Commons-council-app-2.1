@@ -40,7 +40,11 @@ import {
   usePlanetaryBoundaries,
   useCalibrationTargets,
   useModelMaturity,
-  useHistoricalClimateData
+  useHistoricalClimateData,
+  useMonteCarloSimulations,
+  useScenarioComparisons,
+  useOptimizationParams,
+  useSensitivityAnalysis
 } from "@/hooks/use-gaia";
 import {
   LineChart,
@@ -125,7 +129,13 @@ import {
   CircleDot,
   AlertCircle,
   CheckCircle,
-  XCircle
+  XCircle,
+  BarChart3,
+  GitCompare,
+  SlidersHorizontal,
+  TrendingDown,
+  Percent,
+  ArrowUpDown
 } from "lucide-react";
 
 const SCALE_LABELS: Record<string, string> = {
@@ -193,6 +203,10 @@ export default function Dashboard() {
   const { data: calibrationTargets } = useCalibrationTargets();
   const { data: modelMaturity } = useModelMaturity();
   const { data: historicalClimateData } = useHistoricalClimateData();
+  const { data: monteCarloSimulations } = useMonteCarloSimulations();
+  const { data: scenarioComparisons } = useScenarioComparisons();
+  const { data: optimizationParams } = useOptimizationParams();
+  const { data: sensitivityAnalysis } = useSensitivityAnalysis();
   const { data: legalFramework, isLoading: loadingLegal } = useLegalFramework();
 
   const isLoading = loadingPilot || loadingEndowment || loadingTimeline || loadingFinancials || 
@@ -1622,6 +1636,188 @@ export default function Dashboard() {
                           <Line yAxisId="co2" type="monotone" dataKey="co2Ppm" stroke="#3b82f6" name="CO2 (ppm)" strokeWidth={2} dot={{ r: 3 }} />
                         </LineChart>
                       </ResponsiveContainer>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Advanced Modeling Section */}
+        {(monteCarloSimulations && monteCarloSimulations.length > 0) && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.60 }} className="mb-8">
+            <Card className="glass-panel bg-gradient-to-r from-purple-50/50 to-indigo-50/50 dark:from-purple-950/20 dark:to-indigo-950/20" data-testid="card-advanced-modeling">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <BarChart3 className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Advanced Modeling — Monte Carlo, Scenarios & Optimization</CardTitle>
+                <Badge variant="secondary" className="ml-auto">10,000 Iterations</Badge>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-6">
+                  Probabilistic simulations with confidence intervals, scenario comparisons, and optimization analysis 
+                  for robust decision-making under uncertainty.
+                </p>
+
+                {/* Monte Carlo Simulations */}
+                <div className="mb-6">
+                  <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <BarChart3 className="h-4 w-4 text-primary" />
+                    Monte Carlo Uncertainty Analysis (95% Confidence)
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {monteCarloSimulations.map((mc) => (
+                      <div key={mc.id} className="p-3 bg-background/60 rounded-lg border border-border/50" data-testid={`monte-carlo-${mc.id}`}>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-medium text-foreground text-sm">{mc.parameter}</span>
+                          <Badge variant="outline" className="text-xs border-purple-500 text-purple-700 dark:text-purple-400">
+                            {mc.scale}
+                          </Badge>
+                        </div>
+                        <div className="mb-2">
+                          <div className="text-lg font-bold text-foreground">
+                            {mc.unit === 'USD' || mc.unit === 'USD/year' 
+                              ? formatLargeNumber(mc.p50Value)
+                              : formatNumber(mc.p50Value)} <span className="text-xs font-normal text-muted-foreground">{mc.unit !== 'USD' && mc.unit !== 'USD/year' ? mc.unit : ''}</span>
+                          </div>
+                          <div className="flex justify-between text-xs text-muted-foreground">
+                            <span>P10: {mc.unit === 'USD' || mc.unit === 'USD/year' ? formatLargeNumber(mc.p10Value) : formatNumber(mc.p10Value)}</span>
+                            <span>P90: {mc.unit === 'USD' || mc.unit === 'USD/year' ? formatLargeNumber(mc.p90Value) : formatNumber(mc.p90Value)}</span>
+                          </div>
+                        </div>
+                        <div className="h-2 bg-muted rounded-full overflow-hidden relative">
+                          <div className="absolute h-full bg-purple-200 dark:bg-purple-900" style={{ left: `${(mc.p10Value / mc.p90Value) * 50}%`, width: `${100 - (mc.p10Value / mc.p90Value) * 50}%` }} />
+                          <div className="absolute h-full w-1 bg-purple-600" style={{ left: '50%' }} />
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-1">{mc.iterations.toLocaleString()} iterations</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Scenario Comparisons */}
+                {scenarioComparisons && scenarioComparisons.length > 0 && (
+                  <div className="mb-6">
+                    <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                      <GitCompare className="h-4 w-4 text-primary" />
+                      Scenario Comparison (Baseline / Optimistic / Conservative)
+                    </h4>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="border-b border-border/50">
+                            <th className="text-left py-2 px-3 font-medium text-muted-foreground">Metric</th>
+                            <th className="text-left py-2 px-3 font-medium text-muted-foreground">Category</th>
+                            <th className="text-right py-2 px-3 font-medium text-amber-600 dark:text-amber-400">Conservative</th>
+                            <th className="text-right py-2 px-3 font-medium text-blue-600 dark:text-blue-400">Baseline</th>
+                            <th className="text-right py-2 px-3 font-medium text-emerald-600 dark:text-emerald-400">Optimistic</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {scenarioComparisons.map((s) => (
+                            <tr key={s.id} className="border-b border-border/30 hover:bg-muted/20" data-testid={`scenario-${s.id}`}>
+                              <td className="py-2 px-3 font-medium">{s.metric}</td>
+                              <td className="py-2 px-3">
+                                <Badge variant="outline" className="text-xs">{s.category}</Badge>
+                              </td>
+                              <td className="py-2 px-3 text-right text-amber-600 dark:text-amber-400">
+                                {s.unit === 'USD' ? formatLargeNumber(s.conservativeValue) : 
+                                 s.unit === 'approval rate' ? `${(s.conservativeValue * 100).toFixed(0)}%` :
+                                 s.conservativeValue.toLocaleString()}
+                              </td>
+                              <td className="py-2 px-3 text-right text-blue-600 dark:text-blue-400 font-medium">
+                                {s.unit === 'USD' ? formatLargeNumber(s.baselineValue) : 
+                                 s.unit === 'approval rate' ? `${(s.baselineValue * 100).toFixed(0)}%` :
+                                 s.baselineValue.toLocaleString()}
+                              </td>
+                              <td className="py-2 px-3 text-right text-emerald-600 dark:text-emerald-400">
+                                {s.unit === 'USD' ? formatLargeNumber(s.optimisticValue) : 
+                                 s.unit === 'approval rate' ? `${(s.optimisticValue * 100).toFixed(0)}%` :
+                                 s.optimisticValue.toLocaleString()}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+
+                {/* Optimization Parameters */}
+                {optimizationParams && optimizationParams.length > 0 && (
+                  <div className="mb-6">
+                    <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                      <SlidersHorizontal className="h-4 w-4 text-primary" />
+                      Optimization Targets
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                      {optimizationParams.map((o) => (
+                        <div key={o.id} className="p-3 bg-background/60 rounded-lg border border-border/50" data-testid={`optimization-${o.id}`}>
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="font-medium text-foreground text-sm">{o.targetMetric}</span>
+                            <Badge 
+                              variant="outline" 
+                              className={`text-xs ${
+                                o.feasibility === 'achievable' ? 'border-emerald-500 text-emerald-700 dark:text-emerald-400' :
+                                'border-amber-500 text-amber-700 dark:text-amber-400'
+                              }`}
+                            >
+                              {o.feasibility}
+                            </Badge>
+                          </div>
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="text-xs text-muted-foreground">Current:</span>
+                            <span className="text-sm font-medium">{o.currentValue}</span>
+                            <TrendingUp className="h-3 w-3 text-muted-foreground" />
+                            <span className="text-xs text-muted-foreground">Target:</span>
+                            <span className="text-sm font-medium text-primary">{o.targetValue}</span>
+                          </div>
+                          <div className="h-2 bg-muted rounded-full overflow-hidden mb-1">
+                            <div 
+                              className="h-full bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full"
+                              style={{ width: `${Math.min(100, (o.optimalValue / o.targetValue) * 100)}%` }}
+                            />
+                          </div>
+                          <p className="text-xs text-muted-foreground">Optimal: {o.optimalValue} | Constraint: {o.constraintName}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Sensitivity Analysis */}
+                {sensitivityAnalysis && sensitivityAnalysis.length > 0 && (
+                  <div>
+                    <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                      <ArrowUpDown className="h-4 w-4 text-primary" />
+                      Sensitivity Analysis (Parameter Impact Ranking)
+                    </h4>
+                    <div className="space-y-2">
+                      {sensitivityAnalysis.map((s) => (
+                        <div key={s.id} className="flex items-center gap-3 p-2 bg-background/60 rounded-lg border border-border/50" data-testid={`sensitivity-${s.id}`}>
+                          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-bold text-sm">
+                            {s.rank}
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2">
+                              <span className="font-medium text-sm">{s.inputParameter}</span>
+                              <span className="text-xs text-muted-foreground">→ {s.outputMetric}</span>
+                            </div>
+                            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                              <span>Elasticity: <span className={`font-medium ${s.elasticity > 0 ? 'text-emerald-600' : 'text-red-600'}`}>{s.elasticity.toFixed(2)}</span></span>
+                              <span>±{(s.perturbationPct * 100).toFixed(0)}% input → {s.outputChange > 0 ? '+' : ''}{(s.outputChange * 100).toFixed(0)}% output</span>
+                            </div>
+                          </div>
+                          <div className="w-24">
+                            <div className="h-2 bg-muted rounded-full overflow-hidden">
+                              <div 
+                                className={`h-full rounded-full ${s.elasticity > 0 ? 'bg-emerald-500' : 'bg-red-500'}`}
+                                style={{ width: `${Math.min(100, Math.abs(s.elasticity) * 50)}%` }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}

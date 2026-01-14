@@ -38,7 +38,11 @@ import {
   planetaryBoundaries,
   calibrationTargets,
   modelMaturity,
-  historicalClimateData
+  historicalClimateData,
+  monteCarloSimulations,
+  scenarioComparisons,
+  optimizationParams,
+  sensitivityAnalysis
 } from './schema';
 
 export const errorSchemas = {
@@ -149,6 +153,18 @@ export const api = {
   },
   historicalClimateData: {
     list: { method: 'GET' as const, path: '/api/historical-climate-data', responses: { 200: z.array(z.custom<typeof historicalClimateData.$inferSelect>()) } },
+  },
+  monteCarloSimulations: {
+    list: { method: 'GET' as const, path: '/api/monte-carlo-simulations', responses: { 200: z.array(z.custom<typeof monteCarloSimulations.$inferSelect>()) } },
+  },
+  scenarioComparisons: {
+    list: { method: 'GET' as const, path: '/api/scenario-comparisons', responses: { 200: z.array(z.custom<typeof scenarioComparisons.$inferSelect>()) } },
+  },
+  optimizationParams: {
+    list: { method: 'GET' as const, path: '/api/optimization-params', responses: { 200: z.array(z.custom<typeof optimizationParams.$inferSelect>()) } },
+  },
+  sensitivityAnalysis: {
+    list: { method: 'GET' as const, path: '/api/sensitivity-analysis', responses: { 200: z.array(z.custom<typeof sensitivityAnalysis.$inferSelect>()) } },
   },
   health: {
     get: { method: 'GET' as const, path: '/health', responses: { 200: z.object({ status: z.string(), version: z.string(), service: z.string() }) } },

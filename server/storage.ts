@@ -7,6 +7,7 @@ import {
   implementationTimeline, politicalRoadmap, stressTests,
   tieredCarbonPricing, regenerativeAgriculture, nationwideFoodSecurity, laborTransition, politicalCoalition, globalRegenerationSummary,
   planetaryBoundaries, calibrationTargets, modelMaturity, historicalClimateData,
+  monteCarloSimulations, scenarioComparisons, optimizationParams, sensitivityAnalysis,
   type PilotStats, type InsertPilotStats,
   type EndowmentStats, type InsertEndowmentStats,
   type TimelineEvent, type InsertTimelineEvent,
@@ -40,7 +41,11 @@ import {
   type PlanetaryBoundaryType, type InsertPlanetaryBoundary,
   type CalibrationTargetType, type InsertCalibrationTarget,
   type ModelMaturityType, type InsertModelMaturity,
-  type HistoricalClimateDataType, type InsertHistoricalClimateData
+  type HistoricalClimateDataType, type InsertHistoricalClimateData,
+  type MonteCarloSimulationType, type InsertMonteCarloSimulation,
+  type ScenarioComparisonType, type InsertScenarioComparison,
+  type OptimizationParamType, type InsertOptimizationParam,
+  type SensitivityAnalysisType, type InsertSensitivityAnalysis
 } from "@shared/schema";
 import { eq, asc } from "drizzle-orm";
 
@@ -115,6 +120,14 @@ export interface IStorage {
   createModelMaturity(item: InsertModelMaturity): Promise<ModelMaturityType>;
   getHistoricalClimateData(): Promise<HistoricalClimateDataType[]>;
   createHistoricalClimateData(item: InsertHistoricalClimateData): Promise<HistoricalClimateDataType>;
+  getMonteCarloSimulations(): Promise<MonteCarloSimulationType[]>;
+  createMonteCarloSimulation(item: InsertMonteCarloSimulation): Promise<MonteCarloSimulationType>;
+  getScenarioComparisons(): Promise<ScenarioComparisonType[]>;
+  createScenarioComparison(item: InsertScenarioComparison): Promise<ScenarioComparisonType>;
+  getOptimizationParams(): Promise<OptimizationParamType[]>;
+  createOptimizationParam(item: InsertOptimizationParam): Promise<OptimizationParamType>;
+  getSensitivityAnalysis(): Promise<SensitivityAnalysisType[]>;
+  createSensitivityAnalysis(item: InsertSensitivityAnalysis): Promise<SensitivityAnalysisType>;
   isEmpty(): Promise<boolean>;
 }
 
@@ -390,6 +403,34 @@ export class DatabaseStorage implements IStorage {
   async createHistoricalClimateData(item: InsertHistoricalClimateData): Promise<HistoricalClimateDataType> {
     const [h] = await db.insert(historicalClimateData).values(item).returning();
     return h;
+  }
+  async getMonteCarloSimulations(): Promise<MonteCarloSimulationType[]> {
+    return await db.select().from(monteCarloSimulations);
+  }
+  async createMonteCarloSimulation(item: InsertMonteCarloSimulation): Promise<MonteCarloSimulationType> {
+    const [m] = await db.insert(monteCarloSimulations).values(item).returning();
+    return m;
+  }
+  async getScenarioComparisons(): Promise<ScenarioComparisonType[]> {
+    return await db.select().from(scenarioComparisons);
+  }
+  async createScenarioComparison(item: InsertScenarioComparison): Promise<ScenarioComparisonType> {
+    const [s] = await db.insert(scenarioComparisons).values(item).returning();
+    return s;
+  }
+  async getOptimizationParams(): Promise<OptimizationParamType[]> {
+    return await db.select().from(optimizationParams);
+  }
+  async createOptimizationParam(item: InsertOptimizationParam): Promise<OptimizationParamType> {
+    const [o] = await db.insert(optimizationParams).values(item).returning();
+    return o;
+  }
+  async getSensitivityAnalysis(): Promise<SensitivityAnalysisType[]> {
+    return await db.select().from(sensitivityAnalysis).orderBy(asc(sensitivityAnalysis.rank));
+  }
+  async createSensitivityAnalysis(item: InsertSensitivityAnalysis): Promise<SensitivityAnalysisType> {
+    const [s] = await db.insert(sensitivityAnalysis).values(item).returning();
+    return s;
   }
   async isEmpty(): Promise<boolean> {
     const [stats] = await db.select().from(pilotStats).limit(1);

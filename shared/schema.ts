@@ -445,10 +445,72 @@ export const historicalClimateData = pgTable("historical_climate_data", {
   carbonIntensity: real("carbon_intensity").notNull(),
 });
 
+// Monte Carlo Simulation Results
+export const monteCarloSimulations = pgTable("monte_carlo_simulations", {
+  id: serial("id").primaryKey(),
+  parameter: text("parameter").notNull(),
+  scale: text("scale").notNull(),
+  baselineValue: real("baseline_value").notNull(),
+  p10Value: real("p10_value").notNull(),
+  p25Value: real("p25_value").notNull(),
+  p50Value: real("p50_value").notNull(),
+  p75Value: real("p75_value").notNull(),
+  p90Value: real("p90_value").notNull(),
+  iterations: integer("iterations").notNull(),
+  confidenceLevel: real("confidence_level").notNull(),
+  unit: text("unit").notNull(),
+  description: text("description").notNull(),
+});
+
+// Scenario Comparisons (Baseline, Optimistic, Conservative)
+export const scenarioComparisons = pgTable("scenario_comparisons", {
+  id: serial("id").primaryKey(),
+  metric: text("metric").notNull(),
+  category: text("category").notNull(),
+  baselineValue: real("baseline_value").notNull(),
+  optimisticValue: real("optimistic_value").notNull(),
+  conservativeValue: real("conservative_value").notNull(),
+  unit: text("unit").notNull(),
+  description: text("description").notNull(),
+  keyAssumptions: text("key_assumptions").notNull(),
+});
+
+// Optimization Parameters
+export const optimizationParams = pgTable("optimization_params", {
+  id: serial("id").primaryKey(),
+  targetMetric: text("target_metric").notNull(),
+  optimizationType: text("optimization_type").notNull(),
+  currentValue: real("current_value").notNull(),
+  targetValue: real("target_value").notNull(),
+  optimalValue: real("optimal_value").notNull(),
+  constraintName: text("constraint_name").notNull(),
+  constraintValue: real("constraint_value").notNull(),
+  unit: text("unit").notNull(),
+  feasibility: text("feasibility").notNull(),
+  description: text("description").notNull(),
+});
+
+// Sensitivity Analysis Results
+export const sensitivityAnalysis = pgTable("sensitivity_analysis", {
+  id: serial("id").primaryKey(),
+  inputParameter: text("input_parameter").notNull(),
+  outputMetric: text("output_metric").notNull(),
+  baselineInput: real("baseline_input").notNull(),
+  perturbationPct: real("perturbation_pct").notNull(),
+  outputChange: real("output_change").notNull(),
+  elasticity: real("elasticity").notNull(),
+  rank: integer("rank").notNull(),
+  description: text("description").notNull(),
+});
+
 export const insertPlanetaryBoundariesSchema = createInsertSchema(planetaryBoundaries).omit({ id: true });
 export const insertCalibrationTargetsSchema = createInsertSchema(calibrationTargets).omit({ id: true });
 export const insertModelMaturitySchema = createInsertSchema(modelMaturity).omit({ id: true });
 export const insertHistoricalClimateDataSchema = createInsertSchema(historicalClimateData).omit({ id: true });
+export const insertMonteCarloSimulationsSchema = createInsertSchema(monteCarloSimulations).omit({ id: true });
+export const insertScenarioComparisonsSchema = createInsertSchema(scenarioComparisons).omit({ id: true });
+export const insertOptimizationParamsSchema = createInsertSchema(optimizationParams).omit({ id: true });
+export const insertSensitivityAnalysisSchema = createInsertSchema(sensitivityAnalysis).omit({ id: true });
 
 // === TYPES ===
 
@@ -487,6 +549,10 @@ export type PlanetaryBoundaryType = typeof planetaryBoundaries.$inferSelect;
 export type CalibrationTargetType = typeof calibrationTargets.$inferSelect;
 export type ModelMaturityType = typeof modelMaturity.$inferSelect;
 export type HistoricalClimateDataType = typeof historicalClimateData.$inferSelect;
+export type MonteCarloSimulationType = typeof monteCarloSimulations.$inferSelect;
+export type ScenarioComparisonType = typeof scenarioComparisons.$inferSelect;
+export type OptimizationParamType = typeof optimizationParams.$inferSelect;
+export type SensitivityAnalysisType = typeof sensitivityAnalysis.$inferSelect;
 
 // Insert types
 export type InsertPilotStats = z.infer<typeof insertPilotStatsSchema>;
@@ -523,3 +589,7 @@ export type InsertPlanetaryBoundary = z.infer<typeof insertPlanetaryBoundariesSc
 export type InsertCalibrationTarget = z.infer<typeof insertCalibrationTargetsSchema>;
 export type InsertModelMaturity = z.infer<typeof insertModelMaturitySchema>;
 export type InsertHistoricalClimateData = z.infer<typeof insertHistoricalClimateDataSchema>;
+export type InsertMonteCarloSimulation = z.infer<typeof insertMonteCarloSimulationsSchema>;
+export type InsertScenarioComparison = z.infer<typeof insertScenarioComparisonsSchema>;
+export type InsertOptimizationParam = z.infer<typeof insertOptimizationParamsSchema>;
+export type InsertSensitivityAnalysis = z.infer<typeof insertSensitivityAnalysisSchema>;
