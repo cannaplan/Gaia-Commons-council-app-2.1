@@ -1,13 +1,20 @@
 import { db } from "./db";
 import {
   pilotStats, endowmentStats, timelineEvents, financialMetrics, climateMetrics, slideDeck, historicalFinancials,
+  schoolClusters, schools, scaleProjections, environmentalImpact, jobCreation, legalFramework,
   type PilotStats, type InsertPilotStats,
   type EndowmentStats, type InsertEndowmentStats,
   type TimelineEvent, type InsertTimelineEvent,
   type FinancialMetric, type InsertFinancialMetrics,
   type ClimateMetric, type InsertClimateMetrics,
   type Slide, type InsertSlide,
-  type HistoricalFinancial, type InsertHistoricalFinancial
+  type HistoricalFinancial, type InsertHistoricalFinancial,
+  type SchoolCluster, type InsertSchoolCluster,
+  type School, type InsertSchool,
+  type ScaleProjection, type InsertScaleProjection,
+  type EnvironmentalImpactType, type InsertEnvironmentalImpact,
+  type JobCreationType, type InsertJobCreation,
+  type LegalFrameworkType, type InsertLegalFramework
 } from "@shared/schema";
 import { eq, asc } from "drizzle-orm";
 
@@ -26,6 +33,20 @@ export interface IStorage {
   createSlide(slide: InsertSlide): Promise<Slide>;
   getHistoricalFinancials(): Promise<HistoricalFinancial[]>;
   createHistoricalFinancial(data: InsertHistoricalFinancial): Promise<HistoricalFinancial>;
+  getSchoolClusters(): Promise<SchoolCluster[]>;
+  createSchoolCluster(cluster: InsertSchoolCluster): Promise<SchoolCluster>;
+  getSchools(): Promise<School[]>;
+  getSchoolsByCluster(clusterId: number): Promise<School[]>;
+  createSchool(school: InsertSchool): Promise<School>;
+  getScaleProjections(): Promise<ScaleProjection[]>;
+  getScaleProjection(scale: string): Promise<ScaleProjection | undefined>;
+  createScaleProjection(projection: InsertScaleProjection): Promise<ScaleProjection>;
+  getEnvironmentalImpacts(): Promise<EnvironmentalImpactType[]>;
+  createEnvironmentalImpact(impact: InsertEnvironmentalImpact): Promise<EnvironmentalImpactType>;
+  getJobCreations(): Promise<JobCreationType[]>;
+  createJobCreation(job: InsertJobCreation): Promise<JobCreationType>;
+  getLegalFramework(): Promise<LegalFrameworkType | undefined>;
+  createLegalFramework(legal: InsertLegalFramework): Promise<LegalFrameworkType>;
   isEmpty(): Promise<boolean>;
 }
 
@@ -102,6 +123,56 @@ export class DatabaseStorage implements IStorage {
   async createHistoricalFinancial(data: InsertHistoricalFinancial): Promise<HistoricalFinancial> {
     const [h] = await db.insert(historicalFinancials).values(data).returning();
     return h;
+  }
+  async getSchoolClusters(): Promise<SchoolCluster[]> {
+    return await db.select().from(schoolClusters);
+  }
+  async createSchoolCluster(cluster: InsertSchoolCluster): Promise<SchoolCluster> {
+    const [c] = await db.insert(schoolClusters).values(cluster).returning();
+    return c;
+  }
+  async getSchools(): Promise<School[]> {
+    return await db.select().from(schools);
+  }
+  async getSchoolsByCluster(clusterId: number): Promise<School[]> {
+    return await db.select().from(schools).where(eq(schools.clusterId, clusterId));
+  }
+  async createSchool(school: InsertSchool): Promise<School> {
+    const [s] = await db.insert(schools).values(school).returning();
+    return s;
+  }
+  async getScaleProjections(): Promise<ScaleProjection[]> {
+    return await db.select().from(scaleProjections);
+  }
+  async getScaleProjection(scale: string): Promise<ScaleProjection | undefined> {
+    const [p] = await db.select().from(scaleProjections).where(eq(scaleProjections.scale, scale));
+    return p;
+  }
+  async createScaleProjection(projection: InsertScaleProjection): Promise<ScaleProjection> {
+    const [p] = await db.insert(scaleProjections).values(projection).returning();
+    return p;
+  }
+  async getEnvironmentalImpacts(): Promise<EnvironmentalImpactType[]> {
+    return await db.select().from(environmentalImpact);
+  }
+  async createEnvironmentalImpact(impact: InsertEnvironmentalImpact): Promise<EnvironmentalImpactType> {
+    const [i] = await db.insert(environmentalImpact).values(impact).returning();
+    return i;
+  }
+  async getJobCreations(): Promise<JobCreationType[]> {
+    return await db.select().from(jobCreation);
+  }
+  async createJobCreation(job: InsertJobCreation): Promise<JobCreationType> {
+    const [j] = await db.insert(jobCreation).values(job).returning();
+    return j;
+  }
+  async getLegalFramework(): Promise<LegalFrameworkType | undefined> {
+    const [l] = await db.select().from(legalFramework).limit(1);
+    return l;
+  }
+  async createLegalFramework(legal: InsertLegalFramework): Promise<LegalFrameworkType> {
+    const [l] = await db.insert(legalFramework).values(legal).returning();
+    return l;
   }
   async isEmpty(): Promise<boolean> {
     const [stats] = await db.select().from(pilotStats).limit(1);

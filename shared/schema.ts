@@ -12,6 +12,84 @@ export const pilotStats = pgTable("pilot_stats", {
   status: text("status").notNull(),
 });
 
+// School Clusters (St. Paul and Mendota Heights)
+export const schoolClusters = pgTable("school_clusters", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  region: text("region").notNull(),
+  totalStudents: integer("total_students").notNull(),
+  totalSqft: integer("total_sqft").notNull(),
+  greenhouses: integer("greenhouses").notNull(),
+  yr5Students: integer("yr5_students").notNull(),
+  co2TonsSequestered: real("co2_tons_sequestered").notNull(),
+});
+
+// Individual Schools within Clusters
+export const schools = pgTable("schools", {
+  id: serial("id").primaryKey(),
+  clusterId: integer("cluster_id").notNull(),
+  name: text("name").notNull(),
+  enrollment: integer("enrollment").notNull(),
+  grades: text("grades").notNull(),
+  sqftTarget: integer("sqft_target").notNull(),
+});
+
+// Multi-Scale Projections (Pilot, Statewide, National, Global)
+export const scaleProjections = pgTable("scale_projections", {
+  id: serial("id").primaryKey(),
+  scale: text("scale").notNull(),
+  schools: integer("schools").notNull(),
+  students: integer("students").notNull(),
+  greenhouses: integer("greenhouses").notNull(),
+  sqft: integer("sqft").notNull(),
+  capex: real("capex").notNull(),
+  annualRevenue: real("annual_revenue").notNull(),
+  annualOpex: real("annual_opex").notNull(),
+  npv5yr: real("npv_5yr").notNull(),
+  roiPct: real("roi_pct").notNull(),
+  endowmentTarget: real("endowment_target").notNull(),
+  endowmentYr15: real("endowment_yr15").notNull(),
+  jobs: integer("jobs").notNull(),
+  co2TonsAnnual: real("co2_tons_annual").notNull(),
+  mealsPerDay: integer("meals_per_day").notNull(),
+});
+
+// Environmental Impact Metrics
+export const environmentalImpact = pgTable("environmental_impact", {
+  id: serial("id").primaryKey(),
+  scale: text("scale").notNull(),
+  co2SequesteredTons: real("co2_sequestered_tons").notNull(),
+  waterSavedGallons: real("water_saved_gallons").notNull(),
+  landPreservedAcres: real("land_preserved_acres").notNull(),
+  foodMilesReduced: real("food_miles_reduced").notNull(),
+  renewableEnergyPct: real("renewable_energy_pct").notNull(),
+  wasteReducedTons: real("waste_reduced_tons").notNull(),
+});
+
+// Job Creation Projections
+export const jobCreation = pgTable("job_creation", {
+  id: serial("id").primaryKey(),
+  scale: text("scale").notNull(),
+  directJobs: integer("direct_jobs").notNull(),
+  indirectJobs: integer("indirect_jobs").notNull(),
+  inducedJobs: integer("induced_jobs").notNull(),
+  totalJobs: integer("total_jobs").notNull(),
+  avgSalary: real("avg_salary").notNull(),
+  economicImpact: real("economic_impact").notNull(),
+});
+
+// Legal Framework and Governance
+export const legalFramework = pgTable("legal_framework", {
+  id: serial("id").primaryKey(),
+  entityName: text("entity_name").notNull(),
+  entityType: text("entity_type").notNull(),
+  boardSize: integer("board_size").notNull(),
+  boardComposition: text("board_composition").notNull(),
+  endowmentRules: text("endowment_rules").notNull(),
+  filings: text("filings").notNull(),
+  complianceHash: text("compliance_hash"),
+});
+
 export const endowmentStats = pgTable("endowment_stats", {
   id: serial("id").primaryKey(),
   size: text("size").notNull(),
@@ -88,6 +166,12 @@ export const insertFinancialMetricsSchema = createInsertSchema(financialMetrics)
 export const insertClimateMetricsSchema = createInsertSchema(climateMetrics).omit({ id: true, updatedAt: true });
 export const insertSlideSchema = createInsertSchema(slideDeck).omit({ id: true });
 export const insertHistoricalFinancialsSchema = createInsertSchema(historicalFinancials).omit({ id: true, createdAt: true });
+export const insertSchoolClusterSchema = createInsertSchema(schoolClusters).omit({ id: true });
+export const insertSchoolSchema = createInsertSchema(schools).omit({ id: true });
+export const insertScaleProjectionSchema = createInsertSchema(scaleProjections).omit({ id: true });
+export const insertEnvironmentalImpactSchema = createInsertSchema(environmentalImpact).omit({ id: true });
+export const insertJobCreationSchema = createInsertSchema(jobCreation).omit({ id: true });
+export const insertLegalFrameworkSchema = createInsertSchema(legalFramework).omit({ id: true });
 
 // === TYPES ===
 
@@ -99,6 +183,12 @@ export type FinancialMetric = typeof financialMetrics.$inferSelect;
 export type ClimateMetric = typeof climateMetrics.$inferSelect;
 export type Slide = typeof slideDeck.$inferSelect;
 export type HistoricalFinancial = typeof historicalFinancials.$inferSelect;
+export type SchoolCluster = typeof schoolClusters.$inferSelect;
+export type School = typeof schools.$inferSelect;
+export type ScaleProjection = typeof scaleProjections.$inferSelect;
+export type EnvironmentalImpactType = typeof environmentalImpact.$inferSelect;
+export type JobCreationType = typeof jobCreation.$inferSelect;
+export type LegalFrameworkType = typeof legalFramework.$inferSelect;
 
 // Insert types
 export type InsertPilotStats = z.infer<typeof insertPilotStatsSchema>;
@@ -108,3 +198,9 @@ export type InsertFinancialMetrics = z.infer<typeof insertFinancialMetricsSchema
 export type InsertClimateMetrics = z.infer<typeof insertClimateMetricsSchema>;
 export type InsertSlide = z.infer<typeof insertSlideSchema>;
 export type InsertHistoricalFinancial = z.infer<typeof insertHistoricalFinancialsSchema>;
+export type InsertSchoolCluster = z.infer<typeof insertSchoolClusterSchema>;
+export type InsertSchool = z.infer<typeof insertSchoolSchema>;
+export type InsertScaleProjection = z.infer<typeof insertScaleProjectionSchema>;
+export type InsertEnvironmentalImpact = z.infer<typeof insertEnvironmentalImpactSchema>;
+export type InsertJobCreation = z.infer<typeof insertJobCreationSchema>;
+export type InsertLegalFramework = z.infer<typeof insertLegalFrameworkSchema>;

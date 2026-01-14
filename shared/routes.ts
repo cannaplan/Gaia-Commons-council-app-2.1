@@ -11,7 +11,13 @@ import {
   financialMetrics,
   climateMetrics,
   slideDeck,
-  historicalFinancials
+  historicalFinancials,
+  schoolClusters,
+  schools,
+  scaleProjections,
+  environmentalImpact,
+  jobCreation,
+  legalFramework
 } from './schema';
 
 export const errorSchemas = {
@@ -41,6 +47,24 @@ export const api = {
   },
   historicalFinancials: {
     list: { method: 'GET' as const, path: '/api/historical-financials', responses: { 200: z.array(z.custom<typeof historicalFinancials.$inferSelect>()) } },
+  },
+  schoolClusters: {
+    list: { method: 'GET' as const, path: '/api/school-clusters', responses: { 200: z.array(z.custom<typeof schoolClusters.$inferSelect>()) } },
+  },
+  schools: {
+    list: { method: 'GET' as const, path: '/api/schools', responses: { 200: z.array(z.custom<typeof schools.$inferSelect>()) } },
+  },
+  scaleProjections: {
+    list: { method: 'GET' as const, path: '/api/scale-projections', responses: { 200: z.array(z.custom<typeof scaleProjections.$inferSelect>()) } },
+  },
+  environmentalImpact: {
+    list: { method: 'GET' as const, path: '/api/environmental-impact', responses: { 200: z.array(z.custom<typeof environmentalImpact.$inferSelect>()) } },
+  },
+  jobCreation: {
+    list: { method: 'GET' as const, path: '/api/job-creation', responses: { 200: z.array(z.custom<typeof jobCreation.$inferSelect>()) } },
+  },
+  legalFramework: {
+    get: { method: 'GET' as const, path: '/api/legal-framework', responses: { 200: z.custom<typeof legalFramework.$inferSelect>(), 404: errorSchemas.notFound } },
   },
   health: {
     get: { method: 'GET' as const, path: '/health', responses: { 200: z.object({ status: z.string(), version: z.string(), service: z.string() }) } },
