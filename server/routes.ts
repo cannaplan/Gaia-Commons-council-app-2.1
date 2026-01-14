@@ -2,7 +2,6 @@ import type { Express } from "express";
 import type { Server } from "http";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
-import { z } from "zod";
 
 export async function registerRoutes(
   httpServer: Server,
@@ -13,22 +12,8 @@ export async function registerRoutes(
   app.get(api.health.get.path, (_req, res) => {
     res.json({
       status: "healthy",
-      version: "8.7",
+      version: "5.0",
       service: "gaia-commons-api"
-    });
-  });
-
-  // === Docs ===
-  app.get(api.docs.get.path, (_req, res) => {
-    res.json({
-      endpoints: [
-        "/health",
-        "/api/pilot",
-        "/api/endowment",
-        "/api/timeline",
-        "/api/docs"
-      ],
-      description: "Gaia Commons Council API"
     });
   });
 
@@ -41,20 +26,6 @@ export async function registerRoutes(
     res.json(stats);
   });
 
-  app.put(api.pilot.update.path, async (req, res) => {
-    try {
-      const input = api.pilot.update.input.parse(req.body);
-      const stats = await storage.updatePilotStats(input);
-      res.json(stats);
-    } catch (err) {
-      if (err instanceof z.ZodError) {
-        res.status(400).json({ message: err.errors[0].message });
-      } else {
-        res.status(500).json({ message: "Internal server error" });
-      }
-    }
-  });
-
   // === Endowment Stats ===
   app.get(api.endowment.get.path, async (_req, res) => {
     const stats = await storage.getEndowmentStats();
@@ -64,56 +35,23 @@ export async function registerRoutes(
     res.json(stats);
   });
 
-  app.put(api.endowment.update.path, async (req, res) => {
-    try {
-      const input = api.endowment.update.input.parse(req.body);
-      const stats = await storage.updateEndowmentStats(input);
-      res.json(stats);
-    } catch (err) {
-      if (err instanceof z.ZodError) {
-        res.status(400).json({ message: err.errors[0].message });
-      } else {
-        res.status(500).json({ message: "Internal server error" });
-      }
-    }
-  });
-
   // === Timeline ===
   app.get(api.timeline.list.path, async (_req, res) => {
     const events = await storage.getTimelineEvents();
     res.json(events);
   });
 
-  app.post(api.timeline.create.path, async (req, res) => {
-    try {
-      const input = api.timeline.create.input.parse(req.body);
-      const event = await storage.createTimelineEvent(input);
-      res.status(201).json(event);
-    } catch (err) {
-      if (err instanceof z.ZodError) {
-        res.status(400).json({ message: err.errors[0].message });
-      } else {
-        res.status(500).json({ message: "Internal server error" });
-      }
-    }
-  });
-
-  app.delete(api.timeline.delete.path, async (req, res) => {
-    await storage.deleteTimelineEvent(Number(req.params.id));
-    res.status(204).send();
-  });
-
   // === Financial Metrics ===
   app.get(api.financials.get.path, async (_req, res) => {
     const metrics = await storage.getFinancialMetrics();
-    if (!metrics) return res.status(404).json({ message: "Metrics not found" });
+    if (!metrics) return res.status(404).json({ message: "Financial metrics not found" });
     res.json(metrics);
   });
 
   // === Climate Metrics ===
   app.get(api.climate.get.path, async (_req, res) => {
     const metrics = await storage.getClimateMetrics();
-    if (!metrics) return res.status(404).json({ message: "Metrics not found" });
+    if (!metrics) return res.status(404).json({ message: "Climate metrics not found" });
     res.json(metrics);
   });
 
@@ -132,9 +70,9 @@ export async function registerRoutes(
 async function seedDatabase() {
   const isEmpty = await storage.isEmpty();
   if (isEmpty) {
-    console.log("Seeding database...");
+    console.log("Seeding database with GAIA v5.0 data...");
     
-    // Seed Pilot
+    // Seed Pilot - 6 schools, 5640 students, 44950 sqft
     await storage.updatePilotStats({
       students: 5640,
       sqft: 44950,
@@ -142,14 +80,14 @@ async function seedDatabase() {
       status: "live"
     });
 
-    // Seed Endowment
+    // Seed Endowment - v4.2 Locked
     await storage.updateEndowmentStats({
       size: "2.1B",
       annual: "63M",
       greenhouses: 275
     });
 
-    // Seed Financials (v3.1)
+    // Seed Financials (v3.1 Master Production Suite)
     await storage.updateFinancialMetrics({
       initialInvestment: 5000000,
       annualOpex: 1000000,
@@ -160,7 +98,7 @@ async function seedDatabase() {
       roi10yrPct: 250
     });
 
-    // Seed Climate (v5.0)
+    // Seed Climate (v5.0 ETL)
     await storage.updateClimateMetrics({
       avgTemp: 45.8,
       growingSeasonDays: 165,
@@ -169,11 +107,27 @@ async function seedDatabase() {
       studentMealsAnnual: "175,000,000"
     });
 
-    // Seed Slides
+    // Seed Ballot Slide Deck (20 slides)
     const slides = [
       { n: 1, title: "The Problem", text: "875k MN kids face food insecurity" },
       { n: 2, title: "The Solution", text: "275 greenhouses = 875,000 meals/day" },
       { n: 3, title: "Endowment Engine", text: "0.27% tax → $2.1B PERPETUAL" },
+      { n: 4, title: "Math Works", text: "3% draw = $63M/yr" },
+      { n: 5, title: "St. Paul Pilot", text: "3,816 students | 26,550 sqft" },
+      { n: 6, title: "Mendota Pilot", text: "3,262 students | 22,700 sqft" },
+      { n: 7, title: "MCS Yield Model", text: "50 lbs/1000 sqft hydroponic" },
+      { n: 8, title: "Breakeven", text: "$2.75B CAPEX amortized 20yr" },
+      { n: 9, title: "Inflation Proof", text: "Real budget maintained forever" },
+      { n: 10, title: "Governance", text: "7 Board Seats | Tribal Rep" },
+      { n: 11, title: "Legal Path", text: "MN Ballot → Constitutional Amendment" },
+      { n: 12, title: "National Vision", text: "MN → 50 States | $48B+" },
+      { n: 13, title: "Risks Mitigated", text: "Planetary boundaries clause" },
+      { n: 14, title: "Timeline", text: "2026 Pilots → 2028 Ballot → 2030 Full" },
+      { n: 15, title: "The Ask", text: "$5M Seed for Ballot + Pilots" },
+      { n: 16, title: "Legacy", text: "Generations of kids fed, sustainably" },
+      { n: 17, title: "Principals Brief", text: "Jan 20 Meetings Ready" },
+      { n: 18, title: "Donor Accelerant", text: "Pro-Sports/Billionaires OPTIONAL" },
+      { n: 19, title: "MCS Partnership", text: "Analytics for Yield + Risk" },
       { n: 20, title: "Vote Yes on Gaia", text: "Forever Funding" }
     ];
     for (const s of slides) {
@@ -184,12 +138,12 @@ async function seedDatabase() {
       });
     }
 
-    // Seed Timeline
+    // Seed Timeline - v4.2 Deliverables
     await storage.createTimelineEvent({ year: "2026 Q1", event: "St. Paul/Mendota Pilots Live" });
     await storage.createTimelineEvent({ year: "2026 Q4", event: "Ballot Signature Drive" });
     await storage.createTimelineEvent({ year: "2028", event: "$2.1B Funded" });
     await storage.createTimelineEvent({ year: "2030", event: "275 Greenhouses Deployed" });
     
-    console.log("Database seeded successfully");
+    console.log("Database seeded successfully with complete GAIA platform data");
   }
 }

@@ -69,9 +69,18 @@ export const insertSlideSchema = createInsertSchema(slideDeck).omit({ id: true }
 
 // === TYPES ===
 
+// Select types
 export type PilotStats = typeof pilotStats.$inferSelect;
 export type EndowmentStats = typeof endowmentStats.$inferSelect;
 export type TimelineEvent = typeof timelineEvents.$inferSelect;
 export type FinancialMetric = typeof financialMetrics.$inferSelect;
 export type ClimateMetric = typeof climateMetrics.$inferSelect;
 export type Slide = typeof slideDeck.$inferSelect;
+
+// Insert types
+export type InsertPilotStats = z.infer<typeof insertPilotStatsSchema>;
+export type InsertEndowmentStats = z.infer<typeof insertEndowmentStatsSchema>;
+export type InsertTimelineEvent = z.infer<typeof insertTimelineEventSchema>;
+export type InsertFinancialMetrics = z.infer<typeof insertFinancialMetricsSchema>;
+export type InsertClimateMetrics = z.infer<typeof insertClimateMetricsSchema>;
+export type InsertSlide = z.infer<typeof insertSlideSchema>;

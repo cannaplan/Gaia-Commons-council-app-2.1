@@ -4,7 +4,9 @@ import {
   type PilotStats, type InsertPilotStats,
   type EndowmentStats, type InsertEndowmentStats,
   type TimelineEvent, type InsertTimelineEvent,
-  type FinancialMetric, type ClimateMetric, type Slide
+  type FinancialMetric, type InsertFinancialMetrics,
+  type ClimateMetric, type InsertClimateMetrics,
+  type Slide, type InsertSlide
 } from "@shared/schema";
 import { eq } from "drizzle-orm";
 
@@ -16,11 +18,11 @@ export interface IStorage {
   getTimelineEvents(): Promise<TimelineEvent[]>;
   createTimelineEvent(event: InsertTimelineEvent): Promise<TimelineEvent>;
   getFinancialMetrics(): Promise<FinancialMetric | undefined>;
-  updateFinancialMetrics(metrics: any): Promise<FinancialMetric>;
+  updateFinancialMetrics(metrics: InsertFinancialMetrics): Promise<FinancialMetric>;
   getClimateMetrics(): Promise<ClimateMetric | undefined>;
-  updateClimateMetrics(metrics: any): Promise<ClimateMetric>;
+  updateClimateMetrics(metrics: InsertClimateMetrics): Promise<ClimateMetric>;
   getSlides(): Promise<Slide[]>;
-  createSlide(slide: any): Promise<Slide>;
+  createSlide(slide: InsertSlide): Promise<Slide>;
   isEmpty(): Promise<boolean>;
 }
 
@@ -62,7 +64,7 @@ export class DatabaseStorage implements IStorage {
     const [m] = await db.select().from(financialMetrics).limit(1);
     return m;
   }
-  async updateFinancialMetrics(metrics: any): Promise<FinancialMetric> {
+  async updateFinancialMetrics(metrics: InsertFinancialMetrics): Promise<FinancialMetric> {
     const existing = await this.getFinancialMetrics();
     if (!existing) {
       const [nm] = await db.insert(financialMetrics).values(metrics).returning();
@@ -75,7 +77,7 @@ export class DatabaseStorage implements IStorage {
     const [m] = await db.select().from(climateMetrics).limit(1);
     return m;
   }
-  async updateClimateMetrics(metrics: any): Promise<ClimateMetric> {
+  async updateClimateMetrics(metrics: InsertClimateMetrics): Promise<ClimateMetric> {
     const existing = await this.getClimateMetrics();
     if (!existing) {
       const [nm] = await db.insert(climateMetrics).values(metrics).returning();
@@ -87,7 +89,7 @@ export class DatabaseStorage implements IStorage {
   async getSlides(): Promise<Slide[]> {
     return await db.select().from(slideDeck).orderBy(slideDeck.slideNumber);
   }
-  async createSlide(slide: any): Promise<Slide> {
+  async createSlide(slide: InsertSlide): Promise<Slide> {
     const [s] = await db.insert(slideDeck).values(slide).returning();
     return s;
   }

@@ -1,5 +1,5 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { api, buildUrl } from "@shared/routes";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@shared/routes";
 
 // Health
 export function useHealth() {
@@ -10,7 +10,7 @@ export function useHealth() {
       if (!res.ok) throw new Error("Failed to fetch health status");
       return api.health.get.responses[200].parse(await res.json());
     },
-    refetchInterval: 30000, // Check every 30s
+    refetchInterval: 30000,
   });
 }
 
@@ -50,14 +50,38 @@ export function useTimeline() {
   });
 }
 
-// Docs (Metadata)
-export function useDocs() {
+// Financial Metrics (v3.1)
+export function useFinancialMetrics() {
   return useQuery({
-    queryKey: [api.docs.get.path],
+    queryKey: [api.financials.get.path],
     queryFn: async () => {
-      const res = await fetch(api.docs.get.path);
-      if (!res.ok) throw new Error("Failed to fetch docs");
-      return api.docs.get.responses[200].parse(await res.json());
+      const res = await fetch(api.financials.get.path);
+      if (!res.ok) throw new Error("Failed to fetch financial metrics");
+      return api.financials.get.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Climate Metrics (v5.0)
+export function useClimateMetrics() {
+  return useQuery({
+    queryKey: [api.climate.get.path],
+    queryFn: async () => {
+      const res = await fetch(api.climate.get.path);
+      if (!res.ok) throw new Error("Failed to fetch climate metrics");
+      return api.climate.get.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Slide Deck
+export function useSlides() {
+  return useQuery({
+    queryKey: [api.slides.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.slides.list.path);
+      if (!res.ok) throw new Error("Failed to fetch slides");
+      return api.slides.list.responses[200].parse(await res.json());
     },
   });
 }
