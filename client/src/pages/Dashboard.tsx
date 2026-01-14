@@ -143,7 +143,8 @@ import {
   Download,
   Printer,
   Info,
-  HelpCircle
+  HelpCircle,
+  ChevronRight
 } from "lucide-react";
 
 const SCALE_LABELS: Record<string, string> = {
@@ -853,14 +854,70 @@ export default function Dashboard() {
               <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
                 <Shield className="h-5 w-5 text-primary" />
                 <CardTitle className="text-lg font-semibold">Legal Framework & Governance — {legalFramework.entityName}</CardTitle>
+                <UITooltip>
+                  <TooltipTrigger asChild>
+                    <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-sm">
+                    <p>A 501(c)(3) nonprofit trust structure ensures tax-exempt status, perpetual existence, and legal protections that prevent funds from being diverted or misused.</p>
+                  </TooltipContent>
+                </UITooltip>
                 <Badge variant="secondary" className="ml-auto">{legalFramework.entityType}</Badge>
               </CardHeader>
               <CardContent>
+                {/* Explanation */}
+                <p className="text-sm text-muted-foreground mb-4">
+                  The Gaia Commons Council operates as a perpetual nonprofit trust with multi-stakeholder governance, ensuring no single party controls the endowment. Legal safeguards protect the principal forever while annual draws fund operations.
+                </p>
+
+                {/* Governance Flow Visual */}
+                <div className="bg-muted/30 rounded-xl p-4 border border-border/50 mb-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <GitCompare className="h-4 w-4 text-primary" />
+                    <span className="text-xs font-semibold text-foreground uppercase">Accountability Layers</span>
+                  </div>
+                  <div className="flex flex-col md:flex-row items-stretch gap-2">
+                    {[
+                      { layer: 'Voters', desc: 'Approve ballot initiative', icon: '1', color: 'bg-blue-500' },
+                      { layer: 'State AG', desc: 'Legal oversight', icon: '2', color: 'bg-indigo-500' },
+                      { layer: 'Board', desc: '7 multi-stakeholder seats', icon: '3', color: 'bg-purple-500' },
+                      { layer: 'Big 4 Audit', desc: 'Annual independent review', icon: '4', color: 'bg-pink-500' },
+                      { layer: 'Public Dashboard', desc: 'Real-time transparency', icon: '5', color: 'bg-rose-500' },
+                    ].map((item, idx) => (
+                      <div key={idx} className="flex-1 relative">
+                        <div className="flex flex-col items-center p-3 bg-background/60 rounded-lg border border-border/50 h-full">
+                          <div className={`w-6 h-6 rounded-full ${item.color} text-white text-xs font-bold flex items-center justify-center mb-2`}>
+                            {item.icon}
+                          </div>
+                          <span className="text-xs font-semibold text-foreground text-center">{item.layer}</span>
+                          <span className="text-[10px] text-muted-foreground text-center mt-1">{item.desc}</span>
+                        </div>
+                        {idx < 4 && (
+                          <div className="hidden md:block absolute top-1/2 -right-1.5 transform -translate-y-1/2 text-muted-foreground z-10">
+                            <ChevronRight className="h-3 w-3" />
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-muted-foreground text-center mt-3">
+                    Five independent layers of oversight ensure no single point of failure or corruption
+                  </p>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="p-4 bg-muted/30 rounded-xl border border-border/50">
                     <div className="flex items-center gap-2 mb-3">
                       <Users className="h-4 w-4 text-primary" />
                       <h3 className="font-semibold text-foreground">Board Composition</h3>
+                      <UITooltip>
+                        <TooltipTrigger asChild>
+                          <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help" />
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs">
+                          <p>Multi-stakeholder board prevents capture by any single interest group. Includes educators, donors, agriculture experts, tribal representatives, and students.</p>
+                        </TooltipContent>
+                      </UITooltip>
                     </div>
                     <p className="text-sm text-muted-foreground">{legalFramework.boardSize}-Member Board</p>
                     <p className="text-sm text-muted-foreground mt-1">{legalFramework.boardComposition}</p>
@@ -869,6 +926,14 @@ export default function Dashboard() {
                     <div className="flex items-center gap-2 mb-3">
                       <Landmark className="h-4 w-4 text-primary" />
                       <h3 className="font-semibold text-foreground">Endowment Rules</h3>
+                      <UITooltip>
+                        <TooltipTrigger asChild>
+                          <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help" />
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs">
+                          <p>4% annual spend follows the "Yale Model" used by major university endowments. Principal is protected forever, only investment returns fund operations.</p>
+                        </TooltipContent>
+                      </UITooltip>
                     </div>
                     <p className="text-sm text-muted-foreground">{legalFramework.endowmentRules}</p>
                   </div>
@@ -876,8 +941,40 @@ export default function Dashboard() {
                     <div className="flex items-center gap-2 mb-3">
                       <Scale className="h-4 w-4 text-primary" />
                       <h3 className="font-semibold text-foreground">Required Filings</h3>
+                      <UITooltip>
+                        <TooltipTrigger asChild>
+                          <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help" />
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs">
+                          <p>Public IRS Form 990 filings are available to anyone. State registration ensures Attorney General oversight of charitable operations.</p>
+                        </TooltipContent>
+                      </UITooltip>
                     </div>
                     <p className="text-sm text-muted-foreground">{legalFramework.filings}</p>
+                  </div>
+                </div>
+
+                {/* Trust Protection Highlights */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
+                  <div className="text-center p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg border border-emerald-100 dark:border-emerald-900/50">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600 mx-auto mb-1" />
+                    <p className="text-xs font-medium text-emerald-700 dark:text-emerald-400">Tax Exempt</p>
+                    <p className="text-[10px] text-emerald-600 dark:text-emerald-500">501(c)(3) status</p>
+                  </div>
+                  <div className="text-center p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-100 dark:border-blue-900/50">
+                    <CheckCircle2 className="h-4 w-4 text-blue-600 mx-auto mb-1" />
+                    <p className="text-xs font-medium text-blue-700 dark:text-blue-400">Perpetual</p>
+                    <p className="text-[10px] text-blue-600 dark:text-blue-500">Exists forever</p>
+                  </div>
+                  <div className="text-center p-3 bg-purple-50 dark:bg-purple-950/30 rounded-lg border border-purple-100 dark:border-purple-900/50">
+                    <CheckCircle2 className="h-4 w-4 text-purple-600 mx-auto mb-1" />
+                    <p className="text-xs font-medium text-purple-700 dark:text-purple-400">Principal Protected</p>
+                    <p className="text-[10px] text-purple-600 dark:text-purple-500">Cannot be spent</p>
+                  </div>
+                  <div className="text-center p-3 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-100 dark:border-amber-900/50">
+                    <CheckCircle2 className="h-4 w-4 text-amber-600 mx-auto mb-1" />
+                    <p className="text-xs font-medium text-amber-700 dark:text-amber-400">Public Oversight</p>
+                    <p className="text-[10px] text-amber-600 dark:text-amber-500">Full transparency</p>
                   </div>
                 </div>
               </CardContent>
