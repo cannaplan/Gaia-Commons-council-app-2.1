@@ -313,7 +313,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-secondary/30 pb-20 print:bg-white">
-      <div ref={dashboardRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      <div ref={dashboardRef} className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 pt-6">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <div className="flex items-center justify-between flex-wrap gap-4 mb-4">
             <Header />
@@ -479,7 +479,7 @@ export default function Dashboard() {
         )}
 
         {/* Environmental Impact & Job Creation */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-6 xl:gap-8 mb-8">
           {/* Environmental Impact */}
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
             <Card className="glass-panel h-full" data-testid="card-environmental">
@@ -635,7 +635,7 @@ export default function Dashboard() {
         </motion.div>
 
         {/* Financial Engine & Climate (original sections) */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-6 xl:gap-8 mb-8">
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.35 }}>
             <Card className="glass-panel card-hover h-full" data-testid="card-financials">
               <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-2">
@@ -905,7 +905,7 @@ export default function Dashboard() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-3 gap-6 xl:gap-8">
                   <div className="p-4 bg-muted/30 rounded-xl border border-border/50">
                     <div className="flex items-center gap-2 mb-3">
                       <Users className="h-4 w-4 text-primary" />
@@ -1097,7 +1097,7 @@ export default function Dashboard() {
         )}
 
         {/* K-12 NGSS Curriculum & Coalition Partners Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 xl:gap-8 mb-8">
           {/* K-12 Curriculum */}
           {curriculum && curriculum.length > 0 && (
             <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.48 }}>
@@ -1181,7 +1181,7 @@ export default function Dashboard() {
                 <CardTitle className="text-lg font-semibold">Endowment Funding Sources — $2.1B Target</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
                   {fundingSources.map((source, idx) => (
                     <div key={source.id} className="p-4 bg-muted/30 rounded-xl border border-border/50" data-testid={`funding-source-${source.id}`}>
                       <div className="flex items-center justify-between mb-2">
@@ -1633,7 +1633,7 @@ export default function Dashboard() {
                 <Badge variant="secondary" className="ml-auto">5 Operation Types</Badge>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
                   {regenerativeAgriculture.map((op) => (
                     <div key={op.id} className="p-4 bg-muted/30 rounded-lg border border-border/50" data-testid={`ag-op-${op.id}`}>
                       <div className="flex items-center gap-2 mb-2">
@@ -1668,7 +1668,7 @@ export default function Dashboard() {
         )}
 
         {/* Nationwide Food Security & Labor Transition */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-6 xl:gap-8 mb-8">
           {nationwideFoodSecurity && (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.56 }}>
               <Card className="glass-panel h-full" data-testid="card-food-security">
@@ -1957,7 +1957,7 @@ export default function Dashboard() {
                       </TooltipContent>
                     </UITooltip>
                   </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-3">
                     {monteCarloSimulations.map((mc) => (
                       <div key={mc.id} className="p-3 bg-background/60 rounded-lg border border-border/50" data-testid={`monte-carlo-${mc.id}`}>
                         <div className="flex items-center justify-between mb-2">
@@ -2058,7 +2058,7 @@ export default function Dashboard() {
                         </TooltipContent>
                       </UITooltip>
                     </h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3">
                       {optimizationParams.map((o) => (
                         <div key={o.id} className="p-3 bg-background/60 rounded-lg border border-border/50" data-testid={`optimization-${o.id}`}>
                           <div className="flex items-center justify-between mb-2">
