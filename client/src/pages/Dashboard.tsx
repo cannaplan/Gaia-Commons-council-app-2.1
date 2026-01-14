@@ -144,8 +144,16 @@ import {
   Printer,
   Info,
   HelpCircle,
-  ChevronRight
+  ChevronRight,
+  ChevronLeft
 } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const SCALE_LABELS: Record<string, string> = {
   pilot: "Pilot (6 Schools)",
@@ -2172,7 +2180,7 @@ export default function Dashboard() {
           </motion.div>
         </div>
 
-        {/* Slide Deck */}
+        {/* Slide Deck Carousel */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.65 }} className="mb-8">
           <Card className="glass-panel" data-testid="card-slides">
             <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
@@ -2182,17 +2190,33 @@ export default function Dashboard() {
             </CardHeader>
             <CardContent>
               {slides && slides.length > 0 && (
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                  {slides.map((slide) => (
-                    <div key={slide.id} className="p-3 bg-muted/30 rounded-lg border border-border/50 hover:border-primary/30 transition-colors" data-testid={`slide-${slide.slideNumber}`}>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-xs font-bold text-primary">#{slide.slideNumber}</span>
-                        <span className="text-xs font-semibold text-foreground truncate">{slide.title}</span>
-                      </div>
-                      <p className="text-xs text-muted-foreground line-clamp-2">{slide.content}</p>
-                    </div>
-                  ))}
-                </div>
+                <Carousel
+                  opts={{
+                    align: "start",
+                    loop: true,
+                  }}
+                  className="w-full"
+                  data-testid="carousel-slides"
+                >
+                  <CarouselContent className="-ml-2 md:-ml-4">
+                    {slides.map((slide) => (
+                      <CarouselItem key={slide.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
+                        <div className="p-4 bg-muted/30 rounded-lg border border-border/50 hover:border-primary/30 transition-colors h-full min-h-[120px]" data-testid={`slide-${slide.slideNumber}`}>
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="text-sm font-bold text-primary bg-primary/10 px-2 py-0.5 rounded">#{slide.slideNumber}</span>
+                          </div>
+                          <h4 className="text-sm font-semibold text-foreground mb-2">{slide.title}</h4>
+                          <p className="text-xs text-muted-foreground line-clamp-3">{slide.content}</p>
+                        </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <div className="flex items-center justify-center gap-4 mt-4">
+                    <CarouselPrevious className="static translate-y-0" data-testid="button-slides-prev" />
+                    <span className="text-sm text-muted-foreground">Swipe or use arrows to navigate</span>
+                    <CarouselNext className="static translate-y-0" data-testid="button-slides-next" />
+                  </div>
+                </Carousel>
               )}
             </CardContent>
           </Card>
