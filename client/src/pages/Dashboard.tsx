@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Header } from "@/components/Header";
 import { StatsCard, StatItem } from "@/components/StatsCard";
 import { Timeline } from "@/components/Timeline";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Tooltip as UITooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
@@ -135,7 +139,11 @@ import {
   SlidersHorizontal,
   TrendingDown,
   Percent,
-  ArrowUpDown
+  ArrowUpDown,
+  Download,
+  Printer,
+  Info,
+  HelpCircle
 } from "lucide-react";
 
 const SCALE_LABELS: Record<string, string> = {
@@ -168,7 +176,58 @@ function formatNumber(num: number): string {
 }
 
 export default function Dashboard() {
-  const [selectedScale, setSelectedScale] = useState("pilot");
+  const [selectedScale, setSelectedScale] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('gaiaSelectedScale') || 'pilot';
+    }
+    return 'pilot';
+  });
+  const [isExporting, setIsExporting] = useState(false);
+  const dashboardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    localStorage.setItem('gaiaSelectedScale', selectedScale);
+  }, [selectedScale]);
+
+  const handleExportPDF = async () => {
+    if (!dashboardRef.current) return;
+    setIsExporting(true);
+    try {
+      const canvas = await html2canvas(dashboardRef.current, {
+        scale: 1.5,
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff'
+      });
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      let heightLeft = pdfHeight;
+      let position = 0;
+      pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
+      heightLeft -= pdf.internal.pageSize.getHeight();
+      while (heightLeft > 0) {
+        position = heightLeft - pdfHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
+        heightLeft -= pdf.internal.pageSize.getHeight();
+      }
+      pdf.save(`gaia-commons-report-${selectedScale}-${new Date().toISOString().split('T')[0]}.pdf`);
+    } catch (error) {
+      console.error('PDF export failed:', error);
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const handlePrint = () => {
+    window.print();
+  };
   
   const { data: pilot, isLoading: loadingPilot } = usePilotStats();
   const { data: endowment, isLoading: loadingEndowment } = useEndowmentStats();
@@ -252,10 +311,38 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-secondary/30 pb-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+    <div className="min-h-screen bg-gradient-to-br from-background to-secondary/30 pb-20 print:bg-white">
+      <div ref={dashboardRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <Header />
+          <div className="flex items-center justify-between flex-wrap gap-4 mb-4">
+            <Header />
+            <div className="flex items-center gap-2 print:hidden" data-testid="export-controls">
+              <UITooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={handleExportPDF}
+                    disabled={isExporting}
+                    data-testid="button-export-pdf"
+                  >
+                    {isExporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+                    <span className="ml-2 hidden sm:inline">Export PDF</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Download dashboard as PDF report</TooltipContent>
+              </UITooltip>
+              <UITooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="outline" size="sm" onClick={handlePrint} data-testid="button-print">
+                    <Printer className="h-4 w-4" />
+                    <span className="ml-2 hidden sm:inline">Print</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Print dashboard</TooltipContent>
+              </UITooltip>
+            </div>
+          </div>
         </motion.div>
 
         {/* Scale Selector Tabs */}
@@ -1664,6 +1751,14 @@ export default function Dashboard() {
                   <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
                     <BarChart3 className="h-4 w-4 text-primary" />
                     Monte Carlo Uncertainty Analysis (95% Confidence)
+                    <UITooltip>
+                      <TooltipTrigger asChild>
+                        <HelpCircle className="h-3.5 w-3.5 text-muted-foreground cursor-help" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs">
+                        <p>P10/P50/P90 represent the 10th, 50th (median), and 90th percentile outcomes from 10,000 simulation runs, capturing uncertainty in projections.</p>
+                      </TooltipContent>
+                    </UITooltip>
                   </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                     {monteCarloSimulations.map((mc) => (
@@ -1701,9 +1796,17 @@ export default function Dashboard() {
                     <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
                       <GitCompare className="h-4 w-4 text-primary" />
                       Scenario Comparison (Baseline / Optimistic / Conservative)
+                      <UITooltip>
+                        <TooltipTrigger asChild>
+                          <HelpCircle className="h-3.5 w-3.5 text-muted-foreground cursor-help" />
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs">
+                          <p>Three scenarios model different assumptions: Conservative (worst-case delays), Baseline (current plan), Optimistic (accelerated adoption).</p>
+                        </TooltipContent>
+                      </UITooltip>
                     </h4>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-sm">
+                    <div className="overflow-x-auto -mx-3 px-3">
+                      <table className="w-full text-sm min-w-[500px]">
                         <thead>
                           <tr className="border-b border-border/50">
                             <th className="text-left py-2 px-3 font-medium text-muted-foreground">Metric</th>
@@ -1749,6 +1852,14 @@ export default function Dashboard() {
                     <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
                       <SlidersHorizontal className="h-4 w-4 text-primary" />
                       Optimization Targets
+                      <UITooltip>
+                        <TooltipTrigger asChild>
+                          <HelpCircle className="h-3.5 w-3.5 text-muted-foreground cursor-help" />
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs">
+                          <p>Optimization finds the best achievable values for each target while respecting real-world constraints like budget caps and quality standards.</p>
+                        </TooltipContent>
+                      </UITooltip>
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                       {optimizationParams.map((o) => (
@@ -1791,6 +1902,14 @@ export default function Dashboard() {
                     <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
                       <ArrowUpDown className="h-4 w-4 text-primary" />
                       Sensitivity Analysis (Parameter Impact Ranking)
+                      <UITooltip>
+                        <TooltipTrigger asChild>
+                          <HelpCircle className="h-3.5 w-3.5 text-muted-foreground cursor-help" />
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs">
+                          <p>Elasticity measures how much output changes for a 1% change in input. Higher values indicate parameters that most affect outcomes.</p>
+                        </TooltipContent>
+                      </UITooltip>
                     </h4>
                     <div className="space-y-2">
                       {sensitivityAnalysis.map((s) => (
@@ -1912,6 +2031,27 @@ export default function Dashboard() {
             </div>
           </div>
         </motion.div>
+
+        {/* License & Attribution Footer */}
+        <motion.footer 
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          transition={{ delay: 0.8 }} 
+          className="mt-12 pt-6 border-t border-border/30 text-center text-sm text-muted-foreground print:mt-4"
+          data-testid="footer-license"
+        >
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mb-2">
+            <span className="font-medium text-foreground">Gaia Commons Council</span>
+            <span className="hidden sm:inline text-border">|</span>
+            <span>Planetary governance framework for regenerative school lunches</span>
+          </div>
+          <p className="text-xs text-muted-foreground/70">
+            Created by Braden Chance. Licensed under Gaia Commons License v1.0
+          </p>
+          <p className="text-xs text-muted-foreground/50 mt-1">
+            Data sources: NASA GISS, NOAA, IPCC AR6, IEA World Energy Outlook, World Bank, FAO
+          </p>
+        </motion.footer>
       </div>
     </div>
   );
