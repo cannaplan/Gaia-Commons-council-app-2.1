@@ -22,7 +22,9 @@ import {
   expandedJobs,
   k12Curriculum,
   coalitionPartners,
-  fundingSources
+  fundingSources,
+  transparencyFeatures,
+  accountabilityMechanisms
 } from './schema';
 
 export const errorSchemas = {
@@ -85,6 +87,12 @@ export const api = {
   },
   fundingSources: {
     list: { method: 'GET' as const, path: '/api/funding-sources', responses: { 200: z.array(z.custom<typeof fundingSources.$inferSelect>()) } },
+  },
+  transparencyFeatures: {
+    list: { method: 'GET' as const, path: '/api/transparency-features', responses: { 200: z.array(z.custom<typeof transparencyFeatures.$inferSelect>()) } },
+  },
+  accountabilityMechanisms: {
+    list: { method: 'GET' as const, path: '/api/accountability-mechanisms', responses: { 200: z.array(z.custom<typeof accountabilityMechanisms.$inferSelect>()) } },
   },
   health: {
     get: { method: 'GET' as const, path: '/health', responses: { 200: z.object({ status: z.string(), version: z.string(), service: z.string() }) } },

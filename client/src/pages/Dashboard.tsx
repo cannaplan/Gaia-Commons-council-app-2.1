@@ -24,7 +24,9 @@ import {
   useExpandedJobs,
   useK12Curriculum,
   useCoalitionPartners,
-  useFundingSources
+  useFundingSources,
+  useTransparencyFeatures,
+  useAccountabilityMechanisms
 } from "@/hooks/use-gaia";
 import {
   LineChart,
@@ -87,7 +89,11 @@ import {
   Banknote,
   HandCoins,
   Handshake,
-  Clock
+  Clock,
+  Eye,
+  ShieldCheck,
+  ClipboardCheck,
+  AlertTriangle
 } from "lucide-react";
 
 const SCALE_LABELS: Record<string, string> = {
@@ -139,6 +145,8 @@ export default function Dashboard() {
   const { data: curriculum } = useK12Curriculum();
   const { data: coalition } = useCoalitionPartners();
   const { data: fundingSources } = useFundingSources();
+  const { data: transparencyFeatures } = useTransparencyFeatures();
+  const { data: accountabilityMechanisms } = useAccountabilityMechanisms();
   const { data: legalFramework, isLoading: loadingLegal } = useLegalFramework();
 
   const isLoading = loadingPilot || loadingEndowment || loadingTimeline || loadingFinancials || 
@@ -859,6 +867,86 @@ export default function Dashboard() {
                     <div>
                       <p className="text-xs text-blue-700 dark:text-blue-400 font-medium">Year 1 Draw (3.5%)</p>
                       <p className="font-semibold text-blue-800 dark:text-blue-300">$73.5 Million</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Accountability & Transparency - Fraud Prevention */}
+        {transparencyFeatures && transparencyFeatures.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.496 }} className="mb-8">
+            <Card className="glass-panel" data-testid="card-transparency">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <Eye className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Accountability & Transparency — Fraud Prevention by Design</CardTitle>
+                <Badge variant="secondary" className="ml-auto">Everyone Sees Everything</Badge>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div>
+                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3 flex items-center gap-2">
+                      <Eye className="h-3 w-3" /> Transparency Features
+                    </p>
+                    <div className="space-y-3">
+                      {transparencyFeatures.map((feature) => (
+                        <div key={feature.id} className="p-3 bg-muted/30 rounded-lg border border-border/50" data-testid={`transparency-${feature.id}`}>
+                          <div className="flex items-center gap-2 mb-1">
+                            <Badge variant="outline" className="bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800 text-xs">{feature.category}</Badge>
+                          </div>
+                          <h4 className="font-semibold text-foreground text-sm">{feature.feature}</h4>
+                          <p className="text-xs text-muted-foreground mt-1">{feature.description}</p>
+                          <div className="mt-2 pt-2 border-t border-border/30">
+                            <p className="text-xs text-muted-foreground/80"><span className="font-medium">Who sees:</span> {feature.whoSees}</p>
+                            <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-1"><ShieldCheck className="h-3 w-3 inline mr-1" />{feature.fraudPrevention}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {accountabilityMechanisms && accountabilityMechanisms.length > 0 && (
+                    <div>
+                      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3 flex items-center gap-2">
+                        <ClipboardCheck className="h-3 w-3" /> Accountability Mechanisms
+                      </p>
+                      <div className="space-y-3">
+                        {accountabilityMechanisms.map((mechanism) => (
+                          <div key={mechanism.id} className="p-3 bg-muted/30 rounded-lg border border-border/50" data-testid={`accountability-${mechanism.id}`}>
+                            <div className="flex items-center justify-between mb-1">
+                              <h4 className="font-semibold text-foreground text-sm">{mechanism.mechanism}</h4>
+                              <Badge variant="outline" className="text-xs">{mechanism.frequency}</Badge>
+                            </div>
+                            <p className="text-xs text-muted-foreground">{mechanism.description}</p>
+                            <div className="mt-2 grid grid-cols-2 gap-2">
+                              <div className="p-2 bg-blue-50 dark:bg-blue-950/30 rounded border border-blue-100 dark:border-blue-900/50">
+                                <p className="text-xs text-blue-700 dark:text-blue-400 font-medium">Who Audits</p>
+                                <p className="text-xs text-blue-800 dark:text-blue-300">{mechanism.whoAudits}</p>
+                              </div>
+                              <div className="p-2 bg-purple-50 dark:bg-purple-950/30 rounded border border-purple-100 dark:border-purple-900/50">
+                                <p className="text-xs text-purple-700 dark:text-purple-400 font-medium">Visibility</p>
+                                <p className="text-xs text-purple-800 dark:text-purple-300 line-clamp-2">{mechanism.visibility}</p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="mt-4 p-4 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-100 dark:border-amber-900/50">
+                  <div className="flex items-start gap-3">
+                    <AlertTriangle className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="font-semibold text-amber-800 dark:text-amber-300 text-sm">Why Traditional Systems Fail</h4>
+                      <p className="text-xs text-amber-700 dark:text-amber-400 mt-1">
+                        Minnesota has seen $250M+ in COVID relief fraud, childcare system collapse, and ongoing school lunch contractor fraud. 
+                        Root causes: opaque funding flows, fragmented oversight, profit incentives misaligned with kid welfare. 
+                        Gaia Commons makes fraud almost impossible through radical visibility and distributed accountability.
+                      </p>
                     </div>
                   </div>
                 </div>

@@ -3,6 +3,7 @@ import {
   pilotStats, endowmentStats, timelineEvents, financialMetrics, climateMetrics, slideDeck, historicalFinancials,
   schoolClusters, schools, scaleProjections, environmentalImpact, jobCreation, legalFramework,
   endowmentProjections, expandedJobs, k12Curriculum, coalitionPartners, fundingSources,
+  transparencyFeatures, accountabilityMechanisms,
   type PilotStats, type InsertPilotStats,
   type EndowmentStats, type InsertEndowmentStats,
   type TimelineEvent, type InsertTimelineEvent,
@@ -20,7 +21,9 @@ import {
   type ExpandedJobs, type InsertExpandedJobs,
   type K12Curriculum, type InsertK12Curriculum,
   type CoalitionPartner, type InsertCoalitionPartner,
-  type FundingSource, type InsertFundingSource
+  type FundingSource, type InsertFundingSource,
+  type TransparencyFeature, type InsertTransparencyFeature,
+  type AccountabilityMechanism, type InsertAccountabilityMechanism
 } from "@shared/schema";
 import { eq, asc } from "drizzle-orm";
 
@@ -63,6 +66,10 @@ export interface IStorage {
   createCoalitionPartner(partner: InsertCoalitionPartner): Promise<CoalitionPartner>;
   getFundingSources(): Promise<FundingSource[]>;
   createFundingSource(source: InsertFundingSource): Promise<FundingSource>;
+  getTransparencyFeatures(): Promise<TransparencyFeature[]>;
+  createTransparencyFeature(feature: InsertTransparencyFeature): Promise<TransparencyFeature>;
+  getAccountabilityMechanisms(): Promise<AccountabilityMechanism[]>;
+  createAccountabilityMechanism(mechanism: InsertAccountabilityMechanism): Promise<AccountabilityMechanism>;
   isEmpty(): Promise<boolean>;
 }
 
@@ -224,6 +231,20 @@ export class DatabaseStorage implements IStorage {
   async createFundingSource(source: InsertFundingSource): Promise<FundingSource> {
     const [s] = await db.insert(fundingSources).values(source).returning();
     return s;
+  }
+  async getTransparencyFeatures(): Promise<TransparencyFeature[]> {
+    return await db.select().from(transparencyFeatures);
+  }
+  async createTransparencyFeature(feature: InsertTransparencyFeature): Promise<TransparencyFeature> {
+    const [f] = await db.insert(transparencyFeatures).values(feature).returning();
+    return f;
+  }
+  async getAccountabilityMechanisms(): Promise<AccountabilityMechanism[]> {
+    return await db.select().from(accountabilityMechanisms);
+  }
+  async createAccountabilityMechanism(mechanism: InsertAccountabilityMechanism): Promise<AccountabilityMechanism> {
+    const [m] = await db.insert(accountabilityMechanisms).values(mechanism).returning();
+    return m;
   }
   async isEmpty(): Promise<boolean> {
     const [stats] = await db.select().from(pilotStats).limit(1);

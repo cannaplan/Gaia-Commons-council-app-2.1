@@ -134,6 +134,18 @@ export async function registerRoutes(
     res.json(sources);
   });
 
+  // === Transparency Features ===
+  app.get(api.transparencyFeatures.list.path, async (_req, res) => {
+    const features = await storage.getTransparencyFeatures();
+    res.json(features);
+  });
+
+  // === Accountability Mechanisms ===
+  app.get(api.accountabilityMechanisms.list.path, async (_req, res) => {
+    const mechanisms = await storage.getAccountabilityMechanisms();
+    res.json(mechanisms);
+  });
+
   // === Seed Data ===
   await seedDatabase();
 
@@ -569,7 +581,81 @@ async function seedDatabase() {
       percentage: 1.0,
       entities: "Amazon, Microsoft, Google, Meta, Apple"
     });
+
+    // Seed Transparency Features (from Accountability slide)
+    await storage.createTransparencyFeature({
+      category: "Radical Visibility",
+      feature: "Real-Time Dashboard",
+      description: "Public quarterly dashboard showing corpus balance, investment performance, spending breakdown, production metrics",
+      whoSees: "Politicians, school districts, students, stewards, media, auditors, public",
+      fraudPrevention: "No hiding place - every dollar accounted for, visible, traceable"
+    });
+    await storage.createTransparencyFeature({
+      category: "Distributed Construction",
+      feature: "Visible Building Process",
+      description: "Weekly construction photos, public permits, school staff inspections, budget transparency",
+      whoSees: "Community, teachers, students, local media",
+      fraudPrevention: "Can't hide cost overruns, shoddy construction, or corrupted contractors"
+    });
+    await storage.createTransparencyFeature({
+      category: "Distributed Hiring",
+      feature: "Local Jobs Transparency",
+      description: "Local hiring preference, published wages, visible career ladder, equity tracking",
+      whoSees: "Community, school boards, parents, unions",
+      fraudPrevention: "Can't pay workers less, create fake jobs, or exploit workers secretly"
+    });
+    await storage.createTransparencyFeature({
+      category: "Distributed Learning",
+      feature: "Teacher-Controlled Curriculum",
+      description: "Curriculum designed by K-12 educators, public lesson plans, tracked student outcomes",
+      whoSees: "Teachers, parents, students, auditors",
+      fraudPrevention: "Can't fake learning outcomes or use curriculum as money-laundering"
+    });
+    await storage.createTransparencyFeature({
+      category: "Distributed Governance",
+      feature: "Community Board Elections",
+      description: "3 of 13 seats elected by community, public meetings, published minutes, 10-year reviews",
+      whoSees: "Voters, citizens, media, attorney general",
+      fraudPrevention: "Can't control board indefinitely or hide governance decisions"
+    });
+
+    // Seed Accountability Mechanisms (from Accountability slide)
+    await storage.createAccountabilityMechanism({
+      mechanism: "Big 4 Independent Audit",
+      description: "Full financial and compliance audit by Deloitte, EY, PwC, or KPMG",
+      frequency: "Annual",
+      whoAudits: "External Big 4 auditor",
+      visibility: "Results published publicly via Form 990 and IRS record"
+    });
+    await storage.createAccountabilityMechanism({
+      mechanism: "Steward Review",
+      description: "Major donors ($500K+) review financials and raise questions publicly",
+      frequency: "Quarterly",
+      whoAudits: "Steward Advisory Council",
+      visibility: "Meeting documentation shared with stakeholders"
+    });
+    await storage.createAccountabilityMechanism({
+      mechanism: "Community Inspection",
+      description: "School staff, student interns, parents can visit greenhouses unannounced",
+      frequency: "Ongoing",
+      whoAudits: "Teachers, students, parents, journalists",
+      visibility: "Open access policy for media and community members"
+    });
+    await storage.createAccountabilityMechanism({
+      mechanism: "Board Elections",
+      description: "3 community-elected seats with public candidates and debates",
+      frequency: "Every 3 years",
+      whoAudits: "Minnesota voters",
+      visibility: "Public election process with recorded votes"
+    });
+    await storage.createAccountabilityMechanism({
+      mechanism: "Multi-Layer Verification",
+      description: "Multiple auditors prevent corruption - requires conspiracy of 3+ people",
+      frequency: "Continuous",
+      whoAudits: "Big 4 + Stewards + Community + Media",
+      visibility: "Discovery is inevitable - public shame and legal prosecution for fraud"
+    });
     
-    console.log("Database seeded successfully with GAIA v4.1 MASTER PLATFORM data + expanded ballot initiative data");
+    console.log("Database seeded successfully with GAIA v4.1 MASTER PLATFORM data + expanded ballot initiative data + accountability framework");
   }
 }

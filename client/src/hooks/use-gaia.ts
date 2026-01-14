@@ -229,3 +229,27 @@ export function useFundingSources() {
     },
   });
 }
+
+// Transparency Features
+export function useTransparencyFeatures() {
+  return useQuery({
+    queryKey: [api.transparencyFeatures.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.transparencyFeatures.list.path);
+      if (!res.ok) throw new Error("Failed to fetch transparency features");
+      return api.transparencyFeatures.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Accountability Mechanisms
+export function useAccountabilityMechanisms() {
+  return useQuery({
+    queryKey: [api.accountabilityMechanisms.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.accountabilityMechanisms.list.path);
+      if (!res.ok) throw new Error("Failed to fetch accountability mechanisms");
+      return api.accountabilityMechanisms.list.responses[200].parse(await res.json());
+    },
+  });
+}

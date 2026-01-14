@@ -208,6 +208,26 @@ export const historicalFinancials = pgTable("historical_financials", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Transparency Features - Dashboard visibility
+export const transparencyFeatures = pgTable("transparency_features", {
+  id: serial("id").primaryKey(),
+  category: text("category").notNull(),
+  feature: text("feature").notNull(),
+  description: text("description").notNull(),
+  whoSees: text("who_sees").notNull(),
+  fraudPrevention: text("fraud_prevention").notNull(),
+});
+
+// Accountability Mechanisms - Audit layers
+export const accountabilityMechanisms = pgTable("accountability_mechanisms", {
+  id: serial("id").primaryKey(),
+  mechanism: text("mechanism").notNull(),
+  description: text("description").notNull(),
+  frequency: text("frequency").notNull(),
+  whoAudits: text("who_audits").notNull(),
+  visibility: text("visibility").notNull(),
+});
+
 // === INSERT SCHEMAS ===
 
 export const insertPilotStatsSchema = createInsertSchema(pilotStats).omit({ id: true });
@@ -228,6 +248,8 @@ export const insertExpandedJobsSchema = createInsertSchema(expandedJobs).omit({ 
 export const insertK12CurriculumSchema = createInsertSchema(k12Curriculum).omit({ id: true });
 export const insertCoalitionPartnerSchema = createInsertSchema(coalitionPartners).omit({ id: true });
 export const insertFundingSourceSchema = createInsertSchema(fundingSources).omit({ id: true });
+export const insertTransparencyFeatureSchema = createInsertSchema(transparencyFeatures).omit({ id: true });
+export const insertAccountabilityMechanismSchema = createInsertSchema(accountabilityMechanisms).omit({ id: true });
 
 // === TYPES ===
 
@@ -250,6 +272,8 @@ export type ExpandedJobs = typeof expandedJobs.$inferSelect;
 export type K12Curriculum = typeof k12Curriculum.$inferSelect;
 export type CoalitionPartner = typeof coalitionPartners.$inferSelect;
 export type FundingSource = typeof fundingSources.$inferSelect;
+export type TransparencyFeature = typeof transparencyFeatures.$inferSelect;
+export type AccountabilityMechanism = typeof accountabilityMechanisms.$inferSelect;
 
 // Insert types
 export type InsertPilotStats = z.infer<typeof insertPilotStatsSchema>;
@@ -270,3 +294,5 @@ export type InsertExpandedJobs = z.infer<typeof insertExpandedJobsSchema>;
 export type InsertK12Curriculum = z.infer<typeof insertK12CurriculumSchema>;
 export type InsertCoalitionPartner = z.infer<typeof insertCoalitionPartnerSchema>;
 export type InsertFundingSource = z.infer<typeof insertFundingSourceSchema>;
+export type InsertTransparencyFeature = z.infer<typeof insertTransparencyFeatureSchema>;
+export type InsertAccountabilityMechanism = z.infer<typeof insertAccountabilityMechanismSchema>;
