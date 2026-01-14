@@ -25,7 +25,10 @@ import {
   fundingSources,
   transparencyFeatures,
   accountabilityMechanisms,
-  tribalPartnerships
+  tribalPartnerships,
+  implementationTimeline,
+  politicalRoadmap,
+  stressTests
 } from './schema';
 
 export const errorSchemas = {
@@ -97,6 +100,15 @@ export const api = {
   },
   tribalPartnerships: {
     list: { method: 'GET' as const, path: '/api/tribal-partnerships', responses: { 200: z.array(z.custom<typeof tribalPartnerships.$inferSelect>()) } },
+  },
+  implementationTimeline: {
+    list: { method: 'GET' as const, path: '/api/implementation-timeline', responses: { 200: z.array(z.custom<typeof implementationTimeline.$inferSelect>()) } },
+  },
+  politicalRoadmap: {
+    list: { method: 'GET' as const, path: '/api/political-roadmap', responses: { 200: z.array(z.custom<typeof politicalRoadmap.$inferSelect>()) } },
+  },
+  stressTests: {
+    list: { method: 'GET' as const, path: '/api/stress-tests', responses: { 200: z.array(z.custom<typeof stressTests.$inferSelect>()) } },
   },
   health: {
     get: { method: 'GET' as const, path: '/health', responses: { 200: z.object({ status: z.string(), version: z.string(), service: z.string() }) } },

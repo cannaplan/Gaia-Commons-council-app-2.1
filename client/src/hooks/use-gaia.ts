@@ -265,3 +265,39 @@ export function useTribalPartnerships() {
     },
   });
 }
+
+// Implementation Timeline
+export function useImplementationTimeline() {
+  return useQuery({
+    queryKey: [api.implementationTimeline.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.implementationTimeline.list.path);
+      if (!res.ok) throw new Error("Failed to fetch implementation timeline");
+      return api.implementationTimeline.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Political Roadmap
+export function usePoliticalRoadmap() {
+  return useQuery({
+    queryKey: [api.politicalRoadmap.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.politicalRoadmap.list.path);
+      if (!res.ok) throw new Error("Failed to fetch political roadmap");
+      return api.politicalRoadmap.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Stress Tests
+export function useStressTests() {
+  return useQuery({
+    queryKey: [api.stressTests.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.stressTests.list.path);
+      if (!res.ok) throw new Error("Failed to fetch stress tests");
+      return api.stressTests.list.responses[200].parse(await res.json());
+    },
+  });
+}

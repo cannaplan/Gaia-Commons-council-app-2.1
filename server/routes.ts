@@ -152,6 +152,24 @@ export async function registerRoutes(
     res.json(partnerships);
   });
 
+  // === Implementation Timeline ===
+  app.get(api.implementationTimeline.list.path, async (_req, res) => {
+    const timeline = await storage.getImplementationTimeline();
+    res.json(timeline);
+  });
+
+  // === Political Roadmap ===
+  app.get(api.politicalRoadmap.list.path, async (_req, res) => {
+    const roadmap = await storage.getPoliticalRoadmap();
+    res.json(roadmap);
+  });
+
+  // === Stress Tests ===
+  app.get(api.stressTests.list.path, async (_req, res) => {
+    const tests = await storage.getStressTests();
+    res.json(tests);
+  });
+
   // === Seed Data ===
   await seedDatabase();
 
@@ -181,6 +199,56 @@ async function seedDatabase() {
       complementaryProjects: "New $3.6M wild-rice facility - together lock in permanent food sovereignty and generational wealth",
       status: "Partnership Development"
     });
+  }
+
+  // Seed implementation timeline if empty
+  const timelineData = await storage.getImplementationTimeline();
+  if (timelineData.length === 0) {
+    console.log("Seeding implementation timeline...");
+    const milestones = [
+      { phase: "Foundation", quarter: "2027 Q1", milestone: "Board Elections & Corpus Receipt", details: "Board elections; receive $2.1B corpus from state filings", greenhouseCount: 0, jobsCreated: 50, studentsServed: 0 },
+      { phase: "Launch", quarter: "2027 Q2-Q4", milestone: "First 50 Greenhouses", details: "Build first 50 greenhouses; hire staff, train teachers", greenhouseCount: 50, jobsCreated: 260, studentsServed: 159000 },
+      { phase: "Launch", quarter: "2027 Q3", milestone: "First Harvest", details: "First harvest; K-12 curriculum pilots with 9 school districts", greenhouseCount: 50, jobsCreated: 260, studentsServed: 159000 },
+      { phase: "Scale", quarter: "2028 Q1-Q4", milestone: "Scale to 200 Greenhouses", details: "Expand to 200 greenhouses across all 8 congressional districts", greenhouseCount: 200, jobsCreated: 1040, studentsServed: 636000 },
+      { phase: "Full Operation", quarter: "2028 Q4", milestone: "All 275 Greenhouses Operational", details: "875K students fed daily; 1,430 FTE jobs created; full statewide coverage", greenhouseCount: 275, jobsCreated: 1430, studentsServed: 875000 }
+    ];
+    for (const m of milestones) {
+      await storage.createImplementationTimeline(m);
+    }
+  }
+
+  // Seed political roadmap if empty
+  const roadmapData = await storage.getPoliticalRoadmap();
+  if (roadmapData.length === 0) {
+    console.log("Seeding political roadmap...");
+    const districts = [
+      { district: "MN-03", supportLevel: "Strong YES", supportPct: "70%+", strategy: "Bankroll field ops for weak districts", keyMessaging: "Education investment, suburban families" },
+      { district: "MN-04", supportLevel: "Strong YES", supportPct: "70%+", strategy: "Bankroll field ops for weak districts", keyMessaging: "Urban food access, jobs" },
+      { district: "MN-05", supportLevel: "Strong YES", supportPct: "70%+", strategy: "Bankroll field ops for weak districts", keyMessaging: "Climate action, equity" },
+      { district: "MN-01", supportLevel: "Competitive", supportPct: "50-56%", strategy: "Ground game + local partnerships", keyMessaging: "Rural jobs, farm partnerships" },
+      { district: "MN-06", supportLevel: "Competitive", supportPct: "50-56%", strategy: "Ground game + local partnerships", keyMessaging: "Local food, school nutrition" },
+      { district: "MN-07", supportLevel: "Competitive", supportPct: "50-56%", strategy: "Ground game + local partnerships", keyMessaging: "Agricultural innovation, jobs" },
+      { district: "MN-08", supportLevel: "Competitive", supportPct: "50-56%", strategy: "Ground game + local partnerships", keyMessaging: "Iron Range jobs, Boundary Waters protection" },
+      { district: "MN-02", supportLevel: "Lean NO", supportPct: "48-52%", strategy: "Regenerative ag + jobs messaging", keyMessaging: "Economic development, local hiring" }
+    ];
+    for (const d of districts) {
+      await storage.createPoliticalRoadmap(d);
+    }
+  }
+
+  // Seed stress tests if empty
+  const stressData = await storage.getStressTests();
+  if (stressData.length === 0) {
+    console.log("Seeding stress tests...");
+    const scenarios = [
+      { scenario: "Bear Market", description: "5% annual loss for 5 consecutive years", impact: "Corpus temporarily reduced by ~22%", mitigation: "Spending-smoothing policy maintains draw; recovery within 10 years", solvencyProbability: "99%+" },
+      { scenario: "Inflation Surge", description: "4% annual inflation for 10 years", impact: "Purchasing power erosion risk", mitigation: "CPI adjustment protects purchasing power; corpus grows real 2%", solvencyProbability: "99%+" },
+      { scenario: "Combined Shock", description: "Bear market + inflation surge simultaneously", impact: "Maximum stress on corpus and spending", mitigation: "1000-path Monte Carlo using 1926-2022 data shows resilience", solvencyProbability: "99%+" },
+      { scenario: "Spending Policy", description: "3-year rolling-average corpus with caps", impact: "Smooths volatility in annual draws", mitigation: "Max 10% year-to-year change; emergency 5% cap (board vote)", solvencyProbability: "100%" }
+    ];
+    for (const s of scenarios) {
+      await storage.createStressTest(s);
+    }
   }
   
   if (isEmpty) {

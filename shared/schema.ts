@@ -247,6 +247,38 @@ export const tribalPartnerships = pgTable("tribal_partnerships", {
   status: text("status").notNull(),
 });
 
+// Implementation Timeline - Greenhouse rollout milestones
+export const implementationTimeline = pgTable("implementation_timeline", {
+  id: serial("id").primaryKey(),
+  phase: text("phase").notNull(),
+  quarter: text("quarter").notNull(),
+  milestone: text("milestone").notNull(),
+  details: text("details").notNull(),
+  greenhouseCount: integer("greenhouse_count"),
+  jobsCreated: integer("jobs_created"),
+  studentsServed: integer("students_served"),
+});
+
+// Political Roadmap - Congressional district strategy
+export const politicalRoadmap = pgTable("political_roadmap", {
+  id: serial("id").primaryKey(),
+  district: text("district").notNull(),
+  supportLevel: text("support_level").notNull(),
+  supportPct: text("support_pct").notNull(),
+  strategy: text("strategy").notNull(),
+  keyMessaging: text("key_messaging").notNull(),
+});
+
+// Stress Tests - Financial resilience scenarios
+export const stressTests = pgTable("stress_tests", {
+  id: serial("id").primaryKey(),
+  scenario: text("scenario").notNull(),
+  description: text("description").notNull(),
+  impact: text("impact").notNull(),
+  mitigation: text("mitigation").notNull(),
+  solvencyProbability: text("solvency_probability").notNull(),
+});
+
 // === INSERT SCHEMAS ===
 
 export const insertPilotStatsSchema = createInsertSchema(pilotStats).omit({ id: true });
@@ -270,6 +302,9 @@ export const insertFundingSourceSchema = createInsertSchema(fundingSources).omit
 export const insertTransparencyFeatureSchema = createInsertSchema(transparencyFeatures).omit({ id: true });
 export const insertAccountabilityMechanismSchema = createInsertSchema(accountabilityMechanisms).omit({ id: true });
 export const insertTribalPartnershipSchema = createInsertSchema(tribalPartnerships).omit({ id: true });
+export const insertImplementationTimelineSchema = createInsertSchema(implementationTimeline).omit({ id: true });
+export const insertPoliticalRoadmapSchema = createInsertSchema(politicalRoadmap).omit({ id: true });
+export const insertStressTestSchema = createInsertSchema(stressTests).omit({ id: true });
 
 // === TYPES ===
 
@@ -295,6 +330,9 @@ export type FundingSource = typeof fundingSources.$inferSelect;
 export type TransparencyFeature = typeof transparencyFeatures.$inferSelect;
 export type AccountabilityMechanism = typeof accountabilityMechanisms.$inferSelect;
 export type TribalPartnership = typeof tribalPartnerships.$inferSelect;
+export type ImplementationTimelineType = typeof implementationTimeline.$inferSelect;
+export type PoliticalRoadmapType = typeof politicalRoadmap.$inferSelect;
+export type StressTest = typeof stressTests.$inferSelect;
 
 // Insert types
 export type InsertPilotStats = z.infer<typeof insertPilotStatsSchema>;
@@ -318,3 +356,6 @@ export type InsertFundingSource = z.infer<typeof insertFundingSourceSchema>;
 export type InsertTransparencyFeature = z.infer<typeof insertTransparencyFeatureSchema>;
 export type InsertAccountabilityMechanism = z.infer<typeof insertAccountabilityMechanismSchema>;
 export type InsertTribalPartnership = z.infer<typeof insertTribalPartnershipSchema>;
+export type InsertImplementationTimeline = z.infer<typeof insertImplementationTimelineSchema>;
+export type InsertPoliticalRoadmap = z.infer<typeof insertPoliticalRoadmapSchema>;
+export type InsertStressTest = z.infer<typeof insertStressTestSchema>;

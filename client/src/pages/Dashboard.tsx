@@ -27,7 +27,10 @@ import {
   useFundingSources,
   useTransparencyFeatures,
   useAccountabilityMechanisms,
-  useTribalPartnerships
+  useTribalPartnerships,
+  useImplementationTimeline,
+  usePoliticalRoadmap,
+  useStressTests
 } from "@/hooks/use-gaia";
 import {
   LineChart,
@@ -95,7 +98,11 @@ import {
   ShieldCheck,
   ClipboardCheck,
   AlertTriangle,
-  Feather
+  Feather,
+  Calendar,
+  MapPinned,
+  ShieldAlert,
+  CheckCircle2
 } from "lucide-react";
 
 const SCALE_LABELS: Record<string, string> = {
@@ -150,6 +157,9 @@ export default function Dashboard() {
   const { data: transparencyFeatures } = useTransparencyFeatures();
   const { data: accountabilityMechanisms } = useAccountabilityMechanisms();
   const { data: tribalPartnerships } = useTribalPartnerships();
+  const { data: implementationTimeline } = useImplementationTimeline();
+  const { data: politicalRoadmap } = usePoliticalRoadmap();
+  const { data: stressTests } = useStressTests();
   const { data: legalFramework, isLoading: loadingLegal } = useLegalFramework();
 
   const isLoading = loadingPilot || loadingEndowment || loadingTimeline || loadingFinancials || 
@@ -1038,6 +1048,154 @@ export default function Dashboard() {
                           <p className="text-sm text-emerald-800 dark:text-emerald-300">{partnership.complementaryProjects}</p>
                         </div>
                       )}
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Implementation Timeline */}
+        {implementationTimeline && implementationTimeline.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.50 }} className="mb-8">
+            <Card className="glass-panel" data-testid="card-implementation-timeline">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <Calendar className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Implementation Timeline — Greenhouse Rollout 2027-2028</CardTitle>
+                <Badge variant="secondary" className="ml-auto">{implementationTimeline.length} Milestones</Badge>
+              </CardHeader>
+              <CardContent>
+                <div className="relative">
+                  <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-primary/20" />
+                  <div className="space-y-4">
+                    {implementationTimeline.map((item, idx) => (
+                      <div key={item.id} className="relative pl-10" data-testid={`timeline-item-${item.id}`}>
+                        <div className={`absolute left-2 w-4 h-4 rounded-full border-2 ${idx === implementationTimeline.length - 1 ? 'bg-primary border-primary' : 'bg-background border-primary'}`} />
+                        <div className="p-4 bg-muted/30 rounded-lg border border-border/50">
+                          <div className="flex flex-wrap items-center gap-2 mb-2">
+                            <Badge variant="outline" className="text-xs">{item.phase}</Badge>
+                            <span className="text-sm font-semibold text-primary">{item.quarter}</span>
+                            <span className="text-sm font-medium text-foreground">{item.milestone}</span>
+                          </div>
+                          <p className="text-sm text-muted-foreground mb-3">{item.details}</p>
+                          <div className="grid grid-cols-3 gap-3 text-center">
+                            <div className="p-2 bg-background/50 rounded">
+                              <p className="text-lg font-bold text-primary">{item.greenhouseCount}</p>
+                              <p className="text-xs text-muted-foreground">Greenhouses</p>
+                            </div>
+                            <div className="p-2 bg-background/50 rounded">
+                              <p className="text-lg font-bold text-emerald-600">{item.jobsCreated?.toLocaleString()}</p>
+                              <p className="text-xs text-muted-foreground">Jobs</p>
+                            </div>
+                            <div className="p-2 bg-background/50 rounded">
+                              <p className="text-lg font-bold text-blue-600">{item.studentsServed?.toLocaleString()}</p>
+                              <p className="text-xs text-muted-foreground">Students</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Political Roadmap */}
+        {politicalRoadmap && politicalRoadmap.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.51 }} className="mb-8">
+            <Card className="glass-panel" data-testid="card-political-roadmap">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <MapPinned className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Political Roadmap — 8 Districts, One Message</CardTitle>
+                <Badge variant="secondary" className="ml-auto">Target: 58%+ Vote Share</Badge>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {politicalRoadmap.map((district) => (
+                    <div 
+                      key={district.id} 
+                      className={`p-4 rounded-lg border ${
+                        district.supportLevel === 'Strong YES' 
+                          ? 'bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-900/50' 
+                          : district.supportLevel === 'Competitive' 
+                            ? 'bg-amber-50/50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-900/50'
+                            : 'bg-red-50/50 dark:bg-red-950/20 border-red-200 dark:border-red-900/50'
+                      }`}
+                      data-testid={`district-${district.district}`}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-bold text-foreground">{district.district}</span>
+                        <Badge 
+                          variant="outline" 
+                          className={`text-xs ${
+                            district.supportLevel === 'Strong YES' 
+                              ? 'border-emerald-500 text-emerald-700 dark:text-emerald-400' 
+                              : district.supportLevel === 'Competitive'
+                                ? 'border-amber-500 text-amber-700 dark:text-amber-400'
+                                : 'border-red-500 text-red-700 dark:text-red-400'
+                          }`}
+                        >
+                          {district.supportPct}
+                        </Badge>
+                      </div>
+                      <p className={`text-sm font-medium mb-2 ${
+                        district.supportLevel === 'Strong YES' 
+                          ? 'text-emerald-700 dark:text-emerald-400' 
+                          : district.supportLevel === 'Competitive'
+                            ? 'text-amber-700 dark:text-amber-400'
+                            : 'text-red-700 dark:text-red-400'
+                      }`}>{district.supportLevel}</p>
+                      <p className="text-xs text-muted-foreground mb-2">{district.strategy}</p>
+                      <div className="pt-2 border-t border-border/50">
+                        <p className="text-xs text-muted-foreground">Key messaging:</p>
+                        <p className="text-xs font-medium text-foreground">{district.keyMessaging}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Stress Tests / Resilience */}
+        {stressTests && stressTests.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.52 }} className="mb-8">
+            <Card className="glass-panel" data-testid="card-stress-tests">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <ShieldAlert className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Financial Resilience — Stress Tests Prove Sustainability</CardTitle>
+                <Badge variant="secondary" className="ml-auto">99%+ Solvency</Badge>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-4">
+                  50-year stress tests using 1926-2022 market data show resilience across bear markets, inflation surges, and combined shocks.
+                  More conservative than pension funds; tested against Great-Recession scenarios.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {stressTests.map((test) => (
+                    <div key={test.id} className="p-4 bg-muted/30 rounded-lg border border-border/50" data-testid={`stress-test-${test.id}`}>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-semibold text-foreground">{test.scenario}</span>
+                        <Badge variant="outline" className="text-xs border-emerald-500 text-emerald-700 dark:text-emerald-400">
+                          <CheckCircle2 className="h-3 w-3 mr-1" />
+                          {test.solvencyProbability}
+                        </Badge>
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-2">{test.description}</p>
+                      <div className="space-y-2">
+                        <div className="flex items-start gap-2">
+                          <AlertTriangle className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />
+                          <p className="text-xs text-foreground"><span className="font-medium">Impact:</span> {test.impact}</p>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <ShieldCheck className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
+                          <p className="text-xs text-foreground"><span className="font-medium">Mitigation:</span> {test.mitigation}</p>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>

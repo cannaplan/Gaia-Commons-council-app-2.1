@@ -4,6 +4,7 @@ import {
   schoolClusters, schools, scaleProjections, environmentalImpact, jobCreation, legalFramework,
   endowmentProjections, expandedJobs, k12Curriculum, coalitionPartners, fundingSources,
   transparencyFeatures, accountabilityMechanisms, tribalPartnerships,
+  implementationTimeline, politicalRoadmap, stressTests,
   type PilotStats, type InsertPilotStats,
   type EndowmentStats, type InsertEndowmentStats,
   type TimelineEvent, type InsertTimelineEvent,
@@ -24,7 +25,10 @@ import {
   type FundingSource, type InsertFundingSource,
   type TransparencyFeature, type InsertTransparencyFeature,
   type AccountabilityMechanism, type InsertAccountabilityMechanism,
-  type TribalPartnership, type InsertTribalPartnership
+  type TribalPartnership, type InsertTribalPartnership,
+  type ImplementationTimelineType, type InsertImplementationTimeline,
+  type PoliticalRoadmapType, type InsertPoliticalRoadmap,
+  type StressTest, type InsertStressTest
 } from "@shared/schema";
 import { eq, asc } from "drizzle-orm";
 
@@ -73,6 +77,12 @@ export interface IStorage {
   createAccountabilityMechanism(mechanism: InsertAccountabilityMechanism): Promise<AccountabilityMechanism>;
   getTribalPartnerships(): Promise<TribalPartnership[]>;
   createTribalPartnership(partnership: InsertTribalPartnership): Promise<TribalPartnership>;
+  getImplementationTimeline(): Promise<ImplementationTimelineType[]>;
+  createImplementationTimeline(item: InsertImplementationTimeline): Promise<ImplementationTimelineType>;
+  getPoliticalRoadmap(): Promise<PoliticalRoadmapType[]>;
+  createPoliticalRoadmap(item: InsertPoliticalRoadmap): Promise<PoliticalRoadmapType>;
+  getStressTests(): Promise<StressTest[]>;
+  createStressTest(item: InsertStressTest): Promise<StressTest>;
   isEmpty(): Promise<boolean>;
 }
 
@@ -255,6 +265,27 @@ export class DatabaseStorage implements IStorage {
   async createTribalPartnership(partnership: InsertTribalPartnership): Promise<TribalPartnership> {
     const [p] = await db.insert(tribalPartnerships).values(partnership).returning();
     return p;
+  }
+  async getImplementationTimeline(): Promise<ImplementationTimelineType[]> {
+    return await db.select().from(implementationTimeline);
+  }
+  async createImplementationTimeline(item: InsertImplementationTimeline): Promise<ImplementationTimelineType> {
+    const [i] = await db.insert(implementationTimeline).values(item).returning();
+    return i;
+  }
+  async getPoliticalRoadmap(): Promise<PoliticalRoadmapType[]> {
+    return await db.select().from(politicalRoadmap);
+  }
+  async createPoliticalRoadmap(item: InsertPoliticalRoadmap): Promise<PoliticalRoadmapType> {
+    const [p] = await db.insert(politicalRoadmap).values(item).returning();
+    return p;
+  }
+  async getStressTests(): Promise<StressTest[]> {
+    return await db.select().from(stressTests);
+  }
+  async createStressTest(item: InsertStressTest): Promise<StressTest> {
+    const [s] = await db.insert(stressTests).values(item).returning();
+    return s;
   }
   async isEmpty(): Promise<boolean> {
     const [stats] = await db.select().from(pilotStats).limit(1);
