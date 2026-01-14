@@ -28,7 +28,13 @@ import {
   Presentation,
   Calculator,
   Leaf,
-  Target
+  Target,
+  Shield,
+  Vote,
+  PiggyBank,
+  Scale,
+  Building2,
+  Coins
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -304,7 +310,121 @@ export default function Dashboard() {
           </motion.div>
         </div>
 
-        {/* Row 3: Ballot Slide Deck */}
+        {/* Row 3: Dedicated Endowment Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.55 }}
+          className="mb-8"
+        >
+          <Card className="glass-panel" data-testid="card-endowment-detail">
+            <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+              <Landmark className="h-5 w-5 text-primary" />
+              <CardTitle className="text-lg font-semibold">Gaia Commons Constitutional Endowment — Funding, Governance & Financial Projections</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Funding Sources */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <PiggyBank className="h-4 w-4 text-emerald-600" />
+                    <h3 className="font-semibold text-foreground">Funding Sources & Capital Structure</h3>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg border border-emerald-100 dark:border-emerald-900/50">
+                      <p className="text-xs font-medium text-emerald-800 dark:text-emerald-400 uppercase tracking-wide">Primary: Constitutional Amendment</p>
+                      <p className="text-sm text-muted-foreground mt-1">Voter-approved allocation of 0.5% of state education budget redirected to endowment principal</p>
+                    </div>
+                    <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-100 dark:border-blue-900/50">
+                      <p className="text-xs font-medium text-blue-800 dark:text-blue-400 uppercase tracking-wide">Secondary: Federal USDA Grants</p>
+                      <p className="text-sm text-muted-foreground mt-1">Farm-to-School grant programs and Community Food Project funding</p>
+                    </div>
+                    <div className="p-3 bg-purple-50 dark:bg-purple-950/30 rounded-lg border border-purple-100 dark:border-purple-900/50">
+                      <p className="text-xs font-medium text-purple-800 dark:text-purple-400 uppercase tracking-wide">Tertiary: Private Philanthropy</p>
+                      <p className="text-sm text-muted-foreground mt-1">Foundation matching funds and corporate ESG investments</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Governance Structure */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Scale className="h-4 w-4 text-blue-600" />
+                    <h3 className="font-semibold text-foreground">Democratic Governance & Control</h3>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Shield className="h-3 w-3 text-primary" />
+                        <p className="text-xs font-medium text-foreground uppercase tracking-wide">Constitutional Protection</p>
+                      </div>
+                      <p className="text-sm text-muted-foreground">Endowment principal locked by amendment — cannot be raided by legislature</p>
+                    </div>
+                    <div className="p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Vote className="h-3 w-3 text-primary" />
+                        <p className="text-xs font-medium text-foreground uppercase tracking-wide">Tri-Cameral Board</p>
+                      </div>
+                      <p className="text-sm text-muted-foreground">Equal representation: Students (elected), Educators (appointed), Community (lottery)</p>
+                    </div>
+                    <div className="p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Building2 className="h-3 w-3 text-primary" />
+                        <p className="text-xs font-medium text-foreground uppercase tracking-wide">Investment Committee</p>
+                      </div>
+                      <p className="text-sm text-muted-foreground">ESG-only mandate with fossil fuel divestment and planetary boundaries clause</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Financial Projections */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Coins className="h-4 w-4 text-amber-600" />
+                    <h3 className="font-semibold text-foreground">10-Year Financial Projections</h3>
+                  </div>
+                  {endowment && (
+                    <div className="space-y-3">
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="p-3 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/30 dark:to-yellow-950/30 rounded-lg border border-amber-100 dark:border-amber-900/50 text-center">
+                          <p className="text-xs text-amber-800 dark:text-amber-400 font-medium">Current Principal</p>
+                          <p className="text-xl font-bold text-amber-700 dark:text-amber-300" data-testid="text-endowment-principal">${endowment.size}</p>
+                        </div>
+                        <div className="p-3 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/30 dark:to-emerald-950/30 rounded-lg border border-green-100 dark:border-green-900/50 text-center">
+                          <p className="text-xs text-green-800 dark:text-green-400 font-medium">Annual Draw (3%)</p>
+                          <p className="text-xl font-bold text-green-700 dark:text-green-300" data-testid="text-endowment-annual-draw">${endowment.annual}</p>
+                        </div>
+                      </div>
+                      <div className="p-3 bg-muted/50 rounded-lg">
+                        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">Projected Growth (7% Annual Return)</p>
+                        <div className="grid grid-cols-3 gap-2 text-center">
+                          <div>
+                            <p className="text-xs text-muted-foreground">Year 5</p>
+                            <p className="font-semibold text-foreground" data-testid="text-projection-year5">$2.9B</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground">Year 10</p>
+                            <p className="font-semibold text-foreground" data-testid="text-projection-year10">$4.1B</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground">Year 25</p>
+                            <p className="font-semibold text-foreground" data-testid="text-projection-year25">$11.4B</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="p-3 bg-primary/5 rounded-lg border border-primary/10">
+                        <p className="text-xs font-medium text-primary uppercase tracking-wide">Perpetual Sustainability</p>
+                        <p className="text-sm text-muted-foreground mt-1">3% draw rate ensures principal grows faster than distributions — funding forever</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* Row 4: Ballot Slide Deck */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
