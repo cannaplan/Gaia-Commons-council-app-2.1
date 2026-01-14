@@ -469,3 +469,15 @@ export function useSensitivityAnalysis() {
     },
   });
 }
+
+// Greenhouse Locations (Interactive Map)
+export function useGreenhouseLocations() {
+  return useQuery({
+    queryKey: [api.greenhouseLocations.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.greenhouseLocations.list.path);
+      if (!res.ok) throw new Error("Failed to fetch greenhouse locations");
+      return api.greenhouseLocations.list.responses[200].parse(await res.json());
+    },
+  });
+}
