@@ -42,7 +42,8 @@ import {
   monteCarloSimulations,
   scenarioComparisons,
   optimizationParams,
-  sensitivityAnalysis
+  sensitivityAnalysis,
+  greenhouseLocations
 } from './schema';
 
 export const errorSchemas = {
@@ -165,6 +166,9 @@ export const api = {
   },
   sensitivityAnalysis: {
     list: { method: 'GET' as const, path: '/api/sensitivity-analysis', responses: { 200: z.array(z.custom<typeof sensitivityAnalysis.$inferSelect>()) } },
+  },
+  greenhouseLocations: {
+    list: { method: 'GET' as const, path: '/api/greenhouse-locations', responses: { 200: z.array(z.custom<typeof greenhouseLocations.$inferSelect>()) } },
   },
   health: {
     get: { method: 'GET' as const, path: '/health', responses: { 200: z.object({ status: z.string(), version: z.string(), service: z.string() }) } },

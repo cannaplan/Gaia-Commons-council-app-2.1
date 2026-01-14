@@ -503,6 +503,24 @@ export const sensitivityAnalysis = pgTable("sensitivity_analysis", {
   description: text("description").notNull(),
 });
 
+// Greenhouse Locations - Interactive Map Data
+export const greenhouseLocations = pgTable("greenhouse_locations", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  congressionalDistrict: text("congressional_district").notNull(),
+  schoolDistrict: text("school_district").notNull(),
+  latitude: real("latitude").notNull(),
+  longitude: real("longitude").notNull(),
+  greenhouseCount: integer("greenhouse_count").notNull(),
+  studentsServed: integer("students_served").notNull(),
+  annualFoodLbs: real("annual_food_lbs").notNull(),
+  produceTypes: text("produce_types").notNull(),
+  sqft: integer("sqft").notNull(),
+  status: text("status").notNull(),
+});
+
+export const insertGreenhouseLocationSchema = createInsertSchema(greenhouseLocations).omit({ id: true });
+
 export const insertPlanetaryBoundariesSchema = createInsertSchema(planetaryBoundaries).omit({ id: true });
 export const insertCalibrationTargetsSchema = createInsertSchema(calibrationTargets).omit({ id: true });
 export const insertModelMaturitySchema = createInsertSchema(modelMaturity).omit({ id: true });
@@ -553,6 +571,7 @@ export type MonteCarloSimulationType = typeof monteCarloSimulations.$inferSelect
 export type ScenarioComparisonType = typeof scenarioComparisons.$inferSelect;
 export type OptimizationParamType = typeof optimizationParams.$inferSelect;
 export type SensitivityAnalysisType = typeof sensitivityAnalysis.$inferSelect;
+export type GreenhouseLocationType = typeof greenhouseLocations.$inferSelect;
 
 // Insert types
 export type InsertPilotStats = z.infer<typeof insertPilotStatsSchema>;
@@ -593,3 +612,4 @@ export type InsertMonteCarloSimulation = z.infer<typeof insertMonteCarloSimulati
 export type InsertScenarioComparison = z.infer<typeof insertScenarioComparisonsSchema>;
 export type InsertOptimizationParam = z.infer<typeof insertOptimizationParamsSchema>;
 export type InsertSensitivityAnalysis = z.infer<typeof insertSensitivityAnalysisSchema>;
+export type InsertGreenhouseLocation = z.infer<typeof insertGreenhouseLocationSchema>;

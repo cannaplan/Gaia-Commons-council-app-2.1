@@ -45,7 +45,9 @@ import {
   type MonteCarloSimulationType, type InsertMonteCarloSimulation,
   type ScenarioComparisonType, type InsertScenarioComparison,
   type OptimizationParamType, type InsertOptimizationParam,
-  type SensitivityAnalysisType, type InsertSensitivityAnalysis
+  type SensitivityAnalysisType, type InsertSensitivityAnalysis,
+  greenhouseLocations,
+  type GreenhouseLocationType, type InsertGreenhouseLocation
 } from "@shared/schema";
 import { eq, asc } from "drizzle-orm";
 
@@ -128,6 +130,8 @@ export interface IStorage {
   createOptimizationParam(item: InsertOptimizationParam): Promise<OptimizationParamType>;
   getSensitivityAnalysis(): Promise<SensitivityAnalysisType[]>;
   createSensitivityAnalysis(item: InsertSensitivityAnalysis): Promise<SensitivityAnalysisType>;
+  getGreenhouseLocations(): Promise<GreenhouseLocationType[]>;
+  createGreenhouseLocation(item: InsertGreenhouseLocation): Promise<GreenhouseLocationType>;
   isEmpty(): Promise<boolean>;
 }
 
@@ -431,6 +435,13 @@ export class DatabaseStorage implements IStorage {
   async createSensitivityAnalysis(item: InsertSensitivityAnalysis): Promise<SensitivityAnalysisType> {
     const [s] = await db.insert(sensitivityAnalysis).values(item).returning();
     return s;
+  }
+  async getGreenhouseLocations(): Promise<GreenhouseLocationType[]> {
+    return await db.select().from(greenhouseLocations);
+  }
+  async createGreenhouseLocation(item: InsertGreenhouseLocation): Promise<GreenhouseLocationType> {
+    const [g] = await db.insert(greenhouseLocations).values(item).returning();
+    return g;
   }
   async isEmpty(): Promise<boolean> {
     const [stats] = await db.select().from(pilotStats).limit(1);

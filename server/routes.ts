@@ -244,6 +244,12 @@ export async function registerRoutes(
     res.json(data);
   });
 
+  // === Greenhouse Locations (Interactive Map) ===
+  app.get(api.greenhouseLocations.list.path, async (_req, res) => {
+    const data = await storage.getGreenhouseLocations();
+    res.json(data);
+  });
+
   // === Seed Data ===
   await seedDatabase();
 
@@ -1054,5 +1060,38 @@ async function seedDatabase() {
     }
 
     console.log("Advanced modeling data seeded successfully");
+  }
+
+  // Seed Greenhouse Locations for Interactive Map
+  const greenhouseData = await storage.getGreenhouseLocations();
+  if (greenhouseData.length === 0) {
+    console.log("Seeding greenhouse locations data...");
+    
+    const locations = [
+      { name: "Saint Paul Central", congressionalDistrict: "MN-04", schoolDistrict: "Saint Paul Public Schools", latitude: 44.9537, longitude: -93.0900, greenhouseCount: 3, studentsServed: 12500, annualFoodLbs: 225000, produceTypes: "Lettuce, Tomatoes, Peppers, Herbs, Spinach", sqft: 45000, status: "Operational" },
+      { name: "Minneapolis North", congressionalDistrict: "MN-05", schoolDistrict: "Minneapolis Public Schools", latitude: 44.9778, longitude: -93.2650, greenhouseCount: 4, studentsServed: 18200, annualFoodLbs: 324000, produceTypes: "Kale, Cucumbers, Carrots, Beans, Tomatoes", sqft: 60000, status: "Operational" },
+      { name: "Mendota Heights Hub", congressionalDistrict: "MN-04", schoolDistrict: "West St. Paul-Mendota Heights", latitude: 44.8833, longitude: -93.1380, greenhouseCount: 2, studentsServed: 5800, annualFoodLbs: 108000, produceTypes: "Microgreens, Lettuce, Herbs, Strawberries", sqft: 30000, status: "Operational" },
+      { name: "Duluth Lakeside", congressionalDistrict: "MN-08", schoolDistrict: "Duluth Public Schools", latitude: 46.7867, longitude: -92.1005, greenhouseCount: 3, studentsServed: 9200, annualFoodLbs: 162000, produceTypes: "Cold-hardy greens, Root vegetables, Herbs", sqft: 42000, status: "Operational" },
+      { name: "Rochester Medical District", congressionalDistrict: "MN-01", schoolDistrict: "Rochester Public Schools", latitude: 44.0121, longitude: -92.4802, greenhouseCount: 5, studentsServed: 22400, annualFoodLbs: 405000, produceTypes: "Tomatoes, Peppers, Lettuce, Spinach, Herbs, Cucumbers", sqft: 75000, status: "Operational" },
+      { name: "Bloomington South", congressionalDistrict: "MN-03", schoolDistrict: "Bloomington Public Schools", latitude: 44.8408, longitude: -93.2983, greenhouseCount: 3, studentsServed: 11800, annualFoodLbs: 216000, produceTypes: "Lettuce, Tomatoes, Peppers, Microgreens", sqft: 48000, status: "Operational" },
+      { name: "Eden Prairie West", congressionalDistrict: "MN-03", schoolDistrict: "Eden Prairie Schools", latitude: 44.8547, longitude: -93.4708, greenhouseCount: 2, studentsServed: 8900, annualFoodLbs: 162000, produceTypes: "Greens, Tomatoes, Herbs, Strawberries", sqft: 36000, status: "Operational" },
+      { name: "St. Cloud Metro", congressionalDistrict: "MN-06", schoolDistrict: "St. Cloud Area Schools", latitude: 45.5579, longitude: -94.1632, greenhouseCount: 4, studentsServed: 15600, annualFoodLbs: 288000, produceTypes: "Lettuce, Kale, Tomatoes, Peppers, Beans", sqft: 56000, status: "Operational" },
+      { name: "Mankato Regional", congressionalDistrict: "MN-01", schoolDistrict: "Mankato Area Public Schools", latitude: 44.1636, longitude: -94.0016, greenhouseCount: 3, studentsServed: 10200, annualFoodLbs: 189000, produceTypes: "Root vegetables, Greens, Tomatoes, Squash", sqft: 42000, status: "Operational" },
+      { name: "Moorhead Prairie", congressionalDistrict: "MN-07", schoolDistrict: "Moorhead Area Public Schools", latitude: 46.8739, longitude: -96.7678, greenhouseCount: 2, studentsServed: 6800, annualFoodLbs: 126000, produceTypes: "Hardy greens, Potatoes, Onions, Carrots", sqft: 32000, status: "Construction" },
+      { name: "Bemidji Northwoods", congressionalDistrict: "MN-07", schoolDistrict: "Bemidji Area Schools", latitude: 47.4733, longitude: -94.8803, greenhouseCount: 2, studentsServed: 5200, annualFoodLbs: 97000, produceTypes: "Cold-climate greens, Root vegetables, Herbs", sqft: 28000, status: "Construction" },
+      { name: "Leech Lake Tribal", congressionalDistrict: "MN-08", schoolDistrict: "Cass Lake-Bena Schools", latitude: 47.3797, longitude: -94.5428, greenhouseCount: 3, studentsServed: 1500, annualFoodLbs: 54000, produceTypes: "Wild rice integration, Greens, Squash, Beans, Traditional foods", sqft: 24000, status: "Planning" },
+      { name: "Winona River Valley", congressionalDistrict: "MN-01", schoolDistrict: "Winona Area Public Schools", latitude: 44.0499, longitude: -91.6393, greenhouseCount: 2, studentsServed: 4800, annualFoodLbs: 88000, produceTypes: "Tomatoes, Peppers, Greens, Herbs", sqft: 24000, status: "Planning" },
+      { name: "Alexandria Lakes", congressionalDistrict: "MN-07", schoolDistrict: "Alexandria Public Schools", latitude: 45.8852, longitude: -95.3775, greenhouseCount: 2, studentsServed: 4200, annualFoodLbs: 78000, produceTypes: "Lettuce, Spinach, Tomatoes, Cucumbers", sqft: 22000, status: "Planning" },
+      { name: "Brainerd Lakes", congressionalDistrict: "MN-08", schoolDistrict: "Brainerd Public Schools", latitude: 46.3583, longitude: -94.2008, greenhouseCount: 3, studentsServed: 7400, annualFoodLbs: 135000, produceTypes: "Hardy greens, Root vegetables, Tomatoes, Peppers", sqft: 38000, status: "Planning" },
+      { name: "Woodbury East Metro", congressionalDistrict: "MN-02", schoolDistrict: "South Washington County Schools", latitude: 44.9239, longitude: -92.9594, greenhouseCount: 4, studentsServed: 19800, annualFoodLbs: 360000, produceTypes: "Lettuce, Tomatoes, Peppers, Herbs, Microgreens, Cucumbers", sqft: 64000, status: "Planning" },
+      { name: "Shakopee Southwest", congressionalDistrict: "MN-02", schoolDistrict: "Shakopee Public Schools", latitude: 44.7969, longitude: -93.5266, greenhouseCount: 3, studentsServed: 12400, annualFoodLbs: 225000, produceTypes: "Greens, Tomatoes, Peppers, Beans, Squash", sqft: 48000, status: "Planning" },
+      { name: "Anoka-Hennepin North", congressionalDistrict: "MN-06", schoolDistrict: "Anoka-Hennepin Schools", latitude: 45.1983, longitude: -93.3822, greenhouseCount: 6, studentsServed: 38500, annualFoodLbs: 702000, produceTypes: "Full variety: Greens, Tomatoes, Peppers, Cucumbers, Herbs, Root vegetables", sqft: 110000, status: "Planning" }
+    ];
+    
+    for (const loc of locations) {
+      await storage.createGreenhouseLocation(loc);
+    }
+    
+    console.log("Greenhouse locations data seeded successfully");
   }
 }
