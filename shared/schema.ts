@@ -228,6 +228,25 @@ export const accountabilityMechanisms = pgTable("accountability_mechanisms", {
   visibility: text("visibility").notNull(),
 });
 
+// Tribal Partnerships - Sovereign nation food systems
+export const tribalPartnerships = pgTable("tribal_partnerships", {
+  id: serial("id").primaryKey(),
+  tribeName: text("tribe_name").notNull(),
+  location: text("location").notNull(),
+  greenhouseCount: text("greenhouse_count").notNull(),
+  jobsCreated: text("jobs_created").notNull(),
+  hourlyWage: text("hourly_wage").notNull(),
+  firstHarvest: text("first_harvest").notNull(),
+  schoolsServed: text("schools_served").notNull(),
+  studentsServed: integer("students_served").notNull(),
+  annualSurplus: text("annual_surplus"),
+  surplusSplit: text("surplus_split"),
+  breakEvenYear: integer("break_even_year"),
+  governance: text("governance").notNull(),
+  complementaryProjects: text("complementary_projects"),
+  status: text("status").notNull(),
+});
+
 // === INSERT SCHEMAS ===
 
 export const insertPilotStatsSchema = createInsertSchema(pilotStats).omit({ id: true });
@@ -250,6 +269,7 @@ export const insertCoalitionPartnerSchema = createInsertSchema(coalitionPartners
 export const insertFundingSourceSchema = createInsertSchema(fundingSources).omit({ id: true });
 export const insertTransparencyFeatureSchema = createInsertSchema(transparencyFeatures).omit({ id: true });
 export const insertAccountabilityMechanismSchema = createInsertSchema(accountabilityMechanisms).omit({ id: true });
+export const insertTribalPartnershipSchema = createInsertSchema(tribalPartnerships).omit({ id: true });
 
 // === TYPES ===
 
@@ -274,6 +294,7 @@ export type CoalitionPartner = typeof coalitionPartners.$inferSelect;
 export type FundingSource = typeof fundingSources.$inferSelect;
 export type TransparencyFeature = typeof transparencyFeatures.$inferSelect;
 export type AccountabilityMechanism = typeof accountabilityMechanisms.$inferSelect;
+export type TribalPartnership = typeof tribalPartnerships.$inferSelect;
 
 // Insert types
 export type InsertPilotStats = z.infer<typeof insertPilotStatsSchema>;
@@ -296,3 +317,4 @@ export type InsertCoalitionPartner = z.infer<typeof insertCoalitionPartnerSchema
 export type InsertFundingSource = z.infer<typeof insertFundingSourceSchema>;
 export type InsertTransparencyFeature = z.infer<typeof insertTransparencyFeatureSchema>;
 export type InsertAccountabilityMechanism = z.infer<typeof insertAccountabilityMechanismSchema>;
+export type InsertTribalPartnership = z.infer<typeof insertTribalPartnershipSchema>;

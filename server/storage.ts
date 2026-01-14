@@ -3,7 +3,7 @@ import {
   pilotStats, endowmentStats, timelineEvents, financialMetrics, climateMetrics, slideDeck, historicalFinancials,
   schoolClusters, schools, scaleProjections, environmentalImpact, jobCreation, legalFramework,
   endowmentProjections, expandedJobs, k12Curriculum, coalitionPartners, fundingSources,
-  transparencyFeatures, accountabilityMechanisms,
+  transparencyFeatures, accountabilityMechanisms, tribalPartnerships,
   type PilotStats, type InsertPilotStats,
   type EndowmentStats, type InsertEndowmentStats,
   type TimelineEvent, type InsertTimelineEvent,
@@ -23,7 +23,8 @@ import {
   type CoalitionPartner, type InsertCoalitionPartner,
   type FundingSource, type InsertFundingSource,
   type TransparencyFeature, type InsertTransparencyFeature,
-  type AccountabilityMechanism, type InsertAccountabilityMechanism
+  type AccountabilityMechanism, type InsertAccountabilityMechanism,
+  type TribalPartnership, type InsertTribalPartnership
 } from "@shared/schema";
 import { eq, asc } from "drizzle-orm";
 
@@ -70,6 +71,8 @@ export interface IStorage {
   createTransparencyFeature(feature: InsertTransparencyFeature): Promise<TransparencyFeature>;
   getAccountabilityMechanisms(): Promise<AccountabilityMechanism[]>;
   createAccountabilityMechanism(mechanism: InsertAccountabilityMechanism): Promise<AccountabilityMechanism>;
+  getTribalPartnerships(): Promise<TribalPartnership[]>;
+  createTribalPartnership(partnership: InsertTribalPartnership): Promise<TribalPartnership>;
   isEmpty(): Promise<boolean>;
 }
 
@@ -245,6 +248,13 @@ export class DatabaseStorage implements IStorage {
   async createAccountabilityMechanism(mechanism: InsertAccountabilityMechanism): Promise<AccountabilityMechanism> {
     const [m] = await db.insert(accountabilityMechanisms).values(mechanism).returning();
     return m;
+  }
+  async getTribalPartnerships(): Promise<TribalPartnership[]> {
+    return await db.select().from(tribalPartnerships);
+  }
+  async createTribalPartnership(partnership: InsertTribalPartnership): Promise<TribalPartnership> {
+    const [p] = await db.insert(tribalPartnerships).values(partnership).returning();
+    return p;
   }
   async isEmpty(): Promise<boolean> {
     const [stats] = await db.select().from(pilotStats).limit(1);

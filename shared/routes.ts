@@ -24,7 +24,8 @@ import {
   coalitionPartners,
   fundingSources,
   transparencyFeatures,
-  accountabilityMechanisms
+  accountabilityMechanisms,
+  tribalPartnerships
 } from './schema';
 
 export const errorSchemas = {
@@ -93,6 +94,9 @@ export const api = {
   },
   accountabilityMechanisms: {
     list: { method: 'GET' as const, path: '/api/accountability-mechanisms', responses: { 200: z.array(z.custom<typeof accountabilityMechanisms.$inferSelect>()) } },
+  },
+  tribalPartnerships: {
+    list: { method: 'GET' as const, path: '/api/tribal-partnerships', responses: { 200: z.array(z.custom<typeof tribalPartnerships.$inferSelect>()) } },
   },
   health: {
     get: { method: 'GET' as const, path: '/health', responses: { 200: z.object({ status: z.string(), version: z.string(), service: z.string() }) } },

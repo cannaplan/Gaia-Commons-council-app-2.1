@@ -146,6 +146,12 @@ export async function registerRoutes(
     res.json(mechanisms);
   });
 
+  // === Tribal Partnerships ===
+  app.get(api.tribalPartnerships.list.path, async (_req, res) => {
+    const partnerships = await storage.getTribalPartnerships();
+    res.json(partnerships);
+  });
+
   // === Seed Data ===
   await seedDatabase();
 
@@ -154,6 +160,29 @@ export async function registerRoutes(
 
 async function seedDatabase() {
   const isEmpty = await storage.isEmpty();
+  
+  // Always check if tribal partnerships needs seeding (may have been added after initial seed)
+  const tribalData = await storage.getTribalPartnerships();
+  if (tribalData.length === 0) {
+    console.log("Seeding tribal partnerships...");
+    await storage.createTribalPartnership({
+      tribeName: "Leech Lake Band of Ojibwe",
+      location: "Leech Lake Reservation, Minnesota",
+      greenhouseCount: "5-10",
+      jobsCreated: "50-100",
+      hourlyWage: "$18-24/hr",
+      firstHarvest: "Fall 2027",
+      schoolsServed: "Cass Lake-Bena, Bug-O-Nay-Ge-Shig, Head Start",
+      studentsServed: 1500,
+      annualSurplus: "$400,000/year",
+      surplusSplit: "35% Tribal Govt, 35% Growing Endowment, 30% Youth Scholarships & Food Pantry",
+      breakEvenYear: 5,
+      governance: "Council veto power, majority board seats, walk-away clause, annual Big-4 audits, public dashboard",
+      complementaryProjects: "New $3.6M wild-rice facility - together lock in permanent food sovereignty and generational wealth",
+      status: "Partnership Development"
+    });
+  }
+  
   if (isEmpty) {
     console.log("Seeding database with GAIA v4.1 MASTER PLATFORM data...");
     
@@ -655,7 +684,7 @@ async function seedDatabase() {
       whoAudits: "Big 4 + Stewards + Community + Media",
       visibility: "Discovery is inevitable - public shame and legal prosecution for fraud"
     });
-    
+
     console.log("Database seeded successfully with GAIA v4.1 MASTER PLATFORM data + expanded ballot initiative data + accountability framework");
   }
 }

@@ -26,7 +26,8 @@ import {
   useCoalitionPartners,
   useFundingSources,
   useTransparencyFeatures,
-  useAccountabilityMechanisms
+  useAccountabilityMechanisms,
+  useTribalPartnerships
 } from "@/hooks/use-gaia";
 import {
   LineChart,
@@ -93,7 +94,8 @@ import {
   Eye,
   ShieldCheck,
   ClipboardCheck,
-  AlertTriangle
+  AlertTriangle,
+  Feather
 } from "lucide-react";
 
 const SCALE_LABELS: Record<string, string> = {
@@ -147,6 +149,7 @@ export default function Dashboard() {
   const { data: fundingSources } = useFundingSources();
   const { data: transparencyFeatures } = useTransparencyFeatures();
   const { data: accountabilityMechanisms } = useAccountabilityMechanisms();
+  const { data: tribalPartnerships } = useTribalPartnerships();
   const { data: legalFramework, isLoading: loadingLegal } = useLegalFramework();
 
   const isLoading = loadingPilot || loadingEndowment || loadingTimeline || loadingFinancials || 
@@ -949,6 +952,94 @@ export default function Dashboard() {
                       </p>
                     </div>
                   </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Tribal Partnerships - Food Sovereignty */}
+        {tribalPartnerships && tribalPartnerships.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.498 }} className="mb-8">
+            <Card className="glass-panel" data-testid="card-tribal-partnerships">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <Feather className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Tribal Partnerships — Permanent Food Sovereignty</CardTitle>
+                <Badge variant="secondary" className="ml-auto">{tribalPartnerships.length} Partnership{tribalPartnerships.length > 1 ? 's' : ''}</Badge>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {tribalPartnerships.map((partnership) => (
+                    <div key={partnership.id} className="p-4 bg-muted/30 rounded-xl border border-border/50" data-testid={`tribal-${partnership.id}`}>
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-bold text-lg text-foreground">{partnership.tribeName}</h3>
+                          <Badge variant="outline" className="bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800">{partnership.status}</Badge>
+                        </div>
+                        <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                          <MapPin className="h-4 w-4" />
+                          {partnership.location}
+                        </div>
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-4 italic">Tribe owns everything, forever. No money leaves the reservation.</p>
+                      
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                        <div className="p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg border border-emerald-100 dark:border-emerald-900/50">
+                          <p className="text-xs text-emerald-700 dark:text-emerald-400 font-medium">Greenhouses</p>
+                          <p className="text-lg font-bold text-emerald-800 dark:text-emerald-300">{partnership.greenhouseCount}</p>
+                        </div>
+                        <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-100 dark:border-blue-900/50">
+                          <p className="text-xs text-blue-700 dark:text-blue-400 font-medium">Local Jobs</p>
+                          <p className="text-lg font-bold text-blue-800 dark:text-blue-300">{partnership.jobsCreated}</p>
+                          <p className="text-xs text-blue-600 dark:text-blue-400">{partnership.hourlyWage}</p>
+                        </div>
+                        <div className="p-3 bg-purple-50 dark:bg-purple-950/30 rounded-lg border border-purple-100 dark:border-purple-900/50">
+                          <p className="text-xs text-purple-700 dark:text-purple-400 font-medium">Students Served</p>
+                          <p className="text-lg font-bold text-purple-800 dark:text-purple-300">{partnership.studentsServed.toLocaleString()}</p>
+                        </div>
+                        <div className="p-3 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-100 dark:border-amber-900/50">
+                          <p className="text-xs text-amber-700 dark:text-amber-400 font-medium">First Harvest</p>
+                          <p className="text-lg font-bold text-amber-800 dark:text-amber-300">{partnership.firstHarvest}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                        <div className="p-3 bg-muted/50 rounded-lg">
+                          <p className="text-xs font-medium text-muted-foreground mb-1">Schools Served</p>
+                          <p className="text-sm text-foreground">{partnership.schoolsServed}</p>
+                        </div>
+                        {partnership.annualSurplus && (
+                          <div className="p-3 bg-muted/50 rounded-lg">
+                            <p className="text-xs font-medium text-muted-foreground mb-1">Annual Surplus (after Year {partnership.breakEvenYear})</p>
+                            <p className="text-sm font-semibold text-primary">{partnership.annualSurplus}</p>
+                          </div>
+                        )}
+                      </div>
+                      
+                      {partnership.surplusSplit && (
+                        <div className="p-3 bg-primary/5 rounded-lg border border-primary/10 mb-3">
+                          <p className="text-xs font-medium text-primary/70 mb-1">Surplus Distribution</p>
+                          <p className="text-sm text-foreground">{partnership.surplusSplit}</p>
+                        </div>
+                      )}
+                      
+                      <div className="p-3 bg-muted/30 rounded-lg mb-3">
+                        <p className="text-xs font-medium text-muted-foreground mb-1 flex items-center gap-1">
+                          <ShieldCheck className="h-3 w-3" /> Governance & Fraud Protection
+                        </p>
+                        <p className="text-sm text-foreground">{partnership.governance}</p>
+                      </div>
+                      
+                      {partnership.complementaryProjects && (
+                        <div className="p-3 bg-emerald-50/50 dark:bg-emerald-950/20 rounded-lg border border-emerald-100 dark:border-emerald-900/30">
+                          <p className="text-xs font-medium text-emerald-700 dark:text-emerald-400 mb-1 flex items-center gap-1">
+                            <Leaf className="h-3 w-3" /> Complementary Projects
+                          </p>
+                          <p className="text-sm text-emerald-800 dark:text-emerald-300">{partnership.complementaryProjects}</p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>

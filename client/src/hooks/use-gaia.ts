@@ -253,3 +253,15 @@ export function useAccountabilityMechanisms() {
     },
   });
 }
+
+// Tribal Partnerships
+export function useTribalPartnerships() {
+  return useQuery({
+    queryKey: [api.tribalPartnerships.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.tribalPartnerships.list.path);
+      if (!res.ok) throw new Error("Failed to fetch tribal partnerships");
+      return api.tribalPartnerships.list.responses[200].parse(await res.json());
+    },
+  });
+}
