@@ -301,3 +301,75 @@ export function useStressTests() {
     },
   });
 }
+
+// Tiered Carbon Pricing
+export function useTieredCarbonPricing() {
+  return useQuery({
+    queryKey: [api.tieredCarbonPricing.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.tieredCarbonPricing.list.path);
+      if (!res.ok) throw new Error("Failed to fetch tiered carbon pricing");
+      return api.tieredCarbonPricing.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Regenerative Agriculture
+export function useRegenerativeAgriculture() {
+  return useQuery({
+    queryKey: [api.regenerativeAgriculture.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.regenerativeAgriculture.list.path);
+      if (!res.ok) throw new Error("Failed to fetch regenerative agriculture");
+      return api.regenerativeAgriculture.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Nationwide Food Security
+export function useNationwideFoodSecurity() {
+  return useQuery({
+    queryKey: [api.nationwideFoodSecurity.get.path],
+    queryFn: async () => {
+      const res = await fetch(api.nationwideFoodSecurity.get.path);
+      if (!res.ok) throw new Error("Failed to fetch nationwide food security");
+      return api.nationwideFoodSecurity.get.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Labor Transition
+export function useLaborTransition() {
+  return useQuery({
+    queryKey: [api.laborTransition.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.laborTransition.list.path);
+      if (!res.ok) throw new Error("Failed to fetch labor transition");
+      return api.laborTransition.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Political Coalition
+export function usePoliticalCoalitionData() {
+  return useQuery({
+    queryKey: [api.politicalCoalition.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.politicalCoalition.list.path);
+      if (!res.ok) throw new Error("Failed to fetch political coalition");
+      return api.politicalCoalition.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Global Regeneration Summary
+export function useGlobalRegenerationSummary() {
+  return useQuery({
+    queryKey: [api.globalRegenerationSummary.get.path],
+    queryFn: async () => {
+      const res = await fetch(api.globalRegenerationSummary.get.path);
+      if (!res.ok) throw new Error("Failed to fetch global regeneration summary");
+      return api.globalRegenerationSummary.get.responses[200].parse(await res.json());
+    },
+  });
+}

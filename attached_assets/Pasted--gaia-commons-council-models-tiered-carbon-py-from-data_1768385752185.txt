@@ -1,0 +1,128 @@
+# gaia_commons_council/models/tiered_carbon.py
+from dataclasses import dataclass
+from typing import Dict, List, Any
+import math
+
+@dataclass
+class TieredCarbonPricingModel:
+    """Tiered carbon tax that preserves choice while targeting worst polluters"""
+    
+    def __init__(self):
+        self.pricing_tiers = {
+            "small_emitters": {
+                "threshold_min": 0,
+                "threshold_max": 25_000,  # tons CO2/year
+                "carbon_tax_rate": 25,
+                "description": "Small businesses, local operations"
+            },
+            "medium_emitters": {
+                "threshold_min": 25_000,
+                "threshold_max": 100_000,
+                "carbon_tax_rate": 75,
+                "description": "Regional companies, mid-size operations"
+            },
+            "large_emitters": {
+                "threshold_min": 100_000,
+                "threshold_max": 1_000_000,
+                "carbon_tax_rate": 150,
+                "description": "Major corporations, large industrial facilities"
+            },
+            "mega_polluters": {
+                "threshold_min": 1_000_000,
+                "threshold_max": float('inf'),
+                "carbon_tax_rate": 200,
+                "description": "Fossil fuel companies, massive industrial polluters"
+            }
+        }
+    
+    def calculate_exponential_carbon_cost(self, annual_emissions_tons: float) -> float:
+        """Calculate exponential carbon tax cost - brutal for big emitters"""
+        
+        if annual_emissions_tons <= 0:
+            return 0
+            
+        # Determine tier and base rate
+        for tier_name, tier_data in self.pricing_tiers.items():
+            if tier_data["threshold_min"] <= annual_emissions_tons < tier_data["threshold_max"]:
+                base_rate = tier_data["carbon_tax_rate"]
+                break
+        else:
+            base_rate = self.pricing_tiers["mega_polluters"]["carbon_tax_rate"]
+        
+        # Apply exponential scaling within tier for mega-polluters
+        if annual_emissions_tons >= 1_000_000:
+            excess = annual_emissions_tons - 1_000_000
+            exponential_multiplier = 1 + (excess / 1_000_000) ** 1.5  # exponential punishment
+            total_cost = 1_000_000 * 150 + excess * base_rate * exponential_multiplier
+        else:
+            total_cost = annual_emissions_tons * base_rate
+            
+        return total_cost
+    
+    def calculate_impact_by_emitter_size(self, total_us_emissions: float = 7_000_000_000) -> Dict[str, Any]:
+        """Calculate impact of tiered approach on different emitter sizes"""
+        
+        # Rough distribution of US emissions by emitter size
+        emissions_distribution = {
+            "small_emitters": 0.15,    # 15% from small sources
+            "medium_emitters": 0.25,   # 25% from medium sources
+            "large_emitters": 0.35,    # 35% from large corporations
+            "mega_polluters": 0.25     # 25% from massive polluters
+        }
+        
+        results = {}
+        total_revenue = 0
+        
+        for tier_name, emission_fraction in emissions_distribution.items():
+            tier_emissions = total_us_emissions * emission_fraction
+            tier_data = self.pricing_tiers[tier_name]
+            tax_rate = tier_data["carbon_tax_rate"]
+            
+            # Calculate emissions reduction based on tax pressure
+            if tax_rate <= 50:
+                reduction_rate = 0.1  # 10% reduction
+                business_survival = 0.95
+            elif tax_rate <= 100:
+                reduction_rate = 0.25  # 25% reduction
+                business_survival = 0.90
+            elif tax_rate <= 150:
+                reduction_rate = 0.45  # 45% reduction
+                business_survival = 0.80
+            else:  # $200/ton mega-polluters
+                reduction_rate = 0.70  # 70% reduction - industry transformation
+                business_survival = 0.40
+            
+            final_emissions = tier_emissions * (1 - reduction_rate)
+            revenue = final_emissions * tax_rate / 1_000_000  # convert to millions
+            
+            results[tier_name] = {
+                "initial_emissions": tier_emissions,
+                "final_emissions": final_emissions,
+                "emission_reduction_pct": reduction_rate * 100,
+                "tax_rate": tax_rate,
+                "revenue_millions": revenue,
+                "business_survival_rate": business_survival,
+                "worker_choice_preserved": tax_rate <= 150
+            }
+            
+            total_revenue += revenue
+        
+        return {
+            "tier_results": results,
+            "total_revenue_millions": total_revenue,
+            "total_emission_reduction": sum(
+                (r["initial_emissions"] - r["final_emissions"]) 
+                for r in results.values()
+            ) / total_us_emissions * 100,
+            "political_advantages": self._get_political_advantages()
+        }
+    
+    def _get_political_advantages(self) -> List[str]:
+        return [
+            "Small businesses protected at $25/ton",
+            "Workers have time for voluntary transition", 
+            "Farmers can choose gradual regenerative adoption",
+            "Only mega-polluters face extinction pressure",
+            "Graduated approach reduces political resistance",
+            "Creates market incentives rather than mandates"
+        ]

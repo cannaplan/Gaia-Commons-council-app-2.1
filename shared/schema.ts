@@ -279,6 +279,88 @@ export const stressTests = pgTable("stress_tests", {
   solvencyProbability: text("solvency_probability").notNull(),
 });
 
+// Global Regeneration: Tiered Carbon Pricing
+export const tieredCarbonPricing = pgTable("tiered_carbon_pricing", {
+  id: serial("id").primaryKey(),
+  tierName: text("tier_name").notNull(),
+  thresholdMin: real("threshold_min").notNull(),
+  thresholdMax: real("threshold_max"),
+  carbonTaxRate: real("carbon_tax_rate").notNull(),
+  description: text("description").notNull(),
+  emissionFraction: real("emission_fraction").notNull(),
+  reductionRate: real("reduction_rate").notNull(),
+  businessSurvival: real("business_survival").notNull(),
+  revenueMillions: real("revenue_millions"),
+});
+
+// Global Regeneration: Regenerative Agriculture Operations
+export const regenerativeAgriculture = pgTable("regenerative_agriculture", {
+  id: serial("id").primaryKey(),
+  operationType: text("operation_type").notNull(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  acresAllocated: real("acres_allocated").notNull(),
+  revenuePerAcre: real("revenue_per_acre").notNull(),
+  jobsPer1000Acres: real("jobs_per_1000_acres").notNull(),
+  avgWage: real("avg_wage").notNull(),
+  carbonSequestration: real("carbon_sequestration").notNull(),
+  peopleFedPerAcre: real("people_fed_per_acre").notNull(),
+  totalJobs: integer("total_jobs").notNull(),
+  totalRevenue: real("total_revenue").notNull(),
+  totalCarbonSequestered: real("total_carbon_sequestered").notNull(),
+});
+
+// Global Regeneration: Nationwide Food Security
+export const nationwideFoodSecurity = pgTable("nationwide_food_security", {
+  id: serial("id").primaryKey(),
+  scope: text("scope").notNull(),
+  totalStudents: integer("total_students").notNull(),
+  facilitiesNeeded: integer("facilities_needed").notNull(),
+  jobsCreated: integer("jobs_created").notNull(),
+  constructionCost: real("construction_cost").notNull(),
+  annualOperating: real("annual_operating").notNull(),
+  co2ReductionTons: real("co2_reduction_tons").notNull(),
+  waterSavingsGallons: real("water_savings_gallons").notNull(),
+  pesticideElimination: text("pesticide_elimination").notNull(),
+  replicationModel: text("replication_model").notNull(),
+});
+
+// Global Regeneration: Labor Transition Program
+export const laborTransition = pgTable("labor_transition", {
+  id: serial("id").primaryKey(),
+  sector: text("sector").notNull(),
+  workersAffected: integer("workers_affected").notNull(),
+  avgWage: real("avg_wage").notNull(),
+  incomeGuaranteeRate: real("income_guarantee_rate").notNull(),
+  transitionDurationYears: integer("transition_duration_years").notNull(),
+  retrainingCostPerWorker: real("retraining_cost_per_worker").notNull(),
+  successRate: real("success_rate").notNull(),
+  totalCost: real("total_cost").notNull(),
+  choicePreservation: text("choice_preservation").notNull(),
+});
+
+// Global Regeneration: Political Coalition
+export const politicalCoalition = pgTable("political_coalition", {
+  id: serial("id").primaryKey(),
+  groupName: text("group_name").notNull(),
+  memberCount: integer("member_count").notNull(),
+  description: text("description"),
+  isCalculated: integer("is_calculated").default(0),
+});
+
+// Global Regeneration Summary
+export const globalRegenerationSummary = pgTable("global_regeneration_summary", {
+  id: serial("id").primaryKey(),
+  totalJobsCreated: integer("total_jobs_created").notNull(),
+  totalCoalitionSize: integer("total_coalition_size").notNull(),
+  coalitionPercentage: real("coalition_percentage").notNull(),
+  politicalPowerAssessment: text("political_power_assessment").notNull(),
+  oppositionSize: integer("opposition_size").notNull(),
+  coalitionAdvantage: text("coalition_advantage").notNull(),
+  totalTransitionCosts: real("total_transition_costs").notNull(),
+  choicePreservationAchieved: integer("choice_preservation_achieved").default(1),
+});
+
 // === INSERT SCHEMAS ===
 
 export const insertPilotStatsSchema = createInsertSchema(pilotStats).omit({ id: true });
@@ -305,6 +387,12 @@ export const insertTribalPartnershipSchema = createInsertSchema(tribalPartnershi
 export const insertImplementationTimelineSchema = createInsertSchema(implementationTimeline).omit({ id: true });
 export const insertPoliticalRoadmapSchema = createInsertSchema(politicalRoadmap).omit({ id: true });
 export const insertStressTestSchema = createInsertSchema(stressTests).omit({ id: true });
+export const insertTieredCarbonPricingSchema = createInsertSchema(tieredCarbonPricing).omit({ id: true });
+export const insertRegenerativeAgricultureSchema = createInsertSchema(regenerativeAgriculture).omit({ id: true });
+export const insertNationwideFoodSecuritySchema = createInsertSchema(nationwideFoodSecurity).omit({ id: true });
+export const insertLaborTransitionSchema = createInsertSchema(laborTransition).omit({ id: true });
+export const insertPoliticalCoalitionSchema = createInsertSchema(politicalCoalition).omit({ id: true });
+export const insertGlobalRegenerationSummarySchema = createInsertSchema(globalRegenerationSummary).omit({ id: true });
 
 // === TYPES ===
 
@@ -333,6 +421,12 @@ export type TribalPartnership = typeof tribalPartnerships.$inferSelect;
 export type ImplementationTimelineType = typeof implementationTimeline.$inferSelect;
 export type PoliticalRoadmapType = typeof politicalRoadmap.$inferSelect;
 export type StressTest = typeof stressTests.$inferSelect;
+export type TieredCarbonPricingType = typeof tieredCarbonPricing.$inferSelect;
+export type RegenerativeAgricultureType = typeof regenerativeAgriculture.$inferSelect;
+export type NationwideFoodSecurityType = typeof nationwideFoodSecurity.$inferSelect;
+export type LaborTransitionType = typeof laborTransition.$inferSelect;
+export type PoliticalCoalitionType = typeof politicalCoalition.$inferSelect;
+export type GlobalRegenerationSummaryType = typeof globalRegenerationSummary.$inferSelect;
 
 // Insert types
 export type InsertPilotStats = z.infer<typeof insertPilotStatsSchema>;
@@ -359,3 +453,9 @@ export type InsertTribalPartnership = z.infer<typeof insertTribalPartnershipSche
 export type InsertImplementationTimeline = z.infer<typeof insertImplementationTimelineSchema>;
 export type InsertPoliticalRoadmap = z.infer<typeof insertPoliticalRoadmapSchema>;
 export type InsertStressTest = z.infer<typeof insertStressTestSchema>;
+export type InsertTieredCarbonPricing = z.infer<typeof insertTieredCarbonPricingSchema>;
+export type InsertRegenerativeAgriculture = z.infer<typeof insertRegenerativeAgricultureSchema>;
+export type InsertNationwideFoodSecurity = z.infer<typeof insertNationwideFoodSecuritySchema>;
+export type InsertLaborTransition = z.infer<typeof insertLaborTransitionSchema>;
+export type InsertPoliticalCoalition = z.infer<typeof insertPoliticalCoalitionSchema>;
+export type InsertGlobalRegenerationSummary = z.infer<typeof insertGlobalRegenerationSummarySchema>;

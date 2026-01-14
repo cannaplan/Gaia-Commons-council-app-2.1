@@ -1,0 +1,72 @@
+# gaia_commons_council/models/political_coalition.py
+from dataclasses import dataclass
+from typing import Dict, List, Any
+
+class PoliticalCoalitionModel:
+    """Model political coalition strength for Gaia implementation"""
+    
+    def __init__(self):
+        self.base_coalition_groups = {
+            "green_job_workers": 0,  # calculated dynamically
+            "students_families": 0,   # from food security program
+            "farmers_transitioned": 0, # from agriculture transformation
+            "environmental_activists": 15_000_000,
+            "healthcare_workers": 18_000_000,  # support universal programs
+            "teachers": 3_500_000,    # support education investments
+            "young_voters_18_35": 65_000_000  # climate concerned
+        }
+    
+    def calculate_coalition_strength(self, 
+                                   jobs_created: int,
+                                   students_served: int, 
+                                   farmers_transitioned: int) -> Dict[str, Any]:
+        """Calculate total political coalition strength"""
+        
+        coalition = self.base_coalition_groups.copy()
+        coalition["green_job_workers"] = jobs_created
+        coalition["students_families"] = students_served // 2  # ~2 kids per family
+        coalition["farmers_transitioned"] = farmers_transitioned
+        
+        total_coalition_size = sum(coalition.values())
+        
+        # US voting population ~240 million
+        voting_population = 240_000_000
+        coalition_percentage = (total_coalition_size / voting_population) * 100
+        
+        return {
+            "coalition_breakdown": coalition,
+            "total_coalition_size": total_coalition_size,
+            "percentage_of_electorate": coalition_percentage,
+            "political_power_assessment": self._assess_political_power(coalition_percentage),
+            "opposition_size": self._calculate_opposition(),
+            "electoral_impact": self._calculate_electoral_impact(coalition_percentage)
+        }
+    
+    def _assess_political_power(self, percentage: float) -> str:
+        if percentage >= 35:
+            return "Overwhelming - largest coalition in US history"
+        elif percentage >= 25:
+            return "Dominant - sufficient to drive major policy change"
+        elif percentage >= 15:
+            return "Significant - influential in swing states"
+        else:
+            return "Emerging - building toward critical mass"
+    
+    def _calculate_opposition(self) -> Dict[str, Any]:
+        return {
+            "fossil_fuel_executives": 50_000,
+            "industrial_agriculture_executives": 25_000,
+            "total_core_opposition": 75_000,
+            "opposition_percentage": 0.03,  # ~3% of electorate
+            "coalition_advantage": "1000:1 ratio favoring Gaia coalition"
+        }
+    
+    def _calculate_electoral_impact(self, coalition_pct: float) -> Dict[str, str]:
+        swing_states = ["wisconsin", "michigan", "pennsylvania", "arizona", "georgia"]
+        
+        if coalition_pct >= 30:
+            return {state: "Guaranteed victory" for state in swing_states}
+        elif coalition_pct >= 20:
+            return {state: "Strong advantage" for state in swing_states}
+        else:
+            return {state: "Competitive" for state in swing_states}

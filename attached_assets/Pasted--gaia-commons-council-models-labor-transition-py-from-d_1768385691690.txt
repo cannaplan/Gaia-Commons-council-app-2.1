@@ -1,0 +1,70 @@
+# gaia_commons_council/models/labor_transition.py
+from dataclasses import dataclass
+from typing import Dict, List, Any
+
+@dataclass
+class WorkerTransitionProgram:
+    """Comprehensive worker support during energy transition"""
+    
+    # Income support during transition
+    income_guarantee_rate: float = 1.25  # 125% of previous income
+    transition_duration_years: int = 3
+    
+    # Training programs
+    retraining_cost_per_worker: int = 45_000
+    training_success_rate: float = 0.78
+    
+    # Alternative pathways
+    early_retirement_age: int = 58
+    severance_years: float = 2.0
+    healthcare_continuation_years: int = 5
+
+class LaborTransitionModel:
+    """Model worker transition from fossil fuels to green economy"""
+    
+    def __init__(self):
+        self.program = WorkerTransitionProgram()
+        self.fossil_fuel_workforce = {
+            "coal": 43_000,
+            "oil_gas": 1_200_000,
+            "pipeline": 125_000,
+            "auto_ice": 180_000
+        }
+    
+    def calculate_transition_costs(self, carbon_tax_level: int) -> Dict[str, Any]:
+        """Calculate costs for supporting displaced workers"""
+        
+        # Displacement rate based on carbon tax level
+        if carbon_tax_level >= 150:
+            displacement_rate = 0.8  # 80% of fossil fuel workers need transition
+        elif carbon_tax_level >= 100:
+            displacement_rate = 0.6
+        elif carbon_tax_level >= 50:
+            displacement_rate = 0.3
+        else:
+            displacement_rate = 0.1
+        
+        total_workers = sum(self.fossil_fuel_workforce.values())
+        displaced_workers = int(total_workers * displacement_rate)
+        avg_wage = 75_000
+        
+        # Calculate support costs
+        income_support = (displaced_workers * avg_wage * 
+                         self.program.income_guarantee_rate * 
+                         self.program.transition_duration_years)
+        
+        retraining_costs = (displaced_workers * 
+                           self.program.retraining_cost_per_worker)
+        
+        total_program_cost = income_support + retraining_costs
+        
+        return {
+            "displaced_workers": displaced_workers,
+            "total_cost": total_program_cost,
+            "cost_per_worker": total_program_cost / displaced_workers,
+            "income_support": income_support,
+            "retraining_costs": retraining_costs,
+            "program_duration": self.program.transition_duration_years,
+            "success_rate": self.program.training_success_rate,
+            "choice_preservation": "Workers choose timing and pathway"
+        }

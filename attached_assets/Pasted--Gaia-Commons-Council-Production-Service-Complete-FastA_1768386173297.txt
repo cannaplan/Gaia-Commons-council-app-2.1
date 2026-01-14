@@ -1,0 +1,554 @@
+"""
+Gaia Commons Council Production Service
+
+Complete FastAPI service with web UI, API endpoints, and production monitoring.
+Includes Streamlit dashboard, REST API, WebSocket support, and health monitoring.
+"""
+
+import asyncio
+import uvicorn
+from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect, BackgroundTasks
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse, JSONResponse
+from contextlib import asynccontextmanager
+import streamlit as st
+from typing import Dict, List, Any, Optional
+import json
+import logging
+from datetime import datetime
+import subprocess
+import threading
+from pathlib import Path
+
+# Gaia imports
+from .planner import GlobalPlanner
+from .calibration_pipeline import CalibrationPipeline, create_starter_data_files
+from .advanced_features import GaiaProductionService, create_production_service
+from .cli.schema import ScenarioConfig
+from . import __version__
+
+# Setup logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Global service instances
+gaia_service: Optional[GaiaProductionService] = None
+active_connections: List[WebSocket] = []
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Application lifespan management"""
+    global gaia_service
+    
+    # Startup
+    logger.info("🌍 Starting Gaia Commons Council Service")
+    
+    # Initialize data files
+    create_starter_data_files()
+    
+    # Initialize production service
+    gaia_service = create_production_service()
+    
+    # Start Streamlit dashboard in background
+    start_streamlit_dashboard()
+    
+    logger.info("✅ Gaia service ready")
+    
+    yield
+    
+    # Shutdown
+    logger.info("🛑 Shutting down Gaia service")
+
+# FastAPI app
+app = FastAPI(
+    title="Gaia Commons Council API",
+    description="Planetary transformation framework with climate modeling, policy optimization, and scenario analysis",
+    version=__version__,
+    lifespan=lifespan
+)
+
+# CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Health check endpoint
+@app.get("/health")
+async def health_check():
+    """Service health check with detailed system status"""
+    if not gaia_service:
+        raise HTTPException(status_code=503, detail="Service not initialized")
+    
+    health = gaia_service.get_service_health()
+    
+    # Add system info
+    health.update({
+        "service_version": __version__,
+        "api_status": "operational",
+        "timestamp": datetime.now().isoformat(),
+        "endpoints": {
+            "scenarios": "/api/v1/scenarios",
+            "comparison": "/api/v1/compare", 
+            "optimization": "/api/v1/optimize",
+            "monte_carlo": "/api/v1/monte-carlo",
+            "dashboard": "/dashboard",
+            "websocket": "/ws"
+        }
+    })
+    
+    return health
+
+@app.get("/")
+async def root():
+    """Root endpoint with service information"""
+    return HTMLResponse(f"""
+    <html>
+        <head>
+            <title>Gaia Commons Council</title>
+            <style>
+                body {{ font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }}
+                .container {{ max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; }}
+                .header {{ text-align: center; color: #2c3e50; }}
+                .features {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0; }}
+                .feature {{ background: #ecf0f1; padding: 15px; border-radius: 5px; }}
+                .links {{ text-align: center; }}
+                .links a {{ margin: 0 10px; padding: 10px 20px; background: #3498db; color: white; text-decoration: none; border-radius: 5px; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>🌍 Gaia Commons Council v{__version__}</h1>
+                    <p>Planetary transformation framework that actually works</p>
+                </div>
+                
+                <div class="features">
+                    <div class="feature">
+                        <h3>🎯 Scenario Modeling</h3>
+                        <p>Climate, energy, agriculture, and economic integration</p>
+                    </div>
+                    <div class="feature">
+                        <h3>⚖️ Policy Optimization</h3>
+                        <p>Find optimal policies under planetary constraints</p>
+                    </div>
+                    <div class="feature">
+                        <h3>📊 Monte Carlo Analysis</h3>
+                        <p>Uncertainty quantification and risk assessment</p>
+                    </div>
+                    <div class="feature">
+                        <h3>🚀 Production Ready</h3>
+                        <p>Caching, monitoring, and enterprise deployment</p>
+                    </div>
+                </div>
+                
+                <div class="links">
+                    <a href="/dashboard" target="_blank">📊 Dashboard</a>
+                    <a href="/docs">📚 API Docs</a>
+                    <a href="/health">🏥 Health Check</a>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px; color: #666;">
+                    <p>From tiered carbon pricing to regenerative agriculture</p>
+                    <p>From worker transition support to political coalition building</p>
+                    <p><strong>The complete system for planetary transformation</strong></p>
+                </div>
+            </div>
+        </body>
+    </html>
+    """)
+
+# API v1 routes
+@app.post("/api/v1/scenarios/run")
+async def run_scenario(scenario_data: Dict[str, Any]):
+    """Run a single scenario with caching and monitoring"""
+    if not gaia_service:
+        raise HTTPException(status_code=503, detail="Service not initialized")
+    
+    try:
+        # Validate scenario config
+        config = ScenarioConfig.model_validate(scenario_data)
+        
+        # Run scenario
+        result = await gaia_service.run_scenario_with_caching(
+            config.model_dump(), 
+            session_id="api_user"
+        )
+        
+        return {"status": "success", "result": result}
+        
+    except Exception as e:
+        logger.error(f"Scenario execution failed: {e}")
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/api/v1/scenarios/compare")
+async def compare_scenarios(scenarios: List[Dict[str, Any]]):
+    """Compare multiple scenarios"""
+    if not gaia_service:
+        raise HTTPException(status_code=503, detail="Service not initialized")
+    
+    if len(scenarios) < 2:
+        raise HTTPException(status_code=400, detail="At least 2 scenarios required for comparison")
+    
+    try:
+        comparison = gaia_service.comparator.compare_scenarios(scenarios, None)
+        return {"status": "success", "comparison": comparison}
+        
+    except Exception as e:
+        logger.error(f"Scenario comparison failed: {e}")
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/api/v1/monte-carlo")
+async def run_monte_carlo(scenario_data: Dict[str, Any], n_runs: int = 1000):
+    """Run Monte Carlo uncertainty analysis"""
+    if not gaia_service:
+        raise HTTPException(status_code=503, detail="Service not initialized")
+    
+    try:
+        # Configure Monte Carlo
+        from .advanced_features import MonteCarloConfig
+        mc_config = MonteCarloConfig(n_runs=min(n_runs, 5000))  # Cap at 5000 for API
+        gaia_service.monte_carlo.config = mc_config
+        
+        # Run analysis
+        mc_results = gaia_service.monte_carlo.run_monte_carlo(scenario_data, None)
+        
+        return {"status": "success", "monte_carlo_results": mc_results}
+        
+    except Exception as e:
+        logger.error(f"Monte Carlo analysis failed: {e}")
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/api/v1/optimize")
+async def optimize_policy(base_scenario: Dict[str, Any], objective: str = "minimize_temperature"):
+    """Optimize policy parameters"""
+    if not gaia_service:
+        raise HTTPException(status_code=503, detail="Service not initialized")
+    
+    try:
+        # Configure optimizer
+        from .advanced_features import OptimizationConfig
+        opt_config = OptimizationConfig(objective=objective, max_iterations=50)  # Limit for API
+        gaia_service.optimizer.config = opt_config
+        
+        # Run optimization
+        optimization_result = gaia_service.optimizer.optimize_policy(base_scenario, None)
+        
+        return {"status": "success", "optimization": optimization_result}
+        
+    except Exception as e:
+        logger.error(f"Policy optimization failed: {e}")
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.get("/api/v1/calibration")
+async def get_calibration_status():
+    """Get model calibration status"""
+    try:
+        pipeline = CalibrationPipeline()
+        results = pipeline.run_full_calibration()
+        return {"status": "success", "calibration": results}
+        
+    except Exception as e:
+        logger.error(f"Calibration check failed: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# WebSocket endpoint for real-time updates
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    """WebSocket endpoint for real-time scenario updates"""
+    await websocket.accept()
+    active_connections.append(websocket)
+    
+    try:
+        while True:
+            # Wait for messages
+            data = await websocket.receive_text()
+            message = json.loads(data)
+            
+            if message.get("type") == "run_scenario":
+                # Run scenario and send real-time updates
+                scenario_data = message.get("scenario", {})
+                
+                # Send start notification
+                await websocket.send_json({
+                    "type": "status", 
+                    "message": "🔄 Starting scenario...",
+                    "timestamp": datetime.now().isoformat()
+                })
+                
+                try:
+                    # Run scenario
+                    result = await gaia_service.run_scenario_with_caching(scenario_data)
+                    
+                    # Send result
+                    await websocket.send_json({
+                        "type": "result",
+                        "result": result,
+                        "timestamp": datetime.now().isoformat()
+                    })
+                    
+                except Exception as e:
+                    await websocket.send_json({
+                        "type": "error",
+                        "error": str(e),
+                        "timestamp": datetime.now().isoformat()
+                    })
+            
+    except WebSocketDisconnect:
+        active_connections.remove(websocket)
+
+# Background task to broadcast system updates
+async def broadcast_system_status():
+    """Broadcast system status to all connected WebSocket clients"""
+    if gaia_service and active_connections:
+        health = gaia_service.get_service_health()
+        message = {
+            "type": "system_status",
+            "health": health,
+            "timestamp": datetime.now().isoformat()
+        }
+        
+        # Send to all active connections
+        for connection in active_connections[:]:  # Copy list to avoid modification during iteration
+            try:
+                await connection.send_json(message)
+            except Exception:
+                # Remove disconnected clients
+                active_connections.remove(connection)
+
+def start_streamlit_dashboard():
+    """Start Streamlit dashboard in background thread"""
+    def run_streamlit():
+        try:
+            # Check if streamlit is available
+            import streamlit
+            
+            # Create dashboard script
+            dashboard_script = Path(__file__).parent / "dashboard.py"
+            if not dashboard_script.exists():
+                create_streamlit_dashboard()
+            
+            # Run streamlit on port 8501
+            subprocess.run([
+                "streamlit", "run", str(dashboard_script),
+                "--server.port", "8501",
+                "--server.headless", "true",
+                "--logger.level", "error"
+            ])
+        except Exception as e:
+            logger.warning(f"Could not start Streamlit dashboard: {e}")
+    
+    # Start in background thread
+    dashboard_thread = threading.Thread(target=run_streamlit, daemon=True)
+    dashboard_thread.start()
+
+def create_streamlit_dashboard():
+    """Create Streamlit dashboard script"""
+    dashboard_code = '''
+import streamlit as st
+import requests
+import plotly.graph_objects as go
+import plotly.express as px
+import pandas as pd
+import json
+from datetime import datetime
+
+st.set_page_config(
+    page_title="Gaia Commons Council",
+    page_icon="🌍",
+    layout="wide"
+)
+
+# Title
+st.title("🌍 Gaia Commons Council Dashboard")
+st.markdown("*Planetary transformation framework - Real-time monitoring*")
+
+# Sidebar
+st.sidebar.header("🎛️ Controls")
+
+# Health check
+try:
+    health_response = requests.get("http://localhost:8000/health", timeout=5)
+    health = health_response.json()
+    
+    if health_response.status_code == 200:
+        st.sidebar.success("✅ Service Online")
+        st.sidebar.metric("Scenarios Run", health["total_scenarios_run"])
+        st.sidebar.metric("Uptime", f"{health['uptime_seconds']:.0f}s")
+        st.sidebar.metric("Active Sessions", health["active_sessions"])
+    else:
+        st.sidebar.error("❌ Service Issues")
+        
+except Exception as e:
+    st.sidebar.error("❌ Cannot Connect to Service")
+    st.error(f"Cannot connect to Gaia service: {e}")
+    st.stop()
+
+# Main content tabs
+tab1, tab2, tab3, tab4 = st.tabs(["🚀 Run Scenario", "📊 Results", "⚖️ Compare", "🎯 Optimize"])
+
+with tab1:
+    st.header("Run New Scenario")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        scenario_name = st.text_input("Scenario Name", "My Scenario")
+        start_year = st.number_input("Start Year", 2025, 2030, 2025)
+        end_year = st.number_input("End Year", 2040, 2100, 2050)
+        climate_limit = st.slider("Climate Limit (°C)", 1.0, 3.0, 1.5, 0.1)
+        equity_weight = st.slider("Equity Weight", 0.0, 1.0, 0.3, 0.1)
+    
+    with col2:
+        st.subheader("Policy Configuration")
+        carbon_tax = st.number_input("Carbon Tax ($/ton)", 0, 500, 100)
+        renewable_subsidy = st.number_input("Renewable Subsidy ($/MWh)", 0, 200, 50)
+        
+        if st.button("🚀 Run Scenario", type="primary"):
+            scenario_data = {
+                "name":ario_name,
+                "start_year": start_year,
+                "end_year": end_year,
+                "policy": {
+                    "energy": [
+                        {"action": "carbon_tax", "magnitude": carbon_tax, "duration": end_year - start_year},
+                        {"action": "renewable_subsidy", "magnitude": renewable_subsidy, "duration": 15}
+                    ],
+                    "economy": []
+                },
+                "constraints": {
+                    "climate_limit": climate_limit,
+                    "equity_weight": equity_weight
+                }
+            }
+            
+            with st.spinner("Running Gaia scenario..."):
+                try:
+                    response = requests.post(
+                        "http://localhost:8000/api/v1/scenarios/run",
+                        json=scenario_data,
+                        timeout=30
+                    )
+                    
+                    if response.status_code == 200:
+                        result = response.json()["result"]
+                        
+                        # Store in session state
+                        if "scenario_results" not in st.session_state:
+                            st.session_state.scenario_results = []
+                        st.session_state.scenario_results.append({
+                            "name": scenario_name,
+                            "config": scenario_data,
+                            "result": result,
+                            "timestamp": datetime.now().isoformat()
+                        })
+                        
+                        st.success("✅ Scenario completed successfully!")
+                        st.json(result)
+                        
+                    else:
+                        st.error(f"❌ Scenario failed: {response.text}")
+                        
+                except Exception as e:
+                    st.error(f"❌ Request failed: {e}")
+
+with tab2:
+    st.header("📊 Scenario Results")
+    
+    if "scenario_results" in st.session_state and st.session_state.scenario_results:
+        
+        # Results selector
+        scenario_names = [r["name"] for r in st.session_state.scenario_results]
+        selected_scenario = st.selectbox("Select Scenario", scenario_names)
+        
+        # Find selected result
+        selected_result = next(
+            r for r in st.session_state.scenario_results 
+            if r["name"] == selected_scenario
+        )
+        
+        result = selected_result["result"]
+        
+        # Key metrics
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("🌡️ Temperature", f"{result.get('final_temperature', 0):.2f}°C")
+        with col2:
+            st.metric("⚡ Renewables", f"{result.get('final_renewable_share', 0):.1%}")
+        with col3:
+            st.metric("📊 Overall Score", f"{result.get('overall_score', 0):.3f}")
+        with col4:
+            st.metric("👷 Jobs", f"{result.get('total_jobs_created', 0):,}")
+        
+        # Detailed results
+        st.subheader("Detailed Results")
+        st.json(result)
+        
+    else:
+        st.info("No scenario results yet. Run a scenario in the first tab!")
+
+with tab3:
+    st.header("⚖️ Scenario Comparison")
+    st.info("Scenario comparison feature - select multiple scenarios to compare")
+
+with tab4:
+    st.header("🎯 Policy Optimization")
+    st.info("Policy optimization feature - find optimal policy parameters")
+
+# Footer
+st.markdown("---")
+st.markdown("🌍 **Gaia Commons Council** - From Free's vision to planetary transformation")
+'''
+    
+    dashboard_file = Path(__file__).parent / "dashboard.py"
+    dashboard_file.write_text(dashboard_code)
+
+@app.get("/dashboard")
+async def dashboard_redirect():
+    """Redirect to Streamlit dashboard"""
+    return HTMLResponse(f"""
+    <html>
+        <head>
+            <meta http-equiv="refresh" content="0; url=http://localhost:8501">
+        </head>
+        <body>
+            <p>Redirecting to Gaia Dashboard...</p>
+            <p>If not redirected, visit: <a href="http://localhost:8501">http://localhost:8501</a></p>
+        </body>
+    </html>
+    """)
+
+# Background tasks
+@app.on_event("startup")
+async def startup_tasks():
+    """Run startup background tasks"""
+    
+    # Start periodic system status broadcast
+    asyncio.create_task(periodic_status_broadcast())
+    
+    logger.info("🚀 Gaia Commons Council Service v{__version__} - READY")
+    logger.info("📊 Dashboard: http://localhost:8501")
+    logger.info("📚 API Docs: http://localhost:8000/docs")
+
+async def periodic_status_broadcast():
+    """Periodically broadcast system status to WebSocket clients"""
+    while True:
+        await asyncio.sleep(30)  # Every 30 seconds
+        await broadcast_system_status()
+
+if __name__ == "__main__":
+    print("🌍 Starting Gaia Commons Council Production Service")
+    print("📊 Dashboard will be available at: http://localhost:8501")
+    print("📚 API documentation at: http://localhost:8000/docs")
+    
+    uvicorn.run(
+        app,
+        host="0.0.0.0",
+        port=8000,
+        reload=False,  # Disable reload in production
+        access_log=True
+    )

@@ -28,7 +28,13 @@ import {
   tribalPartnerships,
   implementationTimeline,
   politicalRoadmap,
-  stressTests
+  stressTests,
+  tieredCarbonPricing,
+  regenerativeAgriculture,
+  nationwideFoodSecurity,
+  laborTransition,
+  politicalCoalition,
+  globalRegenerationSummary
 } from './schema';
 
 export const errorSchemas = {
@@ -109,6 +115,24 @@ export const api = {
   },
   stressTests: {
     list: { method: 'GET' as const, path: '/api/stress-tests', responses: { 200: z.array(z.custom<typeof stressTests.$inferSelect>()) } },
+  },
+  tieredCarbonPricing: {
+    list: { method: 'GET' as const, path: '/api/tiered-carbon-pricing', responses: { 200: z.array(z.custom<typeof tieredCarbonPricing.$inferSelect>()) } },
+  },
+  regenerativeAgriculture: {
+    list: { method: 'GET' as const, path: '/api/regenerative-agriculture', responses: { 200: z.array(z.custom<typeof regenerativeAgriculture.$inferSelect>()) } },
+  },
+  nationwideFoodSecurity: {
+    get: { method: 'GET' as const, path: '/api/nationwide-food-security', responses: { 200: z.custom<typeof nationwideFoodSecurity.$inferSelect>(), 404: errorSchemas.notFound } },
+  },
+  laborTransition: {
+    list: { method: 'GET' as const, path: '/api/labor-transition', responses: { 200: z.array(z.custom<typeof laborTransition.$inferSelect>()) } },
+  },
+  politicalCoalition: {
+    list: { method: 'GET' as const, path: '/api/political-coalition', responses: { 200: z.array(z.custom<typeof politicalCoalition.$inferSelect>()) } },
+  },
+  globalRegenerationSummary: {
+    get: { method: 'GET' as const, path: '/api/global-regeneration-summary', responses: { 200: z.custom<typeof globalRegenerationSummary.$inferSelect>(), 404: errorSchemas.notFound } },
   },
   health: {
     get: { method: 'GET' as const, path: '/health', responses: { 200: z.object({ status: z.string(), version: z.string(), service: z.string() }) } },

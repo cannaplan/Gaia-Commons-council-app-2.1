@@ -5,6 +5,7 @@ import {
   endowmentProjections, expandedJobs, k12Curriculum, coalitionPartners, fundingSources,
   transparencyFeatures, accountabilityMechanisms, tribalPartnerships,
   implementationTimeline, politicalRoadmap, stressTests,
+  tieredCarbonPricing, regenerativeAgriculture, nationwideFoodSecurity, laborTransition, politicalCoalition, globalRegenerationSummary,
   type PilotStats, type InsertPilotStats,
   type EndowmentStats, type InsertEndowmentStats,
   type TimelineEvent, type InsertTimelineEvent,
@@ -28,7 +29,13 @@ import {
   type TribalPartnership, type InsertTribalPartnership,
   type ImplementationTimelineType, type InsertImplementationTimeline,
   type PoliticalRoadmapType, type InsertPoliticalRoadmap,
-  type StressTest, type InsertStressTest
+  type StressTest, type InsertStressTest,
+  type TieredCarbonPricingType, type InsertTieredCarbonPricing,
+  type RegenerativeAgricultureType, type InsertRegenerativeAgriculture,
+  type NationwideFoodSecurityType, type InsertNationwideFoodSecurity,
+  type LaborTransitionType, type InsertLaborTransition,
+  type PoliticalCoalitionType, type InsertPoliticalCoalition,
+  type GlobalRegenerationSummaryType, type InsertGlobalRegenerationSummary
 } from "@shared/schema";
 import { eq, asc } from "drizzle-orm";
 
@@ -83,6 +90,18 @@ export interface IStorage {
   createPoliticalRoadmap(item: InsertPoliticalRoadmap): Promise<PoliticalRoadmapType>;
   getStressTests(): Promise<StressTest[]>;
   createStressTest(item: InsertStressTest): Promise<StressTest>;
+  getTieredCarbonPricing(): Promise<TieredCarbonPricingType[]>;
+  createTieredCarbonPricing(item: InsertTieredCarbonPricing): Promise<TieredCarbonPricingType>;
+  getRegenerativeAgriculture(): Promise<RegenerativeAgricultureType[]>;
+  createRegenerativeAgriculture(item: InsertRegenerativeAgriculture): Promise<RegenerativeAgricultureType>;
+  getNationwideFoodSecurity(): Promise<NationwideFoodSecurityType | undefined>;
+  createNationwideFoodSecurity(item: InsertNationwideFoodSecurity): Promise<NationwideFoodSecurityType>;
+  getLaborTransition(): Promise<LaborTransitionType[]>;
+  createLaborTransition(item: InsertLaborTransition): Promise<LaborTransitionType>;
+  getPoliticalCoalition(): Promise<PoliticalCoalitionType[]>;
+  createPoliticalCoalition(item: InsertPoliticalCoalition): Promise<PoliticalCoalitionType>;
+  getGlobalRegenerationSummary(): Promise<GlobalRegenerationSummaryType | undefined>;
+  createGlobalRegenerationSummary(item: InsertGlobalRegenerationSummary): Promise<GlobalRegenerationSummaryType>;
   isEmpty(): Promise<boolean>;
 }
 
@@ -286,6 +305,50 @@ export class DatabaseStorage implements IStorage {
   async createStressTest(item: InsertStressTest): Promise<StressTest> {
     const [s] = await db.insert(stressTests).values(item).returning();
     return s;
+  }
+  async getTieredCarbonPricing(): Promise<TieredCarbonPricingType[]> {
+    return await db.select().from(tieredCarbonPricing);
+  }
+  async createTieredCarbonPricing(item: InsertTieredCarbonPricing): Promise<TieredCarbonPricingType> {
+    const [c] = await db.insert(tieredCarbonPricing).values(item).returning();
+    return c;
+  }
+  async getRegenerativeAgriculture(): Promise<RegenerativeAgricultureType[]> {
+    return await db.select().from(regenerativeAgriculture);
+  }
+  async createRegenerativeAgriculture(item: InsertRegenerativeAgriculture): Promise<RegenerativeAgricultureType> {
+    const [a] = await db.insert(regenerativeAgriculture).values(item).returning();
+    return a;
+  }
+  async getNationwideFoodSecurity(): Promise<NationwideFoodSecurityType | undefined> {
+    const [n] = await db.select().from(nationwideFoodSecurity).limit(1);
+    return n;
+  }
+  async createNationwideFoodSecurity(item: InsertNationwideFoodSecurity): Promise<NationwideFoodSecurityType> {
+    const [n] = await db.insert(nationwideFoodSecurity).values(item).returning();
+    return n;
+  }
+  async getLaborTransition(): Promise<LaborTransitionType[]> {
+    return await db.select().from(laborTransition);
+  }
+  async createLaborTransition(item: InsertLaborTransition): Promise<LaborTransitionType> {
+    const [l] = await db.insert(laborTransition).values(item).returning();
+    return l;
+  }
+  async getPoliticalCoalition(): Promise<PoliticalCoalitionType[]> {
+    return await db.select().from(politicalCoalition);
+  }
+  async createPoliticalCoalition(item: InsertPoliticalCoalition): Promise<PoliticalCoalitionType> {
+    const [p] = await db.insert(politicalCoalition).values(item).returning();
+    return p;
+  }
+  async getGlobalRegenerationSummary(): Promise<GlobalRegenerationSummaryType | undefined> {
+    const [g] = await db.select().from(globalRegenerationSummary).limit(1);
+    return g;
+  }
+  async createGlobalRegenerationSummary(item: InsertGlobalRegenerationSummary): Promise<GlobalRegenerationSummaryType> {
+    const [g] = await db.insert(globalRegenerationSummary).values(item).returning();
+    return g;
   }
   async isEmpty(): Promise<boolean> {
     const [stats] = await db.select().from(pilotStats).limit(1);

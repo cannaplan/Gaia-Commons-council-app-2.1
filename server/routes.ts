@@ -170,6 +170,38 @@ export async function registerRoutes(
     res.json(tests);
   });
 
+  app.get(api.tieredCarbonPricing.list.path, async (_req, res) => {
+    const data = await storage.getTieredCarbonPricing();
+    res.json(data);
+  });
+
+  app.get(api.regenerativeAgriculture.list.path, async (_req, res) => {
+    const data = await storage.getRegenerativeAgriculture();
+    res.json(data);
+  });
+
+  app.get(api.nationwideFoodSecurity.get.path, async (_req, res) => {
+    const data = await storage.getNationwideFoodSecurity();
+    if (!data) return res.status(404).json({ message: "Food security data not found" });
+    res.json(data);
+  });
+
+  app.get(api.laborTransition.list.path, async (_req, res) => {
+    const data = await storage.getLaborTransition();
+    res.json(data);
+  });
+
+  app.get(api.politicalCoalition.list.path, async (_req, res) => {
+    const data = await storage.getPoliticalCoalition();
+    res.json(data);
+  });
+
+  app.get(api.globalRegenerationSummary.get.path, async (_req, res) => {
+    const data = await storage.getGlobalRegenerationSummary();
+    if (!data) return res.status(404).json({ message: "Global regeneration summary not found" });
+    res.json(data);
+  });
+
   // === Seed Data ===
   await seedDatabase();
 
@@ -249,6 +281,109 @@ async function seedDatabase() {
     for (const s of scenarios) {
       await storage.createStressTest(s);
     }
+  }
+
+  // Seed Global Regeneration: Tiered Carbon Pricing
+  const carbonData = await storage.getTieredCarbonPricing();
+  if (carbonData.length === 0) {
+    console.log("Seeding tiered carbon pricing...");
+    const tiers = [
+      { tierName: "small_emitters", thresholdMin: 0, thresholdMax: 25000, carbonTaxRate: 25, description: "Small businesses, local operations", emissionFraction: 0.15, reductionRate: 0.10, businessSurvival: 0.95, revenueMillions: 262 },
+      { tierName: "medium_emitters", thresholdMin: 25000, thresholdMax: 100000, carbonTaxRate: 75, description: "Regional companies, mid-size operations", emissionFraction: 0.25, reductionRate: 0.25, businessSurvival: 0.90, revenueMillions: 984 },
+      { tierName: "large_emitters", thresholdMin: 100000, thresholdMax: 1000000, carbonTaxRate: 150, description: "Major corporations, large industrial facilities", emissionFraction: 0.35, reductionRate: 0.45, businessSurvival: 0.80, revenueMillions: 2021 },
+      { tierName: "mega_polluters", thresholdMin: 1000000, thresholdMax: null, carbonTaxRate: 200, description: "Fossil fuel companies, massive industrial polluters", emissionFraction: 0.25, reductionRate: 0.70, businessSurvival: 0.40, revenueMillions: 1050 }
+    ];
+    for (const t of tiers) {
+      await storage.createTieredCarbonPricing(t);
+    }
+  }
+
+  // Seed Global Regeneration: Regenerative Agriculture
+  const agData = await storage.getRegenerativeAgriculture();
+  if (agData.length === 0) {
+    console.log("Seeding regenerative agriculture...");
+    const usAcres = 180000000 * 0.8; // 80% transition at $150 carbon
+    const operations = [
+      { operationType: "hemp_production", name: "Industrial Hemp Multi-Stream", description: "Fiber, seed, biomass, soil remediation", acresAllocated: usAcres * 0.20, revenuePerAcre: 2850, jobsPer1000Acres: 6.8, avgWage: 48000, carbonSequestration: 4.2, peopleFedPerAcre: 12, totalJobs: Math.floor(usAcres * 0.20 / 1000 * 6.8), totalRevenue: usAcres * 0.20 * 2850, totalCarbonSequestered: usAcres * 0.20 * 4.2 },
+      { operationType: "market_garden", name: "Diversified Market Garden", description: "50+ vegetable crops for local markets", acresAllocated: usAcres * 0.16, revenuePerAcre: 8500, jobsPer1000Acres: 12.5, avgWage: 45000, carbonSequestration: 3.2, peopleFedPerAcre: 8, totalJobs: Math.floor(usAcres * 0.16 / 1000 * 12.5), totalRevenue: usAcres * 0.16 * 8500, totalCarbonSequestered: usAcres * 0.16 * 3.2 },
+      { operationType: "food_forest", name: "Agroforestry/Food Forest", description: "Perennial nuts, fruits, berries, mushrooms", acresAllocated: usAcres * 0.12, revenuePerAcre: 3200, jobsPer1000Acres: 6.8, avgWage: 42000, carbonSequestration: 5.8, peopleFedPerAcre: 4, totalJobs: Math.floor(usAcres * 0.12 / 1000 * 6.8), totalRevenue: usAcres * 0.12 * 3200, totalCarbonSequestered: usAcres * 0.12 * 5.8 },
+      { operationType: "silvopasture", name: "Silvopasture Livestock", description: "Rotational grazing with trees", acresAllocated: usAcres * 0.20, revenuePerAcre: 850, jobsPer1000Acres: 4.2, avgWage: 48000, carbonSequestration: 2.8, peopleFedPerAcre: 1.2, totalJobs: Math.floor(usAcres * 0.20 / 1000 * 4.2), totalRevenue: usAcres * 0.20 * 850, totalCarbonSequestered: usAcres * 0.20 * 2.8 },
+      { operationType: "grain_diversification", name: "Diversified Grain Systems", description: "10+ grain crops in rotation", acresAllocated: usAcres * 0.32, revenuePerAcre: 680, jobsPer1000Acres: 2.8, avgWage: 52000, carbonSequestration: 1.8, peopleFedPerAcre: 2.1, totalJobs: Math.floor(usAcres * 0.32 / 1000 * 2.8), totalRevenue: usAcres * 0.32 * 680, totalCarbonSequestered: usAcres * 0.32 * 1.8 }
+    ];
+    for (const op of operations) {
+      await storage.createRegenerativeAgriculture(op);
+    }
+  }
+
+  // Seed Global Regeneration: Nationwide Food Security
+  const foodSecData = await storage.getNationwideFoodSecurity();
+  if (!foodSecData) {
+    console.log("Seeding nationwide food security...");
+    const totalStudents = 52000000; // ~52 million public school students
+    const facilitiesNeeded = Math.ceil(totalStudents / 3000);
+    await storage.createNationwideFoodSecurity({
+      scope: "All 50 states",
+      totalStudents: totalStudents,
+      facilitiesNeeded: facilitiesNeeded,
+      jobsCreated: facilitiesNeeded * 4,
+      constructionCost: facilitiesNeeded * 400000,
+      annualOperating: facilitiesNeeded * 150000,
+      co2ReductionTons: totalStudents * 365 * 0.0003 * 1500 * 0.90 * 0.0004,
+      waterSavingsGallons: facilitiesNeeded * 50000,
+      pesticideElimination: "100% - no pesticides in controlled environment",
+      replicationModel: "State-by-state using MCS template"
+    });
+  }
+
+  // Seed Global Regeneration: Labor Transition
+  const laborData = await storage.getLaborTransition();
+  if (laborData.length === 0) {
+    console.log("Seeding labor transition...");
+    const sectors = [
+      { sector: "Coal", workersAffected: 43000, avgWage: 75000, incomeGuaranteeRate: 1.25, transitionDurationYears: 3, retrainingCostPerWorker: 45000, successRate: 0.78, totalCost: 43000 * (75000 * 1.25 * 3 + 45000), choicePreservation: "Workers choose timing and pathway" },
+      { sector: "Oil & Gas", workersAffected: 1200000, avgWage: 75000, incomeGuaranteeRate: 1.25, transitionDurationYears: 3, retrainingCostPerWorker: 45000, successRate: 0.78, totalCost: 1200000 * (75000 * 1.25 * 3 + 45000), choicePreservation: "Workers choose timing and pathway" },
+      { sector: "Pipeline", workersAffected: 125000, avgWage: 75000, incomeGuaranteeRate: 1.25, transitionDurationYears: 3, retrainingCostPerWorker: 45000, successRate: 0.78, totalCost: 125000 * (75000 * 1.25 * 3 + 45000), choicePreservation: "Workers choose timing and pathway" },
+      { sector: "Auto (ICE)", workersAffected: 180000, avgWage: 75000, incomeGuaranteeRate: 1.25, transitionDurationYears: 3, retrainingCostPerWorker: 45000, successRate: 0.78, totalCost: 180000 * (75000 * 1.25 * 3 + 45000), choicePreservation: "Workers choose timing and pathway" }
+    ];
+    for (const s of sectors) {
+      await storage.createLaborTransition(s);
+    }
+  }
+
+  // Seed Global Regeneration: Political Coalition
+  const coalitionData = await storage.getPoliticalCoalition();
+  if (coalitionData.length === 0) {
+    console.log("Seeding political coalition...");
+    const groups = [
+      { groupName: "Green Job Workers", memberCount: 0, description: "New jobs from energy transition", isCalculated: 1 },
+      { groupName: "Students & Families", memberCount: 0, description: "Beneficiaries of food security program", isCalculated: 1 },
+      { groupName: "Farmers Transitioned", memberCount: 0, description: "Regenerative agriculture adopters", isCalculated: 1 },
+      { groupName: "Environmental Activists", memberCount: 15000000, description: "Climate advocacy organizations", isCalculated: 0 },
+      { groupName: "Healthcare Workers", memberCount: 18000000, description: "Support universal programs", isCalculated: 0 },
+      { groupName: "Teachers", memberCount: 3500000, description: "Support education investments", isCalculated: 0 },
+      { groupName: "Young Voters (18-35)", memberCount: 65000000, description: "Climate-concerned generation", isCalculated: 0 }
+    ];
+    for (const g of groups) {
+      await storage.createPoliticalCoalition(g);
+    }
+  }
+
+  // Seed Global Regeneration Summary
+  const summaryData = await storage.getGlobalRegenerationSummary();
+  if (!summaryData) {
+    console.log("Seeding global regeneration summary...");
+    const totalJobs = 840000 + 69334 + 2500000; // ag jobs + food security + green energy
+    const totalCoalition = 101500000 + totalJobs + 26000000; // base + jobs + calculated families
+    await storage.createGlobalRegenerationSummary({
+      totalJobsCreated: totalJobs,
+      totalCoalitionSize: totalCoalition,
+      coalitionPercentage: (totalCoalition / 240000000) * 100,
+      politicalPowerAssessment: "Overwhelming - largest coalition in US history",
+      oppositionSize: 75000,
+      coalitionAdvantage: "1000:1 ratio favoring Gaia coalition",
+      totalTransitionCosts: 525000000000, // ~$525B
+      choicePreservationAchieved: 1
+    });
   }
   
   if (isEmpty) {

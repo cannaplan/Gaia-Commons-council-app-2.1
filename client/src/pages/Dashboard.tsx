@@ -30,7 +30,13 @@ import {
   useTribalPartnerships,
   useImplementationTimeline,
   usePoliticalRoadmap,
-  useStressTests
+  useStressTests,
+  useTieredCarbonPricing,
+  useRegenerativeAgriculture,
+  useNationwideFoodSecurity,
+  useLaborTransition,
+  usePoliticalCoalitionData,
+  useGlobalRegenerationSummary
 } from "@/hooks/use-gaia";
 import {
   LineChart,
@@ -102,7 +108,12 @@ import {
   Calendar,
   MapPinned,
   ShieldAlert,
-  CheckCircle2
+  CheckCircle2,
+  Flame,
+  Wheat,
+  Utensils,
+  HardHat,
+  Vote as VoteIcon
 } from "lucide-react";
 
 const SCALE_LABELS: Record<string, string> = {
@@ -160,6 +171,12 @@ export default function Dashboard() {
   const { data: implementationTimeline } = useImplementationTimeline();
   const { data: politicalRoadmap } = usePoliticalRoadmap();
   const { data: stressTests } = useStressTests();
+  const { data: tieredCarbonPricing } = useTieredCarbonPricing();
+  const { data: regenerativeAgriculture } = useRegenerativeAgriculture();
+  const { data: nationwideFoodSecurity } = useNationwideFoodSecurity();
+  const { data: laborTransition } = useLaborTransition();
+  const { data: politicalCoalitionData } = usePoliticalCoalitionData();
+  const { data: globalRegenerationSummary } = useGlobalRegenerationSummary();
   const { data: legalFramework, isLoading: loadingLegal } = useLegalFramework();
 
   const isLoading = loadingPilot || loadingEndowment || loadingTimeline || loadingFinancials || 
@@ -1196,6 +1213,232 @@ export default function Dashboard() {
                           <p className="text-xs text-foreground"><span className="font-medium">Mitigation:</span> {test.mitigation}</p>
                         </div>
                       </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Global Regeneration Project */}
+        {globalRegenerationSummary && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.53 }} className="mb-8">
+            <Card className="glass-panel bg-gradient-to-r from-emerald-50/50 to-blue-50/50 dark:from-emerald-950/20 dark:to-blue-950/20" data-testid="card-global-regeneration">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <Globe className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Global Regeneration Project — Complete Climate Transformation</CardTitle>
+                <Badge variant="secondary" className="ml-auto">National Scale</Badge>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                  <div className="p-4 bg-background/60 rounded-lg border border-border/50 text-center">
+                    <p className="text-2xl font-bold text-primary">{formatNumber(globalRegenerationSummary.totalJobsCreated)}</p>
+                    <p className="text-xs text-muted-foreground">Total Jobs Created</p>
+                  </div>
+                  <div className="p-4 bg-background/60 rounded-lg border border-border/50 text-center">
+                    <p className="text-2xl font-bold text-emerald-600">{formatNumber(globalRegenerationSummary.totalCoalitionSize)}</p>
+                    <p className="text-xs text-muted-foreground">Coalition Size</p>
+                  </div>
+                  <div className="p-4 bg-background/60 rounded-lg border border-border/50 text-center">
+                    <p className="text-2xl font-bold text-blue-600">{globalRegenerationSummary.coalitionPercentage.toFixed(1)}%</p>
+                    <p className="text-xs text-muted-foreground">Of Electorate</p>
+                  </div>
+                  <div className="p-4 bg-background/60 rounded-lg border border-border/50 text-center">
+                    <p className="text-2xl font-bold text-amber-600">{globalRegenerationSummary.coalitionAdvantage}</p>
+                    <p className="text-xs text-muted-foreground">vs Opposition</p>
+                  </div>
+                </div>
+                <div className="p-4 bg-background/40 rounded-lg border border-emerald-200 dark:border-emerald-900/50 mb-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <VoteIcon className="h-5 w-5 text-emerald-600" />
+                    <span className="font-semibold text-foreground">{globalRegenerationSummary.politicalPowerAssessment}</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Choice preservation achieved through tiered carbon pricing, voluntary labor transition, and farmer-led regenerative adoption.</p>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Tiered Carbon Pricing */}
+        {tieredCarbonPricing && tieredCarbonPricing.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.54 }} className="mb-8">
+            <Card className="glass-panel" data-testid="card-tiered-carbon">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <Flame className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Tiered Carbon Pricing — Protecting Small Businesses, Targeting Mega-Polluters</CardTitle>
+                <Badge variant="secondary" className="ml-auto">4 Tiers</Badge>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Progressive carbon tax structure: Small businesses pay $25/ton, mega-polluters face $200/ton + exponential penalties.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {tieredCarbonPricing.map((tier) => (
+                    <div 
+                      key={tier.id} 
+                      className={`p-4 rounded-lg border ${
+                        tier.carbonTaxRate <= 25 ? 'bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-900/50' :
+                        tier.carbonTaxRate <= 75 ? 'bg-blue-50/50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-900/50' :
+                        tier.carbonTaxRate <= 150 ? 'bg-amber-50/50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-900/50' :
+                        'bg-red-50/50 dark:bg-red-950/20 border-red-200 dark:border-red-900/50'
+                      }`}
+                      data-testid={`carbon-tier-${tier.id}`}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-lg font-bold text-primary">${tier.carbonTaxRate}/ton</span>
+                        <Badge variant="outline" className="text-xs">{(tier.businessSurvival * 100).toFixed(0)}% survive</Badge>
+                      </div>
+                      <p className="text-sm font-medium text-foreground mb-1">{tier.description}</p>
+                      <div className="grid grid-cols-2 gap-2 mt-3 text-center">
+                        <div className="p-2 bg-background/50 rounded">
+                          <p className="text-sm font-bold text-foreground">{(tier.reductionRate * 100).toFixed(0)}%</p>
+                          <p className="text-xs text-muted-foreground">Reduction</p>
+                        </div>
+                        <div className="p-2 bg-background/50 rounded">
+                          <p className="text-sm font-bold text-foreground">${tier.revenueMillions?.toLocaleString()}M</p>
+                          <p className="text-xs text-muted-foreground">Revenue</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Regenerative Agriculture */}
+        {regenerativeAgriculture && regenerativeAgriculture.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.55 }} className="mb-8">
+            <Card className="glass-panel" data-testid="card-regenerative-ag">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <Wheat className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Regenerative Agriculture — 144M Acres Transformed</CardTitle>
+                <Badge variant="secondary" className="ml-auto">5 Operation Types</Badge>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {regenerativeAgriculture.map((op) => (
+                    <div key={op.id} className="p-4 bg-muted/30 rounded-lg border border-border/50" data-testid={`ag-op-${op.id}`}>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Leaf className="h-4 w-4 text-emerald-500" />
+                        <span className="font-semibold text-foreground">{op.name}</span>
+                      </div>
+                      <p className="text-xs text-muted-foreground mb-3">{op.description}</p>
+                      <div className="grid grid-cols-3 gap-2 text-center">
+                        <div className="p-2 bg-background/50 rounded">
+                          <p className="text-sm font-bold text-emerald-600">{formatNumber(op.totalJobs)}</p>
+                          <p className="text-xs text-muted-foreground">Jobs</p>
+                        </div>
+                        <div className="p-2 bg-background/50 rounded">
+                          <p className="text-sm font-bold text-blue-600">${formatNumber(op.totalRevenue)}</p>
+                          <p className="text-xs text-muted-foreground">Revenue</p>
+                        </div>
+                        <div className="p-2 bg-background/50 rounded">
+                          <p className="text-sm font-bold text-primary">{formatNumber(op.totalCarbonSequestered)}</p>
+                          <p className="text-xs text-muted-foreground">CO2 Tons</p>
+                        </div>
+                      </div>
+                      <div className="mt-3 pt-3 border-t border-border/50 flex justify-between text-xs text-muted-foreground">
+                        <span>${op.revenuePerAcre}/acre</span>
+                        <span>{op.avgWage.toLocaleString()} avg wage</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Nationwide Food Security & Labor Transition */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          {nationwideFoodSecurity && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.56 }}>
+              <Card className="glass-panel h-full" data-testid="card-food-security">
+                <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                  <Utensils className="h-5 w-5 text-primary" />
+                  <CardTitle className="text-lg font-semibold">Nationwide Food Security</CardTitle>
+                  <Badge variant="secondary" className="ml-auto">{nationwideFoodSecurity.scope}</Badge>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 gap-3 mb-4">
+                    <div className="p-3 bg-muted/30 rounded-lg text-center">
+                      <p className="text-xl font-bold text-primary">{formatNumber(nationwideFoodSecurity.totalStudents)}</p>
+                      <p className="text-xs text-muted-foreground">Students Served</p>
+                    </div>
+                    <div className="p-3 bg-muted/30 rounded-lg text-center">
+                      <p className="text-xl font-bold text-emerald-600">{formatNumber(nationwideFoodSecurity.facilitiesNeeded)}</p>
+                      <p className="text-xs text-muted-foreground">Facilities</p>
+                    </div>
+                    <div className="p-3 bg-muted/30 rounded-lg text-center">
+                      <p className="text-xl font-bold text-blue-600">{formatNumber(nationwideFoodSecurity.jobsCreated)}</p>
+                      <p className="text-xs text-muted-foreground">Jobs Created</p>
+                    </div>
+                    <div className="p-3 bg-muted/30 rounded-lg text-center">
+                      <p className="text-xl font-bold text-amber-600">${formatNumber(nationwideFoodSecurity.constructionCost)}</p>
+                      <p className="text-xs text-muted-foreground">Investment</p>
+                    </div>
+                  </div>
+                  <div className="p-3 bg-emerald-50/50 dark:bg-emerald-950/20 rounded-lg border border-emerald-200 dark:border-emerald-900/50">
+                    <p className="text-xs text-emerald-700 dark:text-emerald-400"><span className="font-medium">Model:</span> {nationwideFoodSecurity.replicationModel}</p>
+                    <p className="text-xs text-emerald-700 dark:text-emerald-400 mt-1"><span className="font-medium">Pesticides:</span> {nationwideFoodSecurity.pesticideElimination}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+
+          {laborTransition && laborTransition.length > 0 && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.57 }}>
+              <Card className="glass-panel h-full" data-testid="card-labor-transition">
+                <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                  <HardHat className="h-5 w-5 text-primary" />
+                  <CardTitle className="text-lg font-semibold">Labor Transition Program</CardTitle>
+                  <Badge variant="secondary" className="ml-auto">{laborTransition.reduce((sum, l) => sum + l.workersAffected, 0).toLocaleString()} Workers</Badge>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    125% income guarantee for 3 years + $45K retraining. Workers choose timing and pathway.
+                  </p>
+                  <div className="space-y-3">
+                    {laborTransition.map((sector) => (
+                      <div key={sector.id} className="p-3 bg-muted/30 rounded-lg" data-testid={`labor-sector-${sector.id}`}>
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-medium text-foreground">{sector.sector}</span>
+                          <span className="text-sm font-bold text-primary">{sector.workersAffected.toLocaleString()}</span>
+                        </div>
+                        <div className="flex items-center justify-between text-xs text-muted-foreground">
+                          <span>{(sector.successRate * 100).toFixed(0)}% success rate</span>
+                          <span>Total: ${formatNumber(sector.totalCost)}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+        </div>
+
+        {/* Political Coalition */}
+        {politicalCoalitionData && politicalCoalitionData.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.58 }} className="mb-8">
+            <Card className="glass-panel" data-testid="card-political-coalition">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <VoteIcon className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Political Coalition — Largest in US History</CardTitle>
+                <Badge variant="secondary" className="ml-auto">{politicalCoalitionData.length} Groups</Badge>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {politicalCoalitionData.filter(g => g.memberCount > 0 || g.isCalculated === 0).map((group) => (
+                    <div key={group.id} className="p-4 bg-muted/30 rounded-lg border border-border/50" data-testid={`coalition-group-${group.id}`}>
+                      <p className="font-medium text-foreground mb-1">{group.groupName}</p>
+                      <p className="text-xl font-bold text-primary">{group.memberCount > 0 ? formatNumber(group.memberCount) : 'Calculated'}</p>
+                      {group.description && <p className="text-xs text-muted-foreground mt-1">{group.description}</p>}
                     </div>
                   ))}
                 </div>

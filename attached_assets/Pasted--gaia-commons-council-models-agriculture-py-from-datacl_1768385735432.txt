@@ -1,0 +1,161 @@
+# gaia_commons_council/models/agriculture.py
+from dataclasses import dataclass
+from typing import Dict, List, Any, Tuple
+import math
+
+@dataclass
+class RegenerativeOperation:
+    """Specific regenerative farming operation type"""
+    name: str
+    description: str
+    acres_range: Tuple[int, int]
+    revenue_per_acre: float
+    operating_costs_per_acre: float
+    jobs_per_1000_acres: float
+    avg_wage: float
+    carbon_sequestration: float  # tons CO2/acre/year
+    people_fed_per_acre: int
+    water_efficiency_improvement: float
+    biodiversity_score: float  # 1-10
+
+class RegenerativeAgricultureModel:
+    """Complete regenerative agriculture transformation model"""
+    
+    def __init__(self):
+        self.operations = self._create_operations()
+        
+    def _create_operations(self) -> Dict[str, RegenerativeOperation]:
+        return {
+            "market_garden": RegenerativeOperation(
+                name="Diversified Market Garden",
+                description="50+ vegetable crops for local markets",
+                acres_range=(2, 50),
+                revenue_per_acre=8500,
+                operating_costs_per_acre=4200,
+                jobs_per_1000_acres=12.5,
+                avg_wage=45000,
+                carbon_sequestration=3.2,
+                people_fed_per_acre=8,
+                water_efficiency_improvement=0.85,
+                biodiversity_score=9.2
+            ),
+            
+            "food_forest": RegenerativeOperation(
+                name="Agroforestry/Food Forest",
+                description="Perennial nuts, fruits, berries, mushrooms",
+                acres_range=(5, 500),
+                revenue_per_acre=3200,
+                operating_costs_per_acre=800,
+                jobs_per_1000_acres=6.8,
+                avg_wage=42000,
+                carbon_sequestration=5.8,
+                people_fed_per_acre=4,
+                water_efficiency_improvement=0.95,
+                biodiversity_score=9.8
+            ),
+            
+            "hemp_production": RegenerativeOperation(
+                name="Industrial Hemp Multi-Stream",
+                description="Fiber, seed, biomass, and soil remediation",
+                acres_range=(10, 50000),
+                revenue_per_acre=2850,
+                operating_costs_per_acre=485,
+                jobs_per_1000_acres=6.8,
+                avg_wage=48000,
+                carbon_sequestration=4.2,
+                people_fed_per_acre=12,  # hemp seeds complete protein
+                water_efficiency_improvement=15.0,  # vs cotton
+                biodiversity_score=8.8
+            ),
+            
+            "silvopasture": RegenerativeOperation(
+                name="Silvopasture Livestock", 
+                description="Rotational grazing with trees",
+                acres_range=(20, 2000),
+                revenue_per_acre=850,
+                operating_costs_per_acre=320,
+                jobs_per_1000_acres=4.2,
+                avg_wage=48000,
+                carbon_sequestration=2.8,
+                people_fed_per_acre=1.2,
+                water_efficiency_improvement=0.75,
+                biodiversity_score=8.5
+            ),
+            
+            "grain_diversification": RegenerativeOperation(
+                name="Diversified Grain Systems",
+                description="10+ grain crops in rotation",
+                acres_range=(100, 5000),
+                revenue_per_acre=680,
+                operating_costs_per_acre=285,
+                jobs_per_1000_acres=2.8,
+                avg_wage=52000,
+                carbon_sequestration=1.8,
+                people_fed_per_acre=2.1,
+                water_efficiency_improvement=0.65,
+                biodiversity_score=7.5
+            )
+        }
+    
+    def calculate_transformation_impact(self, 
+                                      total_acres: int,
+                                      transition_percentage: float) -> Dict[str, Any]:
+        """Calculate complete agricultural transformation impact"""
+        
+        acres_to_transition = int(total_acres * transition_percentage)
+        
+        # Optimal land allocation for regenerative systems
+        allocation = {
+            "hemp_production": 0.20,      # 20% hemp for industrial applications
+            "market_garden": 0.16,        # 16% intensive vegetables 
+            "food_forest": 0.12,          # 12% perennial systems
+            "silvopasture": 0.20,         # 20% integrated livestock
+            "grain_diversification": 0.32  # 32% diverse grain rotation
+        }
+        
+        results = {
+            "land_allocation": {},
+            "total_impact": {
+                "jobs_created": 0,
+                "total_revenue": 0,
+                "carbon_sequestered": 0,
+                "people_fed": 0
+            }
+        }
+        
+        for system_name, percentage in allocation.items():
+            system_acres = int(acres_to_transition * percentage)
+            operation = self.operations[system_name]
+            
+            jobs = int((system_acres / 1000) * operation.jobs_per_1000_acres)
+            revenue = system_acres * operation.revenue_per_acre
+            carbon = system_acres * operation.carbon_sequestration
+            people_fed = system_acres * operation.people_fed_per_acre
+            
+            results["land_allocation"][system_name] = {
+                "acres": system_acres,
+                "jobs": jobs,
+                "revenue": revenue,
+                "carbon_sequestered": carbon,
+                "people_fed": people_fed,
+                "avg_wage": operation.avg_wage
+            }
+            
+            # Add to totals
+            results["total_impact"]["jobs_created"] += jobs
+            results["total_impact"]["total_revenue"] += revenue
+            results["total_impact"]["carbon_sequestered"] += carbon
+            results["total_impact"]["people_fed"] += people_fed
+        
+        # Calculate vs current monoculture
+        current_jobs = (acres_to_transition / 1000) * 0.3  # 0.3 jobs per 1000 acres
+        current_revenue = acres_to_transition * 620  # $620/acre corn/soy
+        current_people_fed = acres_to_transition * 0.3  # mostly animal feed
+        
+        results["comparison"] = {
+            "job_multiplier": results["total_impact"]["jobs_created"] / max(current_jobs, 1),
+            "revenue_increase": (results["total_impact"]["total_revenue"] / current_revenue) - 1,
+            "food_production_multiplier": results["total_impact"]["people_fed"] / max(current_people_fed, 1)
+        }
+        
+        return results

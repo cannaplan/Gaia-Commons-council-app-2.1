@@ -1,0 +1,90 @@
+# gaia_commons_council/models/food_security.py
+from dataclasses import dataclass
+from typing import Dict, List, Any
+
+@dataclass
+class SchoolGreenhouseNetwork:
+    """Minnesota Cannabis Society style food security network"""
+    
+    facility_size_sqft: int = 6500
+    students_per_facility: int = 3000
+    staff_per_facility: int = 4
+    construction_cost: int = 400_000
+    annual_operating_cost: int = 150_000
+    
+    def calculate_state_network(self, state_student_population: int) -> Dict[str, Any]:
+        """Calculate complete state food security network"""
+        
+        facilities_needed = math.ceil(state_student_population / self.students_per_facility)
+        
+        total_construction = facilities_needed * self.construction_cost
+        total_annual_operating = facilities_needed * self.annual_operating_cost
+        total_jobs = facilities_needed * self.staff_per_facility
+        
+        # Environmental impact
+        food_miles_eliminated = state_student_population * 365 * 0.0003 * 1500 * 0.90  # tons CO2
+        water_savings = facilities_needed * 50000  # gallons per year per facility
+        
+        return {
+            "facilities_needed": facilities_needed,
+            "students_served": state_student_population,
+            "jobs_created": total_jobs,
+            "construction_cost": total_construction,
+            "annual_operating_cost": total_annual_operating,
+            "environmental_impact": {
+                "co2_reduction_tons": food_miles_eliminated * 0.0004,
+                "water_savings_gallons": water_savings,
+                "pesticide_elimination": "100% - no pesticides in controlled environment"
+            },
+            "educational_benefits": {
+                "stem_students_served": state_student_population,
+                "agricultural_literacy": "hands-on food production learning",
+                "nutrition_education": "farm-to-table understanding"
+            },
+            "sustainability_model": {
+                "cannabis_revenue_start": "Year 2",
+                "breakeven": "Year 3", 
+                "long_term": "Self-sustaining through social enterprise"
+            }
+        }
+
+class NationwideFoodSecurityModel:
+    """Scale food security to all 50 states"""
+    
+    def __init__(self):
+        self.state_student_populations = {
+            "minnesota": 900_000,
+            "california": 6_200_000, 
+            "texas": 5_400_000,
+            "florida": 2_800_000,
+            "new_york": 2_700_000,
+            "illinois": 2_000_000,
+            "pennsylvania": 1_700_000,
+            "ohio": 1_700_000,
+            "michigan": 1_500_000,
+            "north_carolina": 1_500_000
+            # ... other states
+        }
+    
+    def calculate_national_impact(self) -> Dict[str, Any]:
+        """Calculate impact of nationwide implementation"""
+        
+        greenhouse_network = SchoolGreenhouseNetwork()
+        total_students = sum(self.state_student_populations.values())
+        
+        # Scale to all 50 states (rough estimate)
+        estimated_total_students = total_students * 2  # approximately 52 million
+        
+        national_network = greenhouse_network.calculate_state_network(estimated_total_students)
+        
+        return {
+            "scope": "All 50 states",
+            "total_students": estimated_total_students,
+            "facilities": national_network["facilities_needed"],
+            "jobs": national_network["jobs_created"],
+            "investment_needed": national_network["construction_cost"],
+            "annual_operating": national_network["annual_operating_cost"],
+            "environmental_impact": national_network["environmental_impact"],
+            "food_security_achieved": "Universal for all public school students",
+            "replication_model": "State-by-state using MCS template"
+        }
