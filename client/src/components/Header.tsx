@@ -9,8 +9,8 @@ export function Header() {
           <Leaf className="h-7 w-7" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-foreground font-display tracking-tight">Gaia Commons</h1>
-          <p className="text-muted-foreground font-medium">Council Dashboard & Analytics</p>
+          <h1 className="text-3xl font-bold text-foreground font-display tracking-tight whitespace-nowrap">Gaia Commons Council</h1>
+          <p className="text-muted-foreground font-medium">Dashboard & Analytics</p>
         </div>
       </div>
       
