@@ -155,6 +155,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { InteractiveMap } from "@/components/InteractiveMap";
+import { GlobalRegenerationMap } from "@/components/GlobalRegenerationMap";
 
 const SCALE_LABELS: Record<string, string> = {
   pilot: "Pilot (6 Schools)",
@@ -1311,6 +1312,11 @@ export default function Dashboard() {
         {/* Interactive Greenhouse Map */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.49 }} className="mb-8">
           <InteractiveMap />
+        </motion.div>
+
+        {/* Global Regeneration Map */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.495 }} className="mb-8">
+          <GlobalRegenerationMap />
         </motion.div>
 
         {/* Tribal Partnerships - Food Sovereignty */}

@@ -481,3 +481,15 @@ export function useGreenhouseLocations() {
     },
   });
 }
+
+// Global Regeneration Regions (World Map)
+export function useGlobalRegenerationRegions() {
+  return useQuery({
+    queryKey: [api.globalRegenerationRegions.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.globalRegenerationRegions.list.path);
+      if (!res.ok) throw new Error("Failed to fetch global regeneration regions");
+      return api.globalRegenerationRegions.list.responses[200].parse(await res.json());
+    },
+  });
+}
