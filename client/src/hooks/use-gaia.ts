@@ -97,3 +97,75 @@ export function useHistoricalFinancials() {
     },
   });
 }
+
+// School Clusters (St. Paul and Mendota Heights)
+export function useSchoolClusters() {
+  return useQuery({
+    queryKey: [api.schoolClusters.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.schoolClusters.list.path);
+      if (!res.ok) throw new Error("Failed to fetch school clusters");
+      return api.schoolClusters.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Individual Schools
+export function useSchools() {
+  return useQuery({
+    queryKey: [api.schools.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.schools.list.path);
+      if (!res.ok) throw new Error("Failed to fetch schools");
+      return api.schools.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Multi-Scale Projections (Pilot, Statewide, National, Global)
+export function useScaleProjections() {
+  return useQuery({
+    queryKey: [api.scaleProjections.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.scaleProjections.list.path);
+      if (!res.ok) throw new Error("Failed to fetch scale projections");
+      return api.scaleProjections.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Environmental Impact Metrics
+export function useEnvironmentalImpact() {
+  return useQuery({
+    queryKey: [api.environmentalImpact.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.environmentalImpact.list.path);
+      if (!res.ok) throw new Error("Failed to fetch environmental impact");
+      return api.environmentalImpact.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Job Creation Projections
+export function useJobCreation() {
+  return useQuery({
+    queryKey: [api.jobCreation.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.jobCreation.list.path);
+      if (!res.ok) throw new Error("Failed to fetch job creation data");
+      return api.jobCreation.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// Legal Framework and Governance
+export function useLegalFramework() {
+  return useQuery({
+    queryKey: [api.legalFramework.get.path],
+    queryFn: async () => {
+      const res = await fetch(api.legalFramework.get.path);
+      if (!res.ok) throw new Error("Failed to fetch legal framework");
+      return api.legalFramework.get.responses[200].parse(await res.json());
+    },
+  });
+}

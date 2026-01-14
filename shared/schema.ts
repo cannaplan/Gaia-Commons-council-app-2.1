@@ -38,10 +38,10 @@ export const schools = pgTable("schools", {
 export const scaleProjections = pgTable("scale_projections", {
   id: serial("id").primaryKey(),
   scale: text("scale").notNull(),
-  schools: integer("schools").notNull(),
-  students: integer("students").notNull(),
-  greenhouses: integer("greenhouses").notNull(),
-  sqft: integer("sqft").notNull(),
+  schools: real("schools").notNull(),
+  students: real("students").notNull(),
+  greenhouses: real("greenhouses").notNull(),
+  sqft: real("sqft").notNull(),
   capex: real("capex").notNull(),
   annualRevenue: real("annual_revenue").notNull(),
   annualOpex: real("annual_opex").notNull(),
@@ -49,9 +49,9 @@ export const scaleProjections = pgTable("scale_projections", {
   roiPct: real("roi_pct").notNull(),
   endowmentTarget: real("endowment_target").notNull(),
   endowmentYr15: real("endowment_yr15").notNull(),
-  jobs: integer("jobs").notNull(),
+  jobs: real("jobs").notNull(),
   co2TonsAnnual: real("co2_tons_annual").notNull(),
-  mealsPerDay: integer("meals_per_day").notNull(),
+  mealsPerDay: real("meals_per_day").notNull(),
 });
 
 // Environmental Impact Metrics

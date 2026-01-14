@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Header } from "@/components/Header";
 import { StatsCard, StatItem } from "@/components/StatsCard";
 import { Timeline } from "@/components/Timeline";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   usePilotStats, 
   useEndowmentStats, 
@@ -11,7 +13,13 @@ import {
   useFinancialMetrics,
   useClimateMetrics,
   useSlides,
-  useHistoricalFinancials
+  useHistoricalFinancials,
+  useSchoolClusters,
+  useSchools,
+  useScaleProjections,
+  useEnvironmentalImpact,
+  useJobCreation,
+  useLegalFramework
 } from "@/hooks/use-gaia";
 import {
   LineChart,
@@ -25,7 +33,15 @@ import {
   BarChart,
   Bar,
   AreaChart,
-  Area
+  Area,
+  PieChart,
+  Pie,
+  Cell,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar
 } from "recharts";
 import { 
   Sprout, 
@@ -49,10 +65,52 @@ import {
   PiggyBank,
   Scale,
   Building2,
-  Coins
+  Coins,
+  Globe,
+  MapPin,
+  Briefcase,
+  Factory,
+  Droplets,
+  Zap,
+  Recycle,
+  GraduationCap,
+  Globe2,
+  Map,
+  Building
 } from "lucide-react";
 
+const SCALE_LABELS: Record<string, string> = {
+  pilot: "Pilot (6 Schools)",
+  statewide: "Statewide (275 Schools)",
+  national: "National (130K Schools)",
+  global: "Global (1M Schools)"
+};
+
+const SCALE_COLORS = {
+  pilot: "bg-blue-500",
+  statewide: "bg-emerald-500",
+  national: "bg-purple-500",
+  global: "bg-amber-500"
+};
+
+function formatLargeNumber(num: number): string {
+  if (num >= 1e12) return `$${(num / 1e12).toFixed(1)}T`;
+  if (num >= 1e9) return `$${(num / 1e9).toFixed(1)}B`;
+  if (num >= 1e6) return `$${(num / 1e6).toFixed(1)}M`;
+  if (num >= 1e3) return `$${(num / 1e3).toFixed(0)}K`;
+  return `$${num.toFixed(0)}`;
+}
+
+function formatNumber(num: number): string {
+  if (num >= 1e9) return `${(num / 1e9).toFixed(1)}B`;
+  if (num >= 1e6) return `${(num / 1e6).toFixed(1)}M`;
+  if (num >= 1e3) return `${(num / 1e3).toFixed(0)}K`;
+  return num.toLocaleString();
+}
+
 export default function Dashboard() {
+  const [selectedScale, setSelectedScale] = useState("pilot");
+  
   const { data: pilot, isLoading: loadingPilot } = usePilotStats();
   const { data: endowment, isLoading: loadingEndowment } = useEndowmentStats();
   const { data: timeline, isLoading: loadingTimeline } = useTimeline();
@@ -60,10 +118,21 @@ export default function Dashboard() {
   const { data: climate, isLoading: loadingClimate } = useClimateMetrics();
   const { data: slides, isLoading: loadingSlides } = useSlides();
   const { data: historicalData, isLoading: loadingHistorical } = useHistoricalFinancials();
+  const { data: clusters, isLoading: loadingClusters } = useSchoolClusters();
+  const { data: schoolsList, isLoading: loadingSchools } = useSchools();
+  const { data: scaleProjections, isLoading: loadingScales } = useScaleProjections();
+  const { data: envImpacts, isLoading: loadingEnv } = useEnvironmentalImpact();
+  const { data: jobData, isLoading: loadingJobs } = useJobCreation();
+  const { data: legalFramework, isLoading: loadingLegal } = useLegalFramework();
 
-  const isLoading = loadingPilot || loadingEndowment || loadingTimeline || loadingFinancials || loadingClimate || loadingSlides || loadingHistorical;
+  const isLoading = loadingPilot || loadingEndowment || loadingTimeline || loadingFinancials || 
+    loadingClimate || loadingSlides || loadingHistorical || loadingClusters || loadingSchools || 
+    loadingScales || loadingEnv || loadingJobs || loadingLegal;
 
-  // Transform historical data for charts
+  const currentScale = scaleProjections?.find(s => s.scale === selectedScale);
+  const currentEnv = envImpacts?.find(e => e.scale === selectedScale);
+  const currentJobs = jobData?.find(j => j.scale === selectedScale);
+
   const chartData = historicalData?.map(h => ({
     period: `${h.year} Q${h.quarter}`,
     revenue: h.totalRevenue / 1000,
@@ -74,28 +143,26 @@ export default function Dashboard() {
     students: h.studentsServed
   })) || [];
 
-  // Calculate growth insights
-  const getGrowthInsights = () => {
-    if (!historicalData || historicalData.length < 2) return null;
-    const first = historicalData[0];
-    const last = historicalData[historicalData.length - 1];
-    return {
-      revenueGrowth: ((last.totalRevenue - first.totalRevenue) / first.totalRevenue * 100).toFixed(0),
-      opexGrowth: ((last.totalOpex - first.totalOpex) / first.totalOpex * 100).toFixed(0),
-      yieldGrowth: ((last.totalYieldLbs - first.totalYieldLbs) / first.totalYieldLbs * 100).toFixed(0),
-      endowmentGrowth: ((last.endowmentValue - first.endowmentValue) / first.endowmentValue * 100).toFixed(0),
-      schoolGrowth: last.schoolCount - first.schoolCount,
-      studentGrowth: last.studentsServed - first.studentsServed
-    };
-  };
+  const scaleComparisonData = scaleProjections?.map(s => ({
+    name: s.scale.charAt(0).toUpperCase() + s.scale.slice(1),
+    schools: s.schools,
+    students: s.students,
+    jobs: s.jobs,
+    meals: s.mealsPerDay,
+    co2: s.co2TonsAnnual
+  })) || [];
 
-  const insights = getGrowthInsights();
+  const jobBreakdownData = currentJobs ? [
+    { name: "Direct Jobs", value: currentJobs.directJobs, color: "#3b82f6" },
+    { name: "Indirect Jobs", value: currentJobs.indirectJobs, color: "#22c55e" },
+    { name: "Induced Jobs", value: currentJobs.inducedJobs, color: "#f59e0b" }
+  ] : [];
 
   if (isLoading) {
     return (
       <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-background to-secondary/30">
         <Loader2 className="h-10 w-10 text-primary animate-spin mb-4" data-testid="loader-main" />
-        <p className="text-muted-foreground font-medium animate-pulse">Loading Gaia systems...</p>
+        <p className="text-muted-foreground font-medium animate-pulse">Loading Gaia Commons Platform v4.1...</p>
       </div>
     );
   }
@@ -103,177 +170,195 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-secondary/30 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <Header />
         </motion.div>
 
-        {/* Row 1: Overview Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          {/* Pilot Stats */}
-          <StatsCard 
-            title="Minnesota School Greenhouse Pilot" 
-            icon={<Sprout className="h-5 w-5" />}
-            delay={0.1}
-          >
-            {pilot && (
-              <>
-                <StatItem 
-                  label="Students Served by Program" 
-                  value={pilot.students.toLocaleString()} 
-                  trend="+12%"
-                  trendUp={true}
-                />
-                <StatItem 
-                  label="School Districts Participating" 
-                  value={pilot.schools} 
-                />
-                <StatItem 
-                  label="Total Greenhouse Square Footage" 
-                  value={`${(pilot.sqft / 1000).toFixed(1)}k sqft`} 
-                />
-                <div className="pt-2">
-                  <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20" data-testid="badge-status">
-                    <Activity className="w-3 h-3 mr-1.5" />
-                    Pilot Status: {pilot.status}
-                  </Badge>
-                </div>
-              </>
-            )}
-          </StatsCard>
+        {/* Scale Selector Tabs */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="mb-8">
+          <Card className="glass-panel" data-testid="card-scale-selector">
+            <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+              <Globe className="h-5 w-5 text-primary" />
+              <CardTitle className="text-lg font-semibold">Multi-Scale Deployment Dashboard — From Pilot to Global</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Tabs value={selectedScale} onValueChange={setSelectedScale} className="w-full">
+                <TabsList className="grid w-full grid-cols-4 mb-6" data-testid="tabs-scale">
+                  <TabsTrigger value="pilot" data-testid="tab-pilot" className="flex items-center gap-2">
+                    <School className="h-4 w-4" />
+                    <span className="hidden sm:inline">Pilot</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="statewide" data-testid="tab-statewide" className="flex items-center gap-2">
+                    <Map className="h-4 w-4" />
+                    <span className="hidden sm:inline">Statewide</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="national" data-testid="tab-national" className="flex items-center gap-2">
+                    <Building className="h-4 w-4" />
+                    <span className="hidden sm:inline">National</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="global" data-testid="tab-global" className="flex items-center gap-2">
+                    <Globe2 className="h-4 w-4" />
+                    <span className="hidden sm:inline">Global</span>
+                  </TabsTrigger>
+                </TabsList>
 
-          {/* Endowment Stats */}
-          <StatsCard 
-            title="Gaia Commons Perpetual Endowment" 
-            icon={<Landmark className="h-5 w-5" />}
-            delay={0.2}
-          >
-            {endowment && (
-              <>
-                <StatItem 
-                  label="Total Endowment Principal" 
-                  value={endowment.size} 
-                  trend="Stable"
-                  trendUp={true}
-                />
-                <StatItem 
-                  label="Annual 3% Distribution" 
-                  value={endowment.annual} 
-                />
-                <StatItem 
-                  label="Greenhouses Fully Funded" 
-                  value={endowment.greenhouses} 
-                />
-                <div className="mt-4 grid grid-cols-2 gap-2">
-                   <div className="bg-emerald-50 dark:bg-emerald-950/30 p-3 rounded-lg border border-emerald-100 dark:border-emerald-900/50 text-center">
-                      <Trees className="w-5 h-5 text-emerald-600 mx-auto mb-1" />
-                      <span className="text-xs text-emerald-800 dark:text-emerald-400 font-medium">Carbon Neutral</span>
-                   </div>
-                   <div className="bg-amber-50 dark:bg-amber-950/30 p-3 rounded-lg border border-amber-100 dark:border-amber-900/50 text-center">
-                      <TrendingUp className="w-5 h-5 text-amber-600 mx-auto mb-1" />
-                      <span className="text-xs text-amber-800 dark:text-amber-400 font-medium">Perpetual Growth</span>
-                   </div>
-                </div>
-              </>
-            )}
-          </StatsCard>
-
-          {/* Timeline */}
-          <motion.div
-             initial={{ opacity: 0, y: 20 }}
-             animate={{ opacity: 1, y: 0 }}
-             transition={{ duration: 0.5, delay: 0.3 }}
-             className="h-full"
-          >
-            {timeline && <Timeline events={timeline} />}
-          </motion.div>
-        </div>
-
-        {/* Row 2: Financial Engine & Climate */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Financial Engine */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <Card className="glass-panel card-hover h-full" data-testid="card-financials">
-              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-2">
-                <Calculator className="h-5 w-5 text-primary" />
-                <CardTitle className="text-lg font-semibold">Financial Projection Engine v3.1 — Pilot Program ROI Model</CardTitle>
-                {financials && (
-                  <Badge variant="secondary" className="ml-auto">{financials.schoolCount} School Pilot</Badge>
+                {currentScale && (
+                  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    <div className="p-4 bg-blue-50 dark:bg-blue-950/30 rounded-xl border border-blue-100 dark:border-blue-900/50 text-center">
+                      <School className="h-5 w-5 text-blue-600 mx-auto mb-2" />
+                      <p className="text-xs text-blue-800 dark:text-blue-400 font-medium">Schools</p>
+                      <p className="text-xl font-bold text-blue-700 dark:text-blue-300" data-testid="text-scale-schools">{formatNumber(currentScale.schools)}</p>
+                    </div>
+                    <div className="p-4 bg-emerald-50 dark:bg-emerald-950/30 rounded-xl border border-emerald-100 dark:border-emerald-900/50 text-center">
+                      <Users className="h-5 w-5 text-emerald-600 mx-auto mb-2" />
+                      <p className="text-xs text-emerald-800 dark:text-emerald-400 font-medium">Students</p>
+                      <p className="text-xl font-bold text-emerald-700 dark:text-emerald-300" data-testid="text-scale-students">{formatNumber(currentScale.students)}</p>
+                    </div>
+                    <div className="p-4 bg-purple-50 dark:bg-purple-950/30 rounded-xl border border-purple-100 dark:border-purple-900/50 text-center">
+                      <Sprout className="h-5 w-5 text-purple-600 mx-auto mb-2" />
+                      <p className="text-xs text-purple-800 dark:text-purple-400 font-medium">Greenhouses</p>
+                      <p className="text-xl font-bold text-purple-700 dark:text-purple-300" data-testid="text-scale-greenhouses">{formatNumber(currentScale.greenhouses)}</p>
+                    </div>
+                    <div className="p-4 bg-amber-50 dark:bg-amber-950/30 rounded-xl border border-amber-100 dark:border-amber-900/50 text-center">
+                      <DollarSign className="h-5 w-5 text-amber-600 mx-auto mb-2" />
+                      <p className="text-xs text-amber-800 dark:text-amber-400 font-medium">CAPEX</p>
+                      <p className="text-xl font-bold text-amber-700 dark:text-amber-300" data-testid="text-scale-capex">{formatLargeNumber(currentScale.capex)}</p>
+                    </div>
+                    <div className="p-4 bg-green-50 dark:bg-green-950/30 rounded-xl border border-green-100 dark:border-green-900/50 text-center">
+                      <TrendingUp className="h-5 w-5 text-green-600 mx-auto mb-2" />
+                      <p className="text-xs text-green-800 dark:text-green-400 font-medium">5-Yr NPV</p>
+                      <p className="text-xl font-bold text-green-700 dark:text-green-300" data-testid="text-scale-npv">{formatLargeNumber(currentScale.npv5yr)}</p>
+                    </div>
+                    <div className="p-4 bg-rose-50 dark:bg-rose-950/30 rounded-xl border border-rose-100 dark:border-rose-900/50 text-center">
+                      <Target className="h-5 w-5 text-rose-600 mx-auto mb-2" />
+                      <p className="text-xs text-rose-800 dark:text-rose-400 font-medium">ROI</p>
+                      <p className="text-xl font-bold text-rose-700 dark:text-rose-300" data-testid="text-scale-roi">{currentScale.roiPct}%</p>
+                    </div>
+                  </div>
                 )}
+              </Tabs>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* Pilot School Clusters (only show for pilot scale) */}
+        {selectedScale === "pilot" && clusters && clusters.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15 }} className="mb-8">
+            <Card className="glass-panel" data-testid="card-school-clusters">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <MapPin className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Minnesota Pilot School Clusters — St. Paul & Mendota Heights</CardTitle>
               </CardHeader>
               <CardContent>
-                {financials && (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {clusters.map(cluster => {
+                    const clusterSchools = schoolsList?.filter(s => s.clusterId === cluster.id) || [];
+                    return (
+                      <div key={cluster.id} className="p-4 bg-muted/30 rounded-xl border border-border/50" data-testid={`cluster-${cluster.name.toLowerCase().replace(' ', '-')}`}>
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                            <Building2 className="h-5 w-5 text-primary" />
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-foreground">{cluster.name} Cluster</h3>
+                            <p className="text-sm text-muted-foreground">{cluster.region}</p>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-4 gap-3 mb-4">
+                          <div className="text-center p-2 bg-background rounded-lg">
+                            <p className="text-xs text-muted-foreground">Students</p>
+                            <p className="font-semibold text-foreground">{cluster.totalStudents.toLocaleString()}</p>
+                          </div>
+                          <div className="text-center p-2 bg-background rounded-lg">
+                            <p className="text-xs text-muted-foreground">Yr 5 Est.</p>
+                            <p className="font-semibold text-emerald-600">{cluster.yr5Students.toLocaleString()}</p>
+                          </div>
+                          <div className="text-center p-2 bg-background rounded-lg">
+                            <p className="text-xs text-muted-foreground">Sq Ft</p>
+                            <p className="font-semibold text-foreground">{(cluster.totalSqft / 1000).toFixed(1)}K</p>
+                          </div>
+                          <div className="text-center p-2 bg-background rounded-lg">
+                            <p className="text-xs text-muted-foreground">Greenhouses</p>
+                            <p className="font-semibold text-foreground">{cluster.greenhouses}</p>
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Individual Schools</p>
+                          {clusterSchools.map(school => (
+                            <div key={school.id} className="flex items-center justify-between p-2 bg-background rounded-lg border border-border/30">
+                              <div className="flex items-center gap-2">
+                                <GraduationCap className="h-4 w-4 text-muted-foreground" />
+                                <span className="text-sm font-medium">{school.name}</span>
+                                <Badge variant="outline" className="text-xs">{school.grades}</Badge>
+                              </div>
+                              <div className="text-right">
+                                <span className="text-sm text-muted-foreground">{school.enrollment} students</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Environmental Impact & Job Creation */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          {/* Environmental Impact */}
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
+            <Card className="glass-panel h-full" data-testid="card-environmental">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <Leaf className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Environmental Impact — {SCALE_LABELS[selectedScale]}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {currentEnv && (
                   <div className="space-y-4">
-                    {/* Program Totals */}
                     <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/30 dark:to-emerald-950/30 p-4 rounded-xl border border-green-100 dark:border-green-900/50">
+                      <div className="p-4 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/30 dark:to-emerald-950/30 rounded-xl border border-green-100 dark:border-green-900/50">
                         <div className="flex items-center gap-2 mb-2">
-                          <DollarSign className="h-4 w-4 text-green-600" />
-                          <span className="text-xs font-medium text-green-800 dark:text-green-400 uppercase tracking-wide">Net Present Value (10-Year Horizon)</span>
+                          <Trees className="h-4 w-4 text-green-600" />
+                          <span className="text-xs font-medium text-green-800 dark:text-green-400 uppercase">CO2 Sequestered</span>
                         </div>
-                        <p className="text-2xl font-bold text-green-700 dark:text-green-300" data-testid="text-npv">
-                          ${(financials.npv10yr / 1e6).toFixed(2)}M
+                        <p className="text-2xl font-bold text-green-700 dark:text-green-300" data-testid="text-env-co2">
+                          {formatNumber(currentEnv.co2SequesteredTons)} tons/yr
                         </p>
                       </div>
-                      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 p-4 rounded-xl border border-blue-100 dark:border-blue-900/50">
+                      <div className="p-4 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 rounded-xl border border-blue-100 dark:border-blue-900/50">
                         <div className="flex items-center gap-2 mb-2">
-                          <TrendingUp className="h-4 w-4 text-blue-600" />
-                          <span className="text-xs font-medium text-blue-800 dark:text-blue-400 uppercase tracking-wide">Return on Investment (10-Year)</span>
+                          <Droplets className="h-4 w-4 text-blue-600" />
+                          <span className="text-xs font-medium text-blue-800 dark:text-blue-400 uppercase">Water Saved</span>
                         </div>
-                        <p className="text-2xl font-bold text-blue-700 dark:text-blue-300" data-testid="text-roi">
-                          {financials.roi10yrPct}%
+                        <p className="text-2xl font-bold text-blue-700 dark:text-blue-300" data-testid="text-env-water">
+                          {formatNumber(currentEnv.waterSavedGallons)} gal
                         </p>
                       </div>
                     </div>
-
-                    {/* Program Overview */}
-                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mt-4 mb-2">Total Pilot Program Investment & Returns</p>
-                    <div className="grid grid-cols-4 gap-3">
+                    <div className="grid grid-cols-3 gap-3">
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <p className="text-xs text-muted-foreground">Capital Investment</p>
-                        <p className="font-semibold text-foreground" data-testid="text-investment">${(financials.initialInvestment / 1e6).toFixed(1)}M</p>
+                        <Map className="h-4 w-4 text-muted-foreground mx-auto mb-1" />
+                        <p className="text-xs text-muted-foreground">Land Preserved</p>
+                        <p className="font-semibold text-foreground">{formatNumber(currentEnv.landPreservedAcres)} acres</p>
                       </div>
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <p className="text-xs text-muted-foreground">Annual Operating Cost</p>
-                        <p className="font-semibold text-foreground">${(financials.annualOpex / 1e3).toFixed(0)}K</p>
+                        <Factory className="h-4 w-4 text-muted-foreground mx-auto mb-1" />
+                        <p className="text-xs text-muted-foreground">Food Miles Cut</p>
+                        <p className="font-semibold text-foreground">{formatNumber(currentEnv.foodMilesReduced)}</p>
                       </div>
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <p className="text-xs text-muted-foreground">Annual Gross Revenue</p>
-                        <p className="font-semibold text-foreground">${(financials.totalAnnualRevenue / 1e3).toFixed(0)}K</p>
-                      </div>
-                      <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <p className="text-xs text-muted-foreground">Investment Payback Period</p>
-                        <p className="font-semibold text-foreground">{financials.paybackYears} yrs</p>
+                        <Zap className="h-4 w-4 text-muted-foreground mx-auto mb-1" />
+                        <p className="text-xs text-muted-foreground">Renewable Energy</p>
+                        <p className="font-semibold text-foreground">{currentEnv.renewableEnergyPct}%</p>
                       </div>
                     </div>
-
-                    {/* Per-School Economics */}
-                    <div className="border-t border-border/50 pt-4 mt-4">
-                      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Individual School Greenhouse Economics</p>
-                      <div className="grid grid-cols-4 gap-3">
-                        <div className="text-center p-3 bg-primary/5 rounded-lg border border-primary/10">
-                          <p className="text-xs text-muted-foreground">Greenhouse Build Cost</p>
-                          <p className="font-semibold text-primary" data-testid="text-investment-per-school">${(financials.investmentPerSchool / 1e3).toFixed(0)}K</p>
-                        </div>
-                        <div className="text-center p-3 bg-primary/5 rounded-lg border border-primary/10">
-                          <p className="text-xs text-muted-foreground">Annual Operating Cost</p>
-                          <p className="font-semibold text-primary">${(financials.opexPerSchool / 1e3).toFixed(0)}K</p>
-                        </div>
-                        <div className="text-center p-3 bg-primary/5 rounded-lg border border-primary/10">
-                          <p className="text-xs text-muted-foreground">Annual Produce Yield</p>
-                          <p className="font-semibold text-primary">{financials.yieldPerSchool.toLocaleString()} lbs</p>
-                        </div>
-                        <div className="text-center p-3 bg-primary/5 rounded-lg border border-primary/10">
-                          <p className="text-xs text-muted-foreground">Annual Revenue Generated</p>
-                          <p className="font-semibold text-primary">${(financials.annualRevenuePerSchool / 1e3).toFixed(1)}K</p>
-                        </div>
+                    <div className="p-3 bg-primary/5 rounded-lg border border-primary/10">
+                      <div className="flex items-center gap-2">
+                        <Recycle className="h-4 w-4 text-primary" />
+                        <span className="text-sm font-medium text-foreground">Waste Reduced: {formatNumber(currentEnv.wasteReducedTons)} tons/year</span>
                       </div>
                     </div>
                   </div>
@@ -282,68 +367,204 @@ export default function Dashboard() {
             </Card>
           </motion.div>
 
-          {/* Climate & Yield */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-          >
+          {/* Job Creation */}
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.25 }}>
+            <Card className="glass-panel h-full" data-testid="card-jobs">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <Briefcase className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Job Creation & Economic Impact — {SCALE_LABELS[selectedScale]}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {currentJobs && (
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="p-4 bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-purple-950/30 dark:to-indigo-950/30 rounded-xl border border-purple-100 dark:border-purple-900/50">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Users className="h-4 w-4 text-purple-600" />
+                          <span className="text-xs font-medium text-purple-800 dark:text-purple-400 uppercase">Total Jobs Created</span>
+                        </div>
+                        <p className="text-2xl font-bold text-purple-700 dark:text-purple-300" data-testid="text-jobs-total">
+                          {formatNumber(currentJobs.totalJobs)}
+                        </p>
+                      </div>
+                      <div className="p-4 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 rounded-xl border border-amber-100 dark:border-amber-900/50">
+                        <div className="flex items-center gap-2 mb-2">
+                          <DollarSign className="h-4 w-4 text-amber-600" />
+                          <span className="text-xs font-medium text-amber-800 dark:text-amber-400 uppercase">Economic Impact</span>
+                        </div>
+                        <p className="text-2xl font-bold text-amber-700 dark:text-amber-300" data-testid="text-jobs-impact">
+                          {formatLargeNumber(currentJobs.economicImpact)}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-3 gap-3">
+                      <div className="text-center p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-100 dark:border-blue-900/50">
+                        <p className="text-xs text-blue-800 dark:text-blue-400 font-medium">Direct Jobs</p>
+                        <p className="font-semibold text-blue-700 dark:text-blue-300">{formatNumber(currentJobs.directJobs)}</p>
+                      </div>
+                      <div className="text-center p-3 bg-green-50 dark:bg-green-950/30 rounded-lg border border-green-100 dark:border-green-900/50">
+                        <p className="text-xs text-green-800 dark:text-green-400 font-medium">Indirect Jobs</p>
+                        <p className="font-semibold text-green-700 dark:text-green-300">{formatNumber(currentJobs.indirectJobs)}</p>
+                      </div>
+                      <div className="text-center p-3 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-100 dark:border-amber-900/50">
+                        <p className="text-xs text-amber-800 dark:text-amber-400 font-medium">Induced Jobs</p>
+                        <p className="font-semibold text-amber-700 dark:text-amber-300">{formatNumber(currentJobs.inducedJobs)}</p>
+                      </div>
+                    </div>
+                    <div className="p-3 bg-primary/5 rounded-lg border border-primary/10">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-muted-foreground">Average Salary</span>
+                        <span className="font-semibold text-foreground">${currentJobs.avgSalary.toLocaleString()}/year</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
+
+        {/* Scale Comparison Charts */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="mb-8">
+          <Card className="glass-panel" data-testid="card-scale-comparison">
+            <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+              <TrendingUp className="h-5 w-5 text-primary" />
+              <CardTitle className="text-lg font-semibold">Scale Comparison — Pilot to Global Deployment Metrics</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="h-72">
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">Jobs Created by Scale</p>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={scaleComparisonData}>
+                      <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                      <XAxis dataKey="name" className="text-xs" />
+                      <YAxis className="text-xs" tickFormatter={(v) => formatNumber(v)} />
+                      <Tooltip formatter={(value: number) => formatNumber(value)} />
+                      <Bar dataKey="jobs" fill="#8b5cf6" radius={[4, 4, 0, 0]} name="Jobs" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="h-72">
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">Meals Per Day by Scale</p>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={scaleComparisonData}>
+                      <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                      <XAxis dataKey="name" className="text-xs" />
+                      <YAxis className="text-xs" tickFormatter={(v) => formatNumber(v)} />
+                      <Tooltip formatter={(value: number) => formatNumber(value)} />
+                      <Bar dataKey="meals" fill="#22c55e" radius={[4, 4, 0, 0]} name="Meals/Day" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* Financial Engine & Climate (original sections) */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.35 }}>
+            <Card className="glass-panel card-hover h-full" data-testid="card-financials">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-2">
+                <Calculator className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Financial Projection Engine v4.1 — Pilot Program ROI</CardTitle>
+                {financials && <Badge variant="secondary" className="ml-auto">{financials.schoolCount} Schools</Badge>}
+              </CardHeader>
+              <CardContent>
+                {financials && (
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/30 dark:to-emerald-950/30 p-4 rounded-xl border border-green-100 dark:border-green-900/50">
+                        <div className="flex items-center gap-2 mb-2">
+                          <DollarSign className="h-4 w-4 text-green-600" />
+                          <span className="text-xs font-medium text-green-800 dark:text-green-400 uppercase">5-Year NPV</span>
+                        </div>
+                        <p className="text-2xl font-bold text-green-700 dark:text-green-300" data-testid="text-npv">
+                          ${(financials.npv10yr / 1e6).toFixed(2)}M
+                        </p>
+                      </div>
+                      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 p-4 rounded-xl border border-blue-100 dark:border-blue-900/50">
+                        <div className="flex items-center gap-2 mb-2">
+                          <TrendingUp className="h-4 w-4 text-blue-600" />
+                          <span className="text-xs font-medium text-blue-800 dark:text-blue-400 uppercase">Return on Investment</span>
+                        </div>
+                        <p className="text-2xl font-bold text-blue-700 dark:text-blue-300" data-testid="text-roi">
+                          {financials.roi10yrPct}%
+                        </p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-3">
+                      <div className="text-center p-3 bg-muted/50 rounded-lg">
+                        <p className="text-xs text-muted-foreground">CAPEX</p>
+                        <p className="font-semibold text-foreground">${(financials.initialInvestment / 1e6).toFixed(1)}M</p>
+                      </div>
+                      <div className="text-center p-3 bg-muted/50 rounded-lg">
+                        <p className="text-xs text-muted-foreground">Annual OpEx</p>
+                        <p className="font-semibold text-foreground">${(financials.annualOpex / 1e3).toFixed(0)}K</p>
+                      </div>
+                      <div className="text-center p-3 bg-muted/50 rounded-lg">
+                        <p className="text-xs text-muted-foreground">Annual Revenue</p>
+                        <p className="font-semibold text-foreground">${(financials.totalAnnualRevenue / 1e6).toFixed(1)}M</p>
+                      </div>
+                      <div className="text-center p-3 bg-muted/50 rounded-lg">
+                        <p className="text-xs text-muted-foreground">Payback</p>
+                        <p className="font-semibold text-foreground">{financials.paybackYears} yrs</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.4 }}>
             <Card className="glass-panel card-hover h-full" data-testid="card-climate">
               <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-2">
                 <Thermometer className="h-5 w-5 text-primary" />
-                <CardTitle className="text-lg font-semibold">Year-Round Climate Control & Aquaponics Yield Model v5.0</CardTitle>
+                <CardTitle className="text-lg font-semibold">Year-Round Aquaponics & Climate Control v5.0</CardTitle>
               </CardHeader>
               <CardContent>
                 {climate && (
                   <div className="space-y-4">
-                    {/* Climate Control Features */}
                     <div className="grid grid-cols-2 gap-4">
                       <div className="bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-950/30 dark:to-amber-950/30 p-4 rounded-xl border border-orange-100 dark:border-orange-900/50">
                         <div className="flex items-center gap-2 mb-2">
                           <Thermometer className="h-4 w-4 text-orange-600" />
-                          <span className="text-xs font-medium text-orange-800 dark:text-orange-400 uppercase tracking-wide">Greenhouse Internal Temp (Winter Avg)</span>
+                          <span className="text-xs font-medium text-orange-800 dark:text-orange-400 uppercase">Internal Temp</span>
                         </div>
-                        <p className="text-2xl font-bold text-orange-700 dark:text-orange-300" data-testid="text-temp">
-                          {climate.avgTemp}°F
-                        </p>
+                        <p className="text-2xl font-bold text-orange-700 dark:text-orange-300">{climate.avgTemp}°F</p>
                       </div>
                       <div className="bg-gradient-to-br from-slate-50 to-gray-50 dark:from-slate-950/30 dark:to-gray-950/30 p-4 rounded-xl border border-slate-100 dark:border-slate-900/50">
                         <div className="flex items-center gap-2 mb-2">
                           <Wind className="h-4 w-4 text-slate-600" />
-                          <span className="text-xs font-medium text-slate-800 dark:text-slate-400 uppercase tracking-wide">CO2 Enrichment Level</span>
+                          <span className="text-xs font-medium text-slate-800 dark:text-slate-400 uppercase">CO2 Enrichment</span>
                         </div>
-                        <p className="text-2xl font-bold text-slate-700 dark:text-slate-300" data-testid="text-co2">
-                          {climate.co2Ppm} ppm
-                        </p>
+                        <p className="text-2xl font-bold text-slate-700 dark:text-slate-300">{climate.co2Ppm} ppm</p>
                       </div>
                     </div>
-
-                    {/* Heating Systems */}
                     <div className="grid grid-cols-3 gap-2">
                       <div className="text-center p-2 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-100 dark:border-amber-900/50">
-                        <span className="text-xs font-medium text-amber-700 dark:text-amber-400">School HVAC Integration</span>
+                        <span className="text-xs font-medium text-amber-700 dark:text-amber-400">HVAC Integration</span>
                       </div>
                       <div className="text-center p-2 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg border border-emerald-100 dark:border-emerald-900/50">
-                        <span className="text-xs font-medium text-emerald-700 dark:text-emerald-400">Geothermal Heat Pumps</span>
+                        <span className="text-xs font-medium text-emerald-700 dark:text-emerald-400">Geothermal</span>
                       </div>
                       <div className="text-center p-2 bg-sky-50 dark:bg-sky-950/30 rounded-lg border border-sky-100 dark:border-sky-900/50">
-                        <span className="text-xs font-medium text-sky-700 dark:text-sky-400">Passive Solar Design</span>
+                        <span className="text-xs font-medium text-sky-700 dark:text-sky-400">Passive Solar</span>
                       </div>
                     </div>
-
-                    {/* Production Metrics */}
-                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mt-2">Year-Round Aquaponics Production Output</p>
                     <div className="grid grid-cols-3 gap-3">
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <p className="text-xs text-muted-foreground">Growing Season (MN Winter-Proof)</p>
-                        <p className="font-semibold text-foreground">{climate.growingSeasonDays} days</p>
+                        <p className="text-xs text-muted-foreground">Growing Days</p>
+                        <p className="font-semibold text-foreground">{climate.growingSeasonDays}</p>
                       </div>
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <p className="text-xs text-muted-foreground">Annual Harvest (6 Schools)</p>
+                        <p className="text-xs text-muted-foreground">Annual Harvest</p>
                         <p className="font-semibold text-foreground">{climate.annualTons.toLocaleString()} tons</p>
                       </div>
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <p className="text-xs text-muted-foreground">Student Meals Produced Annually</p>
+                        <p className="text-xs text-muted-foreground">Meals/Year</p>
                         <p className="font-semibold text-foreground">{climate.studentMealsAnnual}</p>
                       </div>
                     </div>
@@ -354,311 +575,94 @@ export default function Dashboard() {
           </motion.div>
         </div>
 
-        {/* Row 3: Dedicated Endowment Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.55 }}
-          className="mb-8"
-        >
-          <Card className="glass-panel" data-testid="card-endowment-detail">
-            <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
-              <Landmark className="h-5 w-5 text-primary" />
-              <CardTitle className="text-lg font-semibold">Gaia Commons Constitutional Endowment — Funding, Governance & Financial Projections</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Funding Sources */}
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <PiggyBank className="h-4 w-4 text-emerald-600" />
-                    <h3 className="font-semibold text-foreground">Funding Sources & Capital Structure</h3>
+        {/* Legal Framework */}
+        {legalFramework && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.45 }} className="mb-8">
+            <Card className="glass-panel" data-testid="card-legal">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <Shield className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Legal Framework & Governance — {legalFramework.entityName}</CardTitle>
+                <Badge variant="secondary" className="ml-auto">{legalFramework.entityType}</Badge>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="p-4 bg-muted/30 rounded-xl border border-border/50">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Users className="h-4 w-4 text-primary" />
+                      <h3 className="font-semibold text-foreground">Board Composition</h3>
+                    </div>
+                    <p className="text-sm text-muted-foreground">{legalFramework.boardSize}-Member Board</p>
+                    <p className="text-sm text-muted-foreground mt-1">{legalFramework.boardComposition}</p>
                   </div>
-                  <div className="space-y-3">
-                    <div className="p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg border border-emerald-100 dark:border-emerald-900/50">
-                      <p className="text-xs font-medium text-emerald-800 dark:text-emerald-400 uppercase tracking-wide">Primary: Constitutional Amendment</p>
-                      <p className="text-sm text-muted-foreground mt-1">Voter-approved allocation of 0.5% of state education budget redirected to endowment principal</p>
+                  <div className="p-4 bg-muted/30 rounded-xl border border-border/50">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Landmark className="h-4 w-4 text-primary" />
+                      <h3 className="font-semibold text-foreground">Endowment Rules</h3>
                     </div>
-                    <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-100 dark:border-blue-900/50">
-                      <p className="text-xs font-medium text-blue-800 dark:text-blue-400 uppercase tracking-wide">Secondary: Federal USDA Grants</p>
-                      <p className="text-sm text-muted-foreground mt-1">Farm-to-School grant programs and Community Food Project funding</p>
-                    </div>
-                    <div className="p-3 bg-purple-50 dark:bg-purple-950/30 rounded-lg border border-purple-100 dark:border-purple-900/50">
-                      <p className="text-xs font-medium text-purple-800 dark:text-purple-400 uppercase tracking-wide">Tertiary: Private Philanthropy</p>
-                      <p className="text-sm text-muted-foreground mt-1">Foundation matching funds and corporate ESG investments</p>
-                    </div>
+                    <p className="text-sm text-muted-foreground">{legalFramework.endowmentRules}</p>
                   </div>
-                </div>
-
-                {/* Governance Structure */}
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Scale className="h-4 w-4 text-blue-600" />
-                    <h3 className="font-semibold text-foreground">Democratic Governance & Control</h3>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-2 mb-1">
-                        <Shield className="h-3 w-3 text-primary" />
-                        <p className="text-xs font-medium text-foreground uppercase tracking-wide">Constitutional Protection</p>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Endowment principal locked by amendment — cannot be raided by legislature</p>
+                  <div className="p-4 bg-muted/30 rounded-xl border border-border/50">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Scale className="h-4 w-4 text-primary" />
+                      <h3 className="font-semibold text-foreground">Required Filings</h3>
                     </div>
-                    <div className="p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-2 mb-1">
-                        <Vote className="h-3 w-3 text-primary" />
-                        <p className="text-xs font-medium text-foreground uppercase tracking-wide">Tri-Cameral Board</p>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Equal representation: Students (elected), Educators (appointed), Community (lottery)</p>
-                    </div>
-                    <div className="p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-2 mb-1">
-                        <Building2 className="h-3 w-3 text-primary" />
-                        <p className="text-xs font-medium text-foreground uppercase tracking-wide">Investment Committee</p>
-                      </div>
-                      <p className="text-sm text-muted-foreground">ESG-only mandate with fossil fuel divestment and planetary boundaries clause</p>
-                    </div>
+                    <p className="text-sm text-muted-foreground">{legalFramework.filings}</p>
                   </div>
                 </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
 
-                {/* Financial Projections */}
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Coins className="h-4 w-4 text-amber-600" />
-                    <h3 className="font-semibold text-foreground">10-Year Financial Projections</h3>
-                  </div>
-                  {endowment && (
-                    <div className="space-y-3">
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="p-3 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/30 dark:to-yellow-950/30 rounded-lg border border-amber-100 dark:border-amber-900/50 text-center">
-                          <p className="text-xs text-amber-800 dark:text-amber-400 font-medium">Current Principal</p>
-                          <p className="text-xl font-bold text-amber-700 dark:text-amber-300" data-testid="text-endowment-principal">${endowment.size}</p>
-                        </div>
-                        <div className="p-3 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/30 dark:to-emerald-950/30 rounded-lg border border-green-100 dark:border-green-900/50 text-center">
-                          <p className="text-xs text-green-800 dark:text-green-400 font-medium">Annual Draw (3%)</p>
-                          <p className="text-xl font-bold text-green-700 dark:text-green-300" data-testid="text-endowment-annual-draw">${endowment.annual}</p>
-                        </div>
-                      </div>
-                      <div className="p-3 bg-muted/50 rounded-lg">
-                        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">Projected Growth (7% Annual Return)</p>
-                        <div className="grid grid-cols-3 gap-2 text-center">
-                          <div>
-                            <p className="text-xs text-muted-foreground">Year 5</p>
-                            <p className="font-semibold text-foreground" data-testid="text-projection-year5">$2.9B</p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-muted-foreground">Year 10</p>
-                            <p className="font-semibold text-foreground" data-testid="text-projection-year10">$4.1B</p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-muted-foreground">Year 25</p>
-                            <p className="font-semibold text-foreground" data-testid="text-projection-year25">$11.4B</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="p-3 bg-primary/5 rounded-lg border border-primary/10">
-                        <p className="text-xs font-medium text-primary uppercase tracking-wide">Perpetual Sustainability</p>
-                        <p className="text-sm text-muted-foreground mt-1">3% draw rate ensures principal grows faster than distributions — funding forever</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+        {/* Timeline & Endowment Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          <StatsCard title="Perpetual Endowment" icon={<Landmark className="h-5 w-5" />} delay={0.5}>
+            {endowment && (
+              <>
+                <StatItem label="Total Principal" value={endowment.size} trend="Stable" trendUp={true} />
+                <StatItem label="Annual Draw (3%)" value={endowment.annual} />
+                <StatItem label="Greenhouses Funded" value={endowment.greenhouses} />
+              </>
+            )}
+          </StatsCard>
 
-        {/* Row 4: Historical Trends & Comparison */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.58 }}
-          className="mb-8"
-        >
-          <Card className="glass-panel" data-testid="card-historical-trends">
-            <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
-              <TrendingUp className="h-5 w-5 text-primary" />
-              <CardTitle className="text-lg font-semibold">Financial Trends & Growth Analysis — Quarterly Comparison (2024-2026)</CardTitle>
-              {insights && (
-                <Badge variant="secondary" className="ml-auto" data-testid="badge-revenue-growth">+{insights.revenueGrowth}% Revenue</Badge>
-              )}
-            </CardHeader>
-            <CardContent>
-              {chartData.length > 0 && insights && (
-                <div className="space-y-6">
-                  {/* Growth Insights Summary */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                    <div className="p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg border border-emerald-100 dark:border-emerald-900/50 text-center">
-                      <p className="text-xs text-emerald-800 dark:text-emerald-400 font-medium">Revenue Growth</p>
-                      <p className="text-lg font-bold text-emerald-700 dark:text-emerald-300" data-testid="text-revenue-growth">+{insights.revenueGrowth}%</p>
-                    </div>
-                    <div className="p-3 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-100 dark:border-amber-900/50 text-center">
-                      <p className="text-xs text-amber-800 dark:text-amber-400 font-medium">OpEx Change</p>
-                      <p className="text-lg font-bold text-amber-700 dark:text-amber-300" data-testid="text-opex-growth">+{insights.opexGrowth}%</p>
-                    </div>
-                    <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-100 dark:border-blue-900/50 text-center">
-                      <p className="text-xs text-blue-800 dark:text-blue-400 font-medium">Yield Growth</p>
-                      <p className="text-lg font-bold text-blue-700 dark:text-blue-300" data-testid="text-yield-growth">+{insights.yieldGrowth}%</p>
-                    </div>
-                    <div className="p-3 bg-purple-50 dark:bg-purple-950/30 rounded-lg border border-purple-100 dark:border-purple-900/50 text-center">
-                      <p className="text-xs text-purple-800 dark:text-purple-400 font-medium">Endowment Growth</p>
-                      <p className="text-lg font-bold text-purple-700 dark:text-purple-300" data-testid="text-endowment-growth">+{insights.endowmentGrowth}%</p>
-                    </div>
-                    <div className="p-3 bg-sky-50 dark:bg-sky-950/30 rounded-lg border border-sky-100 dark:border-sky-900/50 text-center">
-                      <p className="text-xs text-sky-800 dark:text-sky-400 font-medium">Schools Added</p>
-                      <p className="text-lg font-bold text-sky-700 dark:text-sky-300" data-testid="text-schools-added">+{insights.schoolGrowth}</p>
-                    </div>
-                    <div className="p-3 bg-rose-50 dark:bg-rose-950/30 rounded-lg border border-rose-100 dark:border-rose-900/50 text-center">
-                      <p className="text-xs text-rose-800 dark:text-rose-400 font-medium">Students Added</p>
-                      <p className="text-lg font-bold text-rose-700 dark:text-rose-300" data-testid="text-students-added">+{insights.studentGrowth.toLocaleString()}</p>
-                    </div>
-                  </div>
+          <StatsCard title="Pilot Program Status" icon={<Sprout className="h-5 w-5" />} delay={0.55}>
+            {pilot && (
+              <>
+                <StatItem label="Students Served" value={pilot.students.toLocaleString()} trend="+12%" trendUp={true} />
+                <StatItem label="Schools Active" value={pilot.schools} />
+                <StatItem label="Total Sq Ft" value={`${(pilot.sqft / 1000).toFixed(1)}k`} />
+                <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 mt-2">
+                  <Activity className="w-3 h-3 mr-1.5" />Status: {pilot.status}
+                </Badge>
+              </>
+            )}
+          </StatsCard>
 
-                  {/* Charts Grid */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {/* Revenue vs OpEx Chart */}
-                    <div className="p-4 bg-muted/30 rounded-lg">
-                      <p className="text-sm font-medium text-foreground mb-3">Revenue vs Operating Expenditure ($K)</p>
-                      <div className="h-64" data-testid="chart-revenue-opex">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <AreaChart data={chartData}>
-                            <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                            <XAxis dataKey="period" tick={{ fontSize: 11 }} />
-                            <YAxis tick={{ fontSize: 11 }} />
-                            <Tooltip 
-                              contentStyle={{ 
-                                backgroundColor: 'hsl(var(--card))', 
-                                border: '1px solid hsl(var(--border))',
-                                borderRadius: '8px'
-                              }}
-                            />
-                            <Legend />
-                            <Area type="monotone" dataKey="revenue" name="Revenue ($K)" stroke="#10b981" fill="#10b981" fillOpacity={0.3} />
-                            <Area type="monotone" dataKey="opex" name="OpEx ($K)" stroke="#f59e0b" fill="#f59e0b" fillOpacity={0.3} />
-                          </AreaChart>
-                        </ResponsiveContainer>
-                      </div>
-                    </div>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.6 }} className="h-full">
+            {timeline && <Timeline events={timeline} />}
+          </motion.div>
+        </div>
 
-                    {/* Yield Production Chart */}
-                    <div className="p-4 bg-muted/30 rounded-lg">
-                      <p className="text-sm font-medium text-foreground mb-3">Harvest Yield (Thousands of lbs)</p>
-                      <div className="h-64" data-testid="chart-yield">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <BarChart data={chartData}>
-                            <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                            <XAxis dataKey="period" tick={{ fontSize: 11 }} />
-                            <YAxis tick={{ fontSize: 11 }} />
-                            <Tooltip 
-                              contentStyle={{ 
-                                backgroundColor: 'hsl(var(--card))', 
-                                border: '1px solid hsl(var(--border))',
-                                borderRadius: '8px'
-                              }}
-                            />
-                            <Bar dataKey="yield" name="Yield (K lbs)" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-                          </BarChart>
-                        </ResponsiveContainer>
-                      </div>
-                    </div>
-
-                    {/* Endowment Growth Chart */}
-                    <div className="p-4 bg-muted/30 rounded-lg">
-                      <p className="text-sm font-medium text-foreground mb-3">Endowment Principal Growth ($B)</p>
-                      <div className="h-64" data-testid="chart-endowment">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <LineChart data={chartData}>
-                            <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                            <XAxis dataKey="period" tick={{ fontSize: 11 }} />
-                            <YAxis tick={{ fontSize: 11 }} />
-                            <Tooltip 
-                              contentStyle={{ 
-                                backgroundColor: 'hsl(var(--card))', 
-                                border: '1px solid hsl(var(--border))',
-                                borderRadius: '8px'
-                              }}
-                            />
-                            <Line type="monotone" dataKey="endowment" name="Endowment ($B)" stroke="#8b5cf6" strokeWidth={3} dot={{ fill: '#8b5cf6', strokeWidth: 2 }} />
-                          </LineChart>
-                        </ResponsiveContainer>
-                      </div>
-                    </div>
-
-                    {/* School & Student Growth */}
-                    <div className="p-4 bg-muted/30 rounded-lg">
-                      <p className="text-sm font-medium text-foreground mb-3">Program Scale: Schools & Students Served</p>
-                      <div className="h-64" data-testid="chart-scale">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <LineChart data={chartData}>
-                            <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                            <XAxis dataKey="period" tick={{ fontSize: 11 }} />
-                            <YAxis yAxisId="left" tick={{ fontSize: 11 }} />
-                            <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 11 }} />
-                            <Tooltip 
-                              contentStyle={{ 
-                                backgroundColor: 'hsl(var(--card))', 
-                                border: '1px solid hsl(var(--border))',
-                                borderRadius: '8px'
-                              }}
-                            />
-                            <Legend />
-                            <Line yAxisId="left" type="stepAfter" dataKey="schools" name="Schools" stroke="#0ea5e9" strokeWidth={2} />
-                            <Line yAxisId="right" type="monotone" dataKey="students" name="Students" stroke="#ec4899" strokeWidth={2} />
-                          </LineChart>
-                        </ResponsiveContainer>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Trend Insights */}
-                  <div className="p-4 bg-primary/5 rounded-lg border border-primary/10">
-                    <p className="text-sm font-medium text-primary mb-2">Key Insights from Historical Data</p>
-                    <ul className="text-sm text-muted-foreground space-y-1">
-                      <li>• Revenue is growing faster than operating costs, indicating improving efficiency</li>
-                      <li>• Endowment has grown {insights.endowmentGrowth}% as the program attracts more funding</li>
-                      <li>• Each new school adds approximately 940 students to the program</li>
-                      <li>• Yield per school remains consistent at ~30K lbs per quarter</li>
-                    </ul>
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        {/* Row 5: Ballot Slide Deck */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="mb-8"
-        >
+        {/* Slide Deck */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.65 }} className="mb-8">
           <Card className="glass-panel" data-testid="card-slides">
             <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
               <Presentation className="h-5 w-5 text-primary" />
-              <CardTitle className="text-lg font-semibold">2028 Ballot Initiative Presentation Deck — Gaia Commons Amendment</CardTitle>
-              <Badge variant="secondary" className="ml-auto">Vote Yes on Gaia</Badge>
+              <CardTitle className="text-lg font-semibold">2028 Ballot Initiative Deck — Vote Yes on Gaia</CardTitle>
+              <Badge variant="secondary" className="ml-auto">{slides?.length || 0} Slides</Badge>
             </CardHeader>
             <CardContent>
               {slides && slides.length > 0 && (
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                   {slides.map((slide) => (
-                    <motion.div
-                      key={slide.id}
-                      whileHover={{ scale: 1.03 }}
-                      className="group relative bg-gradient-to-br from-white to-secondary/20 dark:from-gray-900 dark:to-gray-800 p-4 rounded-xl border border-border/50 hover:border-primary/30 transition-all cursor-pointer"
-                      data-testid={`card-slide-${slide.slideNumber}`}
-                    >
-                      <div className="absolute top-2 right-2">
-                        <Badge variant="outline" className="text-[10px] px-1.5 py-0">
-                          #{slide.slideNumber}
-                        </Badge>
+                    <div key={slide.id} className="p-3 bg-muted/30 rounded-lg border border-border/50 hover:border-primary/30 transition-colors" data-testid={`slide-${slide.slideNumber}`}>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-xs font-bold text-primary">#{slide.slideNumber}</span>
+                        <span className="text-xs font-semibold text-foreground truncate">{slide.title}</span>
                       </div>
-                      <div className="mt-4">
-                        <h4 className="font-semibold text-sm text-foreground truncate">{slide.title}</h4>
-                        <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{slide.content}</p>
-                      </div>
-                    </motion.div>
+                      <p className="text-xs text-muted-foreground line-clamp-2">{slide.content}</p>
+                    </div>
                   ))}
                 </div>
               )}
@@ -666,46 +670,33 @@ export default function Dashboard() {
           </Card>
         </motion.div>
 
-        {/* Row 4: Info / Footer Section */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.7 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 border-t border-border/40 pt-8"
-        >
+        {/* Footer */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 border-t border-border/40 pt-8">
           <div className="flex gap-4 items-start p-4 rounded-xl hover:bg-white/40 dark:hover:bg-white/5 transition-colors">
             <div className="bg-blue-100 dark:bg-blue-900/30 text-blue-600 p-2 rounded-lg">
               <Users className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="font-semibold text-foreground">Community-Led Democratic Governance</h3>
-              <p className="text-sm text-muted-foreground mt-1">
-                Distributed governance across student councils, faculty boards, and local food policy councils.
-              </p>
+              <h3 className="font-semibold text-foreground">Democratic Governance</h3>
+              <p className="text-sm text-muted-foreground mt-1">Tri-cameral board with student, educator, and community representation.</p>
             </div>
           </div>
-          
           <div className="flex gap-4 items-start p-4 rounded-xl hover:bg-white/40 dark:hover:bg-white/5 transition-colors">
-            <div className="bg-purple-100 dark:bg-purple-900/30 text-purple-600 p-2 rounded-lg">
+            <div className="bg-green-100 dark:bg-green-900/30 text-green-600 p-2 rounded-lg">
               <Leaf className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="font-semibold text-foreground">Perpetual Sustainability with Planetary Boundaries</h3>
-              <p className="text-sm text-muted-foreground mt-1">
-                Constitutional endowment with 3% annual distribution and planetary boundaries clause protecting future generations.
-              </p>
+              <h3 className="font-semibold text-foreground">Planetary Boundaries</h3>
+              <p className="text-sm text-muted-foreground mt-1">ESG-only investments with fossil fuel divestment mandate.</p>
             </div>
           </div>
-
           <div className="flex gap-4 items-start p-4 rounded-xl hover:bg-white/40 dark:hover:bg-white/5 transition-colors">
-            <div className="bg-orange-100 dark:bg-orange-900/30 text-orange-600 p-2 rounded-lg">
-              <Target className="h-5 w-5" />
+            <div className="bg-purple-100 dark:bg-purple-900/30 text-purple-600 p-2 rounded-lg">
+              <Vote className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="font-semibold text-foreground">2028 Statewide Ballot Initiative — Vote Yes on Gaia</h3>
-              <p className="text-sm text-muted-foreground mt-1">
-                Full deployment to 275 school greenhouses serving 875,000 students across Minnesota.
-              </p>
+              <h3 className="font-semibold text-foreground">2028 Ballot Initiative</h3>
+              <p className="text-sm text-muted-foreground mt-1">Constitutional amendment for perpetual school food funding.</p>
             </div>
           </div>
         </motion.div>
