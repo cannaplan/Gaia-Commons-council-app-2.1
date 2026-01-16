@@ -396,6 +396,12 @@ export const miningAlternative = pgTable("mining_alternative", {
   constructionCost: real("construction_cost"),
   annualOperatingCost: real("annual_operating_cost"),
   netAnnualRevenue: real("net_annual_revenue"),
+  // Distribution Infrastructure Jobs
+  sortingPackagingJobs: integer("sorting_packaging_jobs"),
+  deliveryDriverJobs: integer("delivery_driver_jobs"),
+  warehouseLogisticsJobs: integer("warehouse_logistics_jobs"),
+  totalDistributionJobs: integer("total_distribution_jobs"),
+  grandTotalJobs: integer("grand_total_jobs"),
 });
 
 // === INSERT SCHEMAS ===

@@ -12,7 +12,10 @@ Gaia Commons Council is a full-stack dashboard application for tracking pilot pr
   - **Production & distribution**: 38.4M lbs annual specialty crops — 60% to 53 school districts, 40% excess sold to stores/markets
   - **Revenue modeling**: $53.8M annual sales revenue @ $3.50/lb wholesale, $42.2M net after operations
   - **Specialty crops by community**: Mushrooms, microgreens, edible flowers, year-round strawberries, specialty melons, gourmet vegetables
-  - **1,248 permanent jobs** funded by endowment vs. 1,855 temporary mining jobs
+  - **1,352 permanent jobs** funded by endowment vs. 1,855 temporary mining jobs:
+    - Greenhouse Operations: 1,152 jobs (growing, harvesting, maintenance)
+    - School Greenhouse Educators: 96 jobs
+    - **Distribution Infrastructure: 104 jobs** (52 sorting/packaging, 38 delivery drivers, 14 warehouse/logistics)
 - **Cluster Builder Tool**: Added interactive 4-step wizard for students/teachers to design custom greenhouse pilot programs. Users can select schools, choose produce varieties, and generate pilot proposals with complete metrics (sqft, production, jobs, costs, environmental impact).
 - **MN School Districts Map**: Added 53 Minnesota school districts with greenhouse candidate data, dual-mode toggle (active sites vs all districts), and filtering by size/south-facing score.
 - **Tribal Community Priority**: Included Cass Lake-Bena, Red Lake, and Nay Ah Shing districts as High Priority for food sovereignty initiatives.

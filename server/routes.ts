@@ -1470,7 +1470,13 @@ async function seedDatabase() {
         annualSalesRevenue: 12600000,      // 3.6M lbs × $3.50
         constructionCost: 19125000,        // 225K × $85
         annualOperatingCost: 2700000,      // 225K × $12
-        netAnnualRevenue: 9900000          // $12.6M - $2.7M ops
+        netAnnualRevenue: 9900000,         // $12.6M - $2.7M ops
+        // Distribution Infrastructure Jobs (for 3.6M lbs excess)
+        sortingPackagingJobs: 12,          // ~1 per 300K lbs/year
+        deliveryDriverJobs: 9,             // ~1 per 400K lbs/year
+        warehouseLogisticsJobs: 3,         // Supervisors/coordinators
+        totalDistributionJobs: 24,
+        grandTotalJobs: 319                // 295 greenhouse + 24 distribution
       },
       {
         community: "Babbitt",
@@ -1504,7 +1510,13 @@ async function seedDatabase() {
         annualSalesRevenue: 7140000,
         constructionCost: 10837500,        // 127.5K × $85
         annualOperatingCost: 1530000,      // 127.5K × $12
-        netAnnualRevenue: 5610000
+        netAnnualRevenue: 5610000,
+        // Distribution Infrastructure Jobs (for 2.04M lbs excess)
+        sortingPackagingJobs: 7,
+        deliveryDriverJobs: 5,
+        warehouseLogisticsJobs: 2,
+        totalDistributionJobs: 14,
+        grandTotalJobs: 179                // 165 greenhouse + 14 distribution
       },
       {
         community: "Hibbing",
@@ -1538,7 +1550,13 @@ async function seedDatabase() {
         annualSalesRevenue: 21000000,
         constructionCost: 31875000,        // 375K × $85
         annualOperatingCost: 4500000,
-        netAnnualRevenue: 16500000
+        netAnnualRevenue: 16500000,
+        // Distribution Infrastructure Jobs (for 6M lbs excess - largest hub)
+        sortingPackagingJobs: 20,
+        deliveryDriverJobs: 15,
+        warehouseLogisticsJobs: 5,
+        totalDistributionJobs: 40,
+        grandTotalJobs: 525                // 485 greenhouse + 40 distribution
       },
       {
         community: "Tower",
@@ -1572,7 +1590,13 @@ async function seedDatabase() {
         annualSalesRevenue: 2940000,
         constructionCost: 4462500,         // 52.5K × $85
         annualOperatingCost: 630000,
-        netAnnualRevenue: 2310000
+        netAnnualRevenue: 2310000,
+        // Distribution Infrastructure Jobs (for 0.84M lbs excess - smallest)
+        sortingPackagingJobs: 3,
+        deliveryDriverJobs: 2,
+        warehouseLogisticsJobs: 1,
+        totalDistributionJobs: 6,
+        grandTotalJobs: 75                 // 69 greenhouse + 6 distribution
       },
       {
         community: "Virginia",
@@ -1606,7 +1630,13 @@ async function seedDatabase() {
         annualSalesRevenue: 10080000,
         constructionCost: 15300000,        // 180K × $85
         annualOperatingCost: 2160000,
-        netAnnualRevenue: 7920000
+        netAnnualRevenue: 7920000,
+        // Distribution Infrastructure Jobs (for 2.88M lbs excess)
+        sortingPackagingJobs: 10,
+        deliveryDriverJobs: 7,
+        warehouseLogisticsJobs: 3,
+        totalDistributionJobs: 20,
+        grandTotalJobs: 254                // 234 greenhouse + 20 distribution
       }
     ];
     
