@@ -262,6 +262,12 @@ export async function registerRoutes(
     res.json(data);
   });
 
+  // === Mining Alternatives (Twin Metals Replacement) ===
+  app.get(api.miningAlternatives.list.path, async (_req, res) => {
+    const data = await storage.getMiningAlternatives();
+    res.json(data);
+  });
+
   // === Seed Data ===
   await seedDatabase();
 
@@ -1277,5 +1283,134 @@ async function seedDatabase() {
     }
     
     console.log("MN school districts data seeded successfully");
+  }
+
+  // Seed Mining Alternative data (Twin Metals Replacement) if empty
+  const miningAltData = await storage.getMiningAlternatives();
+  if (miningAltData.length === 0) {
+    console.log("Seeding mining alternatives data...");
+    const miningAlternatives = [
+      {
+        community: "Ely",
+        county: "St. Louis",
+        latitude: 47.9033,
+        longitude: -91.8672,
+        population: 3460,
+        miningJobsPromised: 750,
+        miningAvgSalary: 65000,
+        miningDuration: "20-25 years (then depleted)",
+        greenhouseComplexSqft: 150000,
+        greenhouseJobs: 180,
+        greenhouseAvgSalary: 52000,
+        schoolGreenhouseJobs: 25,
+        totalGreenhouseJobs: 205,
+        annualEndowmentFunding: 10660000,
+        jobDuration: "Permanent (endowment-funded forever)",
+        environmentalRisk: "None - clean food production",
+        boundaryWatersImpact: "Protective - no sulfide mining pollution risk",
+        economicMultiplier: 2.4,
+        localFoodProduction: 2400000,
+        co2Sequestered: 4500,
+        status: "Proposed Alternative"
+      },
+      {
+        community: "Babbitt",
+        county: "St. Louis",
+        latitude: 47.7083,
+        longitude: -91.9436,
+        population: 1475,
+        miningJobsPromised: 350,
+        miningAvgSalary: 62000,
+        miningDuration: "20-25 years (then depleted)",
+        greenhouseComplexSqft: 85000,
+        greenhouseJobs: 95,
+        greenhouseAvgSalary: 50000,
+        schoolGreenhouseJobs: 12,
+        totalGreenhouseJobs: 107,
+        annualEndowmentFunding: 5350000,
+        jobDuration: "Permanent (endowment-funded forever)",
+        environmentalRisk: "None - clean food production",
+        boundaryWatersImpact: "Protective - no sulfide mining pollution risk",
+        economicMultiplier: 2.4,
+        localFoodProduction: 1360000,
+        co2Sequestered: 2550,
+        status: "Proposed Alternative"
+      },
+      {
+        community: "Hibbing",
+        county: "St. Louis",
+        latitude: 47.4272,
+        longitude: -92.9378,
+        population: 15560,
+        miningJobsPromised: 500,
+        miningAvgSalary: 64000,
+        miningDuration: "20-25 years (then depleted)",
+        greenhouseComplexSqft: 250000,
+        greenhouseJobs: 285,
+        greenhouseAvgSalary: 52000,
+        schoolGreenhouseJobs: 35,
+        totalGreenhouseJobs: 320,
+        annualEndowmentFunding: 16640000,
+        jobDuration: "Permanent (endowment-funded forever)",
+        environmentalRisk: "None - clean food production",
+        boundaryWatersImpact: "Protective - no sulfide mining pollution risk",
+        economicMultiplier: 2.4,
+        localFoodProduction: 4000000,
+        co2Sequestered: 7500,
+        status: "Proposed Alternative"
+      },
+      {
+        community: "Tower",
+        county: "St. Louis",
+        latitude: 47.8053,
+        longitude: -92.2917,
+        population: 490,
+        miningJobsPromised: 75,
+        miningAvgSalary: 58000,
+        miningDuration: "20-25 years (then depleted)",
+        greenhouseComplexSqft: 35000,
+        greenhouseJobs: 42,
+        greenhouseAvgSalary: 48000,
+        schoolGreenhouseJobs: 6,
+        totalGreenhouseJobs: 48,
+        annualEndowmentFunding: 2304000,
+        jobDuration: "Permanent (endowment-funded forever)",
+        environmentalRisk: "None - clean food production",
+        boundaryWatersImpact: "Protective - no sulfide mining pollution risk",
+        economicMultiplier: 2.4,
+        localFoodProduction: 560000,
+        co2Sequestered: 1050,
+        status: "Proposed Alternative"
+      },
+      {
+        community: "Virginia",
+        county: "St. Louis",
+        latitude: 47.5233,
+        longitude: -92.5364,
+        population: 8060,
+        miningJobsPromised: 180,
+        miningAvgSalary: 60000,
+        miningDuration: "20-25 years (then depleted)",
+        greenhouseComplexSqft: 120000,
+        greenhouseJobs: 140,
+        greenhouseAvgSalary: 50000,
+        schoolGreenhouseJobs: 18,
+        totalGreenhouseJobs: 158,
+        annualEndowmentFunding: 7900000,
+        jobDuration: "Permanent (endowment-funded forever)",
+        environmentalRisk: "None - clean food production",
+        boundaryWatersImpact: "Protective - no sulfide mining pollution risk",
+        economicMultiplier: 2.4,
+        localFoodProduction: 1920000,
+        co2Sequestered: 3600,
+        status: "Proposed Alternative"
+      }
+    ];
+    
+    for (const alt of miningAlternatives) {
+      await storage.createMiningAlternative(alt);
+    }
+    
+    console.log("Mining alternatives data seeded successfully");
   }
 }

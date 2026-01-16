@@ -361,6 +361,32 @@ export const globalRegenerationSummary = pgTable("global_regeneration_summary", 
   choicePreservationAchieved: integer("choice_preservation_achieved").default(1),
 });
 
+// Mining Alternative - Twin Metals Replacement Jobs for Northern MN
+export const miningAlternative = pgTable("mining_alternative", {
+  id: serial("id").primaryKey(),
+  community: text("community").notNull(),
+  county: text("county").notNull(),
+  latitude: real("latitude").notNull(),
+  longitude: real("longitude").notNull(),
+  population: integer("population").notNull(),
+  miningJobsPromised: integer("mining_jobs_promised").notNull(),
+  miningAvgSalary: real("mining_avg_salary").notNull(),
+  miningDuration: text("mining_duration").notNull(),
+  greenhouseComplexSqft: integer("greenhouse_complex_sqft").notNull(),
+  greenhouseJobs: integer("greenhouse_jobs").notNull(),
+  greenhouseAvgSalary: real("greenhouse_avg_salary").notNull(),
+  schoolGreenhouseJobs: integer("school_greenhouse_jobs").notNull(),
+  totalGreenhouseJobs: integer("total_greenhouse_jobs").notNull(),
+  annualEndowmentFunding: real("annual_endowment_funding").notNull(),
+  jobDuration: text("job_duration").notNull(),
+  environmentalRisk: text("environmental_risk").notNull(),
+  boundaryWatersImpact: text("boundary_waters_impact").notNull(),
+  economicMultiplier: real("economic_multiplier").notNull(),
+  localFoodProduction: real("local_food_production").notNull(),
+  co2Sequestered: real("co2_sequestered").notNull(),
+  status: text("status").notNull(),
+});
+
 // === INSERT SCHEMAS ===
 
 export const insertPilotStatsSchema = createInsertSchema(pilotStats).omit({ id: true });
@@ -393,6 +419,7 @@ export const insertNationwideFoodSecuritySchema = createInsertSchema(nationwideF
 export const insertLaborTransitionSchema = createInsertSchema(laborTransition).omit({ id: true });
 export const insertPoliticalCoalitionSchema = createInsertSchema(politicalCoalition).omit({ id: true });
 export const insertGlobalRegenerationSummarySchema = createInsertSchema(globalRegenerationSummary).omit({ id: true });
+export const insertMiningAlternativeSchema = createInsertSchema(miningAlternative).omit({ id: true });
 
 // Planetary Boundaries (Steffen et al. 2015, updated Richardson et al. 2023)
 export const planetaryBoundaries = pgTable("planetary_boundaries", {
@@ -608,6 +635,7 @@ export type NationwideFoodSecurityType = typeof nationwideFoodSecurity.$inferSel
 export type LaborTransitionType = typeof laborTransition.$inferSelect;
 export type PoliticalCoalitionType = typeof politicalCoalition.$inferSelect;
 export type GlobalRegenerationSummaryType = typeof globalRegenerationSummary.$inferSelect;
+export type MiningAlternativeType = typeof miningAlternative.$inferSelect;
 export type PlanetaryBoundaryType = typeof planetaryBoundaries.$inferSelect;
 export type CalibrationTargetType = typeof calibrationTargets.$inferSelect;
 export type ModelMaturityType = typeof modelMaturity.$inferSelect;
@@ -651,6 +679,7 @@ export type InsertNationwideFoodSecurity = z.infer<typeof insertNationwideFoodSe
 export type InsertLaborTransition = z.infer<typeof insertLaborTransitionSchema>;
 export type InsertPoliticalCoalition = z.infer<typeof insertPoliticalCoalitionSchema>;
 export type InsertGlobalRegenerationSummary = z.infer<typeof insertGlobalRegenerationSummarySchema>;
+export type InsertMiningAlternative = z.infer<typeof insertMiningAlternativeSchema>;
 export type InsertPlanetaryBoundary = z.infer<typeof insertPlanetaryBoundariesSchema>;
 export type InsertCalibrationTarget = z.infer<typeof insertCalibrationTargetsSchema>;
 export type InsertModelMaturity = z.infer<typeof insertModelMaturitySchema>;

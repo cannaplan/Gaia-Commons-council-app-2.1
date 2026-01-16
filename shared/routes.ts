@@ -45,7 +45,8 @@ import {
   sensitivityAnalysis,
   greenhouseLocations,
   globalRegenerationRegions,
-  mnSchoolDistricts
+  mnSchoolDistricts,
+  miningAlternative
 } from './schema';
 
 export const errorSchemas = {
@@ -177,6 +178,9 @@ export const api = {
   },
   mnSchoolDistricts: {
     list: { method: 'GET' as const, path: '/api/mn-school-districts', responses: { 200: z.array(z.custom<typeof mnSchoolDistricts.$inferSelect>()) } },
+  },
+  miningAlternatives: {
+    list: { method: 'GET' as const, path: '/api/mining-alternatives', responses: { 200: z.array(z.custom<typeof miningAlternative.$inferSelect>()) } },
   },
   health: {
     get: { method: 'GET' as const, path: '/health', responses: { 200: z.object({ status: z.string(), version: z.string(), service: z.string() }) } },

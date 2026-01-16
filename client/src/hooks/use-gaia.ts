@@ -505,3 +505,15 @@ export function useMnSchoolDistricts() {
     },
   });
 }
+
+// Mining Alternatives (Twin Metals Replacement)
+export function useMiningAlternatives() {
+  return useQuery({
+    queryKey: [api.miningAlternatives.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.miningAlternatives.list.path);
+      if (!res.ok) throw new Error("Failed to fetch mining alternatives");
+      return api.miningAlternatives.list.responses[200].parse(await res.json());
+    },
+  });
+}

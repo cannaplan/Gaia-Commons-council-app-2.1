@@ -6,6 +6,7 @@ Gaia Commons Council is a full-stack dashboard application for tracking pilot pr
 
 ## Recent Changes (January 2026)
 
+- **Twin Metals Mining Alternative Section**: Added comprehensive Boundary Waters protection feature showing community-by-community job comparisons (Ely, Babbitt, Hibbing, Tower, Virginia). Positions permanent endowment-funded greenhouse jobs as economic alternative to temporary mining jobs while protecting the BWCA from sulfide mining pollution. Includes `mining_alternatives` database table, API endpoints, and full Dashboard UI.
 - **Cluster Builder Tool**: Added interactive 4-step wizard for students/teachers to design custom greenhouse pilot programs. Users can select schools, choose produce varieties, and generate pilot proposals with complete metrics (sqft, production, jobs, costs, environmental impact).
 - **MN School Districts Map**: Added 53 Minnesota school districts with greenhouse candidate data, dual-mode toggle (active sites vs all districts), and filtering by size/south-facing score.
 - **Tribal Community Priority**: Included Cass Lake-Bena, Red Lake, and Nay Ah Shing districts as High Priority for food sovereignty initiatives.

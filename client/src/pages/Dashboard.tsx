@@ -49,7 +49,8 @@ import {
   useMonteCarloSimulations,
   useScenarioComparisons,
   useOptimizationParams,
-  useSensitivityAnalysis
+  useSensitivityAnalysis,
+  useMiningAlternatives
 } from "@/hooks/use-gaia";
 import {
   LineChart,
@@ -278,6 +279,7 @@ export default function Dashboard() {
   const { data: scenarioComparisons } = useScenarioComparisons();
   const { data: optimizationParams } = useOptimizationParams();
   const { data: sensitivityAnalysis } = useSensitivityAnalysis();
+  const { data: miningAlternatives } = useMiningAlternatives();
   const { data: legalFramework, isLoading: loadingLegal } = useLegalFramework();
 
   const isLoading = loadingPilot || loadingEndowment || loadingTimeline || loadingFinancials || 
@@ -1251,6 +1253,116 @@ export default function Dashboard() {
                     <div>
                       <p className="text-xs text-blue-700 dark:text-blue-400 font-medium">Year 1 Draw (3.5%)</p>
                       <p className="font-semibold text-blue-800 dark:text-blue-300">$73.5 Million</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Mining Alternative - Twin Metals Replacement */}
+        {miningAlternatives && miningAlternatives.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4955 }} className="mb-8">
+            <Card className="glass-panel border-2 border-emerald-200 dark:border-emerald-800" data-testid="card-mining-alternative">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <Trees className="h-5 w-5 text-emerald-600" />
+                <div>
+                  <CardTitle className="text-lg font-semibold">Boundary Waters Alternative — Greenhouse Jobs vs. Twin Metals Mining</CardTitle>
+                  <p className="text-sm text-muted-foreground mt-1">Endowment-funded permanent jobs for Northern Minnesota communities — protecting the BWCA while creating lasting economic opportunity</p>
+                </div>
+                <Badge variant="outline" className="ml-auto bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800">Sustainable Alternative</Badge>
+              </CardHeader>
+              <CardContent>
+                <div className="mb-6 p-4 bg-amber-50 dark:bg-amber-950/30 rounded-xl border border-amber-200 dark:border-amber-800">
+                  <div className="flex items-start gap-3">
+                    <Shield className="h-5 w-5 text-amber-600 mt-0.5 shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-amber-800 dark:text-amber-300">The Twin Metals Dilemma</h4>
+                      <p className="text-sm text-amber-700 dark:text-amber-400 mt-1">
+                        The proposed Twin Metals copper-nickel sulfide mine near Ely promises ~1,850 jobs but would operate for only 20-25 years before depletion, leaving communities dependent on mining with no economic future — and risking irreversible pollution to the Boundary Waters Canoe Area Wilderness.
+                      </p>
+                      <p className="text-sm text-emerald-700 dark:text-emerald-400 mt-2 font-medium">
+                        Our alternative: Massive greenhouse complexes + school greenhouses funded by the endowment, creating permanent jobs that protect the environment.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-6">
+                  {miningAlternatives.map((alt) => (
+                    <div key={alt.id} className="p-4 bg-muted/30 rounded-xl border border-border/50" data-testid={`mining-alt-${alt.id}`}>
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-bold text-foreground text-lg">{alt.community}</h4>
+                        <Badge variant="outline" className="text-xs">{alt.county} Co.</Badge>
+                      </div>
+                      <p className="text-xs text-muted-foreground mb-3">Pop. {alt.population.toLocaleString()}</p>
+                      
+                      <div className="space-y-3">
+                        <div className="p-2 bg-red-50 dark:bg-red-950/30 rounded-lg border border-red-100 dark:border-red-900/50">
+                          <p className="text-xs text-red-600 dark:text-red-400 font-medium mb-1">Mining Promise</p>
+                          <p className="text-lg font-bold text-red-700 dark:text-red-300">{alt.miningJobsPromised} jobs</p>
+                          <p className="text-xs text-red-600 dark:text-red-400">${(alt.miningAvgSalary / 1000).toFixed(0)}K avg · {alt.miningDuration}</p>
+                        </div>
+                        
+                        <div className="p-2 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg border border-emerald-100 dark:border-emerald-900/50">
+                          <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium mb-1">Greenhouse Alternative</p>
+                          <p className="text-lg font-bold text-emerald-700 dark:text-emerald-300">{alt.totalGreenhouseJobs} jobs</p>
+                          <p className="text-xs text-emerald-600 dark:text-emerald-400">${(alt.greenhouseAvgSalary / 1000).toFixed(0)}K avg · {alt.jobDuration}</p>
+                        </div>
+                        
+                        <div className="pt-2 border-t border-border/30">
+                          <p className="text-xs text-muted-foreground"><span className="font-medium">Complex sqft:</span> {alt.greenhouseComplexSqft.toLocaleString()}</p>
+                          <p className="text-xs text-muted-foreground"><span className="font-medium">School jobs:</span> {alt.schoolGreenhouseJobs}</p>
+                          <p className="text-xs text-primary font-medium"><span className="font-medium">Endowment:</span> ${(alt.annualEndowmentFunding / 1000000).toFixed(1)}M/yr</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="p-4 bg-red-50 dark:bg-red-950/30 rounded-xl border border-red-200 dark:border-red-800">
+                    <p className="text-sm text-red-700 dark:text-red-400 font-medium">Twin Metals Total Jobs</p>
+                    <p className="text-2xl font-bold text-red-800 dark:text-red-300">
+                      {miningAlternatives.reduce((sum, a) => sum + a.miningJobsPromised, 0).toLocaleString()}
+                    </p>
+                    <p className="text-xs text-red-600 dark:text-red-400">Temporary (20-25 years)</p>
+                  </div>
+                  
+                  <div className="p-4 bg-emerald-50 dark:bg-emerald-950/30 rounded-xl border border-emerald-200 dark:border-emerald-800">
+                    <p className="text-sm text-emerald-700 dark:text-emerald-400 font-medium">Greenhouse Network Jobs</p>
+                    <p className="text-2xl font-bold text-emerald-800 dark:text-emerald-300">
+                      {miningAlternatives.reduce((sum, a) => sum + a.totalGreenhouseJobs, 0).toLocaleString()}
+                    </p>
+                    <p className="text-xs text-emerald-600 dark:text-emerald-400">Permanent (endowment-funded)</p>
+                  </div>
+                  
+                  <div className="p-4 bg-blue-50 dark:bg-blue-950/30 rounded-xl border border-blue-200 dark:border-blue-800">
+                    <p className="text-sm text-blue-700 dark:text-blue-400 font-medium">Annual Endowment Funding</p>
+                    <p className="text-2xl font-bold text-blue-800 dark:text-blue-300">
+                      ${(miningAlternatives.reduce((sum, a) => sum + a.annualEndowmentFunding, 0) / 1000000).toFixed(1)}M
+                    </p>
+                    <p className="text-xs text-blue-600 dark:text-blue-400">From 3.5% annual draw</p>
+                  </div>
+                  
+                  <div className="p-4 bg-purple-50 dark:bg-purple-950/30 rounded-xl border border-purple-200 dark:border-purple-800">
+                    <p className="text-sm text-purple-700 dark:text-purple-400 font-medium">Total Greenhouse Complex</p>
+                    <p className="text-2xl font-bold text-purple-800 dark:text-purple-300">
+                      {(miningAlternatives.reduce((sum, a) => sum + a.greenhouseComplexSqft, 0) / 1000).toFixed(0)}K sqft
+                    </p>
+                    <p className="text-xs text-purple-600 dark:text-purple-400">Plus school greenhouses</p>
+                  </div>
+                </div>
+                
+                <div className="mt-6 p-4 bg-emerald-50 dark:bg-emerald-950/30 rounded-xl border border-emerald-200 dark:border-emerald-800">
+                  <div className="flex items-start gap-3">
+                    <Leaf className="h-5 w-5 text-emerald-600 mt-0.5 shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-emerald-800 dark:text-emerald-300">Environmental Protection Guarantee</h4>
+                      <p className="text-sm text-emerald-700 dark:text-emerald-400 mt-1">
+                        Zero risk of sulfide acid mine drainage into the Boundary Waters. Instead, {miningAlternatives.reduce((sum, a) => sum + a.co2Sequestered, 0).toLocaleString()} tons of CO2 sequestered annually, {(miningAlternatives.reduce((sum, a) => sum + a.localFoodProduction, 0) / 1000000).toFixed(1)} million lbs of local food produced, and 2.4x economic multiplier keeping dollars in these communities.
+                      </p>
                     </div>
                   </div>
                 </div>
