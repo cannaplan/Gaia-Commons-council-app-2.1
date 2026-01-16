@@ -1269,21 +1269,40 @@ export default function Dashboard() {
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
-                  {fundingSources.map((source, idx) => (
-                    <div key={source.id} className="p-4 bg-muted/30 rounded-xl border border-border/50" data-testid={`funding-source-${source.id}`}>
-                      <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-semibold text-foreground">{source.sourceType}</h4>
-                        {source.percentage && (
-                          <Badge variant="outline" className="text-xs">{source.percentage}%</Badge>
+                  {fundingSources.map((source, idx) => {
+                    // Extract charge rate from description (e.g., "0.27%", "3%", "5%")
+                    const chargeRateMatch = source.description.match(/(\d+\.?\d*)%/);
+                    const chargeRate = chargeRateMatch ? chargeRateMatch[1] + '%' : null;
+                    const isVoluntary = source.description.toLowerCase().includes('voluntary');
+                    
+                    return (
+                      <div key={source.id} className="p-4 bg-muted/30 rounded-xl border border-border/50" data-testid={`funding-source-${source.id}`}>
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="font-semibold text-foreground">{source.sourceType}</h4>
+                          <Badge variant="outline" className="text-xs">{source.percentage}% of total</Badge>
+                        </div>
+                        <p className="text-2xl font-bold text-primary mb-1">{formatLargeNumber(source.targetAmount)}</p>
+                        {chargeRate && !isVoluntary && (
+                          <div className="flex items-center gap-1 mb-2">
+                            <Badge className="bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800 text-xs">
+                              {chargeRate} charge rate
+                            </Badge>
+                          </div>
+                        )}
+                        {isVoluntary && (
+                          <div className="flex items-center gap-1 mb-2">
+                            <Badge className="bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800 text-xs">
+                              Voluntary
+                            </Badge>
+                          </div>
+                        )}
+                        <p className="text-sm text-muted-foreground line-clamp-2">{source.description}</p>
+                        {source.entities && (
+                          <p className="text-xs text-muted-foreground/70 mt-2 italic line-clamp-2">{source.entities}</p>
                         )}
                       </div>
-                      <p className="text-2xl font-bold text-primary mb-2">{formatLargeNumber(source.targetAmount)}</p>
-                      <p className="text-sm text-muted-foreground line-clamp-2">{source.description}</p>
-                      {source.entities && (
-                        <p className="text-xs text-muted-foreground/70 mt-2 italic line-clamp-2">{source.entities}</p>
-                      )}
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
                 <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg border border-emerald-100 dark:border-emerald-900/50 flex items-center gap-3">
