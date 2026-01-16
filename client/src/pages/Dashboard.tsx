@@ -149,7 +149,8 @@ import {
   HelpCircle,
   ChevronRight,
   ChevronLeft,
-  Truck
+  Truck,
+  Sparkles
 } from "lucide-react";
 import {
   Carousel,
@@ -1302,7 +1303,7 @@ export default function Dashboard() {
                     );
                   })}
                 </div>
-                <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div className="p-3 bg-purple-50 dark:bg-purple-950/30 rounded-lg border border-purple-100 dark:border-purple-900/50 flex items-center gap-3">
                     <Banknote className="h-5 w-5 text-purple-600" />
                     <div>
@@ -1313,8 +1314,15 @@ export default function Dashboard() {
                   <div className="p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg border border-emerald-100 dark:border-emerald-900/50 flex items-center gap-3">
                     <PiggyBank className="h-5 w-5 text-emerald-600" />
                     <div>
-                      <p className="text-xs text-emerald-700 dark:text-emerald-400 font-medium">Endowment Target</p>
+                      <p className="text-xs text-emerald-700 dark:text-emerald-400 font-medium">Core Endowment</p>
                       <p className="font-semibold text-emerald-800 dark:text-emerald-300">$2.1 Billion</p>
+                    </div>
+                  </div>
+                  <div className="p-3 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-100 dark:border-amber-900/50 flex items-center gap-3">
+                    <Trees className="h-5 w-5 text-amber-600" />
+                    <div>
+                      <p className="text-xs text-amber-700 dark:text-amber-400 font-medium">Excess Allocation</p>
+                      <p className="font-semibold text-amber-800 dark:text-amber-300">$1.5 Billion</p>
                     </div>
                   </div>
                   <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-100 dark:border-blue-900/50 flex items-center gap-3">
@@ -1322,6 +1330,27 @@ export default function Dashboard() {
                     <div>
                       <p className="text-xs text-blue-700 dark:text-blue-400 font-medium">Year 1 Draw (3.5%)</p>
                       <p className="font-semibold text-blue-800 dark:text-blue-300">$73.5 Million</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mt-4 p-4 bg-gradient-to-r from-amber-50 to-emerald-50 dark:from-amber-950/30 dark:to-emerald-950/30 rounded-xl border border-amber-200 dark:border-amber-800">
+                  <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <Sparkles className="h-4 w-4 text-amber-600" />
+                    Excess Revenue Allocation ($1.5B over target)
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div className="p-3 bg-white/50 dark:bg-black/20 rounded-lg">
+                      <p className="text-sm font-medium text-amber-700 dark:text-amber-300">Leech Lake Tribal Programs</p>
+                      <p className="text-xs text-muted-foreground mt-1">Food sovereignty initiatives for Red Lake, Cass Lake-Bena, and Nay Ah Shing communities</p>
+                    </div>
+                    <div className="p-3 bg-white/50 dark:bg-black/20 rounded-lg">
+                      <p className="text-sm font-medium text-emerald-700 dark:text-emerald-300">Boundary Waters Mining Alternative</p>
+                      <p className="text-xs text-muted-foreground mt-1">Northern MN greenhouse hubs replacing Twin Metals mining jobs with permanent positions</p>
+                    </div>
+                    <div className="p-3 bg-white/50 dark:bg-black/20 rounded-lg">
+                      <p className="text-sm font-medium text-blue-700 dark:text-blue-300">Distribution Infrastructure</p>
+                      <p className="text-xs text-muted-foreground mt-1">Statewide produce delivery network connecting greenhouses to 53 school districts</p>
                     </div>
                   </div>
                 </div>
