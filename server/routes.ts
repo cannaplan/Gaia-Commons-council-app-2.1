@@ -1289,6 +1289,8 @@ async function seedDatabase() {
   const miningAltData = await storage.getMiningAlternatives();
   if (miningAltData.length === 0) {
     console.log("Seeding mining alternatives data...");
+    // Financial constants: $85/sqft construction, $12/sqft/year ops, 40 lbs/sqft/year production, $3.50/lb wholesale
+    // 60% for schools, 40% excess for stores/markets
     const miningAlternatives = [
       {
         community: "Ely",
@@ -1299,21 +1301,30 @@ async function seedDatabase() {
         miningJobsPromised: 750,
         miningAvgSalary: 65000,
         miningDuration: "20-25 years (then depleted)",
-        greenhouseComplexSqft: 450000,
-        greenhouseJobs: 540,
+        greenhouseComplexSqft: 225000,  // Halved from 450K
+        greenhouseJobs: 270,
         greenhouseAvgSalary: 52000,
         schoolGreenhouseJobs: 25,
-        totalGreenhouseJobs: 565,
-        annualEndowmentFunding: 29380000,
+        totalGreenhouseJobs: 295,
+        annualEndowmentFunding: 15340000,
         jobDuration: "Permanent (endowment-funded forever)",
         environmentalRisk: "None - clean food production",
         boundaryWatersImpact: "Protective - no sulfide mining pollution risk",
         economicMultiplier: 2.4,
-        localFoodProduction: 7200000,
-        co2Sequestered: 13500,
+        localFoodProduction: 9000000,  // 225K sqft × 40 lbs/sqft
+        co2Sequestered: 6750,
         status: "Proposed Alternative",
         specialtyCrops: "Mushrooms, Microgreens, Specialty Peppers",
-        suppliesAllSchools: "Yes - Supplies all 53 MN school districts"
+        suppliesAllSchools: "Yes - Supplies all 53 MN school districts",
+        // Financial & Production
+        annualProductionLbs: 9000000,      // 225K × 40 lbs/sqft
+        schoolDistributionLbs: 5400000,    // 60% to schools
+        excessForSaleLbs: 3600000,         // 40% excess for stores
+        wholesalePricePerLb: 3.50,
+        annualSalesRevenue: 12600000,      // 3.6M lbs × $3.50
+        constructionCost: 19125000,        // 225K × $85
+        annualOperatingCost: 2700000,      // 225K × $12
+        netAnnualRevenue: 9900000          // $12.6M - $2.7M ops
       },
       {
         community: "Babbitt",
@@ -1324,21 +1335,30 @@ async function seedDatabase() {
         miningJobsPromised: 350,
         miningAvgSalary: 62000,
         miningDuration: "20-25 years (then depleted)",
-        greenhouseComplexSqft: 255000,
-        greenhouseJobs: 285,
+        greenhouseComplexSqft: 127500,  // Halved from 255K
+        greenhouseJobs: 153,
         greenhouseAvgSalary: 50000,
         schoolGreenhouseJobs: 12,
-        totalGreenhouseJobs: 297,
-        annualEndowmentFunding: 14850000,
+        totalGreenhouseJobs: 165,
+        annualEndowmentFunding: 8250000,
         jobDuration: "Permanent (endowment-funded forever)",
         environmentalRisk: "None - clean food production",
         boundaryWatersImpact: "Protective - no sulfide mining pollution risk",
         economicMultiplier: 2.4,
-        localFoodProduction: 4080000,
-        co2Sequestered: 7650,
+        localFoodProduction: 5100000,
+        co2Sequestered: 3825,
         status: "Proposed Alternative",
         specialtyCrops: "Edible Flowers, Exotic Herbs, Gourmet Greens",
-        suppliesAllSchools: "Yes - Supplies all 53 MN school districts"
+        suppliesAllSchools: "Yes - Supplies all 53 MN school districts",
+        // Financial & Production
+        annualProductionLbs: 5100000,      // 127.5K × 40 lbs/sqft
+        schoolDistributionLbs: 3060000,    // 60% to schools
+        excessForSaleLbs: 2040000,         // 40% excess for stores
+        wholesalePricePerLb: 3.50,
+        annualSalesRevenue: 7140000,
+        constructionCost: 10837500,        // 127.5K × $85
+        annualOperatingCost: 1530000,      // 127.5K × $12
+        netAnnualRevenue: 5610000
       },
       {
         community: "Hibbing",
@@ -1349,21 +1369,30 @@ async function seedDatabase() {
         miningJobsPromised: 500,
         miningAvgSalary: 64000,
         miningDuration: "20-25 years (then depleted)",
-        greenhouseComplexSqft: 750000,
-        greenhouseJobs: 855,
+        greenhouseComplexSqft: 375000,  // Halved from 750K
+        greenhouseJobs: 450,
         greenhouseAvgSalary: 52000,
         schoolGreenhouseJobs: 35,
-        totalGreenhouseJobs: 890,
-        annualEndowmentFunding: 46280000,
+        totalGreenhouseJobs: 485,
+        annualEndowmentFunding: 25220000,
         jobDuration: "Permanent (endowment-funded forever)",
         environmentalRisk: "None - clean food production",
         boundaryWatersImpact: "Protective - no sulfide mining pollution risk",
         economicMultiplier: 2.4,
-        localFoodProduction: 12000000,
-        co2Sequestered: 22500,
+        localFoodProduction: 15000000,
+        co2Sequestered: 11250,
         status: "Proposed Alternative",
         specialtyCrops: "Year-Round Strawberries, Specialty Melons, Heirloom Tomatoes",
-        suppliesAllSchools: "Yes - Supplies all 53 MN school districts"
+        suppliesAllSchools: "Yes - Supplies all 53 MN school districts",
+        // Financial & Production
+        annualProductionLbs: 15000000,     // 375K × 40 lbs/sqft
+        schoolDistributionLbs: 9000000,    // 60% to schools
+        excessForSaleLbs: 6000000,         // 40% excess for stores
+        wholesalePricePerLb: 3.50,
+        annualSalesRevenue: 21000000,
+        constructionCost: 31875000,        // 375K × $85
+        annualOperatingCost: 4500000,
+        netAnnualRevenue: 16500000
       },
       {
         community: "Tower",
@@ -1374,21 +1403,30 @@ async function seedDatabase() {
         miningJobsPromised: 75,
         miningAvgSalary: 58000,
         miningDuration: "20-25 years (then depleted)",
-        greenhouseComplexSqft: 105000,
-        greenhouseJobs: 126,
+        greenhouseComplexSqft: 52500,   // Halved from 105K
+        greenhouseJobs: 63,
         greenhouseAvgSalary: 48000,
         schoolGreenhouseJobs: 6,
-        totalGreenhouseJobs: 132,
-        annualEndowmentFunding: 6336000,
+        totalGreenhouseJobs: 69,
+        annualEndowmentFunding: 3312000,
         jobDuration: "Permanent (endowment-funded forever)",
         environmentalRisk: "None - clean food production",
         boundaryWatersImpact: "Protective - no sulfide mining pollution risk",
         economicMultiplier: 2.4,
-        localFoodProduction: 1680000,
-        co2Sequestered: 3150,
+        localFoodProduction: 2100000,
+        co2Sequestered: 1575,
         status: "Proposed Alternative",
         specialtyCrops: "Specialty Squash, Artisan Cucumbers",
-        suppliesAllSchools: "Yes - Supplies all 53 MN school districts"
+        suppliesAllSchools: "Yes - Supplies all 53 MN school districts",
+        // Financial & Production
+        annualProductionLbs: 2100000,      // 52.5K × 40 lbs/sqft
+        schoolDistributionLbs: 1260000,    // 60% to schools
+        excessForSaleLbs: 840000,          // 40% excess for stores
+        wholesalePricePerLb: 3.50,
+        annualSalesRevenue: 2940000,
+        constructionCost: 4462500,         // 52.5K × $85
+        annualOperatingCost: 630000,
+        netAnnualRevenue: 2310000
       },
       {
         community: "Virginia",
@@ -1399,21 +1437,30 @@ async function seedDatabase() {
         miningJobsPromised: 180,
         miningAvgSalary: 60000,
         miningDuration: "20-25 years (then depleted)",
-        greenhouseComplexSqft: 360000,
-        greenhouseJobs: 420,
+        greenhouseComplexSqft: 180000,  // Halved from 360K
+        greenhouseJobs: 216,
         greenhouseAvgSalary: 50000,
         schoolGreenhouseJobs: 18,
-        totalGreenhouseJobs: 438,
-        annualEndowmentFunding: 21900000,
+        totalGreenhouseJobs: 234,
+        annualEndowmentFunding: 11700000,
         jobDuration: "Permanent (endowment-funded forever)",
         environmentalRisk: "None - clean food production",
         boundaryWatersImpact: "Protective - no sulfide mining pollution risk",
         economicMultiplier: 2.4,
-        localFoodProduction: 5760000,
-        co2Sequestered: 10800,
+        localFoodProduction: 7200000,
+        co2Sequestered: 5400,
         status: "Proposed Alternative",
         specialtyCrops: "Gourmet Mushrooms, Asian Vegetables, Baby Root Vegetables",
-        suppliesAllSchools: "Yes - Supplies all 53 MN school districts"
+        suppliesAllSchools: "Yes - Supplies all 53 MN school districts",
+        // Financial & Production
+        annualProductionLbs: 7200000,      // 180K × 40 lbs/sqft
+        schoolDistributionLbs: 4320000,    // 60% to schools
+        excessForSaleLbs: 2880000,         // 40% excess for stores
+        wholesalePricePerLb: 3.50,
+        annualSalesRevenue: 10080000,
+        constructionCost: 15300000,        // 180K × $85
+        annualOperatingCost: 2160000,
+        netAnnualRevenue: 7920000
       }
     ];
     

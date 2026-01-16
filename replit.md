@@ -6,7 +6,13 @@ Gaia Commons Council is a full-stack dashboard application for tracking pilot pr
 
 ## Recent Changes (January 2026)
 
-- **Twin Metals Mining Alternative Section**: Added comprehensive Boundary Waters protection feature showing community-by-community job comparisons (Ely, Babbitt, Hibbing, Tower, Virginia). Positions permanent endowment-funded greenhouse jobs as economic alternative to temporary mining jobs while protecting the BWCA from sulfide mining pollution. Includes `mining_alternatives` database table, API endpoints, and full Dashboard UI.
+- **Twin Metals Mining Alternative Section (Updated)**: Comprehensive Boundary Waters protection feature with 5 Northern MN communities (Ely, Babbitt, Hibbing, Tower, Virginia). Now includes:
+  - **Halved greenhouse sqft**: 960K total (225K Ely, 127.5K Babbitt, 375K Hibbing, 52.5K Tower, 180K Virginia)
+  - **Complete financial modeling**: $85/sqft construction cost, $12/sqft/year operations, 40 lbs/sqft/year production
+  - **Production & distribution**: 38.4M lbs annual specialty crops — 60% to 53 school districts, 40% excess sold to stores/markets
+  - **Revenue modeling**: $53.8M annual sales revenue @ $3.50/lb wholesale, $42.2M net after operations
+  - **Specialty crops by community**: Mushrooms, microgreens, edible flowers, year-round strawberries, specialty melons, gourmet vegetables
+  - **1,248 permanent jobs** funded by endowment vs. 1,855 temporary mining jobs
 - **Cluster Builder Tool**: Added interactive 4-step wizard for students/teachers to design custom greenhouse pilot programs. Users can select schools, choose produce varieties, and generate pilot proposals with complete metrics (sqft, production, jobs, costs, environmental impact).
 - **MN School Districts Map**: Added 53 Minnesota school districts with greenhouse candidate data, dual-mode toggle (active sites vs all districts), and filtering by size/south-facing score.
 - **Tribal Community Priority**: Included Cass Lake-Bena, Red Lake, and Nay Ah Shing districts as High Priority for food sovereignty initiatives.

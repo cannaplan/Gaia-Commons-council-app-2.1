@@ -1313,11 +1313,13 @@ export default function Dashboard() {
                         </div>
                         
                         <div className="pt-2 border-t border-border/30 space-y-1">
-                          <p className="text-xs text-muted-foreground"><span className="font-medium">Complex sqft:</span> {alt.greenhouseComplexSqft.toLocaleString()}</p>
-                          <p className="text-xs text-muted-foreground"><span className="font-medium">School jobs:</span> {alt.schoolGreenhouseJobs}</p>
-                          <p className="text-xs text-primary font-medium"><span className="font-medium">Endowment:</span> ${(alt.annualEndowmentFunding / 1000000).toFixed(1)}M/yr</p>
+                          <p className="text-xs text-muted-foreground"><span className="font-medium">Complex:</span> {(alt.greenhouseComplexSqft / 1000).toFixed(0)}K sqft</p>
+                          <p className="text-xs text-muted-foreground"><span className="font-medium">Production:</span> {((alt.annualProductionLbs || 0) / 1000000).toFixed(1)}M lbs/yr</p>
+                          <p className="text-xs text-blue-600 dark:text-blue-400"><span className="font-medium">Schools:</span> {((alt.schoolDistributionLbs || 0) / 1000000).toFixed(1)}M lbs</p>
+                          <p className="text-xs text-amber-600 dark:text-amber-400"><span className="font-medium">Stores:</span> {((alt.excessForSaleLbs || 0) / 1000000).toFixed(1)}M lbs</p>
+                          <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium"><span className="font-medium">Sales:</span> ${((alt.annualSalesRevenue || 0) / 1000000).toFixed(1)}M/yr</p>
                           {alt.specialtyCrops && (
-                            <p className="text-xs text-amber-700 dark:text-amber-400 font-medium mt-1"><span className="font-medium">Specialty Crops:</span> {alt.specialtyCrops}</p>
+                            <p className="text-xs text-purple-700 dark:text-purple-400 font-medium mt-1">{alt.specialtyCrops}</p>
                           )}
                         </div>
                       </div>
@@ -1343,19 +1345,61 @@ export default function Dashboard() {
                   </div>
                   
                   <div className="p-4 bg-blue-50 dark:bg-blue-950/30 rounded-xl border border-blue-200 dark:border-blue-800">
-                    <p className="text-sm text-blue-700 dark:text-blue-400 font-medium">Annual Endowment Funding</p>
+                    <p className="text-sm text-blue-700 dark:text-blue-400 font-medium">Total Greenhouse Complex</p>
                     <p className="text-2xl font-bold text-blue-800 dark:text-blue-300">
-                      ${(miningAlternatives.reduce((sum, a) => sum + a.annualEndowmentFunding, 0) / 1000000).toFixed(1)}M
+                      {(miningAlternatives.reduce((sum, a) => sum + a.greenhouseComplexSqft, 0) / 1000).toFixed(0)}K sqft
                     </p>
-                    <p className="text-xs text-blue-600 dark:text-blue-400">From 3.5% annual draw</p>
+                    <p className="text-xs text-blue-600 dark:text-blue-400">$85/sqft construction</p>
                   </div>
                   
                   <div className="p-4 bg-purple-50 dark:bg-purple-950/30 rounded-xl border border-purple-200 dark:border-purple-800">
-                    <p className="text-sm text-purple-700 dark:text-purple-400 font-medium">Total Greenhouse Complex</p>
+                    <p className="text-sm text-purple-700 dark:text-purple-400 font-medium">Annual Production</p>
                     <p className="text-2xl font-bold text-purple-800 dark:text-purple-300">
-                      {(miningAlternatives.reduce((sum, a) => sum + a.greenhouseComplexSqft, 0) / 1000).toFixed(0)}K sqft
+                      {(miningAlternatives.reduce((sum, a) => sum + (a.annualProductionLbs || 0), 0) / 1000000).toFixed(1)}M lbs
                     </p>
-                    <p className="text-xs text-purple-600 dark:text-purple-400">Plus school greenhouses</p>
+                    <p className="text-xs text-purple-600 dark:text-purple-400">40 lbs/sqft/year specialty crops</p>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mt-4">
+                  <div className="p-4 bg-amber-50 dark:bg-amber-950/30 rounded-xl border border-amber-200 dark:border-amber-800">
+                    <p className="text-sm text-amber-700 dark:text-amber-400 font-medium">School Distribution</p>
+                    <p className="text-2xl font-bold text-amber-800 dark:text-amber-300">
+                      {(miningAlternatives.reduce((sum, a) => sum + (a.schoolDistributionLbs || 0), 0) / 1000000).toFixed(1)}M lbs
+                    </p>
+                    <p className="text-xs text-amber-600 dark:text-amber-400">60% to 53 school districts</p>
+                  </div>
+                  
+                  <div className="p-4 bg-orange-50 dark:bg-orange-950/30 rounded-xl border border-orange-200 dark:border-orange-800">
+                    <p className="text-sm text-orange-700 dark:text-orange-400 font-medium">Excess for Stores</p>
+                    <p className="text-2xl font-bold text-orange-800 dark:text-orange-300">
+                      {(miningAlternatives.reduce((sum, a) => sum + (a.excessForSaleLbs || 0), 0) / 1000000).toFixed(1)}M lbs
+                    </p>
+                    <p className="text-xs text-orange-600 dark:text-orange-400">40% sold to stores/markets</p>
+                  </div>
+                  
+                  <div className="p-4 bg-emerald-50 dark:bg-emerald-950/30 rounded-xl border border-emerald-200 dark:border-emerald-800">
+                    <p className="text-sm text-emerald-700 dark:text-emerald-400 font-medium">Annual Sales Revenue</p>
+                    <p className="text-2xl font-bold text-emerald-800 dark:text-emerald-300">
+                      ${(miningAlternatives.reduce((sum, a) => sum + (a.annualSalesRevenue || 0), 0) / 1000000).toFixed(1)}M
+                    </p>
+                    <p className="text-xs text-emerald-600 dark:text-emerald-400">@ $3.50/lb wholesale</p>
+                  </div>
+                  
+                  <div className="p-4 bg-slate-50 dark:bg-slate-950/30 rounded-xl border border-slate-200 dark:border-slate-800">
+                    <p className="text-sm text-slate-700 dark:text-slate-400 font-medium">Construction Cost</p>
+                    <p className="text-2xl font-bold text-slate-800 dark:text-slate-300">
+                      ${(miningAlternatives.reduce((sum, a) => sum + (a.constructionCost || 0), 0) / 1000000).toFixed(1)}M
+                    </p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">One-time capital investment</p>
+                  </div>
+                  
+                  <div className="p-4 bg-teal-50 dark:bg-teal-950/30 rounded-xl border border-teal-200 dark:border-teal-800">
+                    <p className="text-sm text-teal-700 dark:text-teal-400 font-medium">Net Annual Revenue</p>
+                    <p className="text-2xl font-bold text-teal-800 dark:text-teal-300">
+                      ${(miningAlternatives.reduce((sum, a) => sum + (a.netAnnualRevenue || 0), 0) / 1000000).toFixed(1)}M
+                    </p>
+                    <p className="text-xs text-teal-600 dark:text-teal-400">After $12/sqft/yr operations</p>
                   </div>
                 </div>
                 
