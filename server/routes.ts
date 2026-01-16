@@ -790,34 +790,101 @@ async function seedDatabase() {
       economicMultiplier: 2.2
     });
 
-    // Seed K-12 NGSS Curriculum (from ballot deck slide 9)
+    // Seed K-12 NGSS Curriculum (from ballot deck slide 9) - Expanded with detailed units
+    // Kindergarten
     await storage.createK12Curriculum({
-      gradeRange: "K-2",
-      title: "Life Cycles",
-      description: "Plant growth, responsibility, soil science. Students learn the basics of how plants grow and their importance in ecosystems.",
+      gradeRange: "K",
+      title: "Seeds & Sprouts",
+      description: "Introduction to plant life through hands-on seed planting. Students observe germination, learn plant parts (roots, stems, leaves), practice daily watering responsibility, and create plant journals with drawings. Culminates in 'Sprout Celebration' where students share their first harvest of microgreens.",
+      durationWeeks: 6,
+      standards: "NGSS: K-LS1-1 (What plants need), K-ESS2-2 (Weather patterns)"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "1",
+      title: "Garden Helpers",
+      description: "Exploring the ecosystem of helpers in our greenhouse: earthworms, beneficial insects, and pollinators. Students create 'bug hotels', learn composting basics, identify helpful vs. harmful insects, and understand the food web. Field trips to observe bees and butterflies in action.",
       durationWeeks: 8,
-      standards: "NGSS: K-LS1-1, K-ESS2-2, K-ESS3-1"
+      standards: "NGSS: 1-LS1-1 (Animal survival), 1-LS3-1 (Inheritance)"
     });
     await storage.createK12Curriculum({
-      gradeRange: "3-5",
-      title: "Ecosystems",
-      description: "Data collection, carbon cycle, environmental science. Students analyze real greenhouse data and understand nutrient cycling.",
+      gradeRange: "2",
+      title: "Soil Scientists",
+      description: "Deep dive into soil health: texture, composition, and life underground. Students conduct soil tests, compare different growing mediums, learn about decomposition, and create terrariums. Introduction to the nutrient cycle through 'feeding the soil' activities with compost.",
+      durationWeeks: 8,
+      standards: "NGSS: 2-LS2-1 (Seed dispersal), 2-LS4-1 (Habitats), K-ESS3-1 (Human impact)"
+    });
+    // Elementary (3-5)
+    await storage.createK12Curriculum({
+      gradeRange: "3",
+      title: "Plant Detectives",
+      description: "Scientific observation and data collection. Students maintain growth charts, measure plant height/width weekly, learn to use digital thermometers and moisture meters, create graphs of growth data, and conduct simple experiments on light and water variables.",
+      durationWeeks: 10,
+      standards: "NGSS: 3-LS1-1 (Life cycles), 3-LS4-3 (Fossils & environment)"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "4",
+      title: "Energy Flow",
+      description: "Understanding photosynthesis and the carbon cycle. Students trace energy from sun to plant to plate, learn about chlorophyll through leaf chromatography, explore how plants 'breathe' CO2, and calculate carbon sequestration of classroom plants. Introduction to renewable energy concepts.",
       durationWeeks: 12,
-      standards: "NGSS: 3-LS4-3, 4-LS1-1, 5-LS2-1"
+      standards: "NGSS: 4-LS1-1 (Plant structures), 4-PS3-2 (Energy transfer), 4-ESS3-1 (Energy resources)"
     });
     await storage.createK12Curriculum({
-      gradeRange: "6-8",
-      title: "Sustainability",
-      description: "Hydroponics, soil health, regenerative agriculture. Students design and manage aquaponic systems.",
+      gradeRange: "5",
+      title: "Ecosystem Engineers",
+      description: "Designing balanced ecosystems. Students create and manage mini aquaponic systems, understand nitrogen cycling, learn about symbiotic relationships, troubleshoot ecosystem problems, and present solutions. Capstone: Design a self-sustaining closed ecosystem.",
+      durationWeeks: 14,
+      standards: "NGSS: 5-LS2-1 (Ecosystem interactions), 5-PS3-1 (Energy in food), 5-ESS3-1 (Earth resources)"
+    });
+    // Middle School (6-8)
+    await storage.createK12Curriculum({
+      gradeRange: "6",
+      title: "Hydroponic Systems",
+      description: "Engineering hydroponic growing systems. Students learn water chemistry (pH, EC, nutrients), design and build NFT and DWC systems, calculate nutrient solutions, monitor water quality, and optimize growing conditions. Focus on STEM integration with math applications.",
+      durationWeeks: 14,
+      standards: "NGSS: MS-LS1-6 (Photosynthesis), MS-PS1-2 (Chemical reactions), MS-ETS1-4 (Design process)"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "7",
+      title: "Food Systems & Justice",
+      description: "Examining food access, food deserts, and community solutions. Students map local food access, interview community members, analyze nutritional disparities, research food policy history, and design community food security proposals. Guest speakers from local food banks and urban farms.",
+      durationWeeks: 12,
+      standards: "NGSS: MS-LS2-1 (Resource competition), MS-LS2-3 (Ecosystem cycling), MS-ESS3-3 (Human impacts)"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "8",
+      title: "Regenerative Agriculture",
+      description: "Soil health and sustainable farming practices. Students learn no-till methods, cover cropping, crop rotation, companion planting, and integrated pest management. Hands-on soil biology analysis using microscopes. Compare conventional vs. regenerative farming outcomes.",
       durationWeeks: 16,
-      standards: "NGSS: MS-LS2-1, MS-LS2-3, MS-ESS3-3"
+      standards: "NGSS: MS-LS2-4 (Ecosystem disruption), MS-ESS3-4 (Human solutions), MS-ETS1-1 (Engineering criteria)"
+    });
+    // High School (9-12)
+    await storage.createK12Curriculum({
+      gradeRange: "9",
+      title: "Climate Science & Agriculture",
+      description: "Understanding climate change impacts on food systems. Students analyze climate data, model greenhouse gas emissions, study agricultural adaptation strategies, and examine the carbon footprint of food. Lab work includes soil carbon measurement and emissions calculations.",
+      durationWeeks: 16,
+      standards: "NGSS: HS-LS2-7 (Carbon cycling), HS-ESS2-4 (Energy balance), HS-ESS3-5 (Human impacts)"
     });
     await storage.createK12Curriculum({
-      gradeRange: "9-12",
-      title: "Policy + Systems",
-      description: "Climate modeling, ballot initiatives, food policy design. Semester-long capstone project with real policy analysis.",
+      gradeRange: "10",
+      title: "Agricultural Economics",
+      description: "Business of sustainable food production. Students develop greenhouse business plans, analyze cost-benefit of different crops, learn supply chain management, calculate break-even points, and study cooperative economics. Partnerships with local farmers markets for real-world sales experience.",
+      durationWeeks: 14,
+      standards: "NGSS: HS-ETS1-3 (Design optimization), HS-ESS3-2 (Resource management)"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "11",
+      title: "Food Policy & Advocacy",
+      description: "Civic engagement through food policy analysis. Students study Farm Bill history, analyze SNAP and school lunch programs, draft policy proposals, meet with local legislators, and learn advocacy strategies. Mock ballot initiative development and campaign planning.",
       durationWeeks: 18,
-      standards: "NGSS: HS-LS2-7, HS-ESS3-4, HS-ETS1-3"
+      standards: "NGSS: HS-ESS3-1 (Resource availability), HS-ESS3-4 (Sustainability solutions)"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "12",
+      title: "Capstone: Community Food Project",
+      description: "Year-long capstone integrating all K-12 learning. Students design, propose, and implement a community food security project. Includes grant writing, community engagement, project management, outcome measurement, and final presentation to school board and community partners. Career pathway exploration in sustainable agriculture.",
+      durationWeeks: 36,
+      standards: "NGSS: HS-LS2-7, HS-ESS3-4, HS-ETS1-3 (Integrated application)"
     });
 
     // Seed Coalition Partners (from ballot deck slide 11)
@@ -837,7 +904,7 @@ async function seedDatabase() {
     await storage.createCoalitionPartner({ tier: 3, name: "3M Company", category: "Manufacturing", memberCount: null, focus: "Sustainability tech, materials" });
     await storage.createCoalitionPartner({ tier: 3, name: "Minneapolis Chamber of Commerce", category: "Business", memberCount: 1200, focus: "Economic development" });
 
-    // Seed Funding Sources (from ballot deck slides 2, 5.5, 6)
+    // Seed Funding Sources (from ballot deck slides 2, 5.5, 6) - Updated rates
     await storage.createFundingSource({
       sourceType: "Fortune 500",
       description: "0.27% pre-tax profit redirect from Minnesota Fortune 500 companies",
@@ -846,18 +913,32 @@ async function seedDatabase() {
       entities: "Target, UnitedHealth, Best Buy, 3M, General Mills, US Bancorp, Xcel Energy, CHS, Land O'Lakes, Hormel, Polaris, Fastenal, Patterson, CH Robinson, Graco, Pentair, Donaldson"
     });
     await storage.createFundingSource({
-      sourceType: "Billionaires & Sports",
-      description: "Voluntary large-gift contributions from MN billionaires and pro sports teams",
-      targetAmount: 200000000,
+      sourceType: "MN Billionaires",
+      description: "Voluntary large-gift contributions from Minnesota billionaires",
+      targetAmount: 150000000,
       percentage: null,
-      entities: "Glen Taylor, Whitney MacMillan, Stanley Hubbard, Vikings, Twins, Timberwolves, Wild"
+      entities: "Glen Taylor (Wolves, Lynx, Star Tribune), Whitney MacMillan (Cargill heir), Stanley Hubbard (Hubbard Broadcasting), Marilyn Carlson Nelson (Carlson Companies), Robert Carlson (Carlson Companies), Richard Schulze (Best Buy founder)"
+    });
+    await storage.createFundingSource({
+      sourceType: "Sports Franchises",
+      description: "0.27% contribution from Minnesota professional sports franchises annual revenue",
+      targetAmount: 85000000,
+      percentage: 0.27,
+      entities: "Minnesota Vikings (NFL), Minnesota Twins (MLB), Minnesota Timberwolves (NBA), Minnesota Lynx (WNBA), Minnesota Wild (NHL), Minnesota United FC (MLS), St. Paul Saints (MiLB)"
+    });
+    await storage.createFundingSource({
+      sourceType: "Data Center Giants",
+      description: "3% surcharge on major tech companies with MN data center operations",
+      targetAmount: 510000000,
+      percentage: 3.0,
+      entities: "Amazon Web Services, Microsoft Azure, Google Cloud, Meta, Apple, Equinix, Digital Realty, CyrusOne, Cologix"
     });
     await storage.createFundingSource({
       sourceType: "Out-of-Country Mining",
-      description: "1% surcharge on out-of-country mining corporations operating in Minnesota",
-      targetAmount: 400000000,
-      percentage: 1.0,
-      entities: "Codelco, Antofagasta, Vale, SQM, Glencore, Rio Tinto, BHP, Anglo American"
+      description: "5% surcharge on out-of-country mining corporations operating in Minnesota",
+      targetAmount: 750000000,
+      percentage: 5.0,
+      entities: "Codelco (Chile), Antofagasta (Chile), Vale (Brazil), SQM (Chile), Glencore (Switzerland), Rio Tinto (UK/Australia), BHP (Australia), Anglo American (UK), Teck Resources (Canada)"
     });
     await storage.createFundingSource({
       sourceType: "Out-of-State Corporations",
@@ -865,13 +946,6 @@ async function seedDatabase() {
       targetAmount: 240000000,
       percentage: 0.5,
       entities: "Major insurers, banks, retailers, ag-conglomerates with significant MN presence"
-    });
-    await storage.createFundingSource({
-      sourceType: "Data Center Giants",
-      description: "1% surcharge on major tech companies with MN data center operations",
-      targetAmount: 170000000,
-      percentage: 1.0,
-      entities: "Amazon, Microsoft, Google, Meta, Apple"
     });
 
     // Seed Transparency Features (from Accountability slide)
