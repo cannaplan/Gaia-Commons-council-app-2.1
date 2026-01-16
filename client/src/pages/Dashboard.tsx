@@ -361,8 +361,116 @@ export default function Dashboard() {
           </div>
         </motion.div>
 
-        {/* Scale Selector Tabs */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="mb-8">
+        {/* 1. MISSION STATEMENT */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.05 }} className="mb-8">
+          <Card className="glass-panel border-2 border-primary/20 bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5" data-testid="card-mission">
+            <CardContent className="py-8">
+              <div className="text-center max-w-4xl mx-auto">
+                <div className="flex justify-center mb-4">
+                  <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Sprout className="h-8 w-8 text-primary" />
+                  </div>
+                </div>
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">One Vote, Forever Fed</h2>
+                <p className="text-lg text-muted-foreground mb-6">
+                  The Gaia Commons Council 2026 ballot initiative aims to create a perpetual endowment that feeds every Minnesota student 
+                  fresh, locally-grown food while building climate-resilient communities, permanent jobs, and regenerative food systems 
+                  that scale from 6 pilot schools to a global network.
+                </p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                  <div className="p-4 bg-primary/10 rounded-xl">
+                    <Leaf className="h-5 w-5 text-primary mx-auto mb-2" />
+                    <p className="text-sm font-semibold text-foreground">Perpetual Endowment</p>
+                    <p className="text-xs text-muted-foreground">$2.1B principal protected forever</p>
+                  </div>
+                  <div className="p-4 bg-secondary/10 rounded-xl">
+                    <Users className="h-5 w-5 text-secondary mx-auto mb-2" />
+                    <p className="text-sm font-semibold text-foreground">875K Students Fed</p>
+                    <p className="text-xs text-muted-foreground">Fresh meals year-round</p>
+                  </div>
+                  <div className="p-4 bg-accent/10 rounded-xl">
+                    <Briefcase className="h-5 w-5 text-accent mx-auto mb-2" />
+                    <p className="text-sm font-semibold text-foreground">Permanent Jobs</p>
+                    <p className="text-xs text-muted-foreground">Not temporary mining jobs</p>
+                  </div>
+                  <div className="p-4 bg-emerald-500/10 rounded-xl">
+                    <Trees className="h-5 w-5 text-emerald-600 mx-auto mb-2" />
+                    <p className="text-sm font-semibold text-foreground">Climate Action</p>
+                    <p className="text-xs text-muted-foreground">246K tons CO₂ sequestered/yr</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* 2. MINNESOTA PILOT CLUSTERS (moved before scale selector) */}
+        {clusters && clusters.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="mb-8">
+            <Card className="glass-panel" data-testid="card-school-clusters">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <MapPin className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Minnesota Pilot School Clusters — St. Paul & Mendota Heights</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {clusters.map(cluster => {
+                    const clusterSchools = schoolsList?.filter(s => s.clusterId === cluster.id) || [];
+                    return (
+                      <div key={cluster.id} className="p-4 bg-muted/30 rounded-xl border border-border/50" data-testid={`cluster-${cluster.name.toLowerCase().replace(' ', '-')}`}>
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                            <Building2 className="h-5 w-5 text-primary" />
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-foreground">{cluster.name} Cluster</h3>
+                            <p className="text-sm text-muted-foreground">{cluster.region}</p>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-4 gap-3 mb-4">
+                          <div className="text-center p-2 bg-background rounded-lg">
+                            <p className="text-xs text-muted-foreground">Students</p>
+                            <p className="font-semibold text-foreground">{cluster.totalStudents.toLocaleString()}</p>
+                          </div>
+                          <div className="text-center p-2 bg-background rounded-lg">
+                            <p className="text-xs text-muted-foreground">Yr 5 Est.</p>
+                            <p className="font-semibold text-emerald-600">{cluster.yr5Students.toLocaleString()}</p>
+                          </div>
+                          <div className="text-center p-2 bg-background rounded-lg">
+                            <p className="text-xs text-muted-foreground">Sq Ft</p>
+                            <p className="font-semibold text-foreground">{(cluster.totalSqft / 1000).toFixed(1)}K</p>
+                          </div>
+                          <div className="text-center p-2 bg-background rounded-lg">
+                            <p className="text-xs text-muted-foreground">Greenhouses</p>
+                            <p className="font-semibold text-foreground">{cluster.greenhouses}</p>
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Individual Schools</p>
+                          {clusterSchools.map(school => (
+                            <div key={school.id} className="flex items-center justify-between p-2 bg-background rounded-lg border border-border/30">
+                              <div className="flex items-center gap-2">
+                                <GraduationCap className="h-4 w-4 text-muted-foreground" />
+                                <span className="text-sm font-medium">{school.name}</span>
+                                <Badge variant="outline" className="text-xs">{school.grades}</Badge>
+                              </div>
+                              <div className="text-right">
+                                <span className="text-sm text-muted-foreground">{school.enrollment} students</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* 3. PILOT TO GLOBAL - Scale Selector Tabs */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15 }} className="mb-8">
           <Card className="glass-panel" data-testid="card-scale-selector">
             <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
               <Globe className="h-5 w-5 text-primary" />
@@ -428,73 +536,8 @@ export default function Dashboard() {
           </Card>
         </motion.div>
 
-        {/* Pilot School Clusters (only show for pilot scale) */}
-        {selectedScale === "pilot" && clusters && clusters.length > 0 && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15 }} className="mb-8">
-            <Card className="glass-panel" data-testid="card-school-clusters">
-              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
-                <MapPin className="h-5 w-5 text-primary" />
-                <CardTitle className="text-lg font-semibold">Minnesota Pilot School Clusters — St. Paul & Mendota Heights</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {clusters.map(cluster => {
-                    const clusterSchools = schoolsList?.filter(s => s.clusterId === cluster.id) || [];
-                    return (
-                      <div key={cluster.id} className="p-4 bg-muted/30 rounded-xl border border-border/50" data-testid={`cluster-${cluster.name.toLowerCase().replace(' ', '-')}`}>
-                        <div className="flex items-center gap-3 mb-4">
-                          <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                            <Building2 className="h-5 w-5 text-primary" />
-                          </div>
-                          <div>
-                            <h3 className="font-semibold text-foreground">{cluster.name} Cluster</h3>
-                            <p className="text-sm text-muted-foreground">{cluster.region}</p>
-                          </div>
-                        </div>
-                        <div className="grid grid-cols-4 gap-3 mb-4">
-                          <div className="text-center p-2 bg-background rounded-lg">
-                            <p className="text-xs text-muted-foreground">Students</p>
-                            <p className="font-semibold text-foreground">{cluster.totalStudents.toLocaleString()}</p>
-                          </div>
-                          <div className="text-center p-2 bg-background rounded-lg">
-                            <p className="text-xs text-muted-foreground">Yr 5 Est.</p>
-                            <p className="font-semibold text-emerald-600">{cluster.yr5Students.toLocaleString()}</p>
-                          </div>
-                          <div className="text-center p-2 bg-background rounded-lg">
-                            <p className="text-xs text-muted-foreground">Sq Ft</p>
-                            <p className="font-semibold text-foreground">{(cluster.totalSqft / 1000).toFixed(1)}K</p>
-                          </div>
-                          <div className="text-center p-2 bg-background rounded-lg">
-                            <p className="text-xs text-muted-foreground">Greenhouses</p>
-                            <p className="font-semibold text-foreground">{cluster.greenhouses}</p>
-                          </div>
-                        </div>
-                        <div className="space-y-2">
-                          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Individual Schools</p>
-                          {clusterSchools.map(school => (
-                            <div key={school.id} className="flex items-center justify-between p-2 bg-background rounded-lg border border-border/30">
-                              <div className="flex items-center gap-2">
-                                <GraduationCap className="h-4 w-4 text-muted-foreground" />
-                                <span className="text-sm font-medium">{school.name}</span>
-                                <Badge variant="outline" className="text-xs">{school.grades}</Badge>
-                              </div>
-                              <div className="text-right">
-                                <span className="text-sm text-muted-foreground">{school.enrollment} students</span>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
-
-        {/* Cluster Builder Call-to-Action (only show for pilot scale) */}
-        {selectedScale === "pilot" && (
+        {/* 4. CLUSTER BUILDER CTA */}
+        {(
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.18 }} className="mb-8">
             <Card className="glass-panel border-primary/20 bg-gradient-to-r from-primary/5 to-emerald-500/5" data-testid="card-cluster-builder-cta">
               <CardContent className="py-6">
