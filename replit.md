@@ -33,6 +33,24 @@ Gaia Commons Council is a full-stack dashboard application for tracking pilot pr
 - **MN School Districts Map**: Added 53 Minnesota school districts with greenhouse candidate data, dual-mode toggle (active sites vs all districts), and filtering by size/south-facing score.
 - **Tribal Community Priority**: Included Cass Lake-Bena, Red Lake, and Nay Ah Shing districts as High Priority for food sovereignty initiatives.
 
+## Gaia Commons Brand Guidelines
+
+### Color Scheme
+- **Primary**: #4CAF50 (soft earthy green) - buttons, links, accents
+- **Secondary**: #8BC6EC (calming blue) - supporting elements
+- **Accent**: #FFE082 (vibrant yellow) - CTAs and highlights
+- **Background**: #F7F7F7 (light off-white) - page background
+- **Text**: #333333 (dark grey) - readable body text
+
+### Typography
+- **Primary Font**: Roboto (sans-serif) - body and headings
+- **Secondary Font**: Merriweather (serif) - special accents
+
+### Design Elements
+- **Border Radius**: 0.5rem (subtle rounding)
+- **Cards**: White backgrounds on light off-white page
+- **Dark Mode**: Green-tinted dark background with light text
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.

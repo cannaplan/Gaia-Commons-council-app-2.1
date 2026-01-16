@@ -1,40 +1,46 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --font-display: 'Outfit', sans-serif;
-  --font-body: 'Plus Jakarta Sans', sans-serif;
+  /* Gaia Commons Brand Typography */
+  --font-display: 'Roboto', sans-serif;
+  --font-body: 'Roboto', sans-serif;
+  --font-serif: 'Merriweather', serif;
 
-  /* Natural, earthy but modern tech palette for Gaia */
-  --background: 150 20% 98%;
-  --foreground: 160 40% 10%;
+  /* Gaia Commons Brand Colors */
+  /* Primary: #4CAF50 (soft earthy green) = 122 39% 49% */
+  /* Secondary: #8BC6EC (calming blue) = 204 72% 74% */
+  /* Accent: #FFE082 (vibrant yellow) = 45 100% 75% */
+  /* Background: #F7F7F7 = 0 0% 97% */
+  /* Text: #333333 = 0 0% 20% */
   
-  --primary: 155 45% 45%;
-  --primary-foreground: 150 20% 98%;
+  --background: 0 0% 97%;
+  --foreground: 0 0% 20%;
   
-  --secondary: 150 15% 92%;
-  --secondary-foreground: 160 40% 15%;
+  --primary: 122 39% 49%;
+  --primary-foreground: 0 0% 100%;
   
-  --muted: 150 15% 92%;
-  --muted-foreground: 155 10% 45%;
+  --secondary: 204 72% 74%;
+  --secondary-foreground: 204 50% 20%;
   
-  --accent: 35 80% 60%;
-  --accent-foreground: 30 40% 15%;
+  --muted: 0 0% 92%;
+  --muted-foreground: 0 0% 45%;
+  
+  --accent: 45 100% 75%;
+  --accent-foreground: 45 60% 20%;
   
   --destructive: 0 70% 60%;
   --destructive-foreground: 0 0% 98%;
 
-  --border: 150 15% 88%;
-  --input: 150 15% 88%;
-  --ring: 155 45% 45%;
+  --border: 0 0% 88%;
+  --input: 0 0% 88%;
+  --ring: 122 39% 49%;
   
   --card: 0 0% 100%;
-  --card-foreground: 160 40% 10%;
+  --card-foreground: 0 0% 20%;
   
-  --radius: 1rem;
+  --radius: 0.5rem;
 }
 
 @layer base {
@@ -59,32 +65,32 @@
   }
 }
 
-/* Dark mode */
+/* Dark mode - Gaia Commons */
 .dark {
-  --background: 160 30% 8%;
-  --foreground: 150 20% 95%;
+  --background: 120 10% 10%;
+  --foreground: 0 0% 95%;
   
-  --primary: 155 45% 45%;
-  --primary-foreground: 150 20% 98%;
+  --primary: 122 39% 45%;
+  --primary-foreground: 0 0% 100%;
   
-  --secondary: 160 20% 15%;
-  --secondary-foreground: 150 15% 90%;
+  --secondary: 204 50% 25%;
+  --secondary-foreground: 204 72% 90%;
   
-  --muted: 160 20% 15%;
-  --muted-foreground: 155 10% 60%;
+  --muted: 120 10% 18%;
+  --muted-foreground: 0 0% 65%;
   
-  --accent: 35 80% 55%;
-  --accent-foreground: 30 40% 95%;
+  --accent: 45 90% 50%;
+  --accent-foreground: 45 60% 95%;
   
   --destructive: 0 70% 55%;
   --destructive-foreground: 0 0% 98%;
 
-  --border: 160 20% 20%;
-  --input: 160 20% 20%;
-  --ring: 155 45% 45%;
+  --border: 120 10% 22%;
+  --input: 120 10% 22%;
+  --ring: 122 39% 45%;
   
-  --card: 160 25% 12%;
-  --card-foreground: 150 20% 95%;
+  --card: 120 10% 14%;
+  --card-foreground: 0 0% 95%;
 }
 
 .dark .glass-panel {
