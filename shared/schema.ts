@@ -387,6 +387,15 @@ export const miningAlternative = pgTable("mining_alternative", {
   status: text("status").notNull(),
   specialtyCrops: text("specialty_crops"),
   suppliesAllSchools: text("supplies_all_schools"),
+  // Financial & Production Fields
+  annualProductionLbs: real("annual_production_lbs"),
+  schoolDistributionLbs: real("school_distribution_lbs"),
+  excessForSaleLbs: real("excess_for_sale_lbs"),
+  wholesalePricePerLb: real("wholesale_price_per_lb"),
+  annualSalesRevenue: real("annual_sales_revenue"),
+  constructionCost: real("construction_cost"),
+  annualOperatingCost: real("annual_operating_cost"),
+  netAnnualRevenue: real("net_annual_revenue"),
 });
 
 // === INSERT SCHEMAS ===
