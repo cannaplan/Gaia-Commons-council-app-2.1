@@ -385,6 +385,8 @@ export const miningAlternative = pgTable("mining_alternative", {
   localFoodProduction: real("local_food_production").notNull(),
   co2Sequestered: real("co2_sequestered").notNull(),
   status: text("status").notNull(),
+  specialtyCrops: text("specialty_crops"),
+  suppliesAllSchools: text("supplies_all_schools"),
 });
 
 // === INSERT SCHEMAS ===

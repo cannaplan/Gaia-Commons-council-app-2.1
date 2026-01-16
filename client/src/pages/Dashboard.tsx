@@ -147,7 +147,8 @@ import {
   Info,
   HelpCircle,
   ChevronRight,
-  ChevronLeft
+  ChevronLeft,
+  Truck
 } from "lucide-react";
 import {
   Carousel,
@@ -1311,10 +1312,13 @@ export default function Dashboard() {
                           <p className="text-xs text-emerald-600 dark:text-emerald-400">${(alt.greenhouseAvgSalary / 1000).toFixed(0)}K avg · {alt.jobDuration}</p>
                         </div>
                         
-                        <div className="pt-2 border-t border-border/30">
+                        <div className="pt-2 border-t border-border/30 space-y-1">
                           <p className="text-xs text-muted-foreground"><span className="font-medium">Complex sqft:</span> {alt.greenhouseComplexSqft.toLocaleString()}</p>
                           <p className="text-xs text-muted-foreground"><span className="font-medium">School jobs:</span> {alt.schoolGreenhouseJobs}</p>
                           <p className="text-xs text-primary font-medium"><span className="font-medium">Endowment:</span> ${(alt.annualEndowmentFunding / 1000000).toFixed(1)}M/yr</p>
+                          {alt.specialtyCrops && (
+                            <p className="text-xs text-amber-700 dark:text-amber-400 font-medium mt-1"><span className="font-medium">Specialty Crops:</span> {alt.specialtyCrops}</p>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -1355,13 +1359,25 @@ export default function Dashboard() {
                   </div>
                 </div>
                 
-                <div className="mt-6 p-4 bg-emerald-50 dark:bg-emerald-950/30 rounded-xl border border-emerald-200 dark:border-emerald-800">
+                <div className="mt-6 p-4 bg-amber-50 dark:bg-amber-950/30 rounded-xl border border-amber-200 dark:border-amber-800">
+                  <div className="flex items-start gap-3">
+                    <Truck className="h-5 w-5 text-amber-600 mt-0.5 shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-amber-800 dark:text-amber-300">Specialty Crops for All 53 School Districts</h4>
+                      <p className="text-sm text-amber-700 dark:text-amber-400 mt-1">
+                        These massive regional greenhouse complexes grow specialty produce that school greenhouses don't: mushrooms, microgreens, edible flowers, year-round strawberries, specialty melons, and gourmet vegetables. All production is distributed to the 53 participating Minnesota school districts, supplementing what each school grows on-site.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mt-4 p-4 bg-emerald-50 dark:bg-emerald-950/30 rounded-xl border border-emerald-200 dark:border-emerald-800">
                   <div className="flex items-start gap-3">
                     <Leaf className="h-5 w-5 text-emerald-600 mt-0.5 shrink-0" />
                     <div>
                       <h4 className="font-semibold text-emerald-800 dark:text-emerald-300">Environmental Protection Guarantee</h4>
                       <p className="text-sm text-emerald-700 dark:text-emerald-400 mt-1">
-                        Zero risk of sulfide acid mine drainage into the Boundary Waters. Instead, {miningAlternatives.reduce((sum, a) => sum + a.co2Sequestered, 0).toLocaleString()} tons of CO2 sequestered annually, {(miningAlternatives.reduce((sum, a) => sum + a.localFoodProduction, 0) / 1000000).toFixed(1)} million lbs of local food produced, and 2.4x economic multiplier keeping dollars in these communities.
+                        Zero risk of sulfide acid mine drainage into the Boundary Waters. Instead, {miningAlternatives.reduce((sum, a) => sum + a.co2Sequestered, 0).toLocaleString()} tons of CO2 sequestered annually, {(miningAlternatives.reduce((sum, a) => sum + a.localFoodProduction, 0) / 1000000).toFixed(1)} million lbs of specialty produce for schools, and 2.4x economic multiplier keeping dollars in these communities.
                       </p>
                     </div>
                   </div>
