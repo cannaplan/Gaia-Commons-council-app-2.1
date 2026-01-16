@@ -49,7 +49,9 @@ import {
   greenhouseLocations,
   type GreenhouseLocationType, type InsertGreenhouseLocation,
   globalRegenerationRegions,
-  type GlobalRegenerationRegionType, type InsertGlobalRegenerationRegion
+  type GlobalRegenerationRegionType, type InsertGlobalRegenerationRegion,
+  mnSchoolDistricts,
+  type MnSchoolDistrictType, type InsertMnSchoolDistrict
 } from "@shared/schema";
 import { eq, asc } from "drizzle-orm";
 
@@ -136,6 +138,8 @@ export interface IStorage {
   createGreenhouseLocation(item: InsertGreenhouseLocation): Promise<GreenhouseLocationType>;
   getGlobalRegenerationRegions(): Promise<GlobalRegenerationRegionType[]>;
   createGlobalRegenerationRegion(item: InsertGlobalRegenerationRegion): Promise<GlobalRegenerationRegionType>;
+  getMnSchoolDistricts(): Promise<MnSchoolDistrictType[]>;
+  createMnSchoolDistrict(item: InsertMnSchoolDistrict): Promise<MnSchoolDistrictType>;
   isEmpty(): Promise<boolean>;
 }
 
@@ -453,6 +457,13 @@ export class DatabaseStorage implements IStorage {
   async createGlobalRegenerationRegion(item: InsertGlobalRegenerationRegion): Promise<GlobalRegenerationRegionType> {
     const [r] = await db.insert(globalRegenerationRegions).values(item).returning();
     return r;
+  }
+  async getMnSchoolDistricts(): Promise<MnSchoolDistrictType[]> {
+    return await db.select().from(mnSchoolDistricts);
+  }
+  async createMnSchoolDistrict(item: InsertMnSchoolDistrict): Promise<MnSchoolDistrictType> {
+    const [d] = await db.insert(mnSchoolDistricts).values(item).returning();
+    return d;
   }
   async isEmpty(): Promise<boolean> {
     const [stats] = await db.select().from(pilotStats).limit(1);

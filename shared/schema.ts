@@ -544,6 +544,28 @@ export const globalRegenerationRegions = pgTable("global_regeneration_regions", 
 
 export const insertGlobalRegenerationRegionSchema = createInsertSchema(globalRegenerationRegions).omit({ id: true });
 
+// Minnesota School Districts with Greenhouse Candidate Sites
+export const mnSchoolDistricts = pgTable("mn_school_districts", {
+  id: serial("id").primaryKey(),
+  districtName: text("district_name").notNull(),
+  districtNumber: text("district_number").notNull(),
+  county: text("county").notNull(),
+  latitude: real("latitude").notNull(),
+  longitude: real("longitude").notNull(),
+  totalSchools: integer("total_schools").notNull(),
+  totalEnrollment: integer("total_enrollment").notNull(),
+  candidateSites: integer("candidate_sites").notNull(),
+  avgSouthFacingScore: real("avg_south_facing_score").notNull(),
+  estimatedGreenhouseSqft: integer("estimated_greenhouse_sqft").notNull(),
+  topCandidateSchool: text("top_candidate_school").notNull(),
+  topCandidateSqft: integer("top_candidate_sqft").notNull(),
+  topCandidateScore: real("top_candidate_score").notNull(),
+  status: text("status").notNull(),
+  notes: text("notes").notNull(),
+});
+
+export const insertMnSchoolDistrictSchema = createInsertSchema(mnSchoolDistricts).omit({ id: true });
+
 export const insertPlanetaryBoundariesSchema = createInsertSchema(planetaryBoundaries).omit({ id: true });
 export const insertCalibrationTargetsSchema = createInsertSchema(calibrationTargets).omit({ id: true });
 export const insertModelMaturitySchema = createInsertSchema(modelMaturity).omit({ id: true });
@@ -596,6 +618,7 @@ export type OptimizationParamType = typeof optimizationParams.$inferSelect;
 export type SensitivityAnalysisType = typeof sensitivityAnalysis.$inferSelect;
 export type GreenhouseLocationType = typeof greenhouseLocations.$inferSelect;
 export type GlobalRegenerationRegionType = typeof globalRegenerationRegions.$inferSelect;
+export type MnSchoolDistrictType = typeof mnSchoolDistricts.$inferSelect;
 
 // Insert types
 export type InsertPilotStats = z.infer<typeof insertPilotStatsSchema>;
@@ -638,3 +661,4 @@ export type InsertOptimizationParam = z.infer<typeof insertOptimizationParamsSch
 export type InsertSensitivityAnalysis = z.infer<typeof insertSensitivityAnalysisSchema>;
 export type InsertGreenhouseLocation = z.infer<typeof insertGreenhouseLocationSchema>;
 export type InsertGlobalRegenerationRegion = z.infer<typeof insertGlobalRegenerationRegionSchema>;
+export type InsertMnSchoolDistrict = z.infer<typeof insertMnSchoolDistrictSchema>;

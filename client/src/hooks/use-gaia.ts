@@ -493,3 +493,15 @@ export function useGlobalRegenerationRegions() {
     },
   });
 }
+
+// MN School Districts (Interactive Map)
+export function useMnSchoolDistricts() {
+  return useQuery({
+    queryKey: [api.mnSchoolDistricts.list.path],
+    queryFn: async () => {
+      const res = await fetch(api.mnSchoolDistricts.list.path);
+      if (!res.ok) throw new Error("Failed to fetch MN school districts");
+      return api.mnSchoolDistricts.list.responses[200].parse(await res.json());
+    },
+  });
+}
