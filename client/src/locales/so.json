@@ -1,0 +1,139 @@
+{
+  "common": {
+    "loading": "Waa la soo dejinayaa...",
+    "error": "Khalad",
+    "save": "Keydi",
+    "cancel": "Jooji",
+    "submit": "Gudbi",
+    "close": "Xir",
+    "back": "Dib u laabo",
+    "next": "Xiga",
+    "search": "Raadi",
+    "filter": "Shaandhayn",
+    "export": "Dhoofin",
+    "print": "Daabac",
+    "share": "La wadaag",
+    "download": "Soo dejiso",
+    "viewAll": "Arag Dhammaan",
+    "learnMore": "Wax Badan Baro"
+  },
+  "nav": {
+    "dashboard": "Guddiga Maamulka",
+    "pilotProgram": "Barnaamijka Tijaabada",
+    "statewide": "Gobolka Oo Dhan",
+    "national": "Qaranka",
+    "global": "Caalamka",
+    "clusterBuilder": "Dhisaha Kooxda",
+    "miningAlternative": "Beddelka Maamulka",
+    "mnSchoolDistricts": "Degmooyinka Dugsiyada MN",
+    "curriculum": "Manhajka K-12",
+    "endowment": "Maalgelinta",
+    "timeline": "Wakhtiga",
+    "settings": "Dejinta"
+  },
+  "dashboard": {
+    "title": "Guddiga Golaha Gaia Commons",
+    "subtitle": "Hal Cod, Si Daa'im Loo Quudiyo - Doorashada 2026",
+    "overview": "Guud ahaan",
+    "metrics": "Cabbirrada Muhiimka",
+    "recentUpdates": "Cusbooneysiinta Dhow"
+  },
+  "pilot": {
+    "title": "Barnaamijka Tijaabada Minnesota",
+    "students": "Ardayda La Diiwaangeliyey",
+    "schools": "Dugsiyada Wadajirka",
+    "sqft": "Fuutada Laba jibaaran ee Beeraha Dahab",
+    "status": "Xaaladda Barnaamijka",
+    "description": "Shabakadda beeraha dahab ee dugsiyada oo quudinaya ardayda Minnesota oo dhan"
+  },
+  "statewide": {
+    "title": "Balaadhinta Gobolka",
+    "districts": "Degmooyinka Dugsiyada",
+    "coverage": "Daboolida Gobolka",
+    "jobs": "Shaqooyinka La Abuuray",
+    "production": "Wax Soo Saarka Sanadlaha"
+  },
+  "national": {
+    "title": "Geynta Qaranka",
+    "states": "Gobolada Ka Qayb Galaya",
+    "students": "Ardayda La Quudiyey",
+    "greenhouses": "Xarumaha Beeraha Dahab",
+    "impact": "Saamaynta Dhaqaalaha"
+  },
+  "global": {
+    "title": "Dib u Soo Celinta Caalamiga",
+    "regions": "Gobollada Firfircoon",
+    "countries": "Wadamada",
+    "carbonOffset": "Kaarboonka La Qabsaday",
+    "peopleFed": "Dadka La Quudiyey"
+  },
+  "miningAlternative": {
+    "title": "Beddelka Macdanta Twin Metals",
+    "subtitle": "Ilaalinta Boundary Waters Iyada Oo Loo Marayo Wax Soo Saarka Cuntada",
+    "comparison": "Barbar Dhigga Shaqooyinka",
+    "miningJobs": "Shaqooyinka Macdanta (Ku Meel Gaar)",
+    "greenhouseJobs": "Shaqooyinka Beeraha Dahab (Joogto)",
+    "years": "sano kadib wuu dhammaan",
+    "permanent": "Joogto - Maalgelinta Dawladda",
+    "communities": "Bulshooyinka Waqooyiga MN",
+    "totalJobs": "Wadarta Shaqooyinka Joogtada",
+    "production": "Wax Soo Saarka Sanadlaha",
+    "revenue": "Dakhliga Sanadlaha",
+    "environmentalRisk": "Khatarta Deegaanka",
+    "boundaryWatersImpact": "Saamaynta Boundary Waters"
+  },
+  "clusterBuilder": {
+    "title": "Dhisaha Kooxda",
+    "subtitle": "Naqshadeeyso Barnaamijkaaga Tijaabada Beeraha Dahab",
+    "step1": "Xulo Dugsiyada",
+    "step2": "Dooro Wax Soo Saarka",
+    "step3": "Dib u Eeg Cabbirrada",
+    "step4": "Samee Soo Jeedinta",
+    "selectedSchools": "Dugsiyada La Xushay",
+    "produceVarieties": "Noocyada Wax Soo Saarka",
+    "estimatedCost": "Qiimaha La Qiyaasay",
+    "jobsCreated": "Shaqooyinka La Abuuray",
+    "studentsServed": "Ardayda La Adeegay"
+  },
+  "curriculum": {
+    "title": "Isku Dhafka Manhajka K-12",
+    "gradeLevel": "Heerka Fasalka",
+    "unit": "Qaybta",
+    "objectives": "Hadafyada Barashada",
+    "activities": "Hawlaha",
+    "standards": "Heerarka Tacliinta"
+  },
+  "endowment": {
+    "title": "Maalgelinta Dawladda",
+    "totalSize": "Wadarta Cabbirka Maalgelinta",
+    "annualDistribution": "Qaybinta Sanadlaha",
+    "fundingSources": "Ilaha Maalgelinta",
+    "sustainability": "Joogtaynta Dhaqaalaha"
+  },
+  "districts": {
+    "title": "Degmooyinka Dugsiyada Minnesota",
+    "totalDistricts": "Wadarta Degmooyinka",
+    "activeSites": "Goobaha Firfircoon",
+    "highPriority": "Mudnaanta Sare",
+    "tribalCommunities": "Bulshooyinka Qabiilka",
+    "enrollment": "Wadarta Diiwaangelinta",
+    "greenhouseSqft": "Fuutada Beeraha Dahab",
+    "distributionJobs": "Shaqooyinka Qaybinta",
+    "receivingLbs": "Wax Soo Saarka Sanadlaha (lbs)"
+  },
+  "footer": {
+    "copyright": "Golaha Gaia Commons",
+    "privacyPolicy": "Siyaasadda Arrimaha Gaarka",
+    "terms": "Shuruudaha Adeegga",
+    "contact": "Nala Soo Xiriir"
+  },
+  "theme": {
+    "light": "Iftiinka",
+    "dark": "Madow",
+    "system": "Nidaamka"
+  },
+  "language": {
+    "select": "Dooro Luuqadda",
+    "current": "Luuqadda Hadda"
+  }
+}

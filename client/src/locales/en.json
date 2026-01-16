@@ -1,0 +1,139 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "print": "Print",
+    "share": "Share",
+    "download": "Download",
+    "viewAll": "View All",
+    "learnMore": "Learn More"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "pilotProgram": "Pilot Program",
+    "statewide": "Statewide",
+    "national": "National",
+    "global": "Global",
+    "clusterBuilder": "Cluster Builder",
+    "miningAlternative": "Mining Alternative",
+    "mnSchoolDistricts": "MN School Districts",
+    "curriculum": "K-12 Curriculum",
+    "endowment": "Endowment",
+    "timeline": "Timeline",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "title": "Gaia Commons Council Dashboard",
+    "subtitle": "One Vote, Forever Fed - 2026 Ballot Initiative",
+    "overview": "Overview",
+    "metrics": "Key Metrics",
+    "recentUpdates": "Recent Updates"
+  },
+  "pilot": {
+    "title": "Minnesota Pilot Program",
+    "students": "Students Enrolled",
+    "schools": "Partner Schools",
+    "sqft": "Greenhouse Square Feet",
+    "status": "Program Status",
+    "description": "School-integrated greenhouse network feeding students across Minnesota"
+  },
+  "statewide": {
+    "title": "Statewide Expansion",
+    "districts": "School Districts",
+    "coverage": "State Coverage",
+    "jobs": "Jobs Created",
+    "production": "Annual Production"
+  },
+  "national": {
+    "title": "National Deployment",
+    "states": "States Participating",
+    "students": "Students Fed",
+    "greenhouses": "Greenhouse Facilities",
+    "impact": "Economic Impact"
+  },
+  "global": {
+    "title": "Global Regeneration",
+    "regions": "Active Regions",
+    "countries": "Countries",
+    "carbonOffset": "Carbon Sequestered",
+    "peopleFed": "People Fed"
+  },
+  "miningAlternative": {
+    "title": "Twin Metals Mining Alternative",
+    "subtitle": "Boundary Waters Protection Through Sustainable Food Production",
+    "comparison": "Jobs Comparison",
+    "miningJobs": "Mining Jobs (Temporary)",
+    "greenhouseJobs": "Greenhouse Jobs (Permanent)",
+    "years": "years then depleted",
+    "permanent": "Permanent - Endowment Funded",
+    "communities": "Northern MN Communities",
+    "totalJobs": "Total Permanent Jobs",
+    "production": "Annual Production",
+    "revenue": "Annual Revenue",
+    "environmentalRisk": "Environmental Risk",
+    "boundaryWatersImpact": "Boundary Waters Impact"
+  },
+  "clusterBuilder": {
+    "title": "Cluster Builder",
+    "subtitle": "Design Your Custom Greenhouse Pilot Program",
+    "step1": "Select Schools",
+    "step2": "Choose Produce",
+    "step3": "Review Metrics",
+    "step4": "Generate Proposal",
+    "selectedSchools": "Selected Schools",
+    "produceVarieties": "Produce Varieties",
+    "estimatedCost": "Estimated Cost",
+    "jobsCreated": "Jobs Created",
+    "studentsServed": "Students Served"
+  },
+  "curriculum": {
+    "title": "K-12 Curriculum Integration",
+    "gradeLevel": "Grade Level",
+    "unit": "Unit",
+    "objectives": "Learning Objectives",
+    "activities": "Activities",
+    "standards": "Academic Standards"
+  },
+  "endowment": {
+    "title": "Endowment Funding",
+    "totalSize": "Total Endowment Size",
+    "annualDistribution": "Annual Distribution",
+    "fundingSources": "Funding Sources",
+    "sustainability": "Financial Sustainability"
+  },
+  "districts": {
+    "title": "Minnesota School Districts",
+    "totalDistricts": "Total Districts",
+    "activeSites": "Active Sites",
+    "highPriority": "High Priority",
+    "tribalCommunities": "Tribal Communities",
+    "enrollment": "Total Enrollment",
+    "greenhouseSqft": "Greenhouse Sq Ft",
+    "distributionJobs": "Distribution Jobs",
+    "receivingLbs": "Annual Produce (lbs)"
+  },
+  "footer": {
+    "copyright": "Gaia Commons Council",
+    "privacyPolicy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contact": "Contact Us"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "language": {
+    "select": "Select Language",
+    "current": "Current Language"
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "submit": "Enviar",
+    "close": "Cerrar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "export": "Exportar",
+    "print": "Imprimir",
+    "share": "Compartir",
+    "download": "Descargar",
+    "viewAll": "Ver Todo",
+    "learnMore": "Más Información"
+  },
+  "nav": {
+    "dashboard": "Panel de Control",
+    "pilotProgram": "Programa Piloto",
+    "statewide": "Estatal",
+    "national": "Nacional",
+    "global": "Global",
+    "clusterBuilder": "Constructor de Grupos",
+    "miningAlternative": "Alternativa Minera",
+    "mnSchoolDistricts": "Distritos Escolares de MN",
+    "curriculum": "Currículo K-12",
+    "endowment": "Dotación",
+    "timeline": "Línea de Tiempo",
+    "settings": "Configuración"
+  },
+  "dashboard": {
+    "title": "Panel del Consejo Gaia Commons",
+    "subtitle": "Un Voto, Alimentados Para Siempre - Iniciativa de Votación 2026",
+    "overview": "Resumen",
+    "metrics": "Métricas Clave",
+    "recentUpdates": "Actualizaciones Recientes"
+  },
+  "pilot": {
+    "title": "Programa Piloto de Minnesota",
+    "students": "Estudiantes Inscritos",
+    "schools": "Escuelas Asociadas",
+    "sqft": "Pies Cuadrados de Invernadero",
+    "status": "Estado del Programa",
+    "description": "Red de invernaderos integrada en escuelas alimentando estudiantes en todo Minnesota"
+  },
+  "statewide": {
+    "title": "Expansión Estatal",
+    "districts": "Distritos Escolares",
+    "coverage": "Cobertura Estatal",
+    "jobs": "Empleos Creados",
+    "production": "Producción Anual"
+  },
+  "national": {
+    "title": "Despliegue Nacional",
+    "states": "Estados Participantes",
+    "students": "Estudiantes Alimentados",
+    "greenhouses": "Instalaciones de Invernadero",
+    "impact": "Impacto Económico"
+  },
+  "global": {
+    "title": "Regeneración Global",
+    "regions": "Regiones Activas",
+    "countries": "Países",
+    "carbonOffset": "Carbono Secuestrado",
+    "peopleFed": "Personas Alimentadas"
+  },
+  "miningAlternative": {
+    "title": "Alternativa a la Minería Twin Metals",
+    "subtitle": "Protección de Boundary Waters Mediante Producción Alimentaria Sostenible",
+    "comparison": "Comparación de Empleos",
+    "miningJobs": "Empleos Mineros (Temporales)",
+    "greenhouseJobs": "Empleos de Invernadero (Permanentes)",
+    "years": "años luego agotado",
+    "permanent": "Permanente - Financiado por Dotación",
+    "communities": "Comunidades del Norte de MN",
+    "totalJobs": "Total de Empleos Permanentes",
+    "production": "Producción Anual",
+    "revenue": "Ingresos Anuales",
+    "environmentalRisk": "Riesgo Ambiental",
+    "boundaryWatersImpact": "Impacto en Boundary Waters"
+  },
+  "clusterBuilder": {
+    "title": "Constructor de Grupos",
+    "subtitle": "Diseña Tu Programa Piloto de Invernadero Personalizado",
+    "step1": "Seleccionar Escuelas",
+    "step2": "Elegir Productos",
+    "step3": "Revisar Métricas",
+    "step4": "Generar Propuesta",
+    "selectedSchools": "Escuelas Seleccionadas",
+    "produceVarieties": "Variedades de Productos",
+    "estimatedCost": "Costo Estimado",
+    "jobsCreated": "Empleos Creados",
+    "studentsServed": "Estudiantes Atendidos"
+  },
+  "curriculum": {
+    "title": "Integración Curricular K-12",
+    "gradeLevel": "Nivel de Grado",
+    "unit": "Unidad",
+    "objectives": "Objetivos de Aprendizaje",
+    "activities": "Actividades",
+    "standards": "Estándares Académicos"
+  },
+  "endowment": {
+    "title": "Financiamiento de Dotación",
+    "totalSize": "Tamaño Total de Dotación",
+    "annualDistribution": "Distribución Anual",
+    "fundingSources": "Fuentes de Financiamiento",
+    "sustainability": "Sostenibilidad Financiera"
+  },
+  "districts": {
+    "title": "Distritos Escolares de Minnesota",
+    "totalDistricts": "Total de Distritos",
+    "activeSites": "Sitios Activos",
+    "highPriority": "Alta Prioridad",
+    "tribalCommunities": "Comunidades Tribales",
+    "enrollment": "Inscripción Total",
+    "greenhouseSqft": "Pies Cuadrados de Invernadero",
+    "distributionJobs": "Empleos de Distribución",
+    "receivingLbs": "Productos Anuales (lbs)"
+  },
+  "footer": {
+    "copyright": "Consejo Gaia Commons",
+    "privacyPolicy": "Política de Privacidad",
+    "terms": "Términos de Servicio",
+    "contact": "Contáctenos"
+  },
+  "theme": {
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Sistema"
+  },
+  "language": {
+    "select": "Seleccionar Idioma",
+    "current": "Idioma Actual"
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "common": {
+    "loading": "Tab tom load...",
+    "error": "Tsis zoo",
+    "save": "Txuag",
+    "cancel": "Tso tseg",
+    "submit": "Xa",
+    "close": "Kaw",
+    "back": "Rov qab",
+    "next": "Tom ntej",
+    "search": "Nrhiav",
+    "filter": "Lim",
+    "export": "Export",
+    "print": "Luam tawm",
+    "share": "Qhia",
+    "download": "Download",
+    "viewAll": "Saib Tag Nrho",
+    "learnMore": "Kawm Ntxiv"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "pilotProgram": "Kev Pib Sim",
+    "statewide": "Thoob Xeev",
+    "national": "Thoob Teb Chaws",
+    "global": "Thoob Ntiaj Teb",
+    "clusterBuilder": "Tsim Pab Pawg",
+    "miningAlternative": "Lwm Txoj Kev Mining",
+    "mnSchoolDistricts": "MN Cheeb Tsam Tsev Kawm Ntawv",
+    "curriculum": "K-12 Kev Kawm",
+    "endowment": "Peev Nyiaj",
+    "timeline": "Lub Sij Hawm",
+    "settings": "Chaw Teeb"
+  },
+  "dashboard": {
+    "title": "Gaia Commons Council Dashboard",
+    "subtitle": "Ib Pov Npav, Noj Mus Li - 2026 Ballot Initiative",
+    "overview": "Overview",
+    "metrics": "Cov Leb Tseem Ceeb",
+    "recentUpdates": "Qhov Tshiab Kawg"
+  },
+  "pilot": {
+    "title": "Minnesota Kev Pib Sim",
+    "students": "Cov Tub Ntxhais Kawm",
+    "schools": "Cov Tsev Kawm Ntawv Koom",
+    "sqft": "Square Feet ntawm Greenhouse",
+    "status": "Qhov Xwm Txheej",
+    "description": "Lub network ntawm greenhouse hauv tsev kawm ntawv pub cov tub ntxhais kawm thoob plaws Minnesota"
+  },
+  "statewide": {
+    "title": "Nthuav Thoob Xeev",
+    "districts": "Cheeb Tsam Tsev Kawm Ntawv",
+    "coverage": "Kev Them Thoob Xeev",
+    "jobs": "Hauj Lwm Tau Tsim",
+    "production": "Kev Tsim Txhua Xyoo"
+  },
+  "national": {
+    "title": "Nthuav Thoob Teb Chaws",
+    "states": "Cov Xeev Koom",
+    "students": "Cov Tub Ntxhais Kawm Tau Noj",
+    "greenhouses": "Cov Chaw Greenhouse",
+    "impact": "Kev Cuam Tshuam Nyiaj Txiag"
+  },
+  "global": {
+    "title": "Kev Rov Tsim Thoob Ntiaj Teb",
+    "regions": "Thaj Tsam Ua Haujlwm",
+    "countries": "Lub Teb Chaws",
+    "carbonOffset": "Carbon Sequestered",
+    "peopleFed": "Neeg Tau Noj"
+  },
+  "miningAlternative": {
+    "title": "Twin Metals Mining Lwm Txoj Kev",
+    "subtitle": "Tiv Thaiv Boundary Waters Los Ntawm Kev Tsim Zaub Mov",
+    "comparison": "Piv Hauj Lwm",
+    "miningJobs": "Hauj Lwm Mining (Ib Ntus)",
+    "greenhouseJobs": "Hauj Lwm Greenhouse (Mus Li)",
+    "years": "xyoo ces tas lawm",
+    "permanent": "Mus Li - Them Los Ntawm Peev Nyiaj",
+    "communities": "Northern MN Cov Zej Zog",
+    "totalJobs": "Tag Nrho Hauj Lwm Mus Li",
+    "production": "Kev Tsim Txhua Xyoo",
+    "revenue": "Nyiaj Tau Los Txhua Xyoo",
+    "environmentalRisk": "Kev Phom Sij Ib Puag Ncig",
+    "boundaryWatersImpact": "Kev Cuam Tshuam Boundary Waters"
+  },
+  "clusterBuilder": {
+    "title": "Tsim Pab Pawg",
+    "subtitle": "Tsim Koj Li Kev Pib Sim Greenhouse",
+    "step1": "Xaiv Tsev Kawm Ntawv",
+    "step2": "Xaiv Zaub",
+    "step3": "Xyuas Cov Leb",
+    "step4": "Tsim Kev Thov",
+    "selectedSchools": "Tsev Kawm Ntawv Tau Xaiv",
+    "produceVarieties": "Hom Zaub",
+    "estimatedCost": "Nqi Kwv Yees",
+    "jobsCreated": "Hauj Lwm Tau Tsim",
+    "studentsServed": "Tub Ntxhais Kawm Tau Pab"
+  },
+  "curriculum": {
+    "title": "K-12 Kev Kawm Sib Txuas",
+    "gradeLevel": "Theem Qib",
+    "unit": "Chav",
+    "objectives": "Lub Hom Phiaj Kawm",
+    "activities": "Cov Dej Num",
+    "standards": "Cov Qauv Kev Kawm"
+  },
+  "endowment": {
+    "title": "Peev Nyiaj",
+    "totalSize": "Tag Nrho Loj",
+    "annualDistribution": "Kev Faib Txhua Xyoo",
+    "fundingSources": "Cov Chaw Nyiaj Txiag",
+    "sustainability": "Kev Ruaj Khov Nyiaj Txiag"
+  },
+  "districts": {
+    "title": "Minnesota Cheeb Tsam Tsev Kawm Ntawv",
+    "totalDistricts": "Tag Nrho Cheeb Tsam",
+    "activeSites": "Cov Chaw Ua Haujlwm",
+    "highPriority": "Tseem Ceeb Heev",
+    "tribalCommunities": "Cov Zej Zog Haiv Neeg",
+    "enrollment": "Tag Nrho Sau Npe",
+    "greenhouseSqft": "Greenhouse Sq Ft",
+    "distributionJobs": "Hauj Lwm Faib Khoom",
+    "receivingLbs": "Zaub Txhua Xyoo (lbs)"
+  },
+  "footer": {
+    "copyright": "Gaia Commons Council",
+    "privacyPolicy": "Txoj Cai Ntiag Tug",
+    "terms": "Cov Cai Siv",
+    "contact": "Hu Rau Peb"
+  },
+  "theme": {
+    "light": "Ci",
+    "dark": "Tsaus",
+    "system": "System"
+  },
+  "language": {
+    "select": "Xaiv Lus",
+    "current": "Lus Tam Sim No"
+  }
+}

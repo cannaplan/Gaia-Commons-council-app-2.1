@@ -6,6 +6,14 @@ Gaia Commons Council is a full-stack dashboard application for tracking pilot pr
 
 ## Recent Changes (January 2026)
 
+- **Professional Platform Enhancements**: Transformed into a professional-grade platform with:
+  - **Multi-language Support (i18n)**: Added i18next with English, Spanish, Somali, and Hmong translations for Minnesota's diverse communities. Language selector in header. Translation files in `client/src/locales/`.
+  - **Custom Branding & Theming**: ThemeProvider with 6 color schemes (Emerald, Forest, Ocean, Sunset, Earth, Lavender) plus dark/light mode toggle. Theme persists via localStorage.
+  - **Export Functionality**: PDF export (via html2canvas + jsPDF), Excel, and CSV export utilities. Export panel component with print-optimized views.
+  - **Animated Visualizations**: AnimatedCounter component for smooth number transitions.
+  - **Engagement Features**: Newsletter signup, feedback form, and share link functionality in footer.
+  - **Mobile Optimization**: Responsive utilities and print styles in index.css.
+
 - **Twin Metals Mining Alternative Section (Updated)**: Comprehensive Boundary Waters protection feature with 5 Northern MN communities (Ely, Babbitt, Hibbing, Tower, Virginia). Now includes:
   - **Halved greenhouse sqft**: 960K total (225K Ely, 127.5K Babbitt, 375K Hibbing, 52.5K Tower, 180K Virginia)
   - **Complete financial modeling**: $85/sqft construction cost, $12/sqft/year operations, 40 lbs/sqft/year production
@@ -87,6 +95,9 @@ The `shared/` directory contains code used by both frontend and backend:
 - **Radix UI**: Accessible UI primitives (dialog, dropdown, tooltip, etc.)
 - **Framer Motion**: Animation library for React
 - **Zod**: Runtime type validation shared between client and server
+- **i18next / react-i18next**: Internationalization framework for multi-language support
+- **html2canvas / jsPDF**: PDF export functionality
+- **xlsx**: Excel export functionality
 
 ### Development Tools
 - **Vite**: Frontend build tool and dev server

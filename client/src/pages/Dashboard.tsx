@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { Header } from "@/components/Header";
 import { StatsCard, StatItem } from "@/components/StatsCard";
 import { Timeline } from "@/components/Timeline";
+import { EngagementFooter } from "@/components/EngagementPanel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tooltip as UITooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -327,7 +328,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-secondary/30 pb-20 print:bg-white">
-      <div ref={dashboardRef} className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 pt-6">
+      <div id="main-content" ref={dashboardRef} className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 pt-6">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <div className="flex items-center justify-between flex-wrap gap-4 mb-4">
             <Header />
@@ -2467,12 +2468,15 @@ export default function Dashboard() {
           </div>
         </motion.div>
 
+        {/* Engagement Section */}
+        <EngagementFooter />
+
         {/* License & Attribution Footer */}
         <motion.footer 
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
           transition={{ delay: 0.8 }} 
-          className="mt-12 pt-6 border-t border-border/30 text-center text-sm text-muted-foreground print:mt-4"
+          className="mt-8 pt-6 border-t border-border/30 text-center text-sm text-muted-foreground print:mt-4"
           data-testid="footer-license"
         >
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mb-2">

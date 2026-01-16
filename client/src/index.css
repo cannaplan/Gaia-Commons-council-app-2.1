@@ -58,3 +58,75 @@
     @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/20;
   }
 }
+
+/* Dark mode */
+.dark {
+  --background: 160 30% 8%;
+  --foreground: 150 20% 95%;
+  
+  --primary: 155 45% 45%;
+  --primary-foreground: 150 20% 98%;
+  
+  --secondary: 160 20% 15%;
+  --secondary-foreground: 150 15% 90%;
+  
+  --muted: 160 20% 15%;
+  --muted-foreground: 155 10% 60%;
+  
+  --accent: 35 80% 55%;
+  --accent-foreground: 30 40% 95%;
+  
+  --destructive: 0 70% 55%;
+  --destructive-foreground: 0 0% 98%;
+
+  --border: 160 20% 20%;
+  --input: 160 20% 20%;
+  --ring: 155 45% 45%;
+  
+  --card: 160 25% 12%;
+  --card-foreground: 150 20% 95%;
+}
+
+.dark .glass-panel {
+  @apply bg-black/30 backdrop-blur-md border border-white/10 shadow-xl shadow-black/20;
+}
+
+/* Print styles */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .print\\:hidden {
+    display: none !important;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  .card, [class*="card"] {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  
+  @page {
+    margin: 1.5cm;
+  }
+}
+
+/* Mobile-first responsive utilities */
+@layer utilities {
+  .mobile-scroll {
+    @apply overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0 md:overflow-visible;
+  }
+  
+  .mobile-stack {
+    @apply flex flex-col gap-4 sm:flex-row sm:items-center;
+  }
+  
+  .mobile-full {
+    @apply w-full sm:w-auto;
+  }
+}
