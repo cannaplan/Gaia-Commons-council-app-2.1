@@ -1424,11 +1424,27 @@ async function seedDatabase() {
       { districtName: "West St. Paul-Mendota Heights", districtNumber: "0197", county: "Dakota", latitude: 44.8833, longitude: -93.1380, totalSchools: 6, totalEnrollment: 4800, candidateSites: 4, avgSouthFacingScore: 0.84, estimatedGreenhouseSqft: 9000, topCandidateSchool: "Henry Sibley High School", topCandidateSqft: 10500, topCandidateScore: 0.89, status: "Active Planning", notes: "Pilot program partner district" }
     ];
     
+    // Calculate distribution jobs based on enrollment and add to each district
+    // Formula: 23M lbs to ~530K students = ~43 lbs/student/year
+    // Receiving coordinators: 1 per 5,000 students (min 1)
+    // Cafeteria distribution staff: 1 per 3,000 students (min 1)
     for (const district of districts) {
-      await storage.createMnSchoolDistrict(district);
+      const enrollment = district.totalEnrollment;
+      const receivingCoordinators = Math.max(1, Math.ceil(enrollment / 5000));
+      const cafeteriaDistributionStaff = Math.max(1, Math.ceil(enrollment / 3000));
+      const totalDistrictDistributionJobs = receivingCoordinators + cafeteriaDistributionStaff;
+      const annualProduceReceivedLbs = Math.round(enrollment * 43); // ~43 lbs/student/year
+      
+      await storage.createMnSchoolDistrict({
+        ...district,
+        receivingCoordinators,
+        cafeteriaDistributionStaff,
+        totalDistrictDistributionJobs,
+        annualProduceReceivedLbs
+      });
     }
     
-    console.log("MN school districts data seeded successfully");
+    console.log("MN school districts data with distribution jobs seeded successfully");
   }
 
   // Seed Mining Alternative data (Twin Metals Replacement) if empty
@@ -1471,12 +1487,17 @@ async function seedDatabase() {
         constructionCost: 19125000,        // 225K × $85
         annualOperatingCost: 2700000,      // 225K × $12
         netAnnualRevenue: 9900000,         // $12.6M - $2.7M ops
-        // Distribution Infrastructure Jobs (for 3.6M lbs excess)
+        // Distribution Infrastructure Jobs (for 3.6M lbs excess to stores/markets)
         sortingPackagingJobs: 12,          // ~1 per 300K lbs/year
         deliveryDriverJobs: 9,             // ~1 per 400K lbs/year
         warehouseLogisticsJobs: 3,         // Supervisors/coordinators
         totalDistributionJobs: 24,
-        grandTotalJobs: 319                // 295 greenhouse + 24 distribution
+        // School Distribution Jobs (for 5.4M lbs to 53 school districts)
+        schoolSortingJobs: 18,             // Sorting/packaging for schools
+        schoolDeliveryDrivers: 14,         // Refrigerated trucks to districts
+        schoolLogisticsCoordinators: 4,    // Route planning/scheduling
+        totalSchoolDistributionJobs: 36,
+        grandTotalJobs: 355                // 295 greenhouse + 24 stores + 36 schools
       },
       {
         community: "Babbitt",
@@ -1511,12 +1532,17 @@ async function seedDatabase() {
         constructionCost: 10837500,        // 127.5K × $85
         annualOperatingCost: 1530000,      // 127.5K × $12
         netAnnualRevenue: 5610000,
-        // Distribution Infrastructure Jobs (for 2.04M lbs excess)
+        // Distribution Infrastructure Jobs (for 2.04M lbs excess to stores/markets)
         sortingPackagingJobs: 7,
         deliveryDriverJobs: 5,
         warehouseLogisticsJobs: 2,
         totalDistributionJobs: 14,
-        grandTotalJobs: 179                // 165 greenhouse + 14 distribution
+        // School Distribution Jobs (for 3.06M lbs to 53 school districts)
+        schoolSortingJobs: 10,
+        schoolDeliveryDrivers: 8,
+        schoolLogisticsCoordinators: 2,
+        totalSchoolDistributionJobs: 20,
+        grandTotalJobs: 199                // 165 greenhouse + 14 stores + 20 schools
       },
       {
         community: "Hibbing",
@@ -1551,12 +1577,17 @@ async function seedDatabase() {
         constructionCost: 31875000,        // 375K × $85
         annualOperatingCost: 4500000,
         netAnnualRevenue: 16500000,
-        // Distribution Infrastructure Jobs (for 6M lbs excess - largest hub)
+        // Distribution Infrastructure Jobs (for 6M lbs excess to stores/markets - largest hub)
         sortingPackagingJobs: 20,
         deliveryDriverJobs: 15,
         warehouseLogisticsJobs: 5,
         totalDistributionJobs: 40,
-        grandTotalJobs: 525                // 485 greenhouse + 40 distribution
+        // School Distribution Jobs (for 9M lbs to 53 school districts - main hub)
+        schoolSortingJobs: 30,
+        schoolDeliveryDrivers: 23,
+        schoolLogisticsCoordinators: 7,
+        totalSchoolDistributionJobs: 60,
+        grandTotalJobs: 585                // 485 greenhouse + 40 stores + 60 schools
       },
       {
         community: "Tower",
@@ -1591,12 +1622,17 @@ async function seedDatabase() {
         constructionCost: 4462500,         // 52.5K × $85
         annualOperatingCost: 630000,
         netAnnualRevenue: 2310000,
-        // Distribution Infrastructure Jobs (for 0.84M lbs excess - smallest)
+        // Distribution Infrastructure Jobs (for 0.84M lbs excess to stores/markets - smallest)
         sortingPackagingJobs: 3,
         deliveryDriverJobs: 2,
         warehouseLogisticsJobs: 1,
         totalDistributionJobs: 6,
-        grandTotalJobs: 75                 // 69 greenhouse + 6 distribution
+        // School Distribution Jobs (for 1.26M lbs to 53 school districts)
+        schoolSortingJobs: 4,
+        schoolDeliveryDrivers: 3,
+        schoolLogisticsCoordinators: 1,
+        totalSchoolDistributionJobs: 8,
+        grandTotalJobs: 83                 // 69 greenhouse + 6 stores + 8 schools
       },
       {
         community: "Virginia",
@@ -1631,12 +1667,17 @@ async function seedDatabase() {
         constructionCost: 15300000,        // 180K × $85
         annualOperatingCost: 2160000,
         netAnnualRevenue: 7920000,
-        // Distribution Infrastructure Jobs (for 2.88M lbs excess)
+        // Distribution Infrastructure Jobs (for 2.88M lbs excess to stores/markets)
         sortingPackagingJobs: 10,
         deliveryDriverJobs: 7,
         warehouseLogisticsJobs: 3,
         totalDistributionJobs: 20,
-        grandTotalJobs: 254                // 234 greenhouse + 20 distribution
+        // School Distribution Jobs (for 4.32M lbs to 53 school districts)
+        schoolSortingJobs: 14,
+        schoolDeliveryDrivers: 11,
+        schoolLogisticsCoordinators: 3,
+        totalSchoolDistributionJobs: 28,
+        grandTotalJobs: 282                // 234 greenhouse + 20 stores + 28 schools
       }
     ];
     

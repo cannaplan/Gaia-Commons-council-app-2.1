@@ -396,11 +396,17 @@ export const miningAlternative = pgTable("mining_alternative", {
   constructionCost: real("construction_cost"),
   annualOperatingCost: real("annual_operating_cost"),
   netAnnualRevenue: real("net_annual_revenue"),
-  // Distribution Infrastructure Jobs
+  // Distribution Infrastructure Jobs (for 40% excess to stores/markets)
   sortingPackagingJobs: integer("sorting_packaging_jobs"),
   deliveryDriverJobs: integer("delivery_driver_jobs"),
   warehouseLogisticsJobs: integer("warehouse_logistics_jobs"),
   totalDistributionJobs: integer("total_distribution_jobs"),
+  // School Distribution Jobs (for 60% to 53 school districts)
+  schoolSortingJobs: integer("school_sorting_jobs"),
+  schoolDeliveryDrivers: integer("school_delivery_drivers"),
+  schoolLogisticsCoordinators: integer("school_logistics_coordinators"),
+  totalSchoolDistributionJobs: integer("total_school_distribution_jobs"),
+  // Grand totals
   grandTotalJobs: integer("grand_total_jobs"),
 });
 
@@ -606,6 +612,11 @@ export const mnSchoolDistricts = pgTable("mn_school_districts", {
   topCandidateScore: real("top_candidate_score").notNull(),
   status: text("status").notNull(),
   notes: text("notes").notNull(),
+  // Distribution receiving infrastructure per district
+  receivingCoordinators: integer("receiving_coordinators"),
+  cafeteriaDistributionStaff: integer("cafeteria_distribution_staff"),
+  totalDistrictDistributionJobs: integer("total_district_distribution_jobs"),
+  annualProduceReceivedLbs: integer("annual_produce_received_lbs"),
 });
 
 export const insertMnSchoolDistrictSchema = createInsertSchema(mnSchoolDistricts).omit({ id: true });
