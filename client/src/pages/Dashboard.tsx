@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { Link } from "wouter";
 import { Header } from "@/components/Header";
 import { StatsCard, StatItem } from "@/components/StatsCard";
 import { Timeline } from "@/components/Timeline";
@@ -482,6 +483,35 @@ export default function Dashboard() {
                       </div>
                     );
                   })}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Cluster Builder Call-to-Action (only show for pilot scale) */}
+        {selectedScale === "pilot" && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.18 }} className="mb-8">
+            <Card className="glass-panel border-primary/20 bg-gradient-to-r from-primary/5 to-emerald-500/5" data-testid="card-cluster-builder-cta">
+              <CardContent className="py-6">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="h-14 w-14 rounded-xl bg-primary/10 flex items-center justify-center">
+                      <Sprout className="h-8 w-8 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-foreground">Build Your Own Greenhouse Cluster</h3>
+                      <p className="text-muted-foreground">
+                        Design a custom pilot program for your school district with interactive metrics
+                      </p>
+                    </div>
+                  </div>
+                  <Link href="/cluster-builder">
+                    <Button size="lg" className="gap-2" data-testid="button-goto-cluster-builder">
+                      <Calculator className="h-5 w-5" />
+                      Launch Cluster Builder
+                    </Button>
+                  </Link>
                 </div>
               </CardContent>
             </Card>
