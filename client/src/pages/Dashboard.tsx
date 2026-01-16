@@ -161,6 +161,10 @@ import {
 } from "@/components/ui/carousel";
 import { InteractiveMap } from "@/components/InteractiveMap";
 import { GlobalRegenerationMap } from "@/components/GlobalRegenerationMap";
+import { QuickNav } from "@/components/QuickNav";
+import { FundingCalculator } from "@/components/FundingCalculator";
+import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { ProgressBar } from "@/components/ProgressBar";
 
 const SCALE_LABELS: Record<string, string> = {
   pilot: "Pilot (6 Schools)",
@@ -1359,6 +1363,11 @@ export default function Dashboard() {
           </motion.div>
         )}
 
+        {/* Interactive Funding Calculator */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.497 }} className="mb-8">
+          <FundingCalculator />
+        </motion.div>
+
         {/* Mining Alternative - Twin Metals Replacement */}
         {miningAlternatives && miningAlternatives.length > 0 && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4955 }} className="mb-8">
@@ -1811,46 +1820,45 @@ export default function Dashboard() {
           </motion.div>
         )}
 
-        {/* Stress Tests / Resilience */}
+        {/* Stress Tests / Resilience - Using CollapsibleSection */}
         {stressTests && stressTests.length > 0 && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.52 }} className="mb-8">
-            <Card className="glass-panel" data-testid="card-stress-tests">
-              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
-                <ShieldAlert className="h-5 w-5 text-primary" />
-                <CardTitle className="text-lg font-semibold">Financial Resilience — Stress Tests Prove Sustainability</CardTitle>
-                <Badge variant="secondary" className="ml-auto">99%+ Solvency</Badge>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground mb-4">
-                  50-year stress tests using 1926-2022 market data show resilience across bear markets, inflation surges, and combined shocks.
-                  More conservative than pension funds; tested against Great-Recession scenarios.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {stressTests.map((test) => (
-                    <div key={test.id} className="p-4 bg-muted/30 rounded-lg border border-border/50" data-testid={`stress-test-${test.id}`}>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-semibold text-foreground">{test.scenario}</span>
-                        <Badge variant="outline" className="text-xs border-emerald-500 text-emerald-700 dark:text-emerald-400">
-                          <CheckCircle2 className="h-3 w-3 mr-1" />
-                          {test.solvencyProbability}
-                        </Badge>
+            <CollapsibleSection
+              title="Financial Resilience — Stress Tests Prove Sustainability"
+              icon={<ShieldAlert className="h-5 w-5 text-primary" />}
+              badge={<Badge variant="secondary">99%+ Solvency</Badge>}
+              defaultOpen={false}
+              testId="card-stress-tests"
+            >
+              <p className="text-sm text-muted-foreground mb-4">
+                50-year stress tests using 1926-2022 market data show resilience across bear markets, inflation surges, and combined shocks.
+                More conservative than pension funds; tested against Great-Recession scenarios.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {stressTests.map((test) => (
+                  <div key={test.id} className="p-4 bg-muted/30 rounded-lg border border-border/50" data-testid={`stress-test-${test.id}`}>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-semibold text-foreground">{test.scenario}</span>
+                      <Badge variant="outline" className="text-xs border-emerald-500 text-emerald-700 dark:text-emerald-400">
+                        <CheckCircle2 className="h-3 w-3 mr-1" />
+                        {test.solvencyProbability}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-2">{test.description}</p>
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-2">
+                        <AlertTriangle className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />
+                        <p className="text-xs text-foreground"><span className="font-medium">Impact:</span> {test.impact}</p>
                       </div>
-                      <p className="text-sm text-muted-foreground mb-2">{test.description}</p>
-                      <div className="space-y-2">
-                        <div className="flex items-start gap-2">
-                          <AlertTriangle className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />
-                          <p className="text-xs text-foreground"><span className="font-medium">Impact:</span> {test.impact}</p>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <ShieldCheck className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
-                          <p className="text-xs text-foreground"><span className="font-medium">Mitigation:</span> {test.mitigation}</p>
-                        </div>
+                      <div className="flex items-start gap-2">
+                        <ShieldCheck className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
+                        <p className="text-xs text-foreground"><span className="font-medium">Mitigation:</span> {test.mitigation}</p>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                  </div>
+                ))}
+              </div>
+            </CollapsibleSection>
           </motion.div>
         )}
 
@@ -2588,6 +2596,9 @@ export default function Dashboard() {
           </p>
         </motion.footer>
       </div>
+      
+      {/* Quick Navigation Menu */}
+      <QuickNav />
     </div>
   );
 }

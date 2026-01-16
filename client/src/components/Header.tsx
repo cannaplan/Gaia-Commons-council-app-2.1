@@ -5,6 +5,9 @@ import { LanguageSelector } from "./LanguageSelector";
 import { ThemeSelector } from "./ThemeSelector";
 import { ColorSchemeSelector } from "./ColorSchemeSelector";
 import { ExportPanel } from "./ExportPanel";
+import { ShareButtons } from "./ShareButtons";
+import { PrintButton } from "./PrintView";
+import { HighContrastToggle } from "./HighContrastToggle";
 
 export function Header() {
   const { t } = useTranslation();
@@ -22,10 +25,13 @@ export function Header() {
       </div>
       
       <div className="flex items-center gap-2 flex-wrap">
+        <ShareButtons />
+        <PrintButton />
         <ExportPanel />
         <LanguageSelector />
         <ColorSchemeSelector />
         <ThemeSelector />
+        <HighContrastToggle />
         <HealthIndicator />
       </div>
     </header>

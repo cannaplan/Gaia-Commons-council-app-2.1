@@ -4,6 +4,8 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/lib/theme-context";
+import { HighContrastProvider } from "@/components/HighContrastToggle";
+import { KeyboardNavProvider } from "@/components/KeyboardNav";
 import Dashboard from "@/pages/Dashboard";
 import ClusterBuilder from "@/pages/ClusterBuilder";
 import NotFound from "@/pages/not-found";
@@ -23,10 +25,17 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
+        <HighContrastProvider>
+          <KeyboardNavProvider>
+            <TooltipProvider>
+              <a href="#main-content" className="skip-link">
+                Skip to main content
+              </a>
+              <Toaster />
+              <Router />
+            </TooltipProvider>
+          </KeyboardNavProvider>
+        </HighContrastProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
