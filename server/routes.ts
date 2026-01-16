@@ -452,6 +452,152 @@ async function seedDatabase() {
     });
   }
   
+  // Seed K-12 Curriculum if empty (detailed per-grade curriculum)
+  const curriculumData = await storage.getK12Curriculum();
+  if (curriculumData.length === 0) {
+    console.log("Seeding detailed K-12 curriculum...");
+    // Kindergarten
+    await storage.createK12Curriculum({
+      gradeRange: "K",
+      title: "Seeds & Sprouts",
+      description: "Introduction to plant life through hands-on seed planting. Students observe germination, learn plant parts (roots, stems, leaves), practice daily watering responsibility, and create plant journals with drawings. Culminates in 'Sprout Celebration' where students share their first harvest of microgreens.",
+      durationWeeks: 6,
+      standards: "NGSS: K-LS1-1 (What plants need), K-ESS2-2 (Weather patterns)"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "1",
+      title: "Garden Helpers",
+      description: "Exploring the ecosystem of helpers in our greenhouse: earthworms, beneficial insects, and pollinators. Students create 'bug hotels', learn composting basics, identify helpful vs. harmful insects, and understand the food web. Field trips to observe bees and butterflies in action.",
+      durationWeeks: 8,
+      standards: "NGSS: 1-LS1-1 (Animal survival), 1-LS3-1 (Inheritance)"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "2",
+      title: "Soil Scientists",
+      description: "Deep dive into soil health: texture, composition, and life underground. Students conduct soil tests, compare different growing mediums, learn about decomposition, and create terrariums. Introduction to the nutrient cycle through 'feeding the soil' activities with compost.",
+      durationWeeks: 8,
+      standards: "NGSS: 2-LS2-1 (Seed dispersal), 2-LS4-1 (Habitats), K-ESS3-1 (Human impact)"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "3",
+      title: "Plant Detectives",
+      description: "Scientific observation and data collection. Students maintain growth charts, measure plant height/width weekly, learn to use digital thermometers and moisture meters, create graphs of growth data, and conduct simple experiments on light and water variables.",
+      durationWeeks: 10,
+      standards: "NGSS: 3-LS1-1 (Life cycles), 3-LS4-3 (Fossils & environment)"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "4",
+      title: "Energy Explorers",
+      description: "Understanding photosynthesis and energy flow. Students measure light intensity in different greenhouse zones, track plant growth under varying light conditions, learn about solar energy and greenhouse heating, and create energy flow diagrams from sun to plate.",
+      durationWeeks: 10,
+      standards: "NGSS: 4-LS1-1 (Energy in organisms), 4-PS3-2 (Energy transfer)"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "5",
+      title: "Food Systems Analysts",
+      description: "Introduction to systems thinking through food. Students map the journey of food from seed to table, calculate food miles for imported vs. local produce, analyze grocery store produce origins, and design their ideal local food system.",
+      durationWeeks: 12,
+      standards: "NGSS: 5-LS2-1 (Matter cycling), 5-ESS3-1 (Human impact on Earth)"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "6",
+      title: "Hydroponics Engineers",
+      description: "Building and managing hydroponic systems. Students learn water chemistry (pH, EC, dissolved oxygen), build simple DWC systems, monitor nutrient solutions, troubleshoot plant health issues, and compare hydroponic vs. soil growing efficiency.",
+      durationWeeks: 14,
+      standards: "NGSS: MS-LS1-6 (Photosynthesis), MS-PS1-2 (Chemical reactions)"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "7",
+      title: "Aquaponics Masters",
+      description: "Integration of fish and plant systems. Students understand the nitrogen cycle, manage tilapia populations, monitor water quality for fish and plants, calculate feed ratios, and design balanced aquaponic ecosystems. Introduction to business basics through produce sales.",
+      durationWeeks: 16,
+      standards: "NGSS: MS-LS2-3 (Ecosystem dynamics), MS-LS2-4 (Biodiversity & ecosystem services)"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "8",
+      title: "Climate Action Scientists",
+      description: "Connecting greenhouse operations to climate science. Students calculate the carbon footprint of food production, measure CO2 sequestration in greenhouse operations, model climate scenarios using real data, and develop school-wide sustainability plans.",
+      durationWeeks: 16,
+      standards: "NGSS: MS-ESS3-3 (Human impact on climate), MS-ESS3-4 (Natural hazards)"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "9",
+      title: "Agricultural Economics",
+      description: "Business of sustainable farming. Students develop business plans for greenhouse operations, analyze profit/loss statements, understand supply chains and market dynamics, learn agricultural finance basics, and explore cooperative ownership models.",
+      durationWeeks: 18,
+      standards: "NGSS: HS-LS2-7 (Human activity & ecosystems), HS-ETS1-1 (Engineering design)"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "10",
+      title: "Food Security & Justice",
+      description: "Examining food access and equity. Students research food deserts and their causes, interview community members about food access, analyze USDA data on food insecurity, explore the history of agricultural policy, and design community food access solutions.",
+      durationWeeks: 18,
+      standards: "NGSS: HS-ESS3-1 (Resource availability), HS-ESS3-3 (Sustainability)"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "11",
+      title: "Food Policy & Advocacy",
+      description: "Civic engagement through food policy analysis. Students study Farm Bill history, analyze SNAP and school lunch programs, draft policy proposals, meet with local legislators, and learn advocacy strategies. Mock ballot initiative development and campaign planning.",
+      durationWeeks: 18,
+      standards: "NGSS: HS-ESS3-1 (Resource availability), HS-ESS3-4 (Sustainability solutions)"
+    });
+    await storage.createK12Curriculum({
+      gradeRange: "12",
+      title: "Capstone: Community Food Project",
+      description: "Year-long capstone integrating all K-12 learning. Students design, propose, and implement a community food security project. Includes grant writing, community engagement, project management, outcome measurement, and final presentation to school board and community partners. Career pathway exploration in sustainable agriculture.",
+      durationWeeks: 36,
+      standards: "NGSS: HS-LS2-7, HS-ESS3-4, HS-ETS1-3 (Integrated application)"
+    });
+  }
+  
+  // Seed Funding Sources if empty (separated billionaires from sports, updated rates)
+  const fundingData = await storage.getFundingSources();
+  if (fundingData.length === 0) {
+    console.log("Seeding funding sources with updated rates...");
+    await storage.createFundingSource({
+      sourceType: "Fortune 500",
+      description: "0.27% pre-tax profit redirect from Minnesota Fortune 500 companies",
+      targetAmount: 1890000000,
+      percentage: 0.27,
+      entities: "Target, UnitedHealth, Best Buy, 3M, General Mills, US Bancorp, Xcel Energy, CHS, Land O'Lakes, Hormel, Polaris, Fastenal, Patterson, CH Robinson, Graco, Pentair, Donaldson"
+    });
+    await storage.createFundingSource({
+      sourceType: "MN Billionaires",
+      description: "Voluntary large-gift contributions from Minnesota billionaires",
+      targetAmount: 150000000,
+      percentage: null,
+      entities: "Glen Taylor (Wolves, Lynx, Star Tribune), Whitney MacMillan (Cargill heir), Stanley Hubbard (Hubbard Broadcasting), Marilyn Carlson Nelson (Carlson Companies), Robert Carlson (Carlson Companies), Richard Schulze (Best Buy founder)"
+    });
+    await storage.createFundingSource({
+      sourceType: "Sports Franchises",
+      description: "0.27% contribution from Minnesota professional sports franchises annual revenue",
+      targetAmount: 85000000,
+      percentage: 0.27,
+      entities: "Minnesota Vikings (NFL), Minnesota Twins (MLB), Minnesota Timberwolves (NBA), Minnesota Lynx (WNBA), Minnesota Wild (NHL), Minnesota United FC (MLS), St. Paul Saints (MiLB)"
+    });
+    await storage.createFundingSource({
+      sourceType: "Data Center Giants",
+      description: "3% surcharge on major tech companies with MN data center operations",
+      targetAmount: 510000000,
+      percentage: 3.0,
+      entities: "Amazon Web Services, Microsoft Azure, Google Cloud, Meta, Apple, Equinix, Digital Realty, CyrusOne, Cologix"
+    });
+    await storage.createFundingSource({
+      sourceType: "Out-of-Country Mining",
+      description: "5% surcharge on out-of-country mining corporations operating in Minnesota",
+      targetAmount: 750000000,
+      percentage: 5.0,
+      entities: "Codelco (Chile), Antofagasta (Chile), Vale (Brazil), SQM (Chile), Glencore (Switzerland), Rio Tinto (UK/Australia), BHP (Australia), Anglo American (UK), Teck Resources (Canada)"
+    });
+    await storage.createFundingSource({
+      sourceType: "Out-of-State Corporations",
+      description: "0.5% surcharge on out-of-state corps with >$1B MN revenue",
+      targetAmount: 240000000,
+      percentage: 0.5,
+      entities: "Major insurers, banks, retailers, ag-conglomerates with significant MN presence"
+    });
+  }
+  
   if (isEmpty) {
     console.log("Seeding database with GAIA v4.1 MASTER PLATFORM data...");
     
