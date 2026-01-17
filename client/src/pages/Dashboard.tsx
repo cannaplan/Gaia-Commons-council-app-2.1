@@ -1359,6 +1359,152 @@ export default function Dashboard() {
           </motion.div>
         )}
 
+        {/* Land & Water Conservation Fund */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.462 }} className="mb-8">
+          <Card className="glass-panel border-2 border-teal-200 dark:border-teal-800" data-testid="card-land-conservation">
+            <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+              <Trees className="h-5 w-5 text-teal-600" />
+              <div>
+                <CardTitle className="text-lg font-semibold">Land & Water Conservation Fund</CardTitle>
+                <p className="text-sm text-muted-foreground mt-1">10% of annual endowment revenue dedicated to purchasing and protecting Minnesota's natural resources</p>
+              </div>
+              <Badge variant="outline" className="ml-auto bg-teal-50 dark:bg-teal-950/30 text-teal-700 dark:text-teal-300 border-teal-200 dark:border-teal-800">Perpetual Protection</Badge>
+            </CardHeader>
+            <CardContent>
+              <div className="mb-6 p-4 bg-teal-50 dark:bg-teal-950/30 rounded-xl border border-teal-200 dark:border-teal-800">
+                <div className="flex items-start gap-3">
+                  <Shield className="h-5 w-5 text-teal-600 mt-0.5 shrink-0" />
+                  <div>
+                    <h4 className="font-semibold text-teal-800 dark:text-teal-300">Why Land Protection Matters</h4>
+                    <p className="text-sm text-teal-700 dark:text-teal-400 mt-1">
+                      By dedicating 10% of annual revenue to land acquisition, the endowment builds a permanent land trust that protects forests, farmland, and waterways from development, mining, and exploitation. Once acquired, these lands are held in perpetuity — never to be sold or developed.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <div className="p-4 bg-emerald-50 dark:bg-emerald-950/30 rounded-xl border border-emerald-200 dark:border-emerald-800 text-center">
+                  <Trees className="h-8 w-8 text-emerald-600 mx-auto mb-2" />
+                  <p className="text-2xl font-bold text-emerald-800 dark:text-emerald-300">10%</p>
+                  <p className="text-sm text-emerald-700 dark:text-emerald-400 font-medium">Annual Revenue</p>
+                  <p className="text-xs text-emerald-600 dark:text-emerald-500 mt-1">~$6.3M/year at statewide scale</p>
+                </div>
+                <div className="p-4 bg-blue-50 dark:bg-blue-950/30 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
+                  <Droplets className="h-8 w-8 text-blue-600 mx-auto mb-2" />
+                  <p className="text-2xl font-bold text-blue-800 dark:text-blue-300">$315M</p>
+                  <p className="text-sm text-blue-700 dark:text-blue-400 font-medium">50-Year Acquisition</p>
+                  <p className="text-xs text-blue-600 dark:text-blue-500 mt-1">Compound growth adds land yearly</p>
+                </div>
+                <div className="p-4 bg-amber-50 dark:bg-amber-950/30 rounded-xl border border-amber-200 dark:border-amber-800 text-center">
+                  <MapPin className="h-8 w-8 text-amber-600 mx-auto mb-2" />
+                  <p className="text-2xl font-bold text-amber-800 dark:text-amber-300">100K+</p>
+                  <p className="text-sm text-amber-700 dark:text-amber-400 font-medium">Acres Protected</p>
+                  <p className="text-xs text-amber-600 dark:text-amber-500 mt-1">At $3,000/acre average</p>
+                </div>
+                <div className="p-4 bg-purple-50 dark:bg-purple-950/30 rounded-xl border border-purple-200 dark:border-purple-800 text-center">
+                  <Shield className="h-8 w-8 text-purple-600 mx-auto mb-2" />
+                  <p className="text-2xl font-bold text-purple-800 dark:text-purple-300">Forever</p>
+                  <p className="text-sm text-purple-700 dark:text-purple-400 font-medium">Protection Period</p>
+                  <p className="text-xs text-purple-600 dark:text-purple-500 mt-1">Land trust holds in perpetuity</p>
+                </div>
+              </div>
+
+              <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                <Target className="h-4 w-4 text-teal-600" /> Acquisition Priorities
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <div className="p-3 bg-muted/30 rounded-lg border border-border/50">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Trees className="h-4 w-4 text-emerald-600" />
+                    <p className="font-medium text-foreground">Forests</p>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Northern Minnesota forests, Boundary Waters buffer zones, old-growth stands, wildlife corridors</p>
+                  <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-2 font-medium">35% allocation</p>
+                </div>
+                <div className="p-3 bg-muted/30 rounded-lg border border-border/50">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Wheat className="h-4 w-4 text-amber-600" />
+                    <p className="font-medium text-foreground">Farmland</p>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Prime agricultural land, organic transition parcels, family farm preservation, regenerative agriculture sites</p>
+                  <p className="text-xs text-amber-600 dark:text-amber-400 mt-2 font-medium">30% allocation</p>
+                </div>
+                <div className="p-3 bg-muted/30 rounded-lg border border-border/50">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Droplets className="h-4 w-4 text-blue-600" />
+                    <p className="font-medium text-foreground">Waterways</p>
+                  </div>
+                  <p className="text-xs text-muted-foreground">River corridors, lake shorelines, wetlands, groundwater recharge areas, watershed headwaters</p>
+                  <p className="text-xs text-blue-600 dark:text-blue-400 mt-2 font-medium">25% allocation</p>
+                </div>
+                <div className="p-3 bg-muted/30 rounded-lg border border-border/50">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Feather className="h-4 w-4 text-purple-600" />
+                    <p className="font-medium text-foreground">Tribal Lands</p>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Support tribal land reclamation, sacred sites protection, treaty territory restoration</p>
+                  <p className="text-xs text-purple-600 dark:text-purple-400 mt-2 font-medium">10% allocation</p>
+                </div>
+              </div>
+
+              <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                <Building className="h-4 w-4 text-teal-600" /> Acquisition Sources
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div className="p-4 bg-white/50 dark:bg-black/20 rounded-lg border border-border/50">
+                  <h5 className="font-medium text-foreground mb-2 flex items-center gap-2">
+                    <Users className="h-4 w-4 text-blue-600" /> Private Landowners
+                  </h5>
+                  <ul className="space-y-1 text-xs text-muted-foreground">
+                    <li className="flex items-center gap-1"><ArrowRight className="h-3 w-3 text-blue-500" /> Willing seller negotiations</li>
+                    <li className="flex items-center gap-1"><ArrowRight className="h-3 w-3 text-blue-500" /> Conservation easement purchases</li>
+                    <li className="flex items-center gap-1"><ArrowRight className="h-3 w-3 text-blue-500" /> Estate/inheritance acquisitions</li>
+                    <li className="flex items-center gap-1"><ArrowRight className="h-3 w-3 text-blue-500" /> Farm succession programs</li>
+                  </ul>
+                  <p className="text-xs text-blue-600 dark:text-blue-400 mt-2 font-medium">~60% of acquisitions</p>
+                </div>
+                <div className="p-4 bg-white/50 dark:bg-black/20 rounded-lg border border-border/50">
+                  <h5 className="font-medium text-foreground mb-2 flex items-center gap-2">
+                    <Building2 className="h-4 w-4 text-amber-600" /> Federal Government
+                  </h5>
+                  <ul className="space-y-1 text-xs text-muted-foreground">
+                    <li className="flex items-center gap-1"><ArrowRight className="h-3 w-3 text-amber-500" /> USDA surplus property</li>
+                    <li className="flex items-center gap-1"><ArrowRight className="h-3 w-3 text-amber-500" /> BLM land transfers</li>
+                    <li className="flex items-center gap-1"><ArrowRight className="h-3 w-3 text-amber-500" /> Forest Service partnerships</li>
+                    <li className="flex items-center gap-1"><ArrowRight className="h-3 w-3 text-amber-500" /> Military base closures</li>
+                  </ul>
+                  <p className="text-xs text-amber-600 dark:text-amber-400 mt-2 font-medium">~25% of acquisitions</p>
+                </div>
+                <div className="p-4 bg-white/50 dark:bg-black/20 rounded-lg border border-border/50">
+                  <h5 className="font-medium text-foreground mb-2 flex items-center gap-2">
+                    <Scale className="h-4 w-4 text-emerald-600" /> State & County
+                  </h5>
+                  <ul className="space-y-1 text-xs text-muted-foreground">
+                    <li className="flex items-center gap-1"><ArrowRight className="h-3 w-3 text-emerald-500" /> Tax-forfeited land purchases</li>
+                    <li className="flex items-center gap-1"><ArrowRight className="h-3 w-3 text-emerald-500" /> DNR surplus properties</li>
+                    <li className="flex items-center gap-1"><ArrowRight className="h-3 w-3 text-emerald-500" /> County land sales</li>
+                    <li className="flex items-center gap-1"><ArrowRight className="h-3 w-3 text-emerald-500" /> School trust land swaps</li>
+                  </ul>
+                  <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-2 font-medium">~15% of acquisitions</p>
+                </div>
+              </div>
+
+              <div className="p-4 bg-teal-50 dark:bg-teal-950/30 rounded-xl border border-teal-200 dark:border-teal-800">
+                <div className="flex items-start gap-3">
+                  <Leaf className="h-5 w-5 text-teal-600 mt-0.5 shrink-0" />
+                  <div>
+                    <h4 className="font-semibold text-teal-800 dark:text-teal-300">Permanent Protection Guarantee</h4>
+                    <p className="text-sm text-teal-700 dark:text-teal-400 mt-1">
+                      All acquired lands are placed in a permanent land trust with legal protections preventing future sale or development. The endowment's perpetual structure means the land fund grows every year — protecting more acres as the endowment grows. Unlike government programs that can be defunded, this land protection is forever.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
         {/* Expanded Jobs: FTE + Internships + Volunteers */}
         {expandedJobs && expandedJobs.length > 0 && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.47 }} className="mb-8">
