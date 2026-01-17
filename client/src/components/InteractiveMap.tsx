@@ -11,18 +11,14 @@ import { motion, AnimatePresence } from "framer-motion";
 const geoUrl = "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
 
 const statusColors: Record<string, string> = {
-  "Operational": "#22c55e",
-  "Construction": "#f59e0b",
-  "Planning": "#3b82f6",
+  "Priority": "#ec4899",
   "High Priority": "#ec4899",
   "Active Planning": "#8b5cf6",
   "Evaluation": "#6b7280",
 };
 
 const statusBgColors: Record<string, string> = {
-  "Operational": "bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20",
-  "Construction": "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20",
-  "Planning": "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20",
+  "Priority": "bg-pink-500/10 text-pink-700 dark:text-pink-400 border-pink-500/20",
   "High Priority": "bg-pink-500/10 text-pink-700 dark:text-pink-400 border-pink-500/20",
   "Active Planning": "bg-purple-500/10 text-purple-700 dark:text-purple-400 border-purple-500/20",
   "Evaluation": "bg-gray-500/10 text-gray-700 dark:text-gray-400 border-gray-500/20",
@@ -87,15 +83,13 @@ export function InteractiveMap() {
   }, [districts, minSqft, maxSqft, minScore]);
 
   const summaryStats = useMemo(() => {
-    if (!locations) return { operational: 0, construction: 0, planning: 0, totalStudents: 0, totalFood: 0 };
+    if (!locations) return { priority: 0, totalStudents: 0, totalFood: 0 };
     
-    const operational = locations.filter(l => l.status === "Operational").length;
-    const construction = locations.filter(l => l.status === "Construction").length;
-    const planning = locations.filter(l => l.status === "Planning").length;
+    const priority = locations.filter(l => l.status === "Priority").length;
     const totalStudents = locations.reduce((sum, l) => sum + l.studentsServed, 0);
     const totalFood = locations.reduce((sum, l) => sum + l.annualFoodLbs, 0);
     
-    return { operational, construction, planning, totalStudents, totalFood };
+    return { priority, totalStudents, totalFood };
   }, [locations]);
 
   const districtStats = useMemo(() => {
@@ -169,18 +163,13 @@ export function InteractiveMap() {
           
           {viewMode === "greenhouses" ? (
             <div className="flex flex-wrap items-center gap-2">
-              <Badge variant="outline" className={statusBgColors["Operational"]}>
-                <span className="w-2 h-2 rounded-full bg-green-500 mr-1.5" />
-                {summaryStats.operational} Operational
+              <Badge variant="outline" className={statusBgColors["Priority"]}>
+                <span className="w-2 h-2 rounded-full bg-pink-500 mr-1.5" />
+                {summaryStats.priority} Priority Sites
               </Badge>
-              <Badge variant="outline" className={statusBgColors["Construction"]}>
-                <span className="w-2 h-2 rounded-full bg-amber-500 mr-1.5" />
-                {summaryStats.construction} Construction
-              </Badge>
-              <Badge variant="outline" className={statusBgColors["Planning"]}>
-                <span className="w-2 h-2 rounded-full bg-blue-500 mr-1.5" />
-                {summaryStats.planning} Planning
-              </Badge>
+              <span className="text-sm text-muted-foreground">
+                (Proposed — none built yet)
+              </span>
             </div>
           ) : (
             <div className="space-y-3">

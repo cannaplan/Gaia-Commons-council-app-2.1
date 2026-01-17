@@ -286,7 +286,7 @@ async function seedDatabase() {
       location: "Leech Lake Reservation, Minnesota",
       greenhouseCount: "5-10",
       jobsCreated: "50-100",
-      hourlyWage: "$18-24/hr",
+      hourlyWage: "$25-32/hr + full benefits",
       firstHarvest: "Fall 2027",
       schoolsServed: "Cass Lake-Bena, Bug-O-Nay-Ge-Shig, Head Start",
       studentsServed: 1500,
@@ -905,13 +905,14 @@ async function seedDatabase() {
     }
 
     // Seed Expanded Jobs Data (FTE + Internships + Volunteers from ballot deck)
+    // Wages match or exceed Twin Metals mining wages (~$25-30/hr)
     await storage.createExpandedJobs({
       scale: "pilot",
       fteJobs: 36,
       studentInternships: 144,
       volunteerPositions: 66,
-      hourlyWage: 15,
-      directWages: 1420000,
+      hourlyWage: 28,
+      directWages: 2100000,
       economicMultiplier: 2.4
     });
     await storage.createExpandedJobs({
@@ -919,8 +920,8 @@ async function seedDatabase() {
       fteJobs: 1430,
       studentInternships: 6600,
       volunteerPositions: 3025,
-      hourlyWage: 15,
-      directWages: 65000000,
+      hourlyWage: 28,
+      directWages: 83200000,
       economicMultiplier: 2.4
     });
     await storage.createExpandedJobs({
@@ -928,8 +929,8 @@ async function seedDatabase() {
       fteJobs: 67500,
       studentInternships: 312000,
       volunteerPositions: 143000,
-      hourlyWage: 15,
-      directWages: 3070000000,
+      hourlyWage: 26,
+      directWages: 3650000000,
       economicMultiplier: 2.4
     });
     await storage.createExpandedJobs({
@@ -937,8 +938,8 @@ async function seedDatabase() {
       fteJobs: 520000,
       studentInternships: 2400000,
       volunteerPositions: 1100000,
-      hourlyWage: 12,
-      directWages: 18700000000,
+      hourlyWage: 22,
+      directWages: 23800000000,
       economicMultiplier: 2.2
     });
 
@@ -1039,7 +1040,13 @@ async function seedDatabase() {
       standards: "NGSS: HS-LS2-7, HS-ESS3-4, HS-ETS1-3 (Integrated application)"
     });
 
-    // Seed Coalition Partners (from ballot deck slide 11)
+    console.log("K-12 curriculum seeded successfully");
+  }
+
+  // Seed Coalition Partners (independent block)
+  const coalitionPartnersData = await storage.getCoalitionPartners();
+  if (coalitionPartnersData.length === 0) {
+    console.log("Seeding coalition partners...");
     // Tier 1 - Essential
     await storage.createCoalitionPartner({ tier: 1, name: "Minnesota Education Association", category: "Labor", memberCount: 200000, focus: "Teacher support, curriculum" });
     await storage.createCoalitionPartner({ tier: 1, name: "Minnesota AFL-CIO", category: "Labor", memberCount: 300000, focus: "Job creation, fair wages" });
@@ -1050,57 +1057,26 @@ async function seedDatabase() {
     await storage.createCoalitionPartner({ tier: 2, name: "Minnesota Council of Churches", category: "Faith", memberCount: 50000, focus: "Community outreach" });
     await storage.createCoalitionPartner({ tier: 2, name: "University of Minnesota", category: "Academic", memberCount: 70000, focus: "Research, ag extension" });
     await storage.createCoalitionPartner({ tier: 2, name: "Mayo Clinic", category: "Health", memberCount: 73000, focus: "Nutrition, public health" });
-    // Tier 3 - Business
+    // Tier 3 - Business (Top 10 Minnesota-Headquartered Corporations + Key Partners)
+    await storage.createCoalitionPartner({ tier: 3, name: "UnitedHealth Group", category: "Healthcare", memberCount: null, focus: "Employee wellness, nutrition programs" });
     await storage.createCoalitionPartner({ tier: 3, name: "Target Corporation", category: "Retail", memberCount: null, focus: "Corporate sponsorship, supply chain" });
     await storage.createCoalitionPartner({ tier: 3, name: "Cargill", category: "Agriculture", memberCount: null, focus: "Ag technology, distribution" });
+    await storage.createCoalitionPartner({ tier: 3, name: "Best Buy", category: "Technology", memberCount: null, focus: "Greenhouse automation, tech systems" });
+    await storage.createCoalitionPartner({ tier: 3, name: "U.S. Bancorp", category: "Finance", memberCount: null, focus: "Endowment management, financing" });
     await storage.createCoalitionPartner({ tier: 3, name: "3M Company", category: "Manufacturing", memberCount: null, focus: "Sustainability tech, materials" });
+    await storage.createCoalitionPartner({ tier: 3, name: "General Mills", category: "Food", memberCount: null, focus: "Food production, nutrition education" });
+    await storage.createCoalitionPartner({ tier: 3, name: "C.H. Robinson", category: "Logistics", memberCount: null, focus: "Distribution, supply chain logistics" });
+    await storage.createCoalitionPartner({ tier: 3, name: "Ameriprise Financial", category: "Finance", memberCount: null, focus: "Investment partnerships, funding" });
+    await storage.createCoalitionPartner({ tier: 3, name: "Ecolab", category: "Environmental", memberCount: null, focus: "Water systems, hygiene solutions" });
+    await storage.createCoalitionPartner({ tier: 3, name: "CHS Inc.", category: "Agriculture", memberCount: null, focus: "Agricultural cooperative, grain systems" });
     await storage.createCoalitionPartner({ tier: 3, name: "Minneapolis Chamber of Commerce", category: "Business", memberCount: 1200, focus: "Economic development" });
+    console.log("Coalition partners seeded successfully");
+  }
 
-    // Seed Funding Sources (from ballot deck slides 2, 5.5, 6) - Updated rates
-    await storage.createFundingSource({
-      sourceType: "Fortune 500",
-      description: "0.27% pre-tax profit redirect from Minnesota Fortune 500 companies",
-      targetAmount: 1890000000,
-      percentage: 0.27,
-      entities: "Target, UnitedHealth, Best Buy, 3M, General Mills, US Bancorp, Xcel Energy, CHS, Land O'Lakes, Hormel, Polaris, Fastenal, Patterson, CH Robinson, Graco, Pentair, Donaldson"
-    });
-    await storage.createFundingSource({
-      sourceType: "MN Billionaires",
-      description: "Voluntary large-gift contributions from Minnesota billionaires",
-      targetAmount: 150000000,
-      percentage: null,
-      entities: "Glen Taylor (Wolves, Lynx, Star Tribune), Whitney MacMillan (Cargill heir), Stanley Hubbard (Hubbard Broadcasting), Marilyn Carlson Nelson (Carlson Companies), Robert Carlson (Carlson Companies), Richard Schulze (Best Buy founder)"
-    });
-    await storage.createFundingSource({
-      sourceType: "Sports Franchises",
-      description: "0.27% contribution from Minnesota professional sports franchises annual revenue",
-      targetAmount: 85000000,
-      percentage: 0.27,
-      entities: "Minnesota Vikings (NFL), Minnesota Twins (MLB), Minnesota Timberwolves (NBA), Minnesota Lynx (WNBA), Minnesota Wild (NHL), Minnesota United FC (MLS), St. Paul Saints (MiLB)"
-    });
-    await storage.createFundingSource({
-      sourceType: "Data Center Giants",
-      description: "3% surcharge on major tech companies with MN data center operations",
-      targetAmount: 510000000,
-      percentage: 3.0,
-      entities: "Amazon Web Services, Microsoft Azure, Google Cloud, Meta, Apple, Equinix, Digital Realty, CyrusOne, Cologix"
-    });
-    await storage.createFundingSource({
-      sourceType: "Out-of-Country Mining",
-      description: "5% surcharge on out-of-country mining corporations operating in Minnesota",
-      targetAmount: 750000000,
-      percentage: 5.0,
-      entities: "Codelco (Chile), Antofagasta (Chile), Vale (Brazil), SQM (Chile), Glencore (Switzerland), Rio Tinto (UK/Australia), BHP (Australia), Anglo American (UK), Teck Resources (Canada)"
-    });
-    await storage.createFundingSource({
-      sourceType: "Out-of-State Corporations",
-      description: "0.5% surcharge on out-of-state corps with >$1B MN revenue",
-      targetAmount: 240000000,
-      percentage: 0.5,
-      entities: "Major insurers, banks, retailers, ag-conglomerates with significant MN presence"
-    });
-
-    // Seed Transparency Features (from Accountability slide)
+  // Seed Transparency Features (independent block)
+  const transparencyData = await storage.getTransparencyFeatures();
+  if (transparencyData.length === 0) {
+    console.log("Seeding transparency features...");
     await storage.createTransparencyFeature({
       category: "Radical Visibility",
       feature: "Real-Time Dashboard",
@@ -1136,8 +1112,13 @@ async function seedDatabase() {
       whoSees: "Voters, citizens, media, attorney general",
       fraudPrevention: "Can't control board indefinitely or hide governance decisions"
     });
+    console.log("Transparency features seeded successfully");
+  }
 
-    // Seed Accountability Mechanisms (from Accountability slide)
+  // Seed Accountability Mechanisms (independent block)
+  const accountabilityData = await storage.getAccountabilityMechanisms();
+  if (accountabilityData.length === 0) {
+    console.log("Seeding accountability mechanisms...");
     await storage.createAccountabilityMechanism({
       mechanism: "Big 4 Independent Audit",
       description: "Full financial and compliance audit by Deloitte, EY, PwC, or KPMG",
@@ -1173,8 +1154,7 @@ async function seedDatabase() {
       whoAudits: "Big 4 + Stewards + Community + Media",
       visibility: "Discovery is inevitable - public shame and legal prosecution for fraud"
     });
-
-    console.log("Database seeded successfully with GAIA v4.1 MASTER PLATFORM data + expanded ballot initiative data + accountability framework");
+    console.log("Accountability mechanisms seeded successfully");
   }
 
   // Seed Calibration & Validation data if empty
@@ -1305,25 +1285,26 @@ async function seedDatabase() {
   if (greenhouseData.length === 0) {
     console.log("Seeding greenhouse locations data...");
     
+    // All locations show "Priority" - nothing has been built yet, these are all proposed sites
     const locations = [
-      { name: "Saint Paul Central", congressionalDistrict: "MN-04", schoolDistrict: "Saint Paul Public Schools", latitude: 44.9537, longitude: -93.0900, greenhouseCount: 3, studentsServed: 12500, annualFoodLbs: 225000, produceTypes: "Lettuce, Tomatoes, Peppers, Herbs, Spinach", sqft: 45000, status: "Operational" },
-      { name: "Minneapolis North", congressionalDistrict: "MN-05", schoolDistrict: "Minneapolis Public Schools", latitude: 44.9778, longitude: -93.2650, greenhouseCount: 4, studentsServed: 18200, annualFoodLbs: 324000, produceTypes: "Kale, Cucumbers, Carrots, Beans, Tomatoes", sqft: 60000, status: "Operational" },
-      { name: "Mendota Heights Hub", congressionalDistrict: "MN-04", schoolDistrict: "West St. Paul-Mendota Heights", latitude: 44.8833, longitude: -93.1380, greenhouseCount: 2, studentsServed: 5800, annualFoodLbs: 108000, produceTypes: "Microgreens, Lettuce, Herbs, Strawberries", sqft: 30000, status: "Operational" },
-      { name: "Duluth Lakeside", congressionalDistrict: "MN-08", schoolDistrict: "Duluth Public Schools", latitude: 46.7867, longitude: -92.1005, greenhouseCount: 3, studentsServed: 9200, annualFoodLbs: 162000, produceTypes: "Cold-hardy greens, Root vegetables, Herbs", sqft: 42000, status: "Operational" },
-      { name: "Rochester Medical District", congressionalDistrict: "MN-01", schoolDistrict: "Rochester Public Schools", latitude: 44.0121, longitude: -92.4802, greenhouseCount: 5, studentsServed: 22400, annualFoodLbs: 405000, produceTypes: "Tomatoes, Peppers, Lettuce, Spinach, Herbs, Cucumbers", sqft: 75000, status: "Operational" },
-      { name: "Bloomington South", congressionalDistrict: "MN-03", schoolDistrict: "Bloomington Public Schools", latitude: 44.8408, longitude: -93.2983, greenhouseCount: 3, studentsServed: 11800, annualFoodLbs: 216000, produceTypes: "Lettuce, Tomatoes, Peppers, Microgreens", sqft: 48000, status: "Operational" },
-      { name: "Eden Prairie West", congressionalDistrict: "MN-03", schoolDistrict: "Eden Prairie Schools", latitude: 44.8547, longitude: -93.4708, greenhouseCount: 2, studentsServed: 8900, annualFoodLbs: 162000, produceTypes: "Greens, Tomatoes, Herbs, Strawberries", sqft: 36000, status: "Operational" },
-      { name: "St. Cloud Metro", congressionalDistrict: "MN-06", schoolDistrict: "St. Cloud Area Schools", latitude: 45.5579, longitude: -94.1632, greenhouseCount: 4, studentsServed: 15600, annualFoodLbs: 288000, produceTypes: "Lettuce, Kale, Tomatoes, Peppers, Beans", sqft: 56000, status: "Operational" },
-      { name: "Mankato Regional", congressionalDistrict: "MN-01", schoolDistrict: "Mankato Area Public Schools", latitude: 44.1636, longitude: -94.0016, greenhouseCount: 3, studentsServed: 10200, annualFoodLbs: 189000, produceTypes: "Root vegetables, Greens, Tomatoes, Squash", sqft: 42000, status: "Operational" },
-      { name: "Moorhead Prairie", congressionalDistrict: "MN-07", schoolDistrict: "Moorhead Area Public Schools", latitude: 46.8739, longitude: -96.7678, greenhouseCount: 2, studentsServed: 6800, annualFoodLbs: 126000, produceTypes: "Hardy greens, Potatoes, Onions, Carrots", sqft: 32000, status: "Construction" },
-      { name: "Bemidji Northwoods", congressionalDistrict: "MN-07", schoolDistrict: "Bemidji Area Schools", latitude: 47.4733, longitude: -94.8803, greenhouseCount: 2, studentsServed: 5200, annualFoodLbs: 97000, produceTypes: "Cold-climate greens, Root vegetables, Herbs", sqft: 28000, status: "Construction" },
-      { name: "Leech Lake Tribal", congressionalDistrict: "MN-08", schoolDistrict: "Cass Lake-Bena Schools", latitude: 47.3797, longitude: -94.5428, greenhouseCount: 3, studentsServed: 1500, annualFoodLbs: 54000, produceTypes: "Wild rice integration, Greens, Squash, Beans, Traditional foods", sqft: 24000, status: "Planning" },
-      { name: "Winona River Valley", congressionalDistrict: "MN-01", schoolDistrict: "Winona Area Public Schools", latitude: 44.0499, longitude: -91.6393, greenhouseCount: 2, studentsServed: 4800, annualFoodLbs: 88000, produceTypes: "Tomatoes, Peppers, Greens, Herbs", sqft: 24000, status: "Planning" },
-      { name: "Alexandria Lakes", congressionalDistrict: "MN-07", schoolDistrict: "Alexandria Public Schools", latitude: 45.8852, longitude: -95.3775, greenhouseCount: 2, studentsServed: 4200, annualFoodLbs: 78000, produceTypes: "Lettuce, Spinach, Tomatoes, Cucumbers", sqft: 22000, status: "Planning" },
-      { name: "Brainerd Lakes", congressionalDistrict: "MN-08", schoolDistrict: "Brainerd Public Schools", latitude: 46.3583, longitude: -94.2008, greenhouseCount: 3, studentsServed: 7400, annualFoodLbs: 135000, produceTypes: "Hardy greens, Root vegetables, Tomatoes, Peppers", sqft: 38000, status: "Planning" },
-      { name: "Woodbury East Metro", congressionalDistrict: "MN-02", schoolDistrict: "South Washington County Schools", latitude: 44.9239, longitude: -92.9594, greenhouseCount: 4, studentsServed: 19800, annualFoodLbs: 360000, produceTypes: "Lettuce, Tomatoes, Peppers, Herbs, Microgreens, Cucumbers", sqft: 64000, status: "Planning" },
-      { name: "Shakopee Southwest", congressionalDistrict: "MN-02", schoolDistrict: "Shakopee Public Schools", latitude: 44.7969, longitude: -93.5266, greenhouseCount: 3, studentsServed: 12400, annualFoodLbs: 225000, produceTypes: "Greens, Tomatoes, Peppers, Beans, Squash", sqft: 48000, status: "Planning" },
-      { name: "Anoka-Hennepin North", congressionalDistrict: "MN-06", schoolDistrict: "Anoka-Hennepin Schools", latitude: 45.1983, longitude: -93.3822, greenhouseCount: 6, studentsServed: 38500, annualFoodLbs: 702000, produceTypes: "Full variety: Greens, Tomatoes, Peppers, Cucumbers, Herbs, Root vegetables", sqft: 110000, status: "Planning" }
+      { name: "Saint Paul Central", congressionalDistrict: "MN-04", schoolDistrict: "Saint Paul Public Schools", latitude: 44.9537, longitude: -93.0900, greenhouseCount: 3, studentsServed: 12500, annualFoodLbs: 225000, produceTypes: "Lettuce, Tomatoes, Peppers, Herbs, Spinach", sqft: 45000, status: "Priority" },
+      { name: "Minneapolis North", congressionalDistrict: "MN-05", schoolDistrict: "Minneapolis Public Schools", latitude: 44.9778, longitude: -93.2650, greenhouseCount: 4, studentsServed: 18200, annualFoodLbs: 324000, produceTypes: "Kale, Cucumbers, Carrots, Beans, Tomatoes", sqft: 60000, status: "Priority" },
+      { name: "Mendota Heights Hub", congressionalDistrict: "MN-04", schoolDistrict: "West St. Paul-Mendota Heights", latitude: 44.8833, longitude: -93.1380, greenhouseCount: 2, studentsServed: 5800, annualFoodLbs: 108000, produceTypes: "Microgreens, Lettuce, Herbs, Strawberries", sqft: 30000, status: "Priority" },
+      { name: "Duluth Lakeside", congressionalDistrict: "MN-08", schoolDistrict: "Duluth Public Schools", latitude: 46.7867, longitude: -92.1005, greenhouseCount: 3, studentsServed: 9200, annualFoodLbs: 162000, produceTypes: "Cold-hardy greens, Root vegetables, Herbs", sqft: 42000, status: "Priority" },
+      { name: "Rochester Medical District", congressionalDistrict: "MN-01", schoolDistrict: "Rochester Public Schools", latitude: 44.0121, longitude: -92.4802, greenhouseCount: 5, studentsServed: 22400, annualFoodLbs: 405000, produceTypes: "Tomatoes, Peppers, Lettuce, Spinach, Herbs, Cucumbers", sqft: 75000, status: "Priority" },
+      { name: "Bloomington South", congressionalDistrict: "MN-03", schoolDistrict: "Bloomington Public Schools", latitude: 44.8408, longitude: -93.2983, greenhouseCount: 3, studentsServed: 11800, annualFoodLbs: 216000, produceTypes: "Lettuce, Tomatoes, Peppers, Microgreens", sqft: 48000, status: "Priority" },
+      { name: "Eden Prairie West", congressionalDistrict: "MN-03", schoolDistrict: "Eden Prairie Schools", latitude: 44.8547, longitude: -93.4708, greenhouseCount: 2, studentsServed: 8900, annualFoodLbs: 162000, produceTypes: "Greens, Tomatoes, Herbs, Strawberries", sqft: 36000, status: "Priority" },
+      { name: "St. Cloud Metro", congressionalDistrict: "MN-06", schoolDistrict: "St. Cloud Area Schools", latitude: 45.5579, longitude: -94.1632, greenhouseCount: 4, studentsServed: 15600, annualFoodLbs: 288000, produceTypes: "Lettuce, Kale, Tomatoes, Peppers, Beans", sqft: 56000, status: "Priority" },
+      { name: "Mankato Regional", congressionalDistrict: "MN-01", schoolDistrict: "Mankato Area Public Schools", latitude: 44.1636, longitude: -94.0016, greenhouseCount: 3, studentsServed: 10200, annualFoodLbs: 189000, produceTypes: "Root vegetables, Greens, Tomatoes, Squash", sqft: 42000, status: "Priority" },
+      { name: "Moorhead Prairie", congressionalDistrict: "MN-07", schoolDistrict: "Moorhead Area Public Schools", latitude: 46.8739, longitude: -96.7678, greenhouseCount: 2, studentsServed: 6800, annualFoodLbs: 126000, produceTypes: "Hardy greens, Potatoes, Onions, Carrots", sqft: 32000, status: "Priority" },
+      { name: "Bemidji Northwoods", congressionalDistrict: "MN-07", schoolDistrict: "Bemidji Area Schools", latitude: 47.4733, longitude: -94.8803, greenhouseCount: 2, studentsServed: 5200, annualFoodLbs: 97000, produceTypes: "Cold-climate greens, Root vegetables, Herbs", sqft: 28000, status: "Priority" },
+      { name: "Leech Lake Tribal", congressionalDistrict: "MN-08", schoolDistrict: "Cass Lake-Bena Schools", latitude: 47.3797, longitude: -94.5428, greenhouseCount: 3, studentsServed: 1500, annualFoodLbs: 54000, produceTypes: "Wild rice integration, Greens, Squash, Beans, Traditional foods", sqft: 24000, status: "Priority" },
+      { name: "Winona River Valley", congressionalDistrict: "MN-01", schoolDistrict: "Winona Area Public Schools", latitude: 44.0499, longitude: -91.6393, greenhouseCount: 2, studentsServed: 4800, annualFoodLbs: 88000, produceTypes: "Tomatoes, Peppers, Greens, Herbs", sqft: 24000, status: "Priority" },
+      { name: "Alexandria Lakes", congressionalDistrict: "MN-07", schoolDistrict: "Alexandria Public Schools", latitude: 45.8852, longitude: -95.3775, greenhouseCount: 2, studentsServed: 4200, annualFoodLbs: 78000, produceTypes: "Lettuce, Spinach, Tomatoes, Cucumbers", sqft: 22000, status: "Priority" },
+      { name: "Brainerd Lakes", congressionalDistrict: "MN-08", schoolDistrict: "Brainerd Public Schools", latitude: 46.3583, longitude: -94.2008, greenhouseCount: 3, studentsServed: 7400, annualFoodLbs: 135000, produceTypes: "Hardy greens, Root vegetables, Tomatoes, Peppers", sqft: 38000, status: "Priority" },
+      { name: "Woodbury East Metro", congressionalDistrict: "MN-02", schoolDistrict: "South Washington County Schools", latitude: 44.9239, longitude: -92.9594, greenhouseCount: 4, studentsServed: 19800, annualFoodLbs: 360000, produceTypes: "Lettuce, Tomatoes, Peppers, Herbs, Microgreens, Cucumbers", sqft: 64000, status: "Priority" },
+      { name: "Shakopee Southwest", congressionalDistrict: "MN-02", schoolDistrict: "Shakopee Public Schools", latitude: 44.7969, longitude: -93.5266, greenhouseCount: 3, studentsServed: 12400, annualFoodLbs: 225000, produceTypes: "Greens, Tomatoes, Peppers, Beans, Squash", sqft: 48000, status: "Priority" },
+      { name: "Anoka-Hennepin North", congressionalDistrict: "MN-06", schoolDistrict: "Anoka-Hennepin Schools", latitude: 45.1983, longitude: -93.3822, greenhouseCount: 6, studentsServed: 38500, annualFoodLbs: 702000, produceTypes: "Full variety: Greens, Tomatoes, Peppers, Cucumbers, Herbs, Root vegetables", sqft: 110000, status: "Priority" }
     ];
     
     for (const loc of locations) {
@@ -1371,57 +1352,57 @@ async function seedDatabase() {
     const districts = [
       { districtName: "Minneapolis Public Schools", districtNumber: "0001", county: "Hennepin", latitude: 44.9778, longitude: -93.2650, totalSchools: 70, totalEnrollment: 36000, candidateSites: 28, avgSouthFacingScore: 0.82, estimatedGreenhouseSqft: 12500, topCandidateSchool: "South High School", topCandidateSqft: 15000, topCandidateScore: 0.95, status: "High Priority", notes: "Large urban district with multiple suitable rooftop and ground sites" },
       { districtName: "Saint Paul Public Schools", districtNumber: "0625", county: "Ramsey", latitude: 44.9537, longitude: -93.0900, totalSchools: 56, totalEnrollment: 33000, candidateSites: 24, avgSouthFacingScore: 0.79, estimatedGreenhouseSqft: 11000, topCandidateSchool: "Highland Park Senior High", topCandidateSqft: 14000, topCandidateScore: 0.93, status: "High Priority", notes: "Strong community support, existing garden programs" },
-      { districtName: "Anoka-Hennepin Schools", districtNumber: "0011", county: "Anoka", latitude: 45.1983, longitude: -93.3822, totalSchools: 42, totalEnrollment: 38500, candidateSites: 18, avgSouthFacingScore: 0.85, estimatedGreenhouseSqft: 14000, topCandidateSchool: "Coon Rapids High School", topCandidateSqft: 15000, topCandidateScore: 0.96, status: "Active Planning", notes: "Largest suburban district, excellent site availability" },
-      { districtName: "Rochester Public Schools", districtNumber: "0535", county: "Olmsted", latitude: 44.0121, longitude: -92.4802, totalSchools: 26, totalEnrollment: 17500, candidateSites: 12, avgSouthFacingScore: 0.88, estimatedGreenhouseSqft: 13500, topCandidateSchool: "Century High School", topCandidateSqft: 14500, topCandidateScore: 0.94, status: "Active Planning", notes: "Mayo Clinic partnership potential for nutrition research" },
-      { districtName: "Duluth Public Schools", districtNumber: "0709", county: "St. Louis", latitude: 46.7867, longitude: -92.1005, totalSchools: 18, totalEnrollment: 9200, candidateSites: 8, avgSouthFacingScore: 0.76, estimatedGreenhouseSqft: 10000, topCandidateSchool: "Denfeld High School", topCandidateSqft: 12000, topCandidateScore: 0.89, status: "Evaluation", notes: "Cold climate requires insulated greenhouse design" },
+      { districtName: "Anoka-Hennepin Schools", districtNumber: "0011", county: "Anoka", latitude: 45.1983, longitude: -93.3822, totalSchools: 42, totalEnrollment: 38500, candidateSites: 18, avgSouthFacingScore: 0.85, estimatedGreenhouseSqft: 14000, topCandidateSchool: "Coon Rapids High School", topCandidateSqft: 15000, topCandidateScore: 0.96, status: "High Priority", notes: "Largest suburban district, excellent site availability" },
+      { districtName: "Rochester Public Schools", districtNumber: "0535", county: "Olmsted", latitude: 44.0121, longitude: -92.4802, totalSchools: 26, totalEnrollment: 17500, candidateSites: 12, avgSouthFacingScore: 0.88, estimatedGreenhouseSqft: 13500, topCandidateSchool: "Century High School", topCandidateSqft: 14500, topCandidateScore: 0.94, status: "High Priority", notes: "Mayo Clinic partnership potential for nutrition research" },
+      { districtName: "Duluth Public Schools", districtNumber: "0709", county: "St. Louis", latitude: 46.7867, longitude: -92.1005, totalSchools: 18, totalEnrollment: 9200, candidateSites: 8, avgSouthFacingScore: 0.76, estimatedGreenhouseSqft: 10000, topCandidateSchool: "Denfeld High School", topCandidateSqft: 12000, topCandidateScore: 0.89, status: "High Priority", notes: "Cold climate requires insulated greenhouse design" },
       { districtName: "Bloomington Public Schools", districtNumber: "0271", county: "Hennepin", latitude: 44.8408, longitude: -93.2983, totalSchools: 17, totalEnrollment: 10200, candidateSites: 9, avgSouthFacingScore: 0.87, estimatedGreenhouseSqft: 11500, topCandidateSchool: "Jefferson High School", topCandidateSqft: 13000, topCandidateScore: 0.92, status: "High Priority", notes: "Existing STEM programs, strong parental engagement" },
-      { districtName: "Eden Prairie Schools", districtNumber: "0272", county: "Hennepin", latitude: 44.8547, longitude: -93.4708, totalSchools: 12, totalEnrollment: 9800, candidateSites: 7, avgSouthFacingScore: 0.89, estimatedGreenhouseSqft: 12000, topCandidateSchool: "Eden Prairie High School", topCandidateSqft: 14000, topCandidateScore: 0.95, status: "Active Planning", notes: "High-performing district with sustainability curriculum" },
-      { districtName: "St. Cloud Area Schools", districtNumber: "0742", county: "Stearns", latitude: 45.5579, longitude: -94.1632, totalSchools: 20, totalEnrollment: 10500, candidateSites: 10, avgSouthFacingScore: 0.81, estimatedGreenhouseSqft: 11000, topCandidateSchool: "Apollo High School", topCandidateSqft: 13000, topCandidateScore: 0.91, status: "Evaluation", notes: "Central MN hub, serves diverse rural communities" },
-      { districtName: "Mankato Area Public Schools", districtNumber: "0077", county: "Blue Earth", latitude: 44.1636, longitude: -94.0016, totalSchools: 15, totalEnrollment: 8900, candidateSites: 8, avgSouthFacingScore: 0.84, estimatedGreenhouseSqft: 10500, topCandidateSchool: "Mankato West High School", topCandidateSqft: 12500, topCandidateScore: 0.90, status: "Evaluation", notes: "MSU partnership for agricultural education" },
+      { districtName: "Eden Prairie Schools", districtNumber: "0272", county: "Hennepin", latitude: 44.8547, longitude: -93.4708, totalSchools: 12, totalEnrollment: 9800, candidateSites: 7, avgSouthFacingScore: 0.89, estimatedGreenhouseSqft: 12000, topCandidateSchool: "Eden Prairie High School", topCandidateSqft: 14000, topCandidateScore: 0.95, status: "High Priority", notes: "High-performing district with sustainability curriculum" },
+      { districtName: "St. Cloud Area Schools", districtNumber: "0742", county: "Stearns", latitude: 45.5579, longitude: -94.1632, totalSchools: 20, totalEnrollment: 10500, candidateSites: 10, avgSouthFacingScore: 0.81, estimatedGreenhouseSqft: 11000, topCandidateSchool: "Apollo High School", topCandidateSqft: 13000, topCandidateScore: 0.91, status: "High Priority", notes: "Central MN hub, serves diverse rural communities" },
+      { districtName: "Mankato Area Public Schools", districtNumber: "0077", county: "Blue Earth", latitude: 44.1636, longitude: -94.0016, totalSchools: 15, totalEnrollment: 8900, candidateSites: 8, avgSouthFacingScore: 0.84, estimatedGreenhouseSqft: 10500, topCandidateSchool: "Mankato West High School", topCandidateSqft: 12500, topCandidateScore: 0.90, status: "High Priority", notes: "MSU partnership for agricultural education" },
       { districtName: "Osseo Area Schools", districtNumber: "0279", county: "Hennepin", latitude: 45.1194, longitude: -93.4025, totalSchools: 28, totalEnrollment: 21000, candidateSites: 14, avgSouthFacingScore: 0.83, estimatedGreenhouseSqft: 13000, topCandidateSchool: "Osseo Senior High", topCandidateSqft: 14000, topCandidateScore: 0.92, status: "High Priority", notes: "Growing diverse community, strong food security need" },
-      { districtName: "Rosemount-Apple Valley-Eagan", districtNumber: "0196", county: "Dakota", latitude: 44.7500, longitude: -93.1600, totalSchools: 30, totalEnrollment: 28000, candidateSites: 16, avgSouthFacingScore: 0.86, estimatedGreenhouseSqft: 14500, topCandidateSchool: "Eastview High School", topCandidateSqft: 15000, topCandidateScore: 0.97, status: "Active Planning", notes: "Large suburban district with excellent infrastructure" },
-      { districtName: "South Washington County Schools", districtNumber: "0833", county: "Washington", latitude: 44.9239, longitude: -92.9594, totalSchools: 24, totalEnrollment: 19200, candidateSites: 12, avgSouthFacingScore: 0.85, estimatedGreenhouseSqft: 12500, topCandidateSchool: "Woodbury High School", topCandidateSqft: 14500, topCandidateScore: 0.94, status: "Active Planning", notes: "Fast-growing area, new school construction opportunities" },
-      { districtName: "Moorhead Area Public Schools", districtNumber: "0152", county: "Clay", latitude: 46.8739, longitude: -96.7678, totalSchools: 12, totalEnrollment: 6400, candidateSites: 6, avgSouthFacingScore: 0.78, estimatedGreenhouseSqft: 9500, topCandidateSchool: "Moorhead High School", topCandidateSqft: 11000, topCandidateScore: 0.88, status: "Evaluation", notes: "Red River Valley, partnership with NDSU possible" },
+      { districtName: "Rosemount-Apple Valley-Eagan", districtNumber: "0196", county: "Dakota", latitude: 44.7500, longitude: -93.1600, totalSchools: 30, totalEnrollment: 28000, candidateSites: 16, avgSouthFacingScore: 0.86, estimatedGreenhouseSqft: 14500, topCandidateSchool: "Eastview High School", topCandidateSqft: 15000, topCandidateScore: 0.97, status: "High Priority", notes: "Large suburban district with excellent infrastructure" },
+      { districtName: "South Washington County Schools", districtNumber: "0833", county: "Washington", latitude: 44.9239, longitude: -92.9594, totalSchools: 24, totalEnrollment: 19200, candidateSites: 12, avgSouthFacingScore: 0.85, estimatedGreenhouseSqft: 12500, topCandidateSchool: "Woodbury High School", topCandidateSqft: 14500, topCandidateScore: 0.94, status: "High Priority", notes: "Fast-growing area, new school construction opportunities" },
+      { districtName: "Moorhead Area Public Schools", districtNumber: "0152", county: "Clay", latitude: 46.8739, longitude: -96.7678, totalSchools: 12, totalEnrollment: 6400, candidateSites: 6, avgSouthFacingScore: 0.78, estimatedGreenhouseSqft: 9500, topCandidateSchool: "Moorhead High School", topCandidateSqft: 11000, topCandidateScore: 0.88, status: "High Priority", notes: "Red River Valley, partnership with NDSU possible" },
       { districtName: "Shakopee Public Schools", districtNumber: "0720", county: "Scott", latitude: 44.7969, longitude: -93.5266, totalSchools: 11, totalEnrollment: 9200, candidateSites: 7, avgSouthFacingScore: 0.87, estimatedGreenhouseSqft: 11500, topCandidateSchool: "Shakopee High School", topCandidateSqft: 13500, topCandidateScore: 0.93, status: "High Priority", notes: "Rapidly growing community with new facilities" },
-      { districtName: "Wayzata Public Schools", districtNumber: "0284", county: "Hennepin", latitude: 44.9744, longitude: -93.5066, totalSchools: 12, totalEnrollment: 11800, candidateSites: 8, avgSouthFacingScore: 0.88, estimatedGreenhouseSqft: 12500, topCandidateSchool: "Wayzata High School", topCandidateSqft: 15000, topCandidateScore: 0.96, status: "Active Planning", notes: "Strong community resources, high parental involvement" },
-      { districtName: "Prior Lake-Savage Area Schools", districtNumber: "0719", county: "Scott", latitude: 44.7136, longitude: -93.4227, totalSchools: 10, totalEnrollment: 8700, candidateSites: 6, avgSouthFacingScore: 0.86, estimatedGreenhouseSqft: 11000, topCandidateSchool: "Prior Lake High School", topCandidateSqft: 13000, topCandidateScore: 0.92, status: "Evaluation", notes: "Growing suburban district" },
+      { districtName: "Wayzata Public Schools", districtNumber: "0284", county: "Hennepin", latitude: 44.9744, longitude: -93.5066, totalSchools: 12, totalEnrollment: 11800, candidateSites: 8, avgSouthFacingScore: 0.88, estimatedGreenhouseSqft: 12500, topCandidateSchool: "Wayzata High School", topCandidateSqft: 15000, topCandidateScore: 0.96, status: "High Priority", notes: "Strong community resources, high parental involvement" },
+      { districtName: "Prior Lake-Savage Area Schools", districtNumber: "0719", county: "Scott", latitude: 44.7136, longitude: -93.4227, totalSchools: 10, totalEnrollment: 8700, candidateSites: 6, avgSouthFacingScore: 0.86, estimatedGreenhouseSqft: 11000, topCandidateSchool: "Prior Lake High School", topCandidateSqft: 13000, topCandidateScore: 0.92, status: "High Priority", notes: "Growing suburban district" },
       { districtName: "Lakeville Area Schools", districtNumber: "0194", county: "Dakota", latitude: 44.6497, longitude: -93.2428, totalSchools: 20, totalEnrollment: 11500, candidateSites: 10, avgSouthFacingScore: 0.87, estimatedGreenhouseSqft: 12500, topCandidateSchool: "Lakeville South High School", topCandidateSqft: 14000, topCandidateScore: 0.94, status: "High Priority", notes: "Two high schools with excellent site potential" },
-      { districtName: "Burnsville-Eagan-Savage", districtNumber: "0191", county: "Dakota", latitude: 44.7677, longitude: -93.2778, totalSchools: 16, totalEnrollment: 9100, candidateSites: 8, avgSouthFacingScore: 0.84, estimatedGreenhouseSqft: 11500, topCandidateSchool: "Burnsville High School", topCandidateSqft: 13000, topCandidateScore: 0.91, status: "Evaluation", notes: "Diverse community with food security initiatives" },
-      { districtName: "Mounds View Public Schools", districtNumber: "0621", county: "Ramsey", latitude: 45.1069, longitude: -93.2092, totalSchools: 14, totalEnrollment: 10800, candidateSites: 8, avgSouthFacingScore: 0.83, estimatedGreenhouseSqft: 11500, topCandidateSchool: "Mounds View High School", topCandidateSqft: 13000, topCandidateScore: 0.91, status: "Active Planning", notes: "Strong science programs, greenhouse integration" },
-      { districtName: "North St. Paul-Maplewood-Oakdale", districtNumber: "0622", county: "Ramsey", latitude: 44.9533, longitude: -93.0167, totalSchools: 12, totalEnrollment: 10500, candidateSites: 7, avgSouthFacingScore: 0.80, estimatedGreenhouseSqft: 10500, topCandidateSchool: "North High School", topCandidateSqft: 12000, topCandidateScore: 0.89, status: "Evaluation", notes: "Urban-suburban transition zone" },
-      { districtName: "Stillwater Area Schools", districtNumber: "0834", county: "Washington", latitude: 45.0564, longitude: -92.8058, totalSchools: 14, totalEnrollment: 8900, candidateSites: 7, avgSouthFacingScore: 0.85, estimatedGreenhouseSqft: 11000, topCandidateSchool: "Stillwater Area High School", topCandidateSqft: 13000, topCandidateScore: 0.92, status: "Evaluation", notes: "Historic community, strong local agriculture connection" },
+      { districtName: "Burnsville-Eagan-Savage", districtNumber: "0191", county: "Dakota", latitude: 44.7677, longitude: -93.2778, totalSchools: 16, totalEnrollment: 9100, candidateSites: 8, avgSouthFacingScore: 0.84, estimatedGreenhouseSqft: 11500, topCandidateSchool: "Burnsville High School", topCandidateSqft: 13000, topCandidateScore: 0.91, status: "High Priority", notes: "Diverse community with food security initiatives" },
+      { districtName: "Mounds View Public Schools", districtNumber: "0621", county: "Ramsey", latitude: 45.1069, longitude: -93.2092, totalSchools: 14, totalEnrollment: 10800, candidateSites: 8, avgSouthFacingScore: 0.83, estimatedGreenhouseSqft: 11500, topCandidateSchool: "Mounds View High School", topCandidateSqft: 13000, topCandidateScore: 0.91, status: "High Priority", notes: "Strong science programs, greenhouse integration" },
+      { districtName: "North St. Paul-Maplewood-Oakdale", districtNumber: "0622", county: "Ramsey", latitude: 44.9533, longitude: -93.0167, totalSchools: 12, totalEnrollment: 10500, candidateSites: 7, avgSouthFacingScore: 0.80, estimatedGreenhouseSqft: 10500, topCandidateSchool: "North High School", topCandidateSqft: 12000, topCandidateScore: 0.89, status: "High Priority", notes: "Urban-suburban transition zone" },
+      { districtName: "Stillwater Area Schools", districtNumber: "0834", county: "Washington", latitude: 45.0564, longitude: -92.8058, totalSchools: 14, totalEnrollment: 8900, candidateSites: 7, avgSouthFacingScore: 0.85, estimatedGreenhouseSqft: 11000, topCandidateSchool: "Stillwater Area High School", topCandidateSqft: 13000, topCandidateScore: 0.92, status: "High Priority", notes: "Historic community, strong local agriculture connection" },
       { districtName: "Elk River Area Schools", districtNumber: "0728", county: "Sherburne", latitude: 45.3044, longitude: -93.5672, totalSchools: 16, totalEnrollment: 13200, candidateSites: 9, avgSouthFacingScore: 0.84, estimatedGreenhouseSqft: 12000, topCandidateSchool: "Elk River High School", topCandidateSqft: 14000, topCandidateScore: 0.93, status: "High Priority", notes: "Growing northwest metro district" },
-      { districtName: "Forest Lake Area Schools", districtNumber: "0831", county: "Washington", latitude: 45.2789, longitude: -92.9853, totalSchools: 10, totalEnrollment: 6800, candidateSites: 5, avgSouthFacingScore: 0.83, estimatedGreenhouseSqft: 10500, topCandidateSchool: "Forest Lake Area High School", topCandidateSqft: 12500, topCandidateScore: 0.90, status: "Evaluation", notes: "Rural-suburban district" },
-      { districtName: "White Bear Lake Area Schools", districtNumber: "0624", county: "Ramsey", latitude: 45.0839, longitude: -93.0097, totalSchools: 12, totalEnrollment: 8200, candidateSites: 6, avgSouthFacingScore: 0.82, estimatedGreenhouseSqft: 10500, topCandidateSchool: "White Bear Lake Area High School", topCandidateSqft: 12500, topCandidateScore: 0.90, status: "Evaluation", notes: "Strong environmental science programs" },
+      { districtName: "Forest Lake Area Schools", districtNumber: "0831", county: "Washington", latitude: 45.2789, longitude: -92.9853, totalSchools: 10, totalEnrollment: 6800, candidateSites: 5, avgSouthFacingScore: 0.83, estimatedGreenhouseSqft: 10500, topCandidateSchool: "Forest Lake Area High School", topCandidateSqft: 12500, topCandidateScore: 0.90, status: "High Priority", notes: "Rural-suburban district" },
+      { districtName: "White Bear Lake Area Schools", districtNumber: "0624", county: "Ramsey", latitude: 45.0839, longitude: -93.0097, totalSchools: 12, totalEnrollment: 8200, candidateSites: 6, avgSouthFacingScore: 0.82, estimatedGreenhouseSqft: 10500, topCandidateSchool: "White Bear Lake Area High School", topCandidateSqft: 12500, topCandidateScore: 0.90, status: "High Priority", notes: "Strong environmental science programs" },
       { districtName: "Richfield Public Schools", districtNumber: "0280", county: "Hennepin", latitude: 44.8831, longitude: -93.2830, totalSchools: 7, totalEnrollment: 4200, candidateSites: 4, avgSouthFacingScore: 0.81, estimatedGreenhouseSqft: 9000, topCandidateSchool: "Richfield High School", topCandidateSqft: 11000, topCandidateScore: 0.88, status: "High Priority", notes: "Compact urban district with high food insecurity" },
-      { districtName: "Hopkins Public Schools", districtNumber: "0270", county: "Hennepin", latitude: 44.9250, longitude: -93.4019, totalSchools: 9, totalEnrollment: 7100, candidateSites: 5, avgSouthFacingScore: 0.84, estimatedGreenhouseSqft: 10500, topCandidateSchool: "Hopkins High School", topCandidateSqft: 12500, topCandidateScore: 0.91, status: "Active Planning", notes: "Diverse district with sustainability focus" },
-      { districtName: "Edina Public Schools", districtNumber: "0273", county: "Hennepin", latitude: 44.8897, longitude: -93.3499, totalSchools: 9, totalEnrollment: 8500, candidateSites: 5, avgSouthFacingScore: 0.88, estimatedGreenhouseSqft: 11500, topCandidateSchool: "Edina High School", topCandidateSqft: 14000, topCandidateScore: 0.95, status: "Active Planning", notes: "High-resource district with green building expertise" },
-      { districtName: "Minnetonka Public Schools", districtNumber: "0276", county: "Hennepin", latitude: 44.9211, longitude: -93.4683, totalSchools: 10, totalEnrollment: 11200, candidateSites: 6, avgSouthFacingScore: 0.87, estimatedGreenhouseSqft: 12000, topCandidateSchool: "Minnetonka High School", topCandidateSqft: 14500, topCandidateScore: 0.96, status: "Active Planning", notes: "Large campus with extensive grounds" },
-      { districtName: "St. Louis Park Public Schools", districtNumber: "0283", county: "Hennepin", latitude: 44.9483, longitude: -93.3483, totalSchools: 7, totalEnrollment: 4800, candidateSites: 4, avgSouthFacingScore: 0.83, estimatedGreenhouseSqft: 9500, topCandidateSchool: "St. Louis Park High School", topCandidateSqft: 11500, topCandidateScore: 0.89, status: "Evaluation", notes: "First-ring suburb with equity focus" },
-      { districtName: "Bemidji Area Schools", districtNumber: "0031", county: "Beltrami", latitude: 47.4733, longitude: -94.8803, totalSchools: 8, totalEnrollment: 5100, candidateSites: 5, avgSouthFacingScore: 0.75, estimatedGreenhouseSqft: 8500, topCandidateSchool: "Bemidji High School", topCandidateSqft: 10000, topCandidateScore: 0.86, status: "Evaluation", notes: "Northern MN hub, BSU partnership potential" },
-      { districtName: "Brainerd Public Schools", districtNumber: "0181", county: "Crow Wing", latitude: 46.3583, longitude: -94.2008, totalSchools: 10, totalEnrollment: 6500, candidateSites: 5, avgSouthFacingScore: 0.79, estimatedGreenhouseSqft: 9500, topCandidateSchool: "Brainerd High School", topCandidateSqft: 11000, topCandidateScore: 0.87, status: "Evaluation", notes: "Central Lakes region hub" },
-      { districtName: "Alexandria Public Schools", districtNumber: "0206", county: "Douglas", latitude: 45.8852, longitude: -95.3775, totalSchools: 6, totalEnrollment: 4100, candidateSites: 4, avgSouthFacingScore: 0.81, estimatedGreenhouseSqft: 8500, topCandidateSchool: "Alexandria Area High School", topCandidateSqft: 10500, topCandidateScore: 0.88, status: "Evaluation", notes: "Lakes area with tourism economy" },
-      { districtName: "Winona Area Public Schools", districtNumber: "0861", county: "Winona", latitude: 44.0499, longitude: -91.6393, totalSchools: 8, totalEnrollment: 4600, candidateSites: 4, avgSouthFacingScore: 0.82, estimatedGreenhouseSqft: 9000, topCandidateSchool: "Winona Senior High School", topCandidateSqft: 10500, topCandidateScore: 0.88, status: "Evaluation", notes: "Mississippi River valley, WSU partnership" },
-      { districtName: "Willmar Public Schools", districtNumber: "0347", county: "Kandiyohi", latitude: 45.1219, longitude: -95.0433, totalSchools: 8, totalEnrollment: 4200, candidateSites: 4, avgSouthFacingScore: 0.80, estimatedGreenhouseSqft: 8500, topCandidateSchool: "Willmar Senior High School", topCandidateSqft: 10000, topCandidateScore: 0.87, status: "Evaluation", notes: "Growing immigrant population, food access needs" },
-      { districtName: "Fergus Falls Public Schools", districtNumber: "0544", county: "Otter Tail", latitude: 46.2831, longitude: -96.0778, totalSchools: 6, totalEnrollment: 2800, candidateSites: 3, avgSouthFacingScore: 0.78, estimatedGreenhouseSqft: 7500, topCandidateSchool: "Fergus Falls High School", topCandidateSqft: 9000, topCandidateScore: 0.85, status: "Evaluation", notes: "Western MN regional center" },
-      { districtName: "Hibbing Public Schools", districtNumber: "0701", county: "St. Louis", latitude: 47.4272, longitude: -92.9378, totalSchools: 6, totalEnrollment: 2500, candidateSites: 3, avgSouthFacingScore: 0.74, estimatedGreenhouseSqft: 7000, topCandidateSchool: "Hibbing High School", topCandidateSqft: 8500, topCandidateScore: 0.83, status: "Evaluation", notes: "Iron Range community, cold climate design needed" },
-      { districtName: "Grand Rapids Public Schools", districtNumber: "0318", county: "Itasca", latitude: 47.2372, longitude: -93.5303, totalSchools: 5, totalEnrollment: 3100, candidateSites: 3, avgSouthFacingScore: 0.76, estimatedGreenhouseSqft: 7500, topCandidateSchool: "Grand Rapids High School", topCandidateSqft: 9000, topCandidateScore: 0.84, status: "Evaluation", notes: "Northern forest region hub" },
-      { districtName: "Cloquet Public Schools", districtNumber: "0094", county: "Carlton", latitude: 46.7219, longitude: -92.4617, totalSchools: 5, totalEnrollment: 2400, candidateSites: 3, avgSouthFacingScore: 0.77, estimatedGreenhouseSqft: 7000, topCandidateSchool: "Cloquet High School", topCandidateSqft: 8500, topCandidateScore: 0.84, status: "Evaluation", notes: "Near Fond du Lac reservation" },
-      { districtName: "Austin Public Schools", districtNumber: "0492", county: "Mower", latitude: 43.6667, longitude: -92.9747, totalSchools: 9, totalEnrollment: 5200, candidateSites: 5, avgSouthFacingScore: 0.83, estimatedGreenhouseSqft: 9500, topCandidateSchool: "Austin High School", topCandidateSqft: 11000, topCandidateScore: 0.89, status: "Evaluation", notes: "Southern MN, diverse immigrant community" },
-      { districtName: "Albert Lea Area Schools", districtNumber: "0241", county: "Freeborn", latitude: 43.6480, longitude: -93.3683, totalSchools: 6, totalEnrollment: 3400, candidateSites: 3, avgSouthFacingScore: 0.82, estimatedGreenhouseSqft: 8000, topCandidateSchool: "Albert Lea High School", topCandidateSqft: 9500, topCandidateScore: 0.87, status: "Evaluation", notes: "Southern MN rural hub" },
-      { districtName: "Faribault Public Schools", districtNumber: "0656", county: "Rice", latitude: 44.2950, longitude: -93.2689, totalSchools: 7, totalEnrollment: 3800, candidateSites: 4, avgSouthFacingScore: 0.83, estimatedGreenhouseSqft: 8500, topCandidateSchool: "Faribault High School", topCandidateSqft: 10000, topCandidateScore: 0.88, status: "Evaluation", notes: "Growing diverse community" },
-      { districtName: "Owatonna Public Schools", districtNumber: "0761", county: "Steele", latitude: 44.0839, longitude: -93.2261, totalSchools: 8, totalEnrollment: 5600, candidateSites: 5, avgSouthFacingScore: 0.84, estimatedGreenhouseSqft: 9500, topCandidateSchool: "Owatonna High School", topCandidateSqft: 11000, topCandidateScore: 0.89, status: "Evaluation", notes: "Southern MN manufacturing hub" },
-      { districtName: "Northfield Public Schools", districtNumber: "0659", county: "Rice", latitude: 44.4583, longitude: -93.1614, totalSchools: 5, totalEnrollment: 4100, candidateSites: 4, avgSouthFacingScore: 0.85, estimatedGreenhouseSqft: 9000, topCandidateSchool: "Northfield High School", topCandidateSqft: 10500, topCandidateScore: 0.90, status: "Evaluation", notes: "College town, strong community engagement" },
-      { districtName: "Red Wing Public Schools", districtNumber: "0256", county: "Goodhue", latitude: 44.5625, longitude: -92.5336, totalSchools: 5, totalEnrollment: 2900, candidateSites: 3, avgSouthFacingScore: 0.84, estimatedGreenhouseSqft: 8000, topCandidateSchool: "Red Wing High School", topCandidateSqft: 9500, topCandidateScore: 0.88, status: "Evaluation", notes: "River community with arts focus" },
-      { districtName: "Chaska Public Schools", districtNumber: "0112", county: "Carver", latitude: 44.7894, longitude: -93.6019, totalSchools: 11, totalEnrollment: 8900, candidateSites: 6, avgSouthFacingScore: 0.86, estimatedGreenhouseSqft: 11000, topCandidateSchool: "Chaska High School", topCandidateSqft: 13000, topCandidateScore: 0.92, status: "Active Planning", notes: "Growing southwest metro district" },
-      { districtName: "Hastings Public Schools", districtNumber: "0200", county: "Dakota", latitude: 44.7433, longitude: -92.8517, totalSchools: 7, totalEnrollment: 4400, candidateSites: 4, avgSouthFacingScore: 0.84, estimatedGreenhouseSqft: 9000, topCandidateSchool: "Hastings High School", topCandidateSqft: 10500, topCandidateScore: 0.89, status: "Evaluation", notes: "Historic river community" },
-      { districtName: "Cambridge-Isanti Schools", districtNumber: "0911", county: "Isanti", latitude: 45.5728, longitude: -93.2242, totalSchools: 8, totalEnrollment: 5800, candidateSites: 5, avgSouthFacingScore: 0.82, estimatedGreenhouseSqft: 9500, topCandidateSchool: "Cambridge-Isanti High School", topCandidateSqft: 11000, topCandidateScore: 0.88, status: "Evaluation", notes: "Rural-suburban transition area" },
-      { districtName: "Monticello Public Schools", districtNumber: "0882", county: "Wright", latitude: 45.3058, longitude: -93.7942, totalSchools: 6, totalEnrollment: 5200, candidateSites: 4, avgSouthFacingScore: 0.83, estimatedGreenhouseSqft: 9500, topCandidateSchool: "Monticello High School", topCandidateSqft: 11000, topCandidateScore: 0.89, status: "Evaluation", notes: "Growing northwest corridor" },
-      { districtName: "Buffalo-Hanover-Montrose Schools", districtNumber: "0877", county: "Wright", latitude: 45.1720, longitude: -93.8745, totalSchools: 8, totalEnrollment: 6200, candidateSites: 5, avgSouthFacingScore: 0.83, estimatedGreenhouseSqft: 9500, topCandidateSchool: "Buffalo High School", topCandidateSqft: 11000, topCandidateScore: 0.89, status: "Evaluation", notes: "Fast-growing western metro" },
+      { districtName: "Hopkins Public Schools", districtNumber: "0270", county: "Hennepin", latitude: 44.9250, longitude: -93.4019, totalSchools: 9, totalEnrollment: 7100, candidateSites: 5, avgSouthFacingScore: 0.84, estimatedGreenhouseSqft: 10500, topCandidateSchool: "Hopkins High School", topCandidateSqft: 12500, topCandidateScore: 0.91, status: "High Priority", notes: "Diverse district with sustainability focus" },
+      { districtName: "Edina Public Schools", districtNumber: "0273", county: "Hennepin", latitude: 44.8897, longitude: -93.3499, totalSchools: 9, totalEnrollment: 8500, candidateSites: 5, avgSouthFacingScore: 0.88, estimatedGreenhouseSqft: 11500, topCandidateSchool: "Edina High School", topCandidateSqft: 14000, topCandidateScore: 0.95, status: "High Priority", notes: "High-resource district with green building expertise" },
+      { districtName: "Minnetonka Public Schools", districtNumber: "0276", county: "Hennepin", latitude: 44.9211, longitude: -93.4683, totalSchools: 10, totalEnrollment: 11200, candidateSites: 6, avgSouthFacingScore: 0.87, estimatedGreenhouseSqft: 12000, topCandidateSchool: "Minnetonka High School", topCandidateSqft: 14500, topCandidateScore: 0.96, status: "High Priority", notes: "Large campus with extensive grounds" },
+      { districtName: "St. Louis Park Public Schools", districtNumber: "0283", county: "Hennepin", latitude: 44.9483, longitude: -93.3483, totalSchools: 7, totalEnrollment: 4800, candidateSites: 4, avgSouthFacingScore: 0.83, estimatedGreenhouseSqft: 9500, topCandidateSchool: "St. Louis Park High School", topCandidateSqft: 11500, topCandidateScore: 0.89, status: "High Priority", notes: "First-ring suburb with equity focus" },
+      { districtName: "Bemidji Area Schools", districtNumber: "0031", county: "Beltrami", latitude: 47.4733, longitude: -94.8803, totalSchools: 8, totalEnrollment: 5100, candidateSites: 5, avgSouthFacingScore: 0.75, estimatedGreenhouseSqft: 8500, topCandidateSchool: "Bemidji High School", topCandidateSqft: 10000, topCandidateScore: 0.86, status: "High Priority", notes: "Northern MN hub, BSU partnership potential" },
+      { districtName: "Brainerd Public Schools", districtNumber: "0181", county: "Crow Wing", latitude: 46.3583, longitude: -94.2008, totalSchools: 10, totalEnrollment: 6500, candidateSites: 5, avgSouthFacingScore: 0.79, estimatedGreenhouseSqft: 9500, topCandidateSchool: "Brainerd High School", topCandidateSqft: 11000, topCandidateScore: 0.87, status: "High Priority", notes: "Central Lakes region hub" },
+      { districtName: "Alexandria Public Schools", districtNumber: "0206", county: "Douglas", latitude: 45.8852, longitude: -95.3775, totalSchools: 6, totalEnrollment: 4100, candidateSites: 4, avgSouthFacingScore: 0.81, estimatedGreenhouseSqft: 8500, topCandidateSchool: "Alexandria Area High School", topCandidateSqft: 10500, topCandidateScore: 0.88, status: "High Priority", notes: "Lakes area with tourism economy" },
+      { districtName: "Winona Area Public Schools", districtNumber: "0861", county: "Winona", latitude: 44.0499, longitude: -91.6393, totalSchools: 8, totalEnrollment: 4600, candidateSites: 4, avgSouthFacingScore: 0.82, estimatedGreenhouseSqft: 9000, topCandidateSchool: "Winona Senior High School", topCandidateSqft: 10500, topCandidateScore: 0.88, status: "High Priority", notes: "Mississippi River valley, WSU partnership" },
+      { districtName: "Willmar Public Schools", districtNumber: "0347", county: "Kandiyohi", latitude: 45.1219, longitude: -95.0433, totalSchools: 8, totalEnrollment: 4200, candidateSites: 4, avgSouthFacingScore: 0.80, estimatedGreenhouseSqft: 8500, topCandidateSchool: "Willmar Senior High School", topCandidateSqft: 10000, topCandidateScore: 0.87, status: "High Priority", notes: "Growing immigrant population, food access needs" },
+      { districtName: "Fergus Falls Public Schools", districtNumber: "0544", county: "Otter Tail", latitude: 46.2831, longitude: -96.0778, totalSchools: 6, totalEnrollment: 2800, candidateSites: 3, avgSouthFacingScore: 0.78, estimatedGreenhouseSqft: 7500, topCandidateSchool: "Fergus Falls High School", topCandidateSqft: 9000, topCandidateScore: 0.85, status: "High Priority", notes: "Western MN regional center" },
+      { districtName: "Hibbing Public Schools", districtNumber: "0701", county: "St. Louis", latitude: 47.4272, longitude: -92.9378, totalSchools: 6, totalEnrollment: 2500, candidateSites: 3, avgSouthFacingScore: 0.74, estimatedGreenhouseSqft: 7000, topCandidateSchool: "Hibbing High School", topCandidateSqft: 8500, topCandidateScore: 0.83, status: "High Priority", notes: "Iron Range community, cold climate design needed" },
+      { districtName: "Grand Rapids Public Schools", districtNumber: "0318", county: "Itasca", latitude: 47.2372, longitude: -93.5303, totalSchools: 5, totalEnrollment: 3100, candidateSites: 3, avgSouthFacingScore: 0.76, estimatedGreenhouseSqft: 7500, topCandidateSchool: "Grand Rapids High School", topCandidateSqft: 9000, topCandidateScore: 0.84, status: "High Priority", notes: "Northern forest region hub" },
+      { districtName: "Cloquet Public Schools", districtNumber: "0094", county: "Carlton", latitude: 46.7219, longitude: -92.4617, totalSchools: 5, totalEnrollment: 2400, candidateSites: 3, avgSouthFacingScore: 0.77, estimatedGreenhouseSqft: 7000, topCandidateSchool: "Cloquet High School", topCandidateSqft: 8500, topCandidateScore: 0.84, status: "High Priority", notes: "Near Fond du Lac reservation" },
+      { districtName: "Austin Public Schools", districtNumber: "0492", county: "Mower", latitude: 43.6667, longitude: -92.9747, totalSchools: 9, totalEnrollment: 5200, candidateSites: 5, avgSouthFacingScore: 0.83, estimatedGreenhouseSqft: 9500, topCandidateSchool: "Austin High School", topCandidateSqft: 11000, topCandidateScore: 0.89, status: "High Priority", notes: "Southern MN, diverse immigrant community" },
+      { districtName: "Albert Lea Area Schools", districtNumber: "0241", county: "Freeborn", latitude: 43.6480, longitude: -93.3683, totalSchools: 6, totalEnrollment: 3400, candidateSites: 3, avgSouthFacingScore: 0.82, estimatedGreenhouseSqft: 8000, topCandidateSchool: "Albert Lea High School", topCandidateSqft: 9500, topCandidateScore: 0.87, status: "High Priority", notes: "Southern MN rural hub" },
+      { districtName: "Faribault Public Schools", districtNumber: "0656", county: "Rice", latitude: 44.2950, longitude: -93.2689, totalSchools: 7, totalEnrollment: 3800, candidateSites: 4, avgSouthFacingScore: 0.83, estimatedGreenhouseSqft: 8500, topCandidateSchool: "Faribault High School", topCandidateSqft: 10000, topCandidateScore: 0.88, status: "High Priority", notes: "Growing diverse community" },
+      { districtName: "Owatonna Public Schools", districtNumber: "0761", county: "Steele", latitude: 44.0839, longitude: -93.2261, totalSchools: 8, totalEnrollment: 5600, candidateSites: 5, avgSouthFacingScore: 0.84, estimatedGreenhouseSqft: 9500, topCandidateSchool: "Owatonna High School", topCandidateSqft: 11000, topCandidateScore: 0.89, status: "High Priority", notes: "Southern MN manufacturing hub" },
+      { districtName: "Northfield Public Schools", districtNumber: "0659", county: "Rice", latitude: 44.4583, longitude: -93.1614, totalSchools: 5, totalEnrollment: 4100, candidateSites: 4, avgSouthFacingScore: 0.85, estimatedGreenhouseSqft: 9000, topCandidateSchool: "Northfield High School", topCandidateSqft: 10500, topCandidateScore: 0.90, status: "High Priority", notes: "College town, strong community engagement" },
+      { districtName: "Red Wing Public Schools", districtNumber: "0256", county: "Goodhue", latitude: 44.5625, longitude: -92.5336, totalSchools: 5, totalEnrollment: 2900, candidateSites: 3, avgSouthFacingScore: 0.84, estimatedGreenhouseSqft: 8000, topCandidateSchool: "Red Wing High School", topCandidateSqft: 9500, topCandidateScore: 0.88, status: "High Priority", notes: "River community with arts focus" },
+      { districtName: "Chaska Public Schools", districtNumber: "0112", county: "Carver", latitude: 44.7894, longitude: -93.6019, totalSchools: 11, totalEnrollment: 8900, candidateSites: 6, avgSouthFacingScore: 0.86, estimatedGreenhouseSqft: 11000, topCandidateSchool: "Chaska High School", topCandidateSqft: 13000, topCandidateScore: 0.92, status: "High Priority", notes: "Growing southwest metro district" },
+      { districtName: "Hastings Public Schools", districtNumber: "0200", county: "Dakota", latitude: 44.7433, longitude: -92.8517, totalSchools: 7, totalEnrollment: 4400, candidateSites: 4, avgSouthFacingScore: 0.84, estimatedGreenhouseSqft: 9000, topCandidateSchool: "Hastings High School", topCandidateSqft: 10500, topCandidateScore: 0.89, status: "High Priority", notes: "Historic river community" },
+      { districtName: "Cambridge-Isanti Schools", districtNumber: "0911", county: "Isanti", latitude: 45.5728, longitude: -93.2242, totalSchools: 8, totalEnrollment: 5800, candidateSites: 5, avgSouthFacingScore: 0.82, estimatedGreenhouseSqft: 9500, topCandidateSchool: "Cambridge-Isanti High School", topCandidateSqft: 11000, topCandidateScore: 0.88, status: "High Priority", notes: "Rural-suburban transition area" },
+      { districtName: "Monticello Public Schools", districtNumber: "0882", county: "Wright", latitude: 45.3058, longitude: -93.7942, totalSchools: 6, totalEnrollment: 5200, candidateSites: 4, avgSouthFacingScore: 0.83, estimatedGreenhouseSqft: 9500, topCandidateSchool: "Monticello High School", topCandidateSqft: 11000, topCandidateScore: 0.89, status: "High Priority", notes: "Growing northwest corridor" },
+      { districtName: "Buffalo-Hanover-Montrose Schools", districtNumber: "0877", county: "Wright", latitude: 45.1720, longitude: -93.8745, totalSchools: 8, totalEnrollment: 6200, candidateSites: 5, avgSouthFacingScore: 0.83, estimatedGreenhouseSqft: 9500, topCandidateSchool: "Buffalo High School", topCandidateSqft: 11000, topCandidateScore: 0.89, status: "High Priority", notes: "Fast-growing western metro" },
       { districtName: "Cass Lake-Bena Schools", districtNumber: "0115", county: "Cass", latitude: 47.3797, longitude: -94.5428, totalSchools: 3, totalEnrollment: 620, candidateSites: 2, avgSouthFacingScore: 0.73, estimatedGreenhouseSqft: 6000, topCandidateSchool: "Cass Lake-Bena High School", topCandidateSqft: 7500, topCandidateScore: 0.82, status: "High Priority", notes: "Leech Lake Band tribal community, food sovereignty focus" },
       { districtName: "Red Lake Schools", districtNumber: "0038", county: "Beltrami", latitude: 47.8764, longitude: -95.0169, totalSchools: 4, totalEnrollment: 1100, candidateSites: 2, avgSouthFacingScore: 0.72, estimatedGreenhouseSqft: 6500, topCandidateSchool: "Red Lake High School", topCandidateSqft: 8000, topCandidateScore: 0.81, status: "High Priority", notes: "Red Lake Nation, traditional foods integration" },
       { districtName: "Nay Ah Shing Schools", districtNumber: "0435", county: "Mille Lacs", latitude: 46.1250, longitude: -93.7117, totalSchools: 2, totalEnrollment: 280, candidateSites: 2, avgSouthFacingScore: 0.76, estimatedGreenhouseSqft: 5500, topCandidateSchool: "Nay Ah Shing School", topCandidateSqft: 7000, topCandidateScore: 0.84, status: "High Priority", notes: "Mille Lacs Band, cultural curriculum integration" },
-      { districtName: "West St. Paul-Mendota Heights", districtNumber: "0197", county: "Dakota", latitude: 44.8833, longitude: -93.1380, totalSchools: 6, totalEnrollment: 4800, candidateSites: 4, avgSouthFacingScore: 0.84, estimatedGreenhouseSqft: 9000, topCandidateSchool: "Henry Sibley High School", topCandidateSqft: 10500, topCandidateScore: 0.89, status: "Active Planning", notes: "Pilot program partner district" }
+      { districtName: "West St. Paul-Mendota Heights", districtNumber: "0197", county: "Dakota", latitude: 44.8833, longitude: -93.1380, totalSchools: 6, totalEnrollment: 4800, candidateSites: 4, avgSouthFacingScore: 0.84, estimatedGreenhouseSqft: 9000, topCandidateSchool: "Henry Sibley High School", topCandidateSqft: 10500, topCandidateScore: 0.89, status: "High Priority", notes: "Pilot program partner district" }
     ];
     
     // Calculate distribution jobs based on enrollment and add to each district
