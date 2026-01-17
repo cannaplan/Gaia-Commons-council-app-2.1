@@ -37,6 +37,11 @@ Gaia Commons Council is a full-stack dashboard application for tracking pilot pr
     - **53 School Districts (311 jobs)**:
       - Receiving Coordinators: ~103 jobs (1 per 5,000 students, min 1)
       - Cafeteria Distribution Staff: ~208 jobs (1 per 3,000 students, min 1)
+- **Land & Water Conservation Fund**: 10% of annual endowment revenue dedicated to purchasing and protecting Minnesota's natural resources:
+  - **Financial Projections**: ~$6.3M/year at statewide scale, $315M total over 50 years, 100K+ acres at $3,000/acre average
+  - **Acquisition Priorities**: Forests (35%), Farmland (30%), Waterways (25%), Tribal Lands (10%)
+  - **Acquisition Sources**: Private landowners (60%), Federal government (25%), State & County (15%)
+  - **Perpetual Protection**: All lands held in permanent land trust — never to be sold or developed
 - **Cluster Builder Tool**: Added interactive 4-step wizard for students/teachers to design custom greenhouse pilot programs. Users can select schools, choose produce varieties, and generate pilot proposals with complete metrics (sqft, production, jobs, costs, environmental impact).
 - **MN School Districts Map**: Added 53 Minnesota school districts with greenhouse candidate data, dual-mode toggle (active sites vs all districts), and filtering by size/south-facing score.
 - **Tribal Community Priority**: Included Cass Lake-Bena, Red Lake, and Nay Ah Shing districts as High Priority for food sovereignty initiatives.
