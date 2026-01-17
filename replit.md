@@ -20,7 +20,7 @@ Gaia Commons Council is a full-stack dashboard application for tracking pilot pr
   - **Production & distribution**: 38.4M lbs annual specialty crops — 60% to 53 school districts, 40% excess sold to stores/markets
   - **Revenue modeling**: $53.8M annual sales revenue @ $3.50/lb wholesale, $42.2M net after operations
   - **Specialty crops by community**: Mushrooms, microgreens, edible flowers, year-round strawberries, specialty melons, gourmet vegetables
-  - **1,815 permanent jobs** funded by endowment vs. 1,855 temporary mining jobs:
+  - **1,815 permanent jobs** funded by endowment vs. ~1,500 temporary mining jobs (Twin Metals estimate):
     - **5 Northern MN Hubs (1,504 jobs)**:
       - Greenhouse Operations: 1,152 jobs (growing, harvesting, maintenance)
       - School Greenhouse Educators: 96 jobs

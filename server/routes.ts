@@ -1460,7 +1460,7 @@ async function seedDatabase() {
         latitude: 47.9033,
         longitude: -91.8672,
         population: 3460,
-        miningJobsPromised: 750,
+        miningJobsPromised: 600,  // Updated: Twin Metals total ~1,500 jobs
         miningAvgSalary: 65000,
         miningDuration: "20-25 years (then depleted)",
         greenhouseComplexSqft: 225000,  // Halved from 450K
@@ -1505,7 +1505,7 @@ async function seedDatabase() {
         latitude: 47.7083,
         longitude: -91.9436,
         population: 1475,
-        miningJobsPromised: 350,
+        miningJobsPromised: 285,  // Updated: Twin Metals total ~1,500 jobs
         miningAvgSalary: 62000,
         miningDuration: "20-25 years (then depleted)",
         greenhouseComplexSqft: 127500,  // Halved from 255K
@@ -1550,7 +1550,7 @@ async function seedDatabase() {
         latitude: 47.4272,
         longitude: -92.9378,
         population: 15560,
-        miningJobsPromised: 500,
+        miningJobsPromised: 400,  // Updated: Twin Metals total ~1,500 jobs
         miningAvgSalary: 64000,
         miningDuration: "20-25 years (then depleted)",
         greenhouseComplexSqft: 375000,  // Halved from 750K
@@ -1595,7 +1595,7 @@ async function seedDatabase() {
         latitude: 47.8053,
         longitude: -92.2917,
         population: 490,
-        miningJobsPromised: 75,
+        miningJobsPromised: 60,   // Updated: Twin Metals total ~1,500 jobs
         miningAvgSalary: 58000,
         miningDuration: "20-25 years (then depleted)",
         greenhouseComplexSqft: 52500,   // Halved from 105K
@@ -1640,7 +1640,7 @@ async function seedDatabase() {
         latitude: 47.5233,
         longitude: -92.5364,
         population: 8060,
-        miningJobsPromised: 180,
+        miningJobsPromised: 155,  // Updated: Twin Metals total ~1,500 jobs
         miningAvgSalary: 60000,
         miningDuration: "20-25 years (then depleted)",
         greenhouseComplexSqft: 180000,  // Halved from 360K

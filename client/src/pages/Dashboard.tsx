@@ -450,7 +450,7 @@ export default function Dashboard() {
                             <p className="font-semibold text-foreground">{cluster.greenhouses}</p>
                           </div>
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-2 mb-4">
                           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Individual Schools</p>
                           {clusterSchools.map(school => (
                             <div key={school.id} className="flex items-center justify-between p-2 bg-background rounded-lg border border-border/30">
@@ -465,9 +465,126 @@ export default function Dashboard() {
                             </div>
                           ))}
                         </div>
+                        
+                        {/* Cost Analysis per Cluster */}
+                        <div className="mt-4 p-3 bg-gradient-to-r from-emerald-50/50 to-blue-50/50 dark:from-emerald-950/20 dark:to-blue-950/20 rounded-lg border border-emerald-200/50 dark:border-emerald-800/50">
+                          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2 flex items-center gap-1">
+                            <DollarSign className="h-3 w-3" /> Initial Cost Analysis
+                          </p>
+                          <div className="grid grid-cols-2 gap-2 text-xs">
+                            <div className="flex justify-between">
+                              <span className="text-muted-foreground">Construction ($85/sqft):</span>
+                              <span className="font-semibold">${((cluster.totalSqft * 85) / 1e6).toFixed(2)}M</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-muted-foreground">Annual OpEx ($12/sqft):</span>
+                              <span className="font-semibold">${((cluster.totalSqft * 12) / 1e3).toFixed(0)}K</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-muted-foreground">Est. Annual Yield:</span>
+                              <span className="font-semibold">{((cluster.totalSqft * 40) / 1e6).toFixed(1)}M lbs</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-muted-foreground">Revenue (@$2.50/lb):</span>
+                              <span className="font-semibold text-emerald-600">${((cluster.totalSqft * 40 * 2.50) / 1e6).toFixed(2)}M</span>
+                            </div>
+                          </div>
+                          <div className="mt-2 pt-2 border-t border-border/30 flex justify-between text-xs">
+                            <span className="text-muted-foreground">Net Annual Surplus:</span>
+                            <span className="font-bold text-emerald-600">${(((cluster.totalSqft * 40 * 2.50) - (cluster.totalSqft * 12)) / 1e6).toFixed(2)}M</span>
+                          </div>
+                        </div>
                       </div>
                     );
                   })}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* 2.5 TRIBAL PARTNERSHIPS - Food Sovereignty (moved here to follow MN pilot) */}
+        {tribalPartnerships && tribalPartnerships.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.12 }} className="mb-8">
+            <Card className="glass-panel" data-testid="card-tribal-partnerships">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <Feather className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Tribal Partnerships — Permanent Food Sovereignty</CardTitle>
+                <Badge variant="secondary" className="ml-auto">{tribalPartnerships.length} Partnership{tribalPartnerships.length > 1 ? 's' : ''}</Badge>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-4 italic">Priority expansion with sovereign tribal nations. Tribe owns everything, forever. No money leaves the reservation.</p>
+                <div className="space-y-4">
+                  {tribalPartnerships.map((partnership) => (
+                    <div key={partnership.id} className="p-4 bg-muted/30 rounded-xl border border-border/50" data-testid={`tribal-${partnership.id}`}>
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-bold text-lg text-foreground">{partnership.tribeName}</h3>
+                          <Badge variant="outline" className="bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800">{partnership.status}</Badge>
+                        </div>
+                        <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                          <MapPin className="h-4 w-4" />
+                          {partnership.location}
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                        <div className="p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg border border-emerald-100 dark:border-emerald-900/50">
+                          <p className="text-xs text-emerald-700 dark:text-emerald-400 font-medium">Greenhouses</p>
+                          <p className="text-lg font-bold text-emerald-800 dark:text-emerald-300">{partnership.greenhouseCount}</p>
+                        </div>
+                        <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-100 dark:border-blue-900/50">
+                          <p className="text-xs text-blue-700 dark:text-blue-400 font-medium">Local Jobs</p>
+                          <p className="text-lg font-bold text-blue-800 dark:text-blue-300">{partnership.jobsCreated}</p>
+                          <p className="text-xs text-blue-600 dark:text-blue-400">{partnership.hourlyWage}</p>
+                        </div>
+                        <div className="p-3 bg-purple-50 dark:bg-purple-950/30 rounded-lg border border-purple-100 dark:border-purple-900/50">
+                          <p className="text-xs text-purple-700 dark:text-purple-400 font-medium">Students Served</p>
+                          <p className="text-lg font-bold text-purple-800 dark:text-purple-300">{partnership.studentsServed.toLocaleString()}</p>
+                        </div>
+                        <div className="p-3 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-100 dark:border-amber-900/50">
+                          <p className="text-xs text-amber-700 dark:text-amber-400 font-medium">First Harvest</p>
+                          <p className="text-lg font-bold text-amber-800 dark:text-amber-300">{partnership.firstHarvest}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                        <div className="p-3 bg-muted/50 rounded-lg">
+                          <p className="text-xs font-medium text-muted-foreground mb-1">Schools Served</p>
+                          <p className="text-sm text-foreground">{partnership.schoolsServed}</p>
+                        </div>
+                        {partnership.annualSurplus && (
+                          <div className="p-3 bg-muted/50 rounded-lg">
+                            <p className="text-xs font-medium text-muted-foreground mb-1">Annual Surplus (after Year {partnership.breakEvenYear})</p>
+                            <p className="text-sm font-semibold text-primary">{partnership.annualSurplus}</p>
+                          </div>
+                        )}
+                      </div>
+                      
+                      {partnership.surplusSplit && (
+                        <div className="p-3 bg-primary/5 rounded-lg border border-primary/10 mb-3">
+                          <p className="text-xs font-medium text-primary/70 mb-1">Surplus Distribution</p>
+                          <p className="text-sm text-foreground">{partnership.surplusSplit}</p>
+                        </div>
+                      )}
+                      
+                      <div className="p-3 bg-muted/30 rounded-lg mb-3">
+                        <p className="text-xs font-medium text-muted-foreground mb-1 flex items-center gap-1">
+                          <ShieldCheck className="h-3 w-3" /> Governance & Fraud Protection
+                        </p>
+                        <p className="text-sm text-foreground">{partnership.governance}</p>
+                      </div>
+                      
+                      {partnership.complementaryProjects && (
+                        <div className="p-3 bg-emerald-50/50 dark:bg-emerald-950/20 rounded-lg border border-emerald-100 dark:border-emerald-900/30">
+                          <p className="text-xs font-medium text-emerald-700 dark:text-emerald-400 mb-1 flex items-center gap-1">
+                            <Leaf className="h-3 w-3" /> Complementary Projects
+                          </p>
+                          <p className="text-sm text-emerald-800 dark:text-emerald-300">{partnership.complementaryProjects}</p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
@@ -483,7 +600,7 @@ export default function Dashboard() {
             </CardHeader>
             <CardContent>
               <Tabs value={selectedScale} onValueChange={setSelectedScale} className="w-full">
-                <TabsList className="grid w-full grid-cols-4 mb-6" data-testid="tabs-scale">
+                <TabsList className="grid w-full grid-cols-4 mb-4" data-testid="tabs-scale">
                   <TabsTrigger value="pilot" data-testid="tab-pilot" className="flex items-center gap-2">
                     <School className="h-4 w-4" />
                     <span className="hidden sm:inline">Pilot</span>
@@ -501,6 +618,46 @@ export default function Dashboard() {
                     <span className="hidden sm:inline">Global</span>
                   </TabsTrigger>
                 </TabsList>
+                
+                {/* Phase Context Info */}
+                <div className="mb-4 p-3 bg-muted/30 rounded-lg border border-border/50">
+                  {selectedScale === 'pilot' && (
+                    <div className="flex items-start gap-2">
+                      <Info className="h-4 w-4 text-blue-500 mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium text-foreground">2026 Pilot Phase</p>
+                        <p className="text-xs text-muted-foreground">6 St. Paul/Mendota schools demonstrating the model. 5,630 students receiving fresh produce daily. $2.95M initial investment with 435% ROI.</p>
+                      </div>
+                    </div>
+                  )}
+                  {selectedScale === 'statewide' && (
+                    <div className="flex items-start gap-2">
+                      <Info className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium text-foreground">2028-2030 Statewide Expansion</p>
+                        <p className="text-xs text-muted-foreground">After ballot initiative passes, $2.1B endowment funds 275 greenhouses across all Minnesota school districts. 875,000 students fed daily with year-round fresh produce.</p>
+                      </div>
+                    </div>
+                  )}
+                  {selectedScale === 'national' && (
+                    <div className="flex items-start gap-2">
+                      <Info className="h-4 w-4 text-purple-500 mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium text-foreground">2035 National Rollout</p>
+                        <p className="text-xs text-muted-foreground">Other states adopt the proven Minnesota model through similar ballot initiatives. 130,000 schools and 50 million students benefit nationwide with $48B total investment.</p>
+                      </div>
+                    </div>
+                  )}
+                  {selectedScale === 'global' && (
+                    <div className="flex items-start gap-2">
+                      <Info className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium text-foreground">2040+ Global Impact</p>
+                        <p className="text-xs text-muted-foreground">International partners replicate the model. 1 million schools serve 500 million children with food security. 41M tons CO2 sequestered annually, transforming global food systems.</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
 
                 {currentScale && (
                   <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -688,42 +845,111 @@ export default function Dashboard() {
           </motion.div>
         </div>
 
-        {/* Scale Comparison Charts */}
+        {/* Scale Comparison - Detailed Table with Context */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="mb-8">
-          <Card className="glass-panel" data-testid="card-scale-comparison">
-            <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
-              <TrendingUp className="h-5 w-5 text-primary" />
-              <CardTitle className="text-lg font-semibold">Scale Comparison — Pilot to Global Deployment Metrics</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="h-72">
-                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">Jobs Created by Scale</p>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={scaleComparisonData}>
-                      <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                      <XAxis dataKey="name" className="text-xs" />
-                      <YAxis className="text-xs" tickFormatter={(v) => formatNumber(v)} />
-                      <Tooltip formatter={(value: number) => formatNumber(value)} />
-                      <Bar dataKey="jobs" fill="#8b5cf6" radius={[4, 4, 0, 0]} name="Jobs" />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-                <div className="h-72">
-                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">Meals Per Day by Scale</p>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={scaleComparisonData}>
-                      <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                      <XAxis dataKey="name" className="text-xs" />
-                      <YAxis className="text-xs" tickFormatter={(v) => formatNumber(v)} />
-                      <Tooltip formatter={(value: number) => formatNumber(value)} />
-                      <Bar dataKey="meals" fill="#22c55e" radius={[4, 4, 0, 0]} name="Meals/Day" />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
+          <CollapsibleSection
+            title="Growth Pathway — From 6 Schools to Global Impact"
+            icon={<TrendingUp className="h-5 w-5 text-primary" />}
+            badge={<Badge variant="secondary">4 Phases</Badge>}
+            defaultOpen={true}
+            testId="card-scale-comparison"
+          >
+            <p className="text-sm text-muted-foreground mb-4">
+              The Gaia Commons model scales from a 6-school Minnesota pilot to global deployment. Each phase builds on proven success, 
+              with the 2026 ballot initiative funding statewide expansion. Here's how the numbers grow at each stage:
+            </p>
+            
+            {/* Detailed Comparison Table */}
+            <div className="overflow-x-auto mb-6">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="text-left p-3 font-semibold text-foreground bg-muted/30">Metric</th>
+                    {scaleProjections?.map(s => (
+                      <th key={s.scale} className="text-center p-3 font-semibold text-foreground bg-muted/30">
+                        <div className="flex flex-col items-center gap-1">
+                          <span className="capitalize">{s.scale}</span>
+                          <Badge variant="outline" className="text-xs">
+                            {s.scale === 'pilot' ? '2026' : s.scale === 'statewide' ? '2028-30' : s.scale === 'national' ? '2035' : '2040+'}
+                          </Badge>
+                        </div>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-border/50 hover:bg-muted/20">
+                    <td className="p-3 text-muted-foreground flex items-center gap-2">
+                      <School className="h-4 w-4" /> Schools
+                    </td>
+                    {scaleProjections?.map(s => (
+                      <td key={s.scale} className="text-center p-3 font-medium">{formatNumber(s.schools)}</td>
+                    ))}
+                  </tr>
+                  <tr className="border-b border-border/50 hover:bg-muted/20">
+                    <td className="p-3 text-muted-foreground flex items-center gap-2">
+                      <Users className="h-4 w-4" /> Students Fed Daily
+                    </td>
+                    {scaleProjections?.map(s => (
+                      <td key={s.scale} className="text-center p-3 font-medium">{formatNumber(s.students)}</td>
+                    ))}
+                  </tr>
+                  <tr className="border-b border-border/50 hover:bg-muted/20">
+                    <td className="p-3 text-muted-foreground flex items-center gap-2">
+                      <Briefcase className="h-4 w-4" /> Jobs Created
+                    </td>
+                    {scaleProjections?.map(s => (
+                      <td key={s.scale} className="text-center p-3 font-medium text-primary">{formatNumber(s.jobs)}</td>
+                    ))}
+                  </tr>
+                  <tr className="border-b border-border/50 hover:bg-muted/20">
+                    <td className="p-3 text-muted-foreground flex items-center gap-2">
+                      <Utensils className="h-4 w-4" /> Meals Per Day
+                    </td>
+                    {scaleProjections?.map(s => (
+                      <td key={s.scale} className="text-center p-3 font-medium text-emerald-600 dark:text-emerald-400">{formatNumber(s.mealsPerDay)}</td>
+                    ))}
+                  </tr>
+                  <tr className="border-b border-border/50 hover:bg-muted/20">
+                    <td className="p-3 text-muted-foreground flex items-center gap-2">
+                      <Leaf className="h-4 w-4" /> CO2 Sequestered (tons/yr)
+                    </td>
+                    {scaleProjections?.map(s => (
+                      <td key={s.scale} className="text-center p-3 font-medium">{formatNumber(s.co2TonsAnnual)}</td>
+                    ))}
+                  </tr>
+                  <tr className="border-b border-border/50 hover:bg-muted/20">
+                    <td className="p-3 text-muted-foreground flex items-center gap-2">
+                      <DollarSign className="h-4 w-4" /> Endowment Target
+                    </td>
+                    {scaleProjections?.map(s => (
+                      <td key={s.scale} className="text-center p-3 font-medium">{formatLargeNumber(s.endowmentTarget)}</td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Phase Explanations */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="p-4 bg-blue-50/50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                <h4 className="font-semibold text-blue-700 dark:text-blue-300 mb-2">Pilot (2026)</h4>
+                <p className="text-xs text-muted-foreground">6 St. Paul/Mendota schools prove the model works. 5,630 students receive fresh produce daily.</p>
               </div>
-            </CardContent>
-          </Card>
+              <div className="p-4 bg-emerald-50/50 dark:bg-emerald-950/20 rounded-lg border border-emerald-200 dark:border-emerald-800">
+                <h4 className="font-semibold text-emerald-700 dark:text-emerald-300 mb-2">Statewide (2028-30)</h4>
+                <p className="text-xs text-muted-foreground">Ballot initiative passes. $2.1B endowment funds 275 greenhouses across all Minnesota districts.</p>
+              </div>
+              <div className="p-4 bg-purple-50/50 dark:bg-purple-950/20 rounded-lg border border-purple-200 dark:border-purple-800">
+                <h4 className="font-semibold text-purple-700 dark:text-purple-300 mb-2">National (2035)</h4>
+                <p className="text-xs text-muted-foreground">Other states adopt the proven Minnesota model. 50 million students benefit nationwide.</p>
+              </div>
+              <div className="p-4 bg-amber-50/50 dark:bg-amber-950/20 rounded-lg border border-amber-200 dark:border-amber-800">
+                <h4 className="font-semibold text-amber-700 dark:text-amber-300 mb-2">Global (2040+)</h4>
+                <p className="text-xs text-muted-foreground">International partners replicate the model. Half a billion children gain food security.</p>
+              </div>
+            </div>
+          </CollapsibleSection>
         </motion.div>
 
         {/* Financial Engine & Climate (original sections) */}
@@ -1626,94 +1852,6 @@ export default function Dashboard() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.495 }} className="mb-8">
           <GlobalRegenerationMap />
         </motion.div>
-
-        {/* Tribal Partnerships - Food Sovereignty */}
-        {tribalPartnerships && tribalPartnerships.length > 0 && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.498 }} className="mb-8">
-            <Card className="glass-panel" data-testid="card-tribal-partnerships">
-              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
-                <Feather className="h-5 w-5 text-primary" />
-                <CardTitle className="text-lg font-semibold">Tribal Partnerships — Permanent Food Sovereignty</CardTitle>
-                <Badge variant="secondary" className="ml-auto">{tribalPartnerships.length} Partnership{tribalPartnerships.length > 1 ? 's' : ''}</Badge>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {tribalPartnerships.map((partnership) => (
-                    <div key={partnership.id} className="p-4 bg-muted/30 rounded-xl border border-border/50" data-testid={`tribal-${partnership.id}`}>
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-2">
-                          <h3 className="font-bold text-lg text-foreground">{partnership.tribeName}</h3>
-                          <Badge variant="outline" className="bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800">{partnership.status}</Badge>
-                        </div>
-                        <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                          <MapPin className="h-4 w-4" />
-                          {partnership.location}
-                        </div>
-                      </div>
-                      <p className="text-sm text-muted-foreground mb-4 italic">Tribe owns everything, forever. No money leaves the reservation.</p>
-                      
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-                        <div className="p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg border border-emerald-100 dark:border-emerald-900/50">
-                          <p className="text-xs text-emerald-700 dark:text-emerald-400 font-medium">Greenhouses</p>
-                          <p className="text-lg font-bold text-emerald-800 dark:text-emerald-300">{partnership.greenhouseCount}</p>
-                        </div>
-                        <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-100 dark:border-blue-900/50">
-                          <p className="text-xs text-blue-700 dark:text-blue-400 font-medium">Local Jobs</p>
-                          <p className="text-lg font-bold text-blue-800 dark:text-blue-300">{partnership.jobsCreated}</p>
-                          <p className="text-xs text-blue-600 dark:text-blue-400">{partnership.hourlyWage}</p>
-                        </div>
-                        <div className="p-3 bg-purple-50 dark:bg-purple-950/30 rounded-lg border border-purple-100 dark:border-purple-900/50">
-                          <p className="text-xs text-purple-700 dark:text-purple-400 font-medium">Students Served</p>
-                          <p className="text-lg font-bold text-purple-800 dark:text-purple-300">{partnership.studentsServed.toLocaleString()}</p>
-                        </div>
-                        <div className="p-3 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-100 dark:border-amber-900/50">
-                          <p className="text-xs text-amber-700 dark:text-amber-400 font-medium">First Harvest</p>
-                          <p className="text-lg font-bold text-amber-800 dark:text-amber-300">{partnership.firstHarvest}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
-                        <div className="p-3 bg-muted/50 rounded-lg">
-                          <p className="text-xs font-medium text-muted-foreground mb-1">Schools Served</p>
-                          <p className="text-sm text-foreground">{partnership.schoolsServed}</p>
-                        </div>
-                        {partnership.annualSurplus && (
-                          <div className="p-3 bg-muted/50 rounded-lg">
-                            <p className="text-xs font-medium text-muted-foreground mb-1">Annual Surplus (after Year {partnership.breakEvenYear})</p>
-                            <p className="text-sm font-semibold text-primary">{partnership.annualSurplus}</p>
-                          </div>
-                        )}
-                      </div>
-                      
-                      {partnership.surplusSplit && (
-                        <div className="p-3 bg-primary/5 rounded-lg border border-primary/10 mb-3">
-                          <p className="text-xs font-medium text-primary/70 mb-1">Surplus Distribution</p>
-                          <p className="text-sm text-foreground">{partnership.surplusSplit}</p>
-                        </div>
-                      )}
-                      
-                      <div className="p-3 bg-muted/30 rounded-lg mb-3">
-                        <p className="text-xs font-medium text-muted-foreground mb-1 flex items-center gap-1">
-                          <ShieldCheck className="h-3 w-3" /> Governance & Fraud Protection
-                        </p>
-                        <p className="text-sm text-foreground">{partnership.governance}</p>
-                      </div>
-                      
-                      {partnership.complementaryProjects && (
-                        <div className="p-3 bg-emerald-50/50 dark:bg-emerald-950/20 rounded-lg border border-emerald-100 dark:border-emerald-900/30">
-                          <p className="text-xs font-medium text-emerald-700 dark:text-emerald-400 mb-1 flex items-center gap-1">
-                            <Leaf className="h-3 w-3" /> Complementary Projects
-                          </p>
-                          <p className="text-sm text-emerald-800 dark:text-emerald-300">{partnership.complementaryProjects}</p>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
 
         {/* Implementation Timeline */}
         {implementationTimeline && implementationTimeline.length > 0 && (
