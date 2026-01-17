@@ -15,6 +15,14 @@ Gaia Commons Council is a full-stack dashboard application for tracking pilot pr
   - **Mobile Optimization**: Responsive utilities and print styles in index.css.
 
 - **Twin Metals Mining Alternative Section (Updated)**: Comprehensive Boundary Waters protection feature with 5 Northern MN communities (Ely, Babbitt, Hibbing, Tower, Virginia). Now includes:
+  - **Foreign Ownership Exposé**: Twin Metals is 100% owned by Antofagasta PLC (Chilean mining conglomerate, London HQ, controlled by Luksic billionaire family)
+  - **Profit Leakage Analysis**:
+    - 50% of profits → dividends to Luksic family (Chile)
+    - 0.4% gross proceeds tax (vs $3.35/ton for iron mining)
+    - 0% of that tax goes to State General Fund (Taconite Area rules)
+    - Ore leaves state for processing elsewhere
+    - Minnesota left with cleanup liability when mine closes
+  - **Side-by-Side Comparison Table**: Mining vs Gaia on ownership, profits, taxes, jobs, duration, wages, resources, environment, post-closure, foreign workers
   - **Halved greenhouse sqft**: 960K total (225K Ely, 127.5K Babbitt, 375K Hibbing, 52.5K Tower, 180K Virginia)
   - **Complete financial modeling**: $85/sqft construction cost, $12/sqft/year operations, 40 lbs/sqft/year production
   - **Production & distribution**: 38.4M lbs annual specialty crops — 60% to 53 school districts, 40% excess sold to stores/markets

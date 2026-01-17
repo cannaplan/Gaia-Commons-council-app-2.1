@@ -150,7 +150,9 @@ import {
   ChevronRight,
   ChevronLeft,
   Truck,
-  Sparkles
+  Sparkles,
+  ArrowRight,
+  Home
 } from "lucide-react";
 import {
   Carousel,
@@ -1618,6 +1620,166 @@ export default function Dashboard() {
                       <p className="text-sm text-emerald-700 dark:text-emerald-400 mt-2 font-medium">
                         Our alternative: Massive greenhouse complexes + school greenhouses funded by the endowment, creating permanent jobs that protect the environment.
                       </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Foreign Ownership & Profit Leakage Section */}
+                <div className="mb-6 p-4 bg-red-50 dark:bg-red-950/30 rounded-xl border border-red-200 dark:border-red-800">
+                  <div className="flex items-start gap-3 mb-4">
+                    <Globe className="h-5 w-5 text-red-600 mt-0.5 shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-red-800 dark:text-red-300">Foreign Ownership: Where Your Resources Go</h4>
+                      <p className="text-sm text-red-700 dark:text-red-400 mt-1">
+                        Twin Metals is <span className="font-bold">100% owned by Antofagasta PLC</span> — a Chilean mining conglomerate controlled by the <span className="font-bold">Luksic family (Chilean billionaires)</span>, headquartered in London. Minnesota provides the land, water, and workers. Foreign billionaires keep the profits.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div className="p-3 bg-white/70 dark:bg-black/30 rounded-lg">
+                      <h5 className="font-semibold text-red-700 dark:text-red-300 mb-2 flex items-center gap-2">
+                        <DollarSign className="h-4 w-4" /> What Leaves Minnesota
+                      </h5>
+                      <ul className="space-y-1 text-sm text-red-600 dark:text-red-400">
+                        <li className="flex items-center gap-2"><ArrowRight className="h-3 w-3" /> <span className="font-bold">50% of profits</span> → dividends to Luksic family (Chile)</li>
+                        <li className="flex items-center gap-2"><ArrowRight className="h-3 w-3" /> Corporate profits → London headquarters</li>
+                        <li className="flex items-center gap-2"><ArrowRight className="h-3 w-3" /> Management fees → parent company</li>
+                        <li className="flex items-center gap-2"><ArrowRight className="h-3 w-3" /> Ore leaves state → processed elsewhere</li>
+                        <li className="flex items-center gap-2"><ArrowRight className="h-3 w-3" /> Equipment often imported from Canada/Australia</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-3 bg-white/70 dark:bg-black/30 rounded-lg">
+                      <h5 className="font-semibold text-red-700 dark:text-red-300 mb-2 flex items-center gap-2">
+                        <Building className="h-4 w-4" /> What Minnesota Gets
+                      </h5>
+                      <ul className="space-y-1 text-sm text-red-600 dark:text-red-400">
+                        <li className="flex items-center gap-2"><ArrowRight className="h-3 w-3" /> Employee wages (~$45-50M/yr for ~1,500 jobs)</li>
+                        <li className="flex items-center gap-2"><ArrowRight className="h-3 w-3" /> <span className="font-bold">Only 0.4%</span> gross proceeds tax</li>
+                        <li className="flex items-center gap-2"><ArrowRight className="h-3 w-3" /> Of that 0.4%: <span className="font-bold">0% to State General Fund</span></li>
+                        <li className="flex items-center gap-2"><ArrowRight className="h-3 w-3" /> Local property taxes (minimal)</li>
+                        <li className="flex items-center gap-2"><ArrowRight className="h-3 w-3" /> <span className="font-bold">Cleanup liability</span> when mine closes</li>
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div className="p-3 bg-red-100 dark:bg-red-900/40 rounded-lg text-center">
+                      <p className="text-2xl font-bold text-red-800 dark:text-red-200">0.4%</p>
+                      <p className="text-xs text-red-600 dark:text-red-400">MN Tax Rate</p>
+                      <p className="text-xs text-red-500 dark:text-red-500">(vs. 3.35/ton for iron)</p>
+                    </div>
+                    <div className="p-3 bg-red-100 dark:bg-red-900/40 rounded-lg text-center">
+                      <p className="text-2xl font-bold text-red-800 dark:text-red-200">0%</p>
+                      <p className="text-xs text-red-600 dark:text-red-400">To State Fund</p>
+                      <p className="text-xs text-red-500 dark:text-red-500">(Taconite Area rules)</p>
+                    </div>
+                    <div className="p-3 bg-red-100 dark:bg-red-900/40 rounded-lg text-center">
+                      <p className="text-2xl font-bold text-red-800 dark:text-red-200">50%</p>
+                      <p className="text-xs text-red-600 dark:text-red-400">Profits to Chile</p>
+                      <p className="text-xs text-red-500 dark:text-red-500">(Antofagasta dividend)</p>
+                    </div>
+                    <div className="p-3 bg-red-100 dark:bg-red-900/40 rounded-lg text-center">
+                      <p className="text-2xl font-bold text-red-800 dark:text-red-200">20-25</p>
+                      <p className="text-xs text-red-600 dark:text-red-400">Years Then Gone</p>
+                      <p className="text-xs text-red-500 dark:text-red-500">(Resource depleted)</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Gaia Alternative Comparison */}
+                <div className="mb-6 p-4 bg-emerald-50 dark:bg-emerald-950/30 rounded-xl border border-emerald-200 dark:border-emerald-800">
+                  <div className="flex items-start gap-3 mb-4">
+                    <Home className="h-5 w-5 text-emerald-600 mt-0.5 shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-emerald-800 dark:text-emerald-300">Gaia Commons Alternative: 100% Minnesota-Owned</h4>
+                      <p className="text-sm text-emerald-700 dark:text-emerald-400 mt-1">
+                        The Gaia Commons endowment is a <span className="font-bold">501(c)(3) nonprofit permanently domiciled in Minnesota</span>. Every dollar of profit stays in-state, reinvested in schools and communities. No foreign shareholders, no profit extraction.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-emerald-200 dark:border-emerald-700">
+                          <th className="text-left py-2 px-3 text-emerald-800 dark:text-emerald-300 font-semibold">Comparison</th>
+                          <th className="text-center py-2 px-3 text-red-700 dark:text-red-400 font-semibold">Twin Metals (Chile)</th>
+                          <th className="text-center py-2 px-3 text-emerald-700 dark:text-emerald-400 font-semibold">Gaia Commons (MN)</th>
+                        </tr>
+                      </thead>
+                      <tbody className="text-foreground">
+                        <tr className="border-b border-emerald-100 dark:border-emerald-800/50">
+                          <td className="py-2 px-3 font-medium">Ownership</td>
+                          <td className="py-2 px-3 text-center text-red-600 dark:text-red-400">100% Chilean billionaires</td>
+                          <td className="py-2 px-3 text-center text-emerald-600 dark:text-emerald-400 font-bold">100% Minnesota nonprofit</td>
+                        </tr>
+                        <tr className="border-b border-emerald-100 dark:border-emerald-800/50">
+                          <td className="py-2 px-3 font-medium">Profits Stay in MN</td>
+                          <td className="py-2 px-3 text-center text-red-600 dark:text-red-400">~0% (dividends to Chile)</td>
+                          <td className="py-2 px-3 text-center text-emerald-600 dark:text-emerald-400 font-bold">100% reinvested locally</td>
+                        </tr>
+                        <tr className="border-b border-emerald-100 dark:border-emerald-800/50">
+                          <td className="py-2 px-3 font-medium">State Tax Revenue</td>
+                          <td className="py-2 px-3 text-center text-red-600 dark:text-red-400">0.4% gross (0% to state fund)</td>
+                          <td className="py-2 px-3 text-center text-emerald-600 dark:text-emerald-400 font-bold">Full property + payroll taxes</td>
+                        </tr>
+                        <tr className="border-b border-emerald-100 dark:border-emerald-800/50">
+                          <td className="py-2 px-3 font-medium">Jobs</td>
+                          <td className="py-2 px-3 text-center text-red-600 dark:text-red-400">~1,500 temporary</td>
+                          <td className="py-2 px-3 text-center text-emerald-600 dark:text-emerald-400 font-bold">1,815+ permanent</td>
+                        </tr>
+                        <tr className="border-b border-emerald-100 dark:border-emerald-800/50">
+                          <td className="py-2 px-3 font-medium">Job Duration</td>
+                          <td className="py-2 px-3 text-center text-red-600 dark:text-red-400">20-25 years (ore depletes)</td>
+                          <td className="py-2 px-3 text-center text-emerald-600 dark:text-emerald-400 font-bold">Forever (renewable)</td>
+                        </tr>
+                        <tr className="border-b border-emerald-100 dark:border-emerald-800/50">
+                          <td className="py-2 px-3 font-medium">Average Wage</td>
+                          <td className="py-2 px-3 text-center text-red-600 dark:text-red-400">~$58K/year</td>
+                          <td className="py-2 px-3 text-center text-emerald-600 dark:text-emerald-400 font-bold">$58K+/year (matching)</td>
+                        </tr>
+                        <tr className="border-b border-emerald-100 dark:border-emerald-800/50">
+                          <td className="py-2 px-3 font-medium">Resource</td>
+                          <td className="py-2 px-3 text-center text-red-600 dark:text-red-400">Finite ore (depletes)</td>
+                          <td className="py-2 px-3 text-center text-emerald-600 dark:text-emerald-400 font-bold">Sunlight (infinite)</td>
+                        </tr>
+                        <tr className="border-b border-emerald-100 dark:border-emerald-800/50">
+                          <td className="py-2 px-3 font-medium">Environment</td>
+                          <td className="py-2 px-3 text-center text-red-600 dark:text-red-400">Sulfide pollution risk</td>
+                          <td className="py-2 px-3 text-center text-emerald-600 dark:text-emerald-400 font-bold">Carbon-negative</td>
+                        </tr>
+                        <tr className="border-b border-emerald-100 dark:border-emerald-800/50">
+                          <td className="py-2 px-3 font-medium">After Closure</td>
+                          <td className="py-2 px-3 text-center text-red-600 dark:text-red-400">Cleanup liability for MN</td>
+                          <td className="py-2 px-3 text-center text-emerald-600 dark:text-emerald-400 font-bold">Still operating</td>
+                        </tr>
+                        <tr>
+                          <td className="py-2 px-3 font-medium">Foreign Workers On-Site</td>
+                          <td className="py-2 px-3 text-center text-red-600 dark:text-red-400">Chile, UK, Canada, Australia</td>
+                          <td className="py-2 px-3 text-center text-emerald-600 dark:text-emerald-400 font-bold">100% local hire priority</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  
+                  <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div className="p-3 bg-emerald-100 dark:bg-emerald-900/40 rounded-lg text-center">
+                      <p className="text-2xl font-bold text-emerald-800 dark:text-emerald-200">100%</p>
+                      <p className="text-xs text-emerald-600 dark:text-emerald-400">Profits Stay in MN</p>
+                    </div>
+                    <div className="p-3 bg-emerald-100 dark:bg-emerald-900/40 rounded-lg text-center">
+                      <p className="text-2xl font-bold text-emerald-800 dark:text-emerald-200">$28/hr</p>
+                      <p className="text-xs text-emerald-600 dark:text-emerald-400">Living Wage Jobs</p>
+                    </div>
+                    <div className="p-3 bg-emerald-100 dark:bg-emerald-900/40 rounded-lg text-center">
+                      <p className="text-2xl font-bold text-emerald-800 dark:text-emerald-200">∞</p>
+                      <p className="text-xs text-emerald-600 dark:text-emerald-400">Years of Operation</p>
+                    </div>
+                    <div className="p-3 bg-emerald-100 dark:bg-emerald-900/40 rounded-lg text-center">
+                      <p className="text-2xl font-bold text-emerald-800 dark:text-emerald-200">0</p>
+                      <p className="text-xs text-emerald-600 dark:text-emerald-400">Foreign Shareholders</p>
                     </div>
                   </div>
                 </div>
