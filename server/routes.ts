@@ -904,8 +904,9 @@ async function seedDatabase() {
       await storage.createEndowmentProjection(e);
     }
 
-    // Seed Expanded Jobs Data (FTE + Internships + Volunteers from ballot deck)
+    // Seed Expanded Jobs Data (FTE + Internships + Volunteers + Construction from ballot deck)
     // Wages match or exceed Twin Metals mining wages (~$25-30/hr)
+    // Construction jobs calculated at ~1 job per $100K construction spend
     await storage.createExpandedJobs({
       scale: "pilot",
       fteJobs: 36,
@@ -913,7 +914,17 @@ async function seedDatabase() {
       volunteerPositions: 66,
       hourlyWage: 28,
       directWages: 2100000,
-      economicMultiplier: 2.4
+      economicMultiplier: 2.4,
+      // Pilot: 6 schools × 15K sqft = 90K sqft @ $85/sqft = $7.65M
+      constructionJobs: 76,
+      constructionGeneral: 30,
+      constructionElectricians: 15,
+      constructionPlumbers: 12,
+      constructionHvac: 12,
+      constructionSpecialists: 7,
+      constructionWage: 35,
+      constructionDurationYears: "1-2 years",
+      constructionSpending: 7650000
     });
     await storage.createExpandedJobs({
       scale: "statewide",
@@ -922,7 +933,17 @@ async function seedDatabase() {
       volunteerPositions: 3025,
       hourlyWage: 28,
       directWages: 83200000,
-      economicMultiplier: 2.4
+      economicMultiplier: 2.4,
+      // Statewide: 275 schools × 15K sqft + 960K regional hubs = 5.085M sqft @ $85/sqft = $432M
+      constructionJobs: 4320,
+      constructionGeneral: 1728,
+      constructionElectricians: 864,
+      constructionPlumbers: 648,
+      constructionHvac: 648,
+      constructionSpecialists: 432,
+      constructionWage: 35,
+      constructionDurationYears: "5-7 years (phased)",
+      constructionSpending: 432225000
     });
     await storage.createExpandedJobs({
       scale: "national",
@@ -931,7 +952,17 @@ async function seedDatabase() {
       volunteerPositions: 143000,
       hourlyWage: 26,
       directWages: 3650000000,
-      economicMultiplier: 2.4
+      economicMultiplier: 2.4,
+      // National: 130K schools × 12K sqft avg = 1.56B sqft @ $75/sqft = $117B (economies of scale)
+      constructionJobs: 1170000,
+      constructionGeneral: 468000,
+      constructionElectricians: 234000,
+      constructionPlumbers: 175500,
+      constructionHvac: 175500,
+      constructionSpecialists: 117000,
+      constructionWage: 32,
+      constructionDurationYears: "10-15 years (rolling)",
+      constructionSpending: 117000000000
     });
     await storage.createExpandedJobs({
       scale: "global",
@@ -940,7 +971,17 @@ async function seedDatabase() {
       volunteerPositions: 1100000,
       hourlyWage: 22,
       directWages: 23800000000,
-      economicMultiplier: 2.2
+      economicMultiplier: 2.2,
+      // Global: 1M schools × 10K sqft avg = 10B sqft @ $65/sqft = $650B (global economies of scale)
+      constructionJobs: 6500000,
+      constructionGeneral: 2600000,
+      constructionElectricians: 1300000,
+      constructionPlumbers: 975000,
+      constructionHvac: 975000,
+      constructionSpecialists: 650000,
+      constructionWage: 28,
+      constructionDurationYears: "20-30 years (phased)",
+      constructionSpending: 650000000000
     });
 
     // Seed K-12 NGSS Curriculum (from ballot deck slide 9) - Expanded with detailed units

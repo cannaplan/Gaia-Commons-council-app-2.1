@@ -152,7 +152,7 @@ export const endowmentProjections = pgTable("endowment_projections", {
   inflationAdjusted: real("inflation_adjusted"),
 });
 
-// Expanded Job Creation (includes internships, volunteers)
+// Expanded Job Creation (includes internships, volunteers, construction)
 export const expandedJobs = pgTable("expanded_jobs", {
   id: serial("id").primaryKey(),
   scale: text("scale").notNull(),
@@ -162,6 +162,16 @@ export const expandedJobs = pgTable("expanded_jobs", {
   hourlyWage: real("hourly_wage").notNull(),
   directWages: real("direct_wages").notNull(),
   economicMultiplier: real("economic_multiplier").notNull(),
+  // Construction Phase Jobs
+  constructionJobs: integer("construction_jobs").default(0),
+  constructionGeneral: integer("construction_general").default(0),
+  constructionElectricians: integer("construction_electricians").default(0),
+  constructionPlumbers: integer("construction_plumbers").default(0),
+  constructionHvac: integer("construction_hvac").default(0),
+  constructionSpecialists: integer("construction_specialists").default(0),
+  constructionWage: real("construction_wage").default(35),
+  constructionDurationYears: text("construction_duration_years"),
+  constructionSpending: real("construction_spending").default(0),
 });
 
 // K-12 NGSS Curriculum
