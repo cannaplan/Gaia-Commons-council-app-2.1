@@ -1559,7 +1559,7 @@ export default function Dashboard() {
                 </div>
 
                 {/* Construction Phase Jobs */}
-                <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/30 rounded-xl border border-blue-200 dark:border-blue-800">
+                <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/30 rounded-xl border border-blue-200 dark:border-blue-800" data-testid="section-construction-jobs">
                   <div className="flex items-center gap-2 mb-4">
                     <HardHat className="h-5 w-5 text-blue-600" />
                     <h4 className="font-semibold text-blue-800 dark:text-blue-300">Construction Phase Jobs — All Scales</h4>
@@ -1572,43 +1572,43 @@ export default function Dashboard() {
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {expandedJobs.map((job) => (
-                      <div key={job.id} className="p-3 bg-white/70 dark:bg-black/30 rounded-lg border border-blue-100 dark:border-blue-800/50">
+                      <div key={job.id} className="p-3 bg-white/70 dark:bg-black/30 rounded-lg border border-blue-100 dark:border-blue-800/50" data-testid={`card-construction-${job.scale}`}>
                         <div className="flex items-center gap-2 mb-2">
                           <Badge className={SCALE_COLORS[job.scale as keyof typeof SCALE_COLORS]}>{SCALE_LABELS[job.scale]}</Badge>
                         </div>
-                        <p className="text-2xl font-bold text-blue-800 dark:text-blue-200">{(job.constructionJobs || 0).toLocaleString()}</p>
+                        <p className="text-2xl font-bold text-blue-800 dark:text-blue-200" data-testid={`text-construction-jobs-${job.scale}`}>{(job.constructionJobs || 0).toLocaleString()}</p>
                         <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">Construction Jobs</p>
-                        <p className="text-[10px] text-blue-500 dark:text-blue-500 mt-1">{job.constructionDurationYears || "TBD"}</p>
+                        <p className="text-[10px] text-blue-500 dark:text-blue-500 mt-1" data-testid={`text-construction-duration-${job.scale}`}>{job.constructionDurationYears || "TBD"}</p>
                         
                         <div className="mt-3 pt-2 border-t border-blue-200 dark:border-blue-700/50 space-y-1">
-                          <div className="flex justify-between text-xs">
+                          <div className="flex justify-between text-xs" data-testid={`row-construction-${job.scale}-general`}>
                             <span className="text-blue-600 dark:text-blue-400">General</span>
                             <span className="font-medium text-blue-700 dark:text-blue-300">{(job.constructionGeneral || 0).toLocaleString()}</span>
                           </div>
-                          <div className="flex justify-between text-xs">
+                          <div className="flex justify-between text-xs" data-testid={`row-construction-${job.scale}-electricians`}>
                             <span className="text-blue-600 dark:text-blue-400">Electricians</span>
                             <span className="font-medium text-blue-700 dark:text-blue-300">{(job.constructionElectricians || 0).toLocaleString()}</span>
                           </div>
-                          <div className="flex justify-between text-xs">
+                          <div className="flex justify-between text-xs" data-testid={`row-construction-${job.scale}-plumbers`}>
                             <span className="text-blue-600 dark:text-blue-400">Plumbers</span>
                             <span className="font-medium text-blue-700 dark:text-blue-300">{(job.constructionPlumbers || 0).toLocaleString()}</span>
                           </div>
-                          <div className="flex justify-between text-xs">
+                          <div className="flex justify-between text-xs" data-testid={`row-construction-${job.scale}-hvac`}>
                             <span className="text-blue-600 dark:text-blue-400">HVAC</span>
                             <span className="font-medium text-blue-700 dark:text-blue-300">{(job.constructionHvac || 0).toLocaleString()}</span>
                           </div>
-                          <div className="flex justify-between text-xs">
+                          <div className="flex justify-between text-xs" data-testid={`row-construction-${job.scale}-specialists`}>
                             <span className="text-blue-600 dark:text-blue-400">Specialists</span>
                             <span className="font-medium text-blue-700 dark:text-blue-300">{(job.constructionSpecialists || 0).toLocaleString()}</span>
                           </div>
                         </div>
                         
                         <div className="mt-2 pt-2 border-t border-blue-200 dark:border-blue-700/50">
-                          <div className="flex justify-between text-xs">
+                          <div className="flex justify-between text-xs" data-testid={`text-construction-wage-${job.scale}`}>
                             <span className="text-blue-600 dark:text-blue-400">Avg. Wage</span>
                             <span className="font-bold text-blue-700 dark:text-blue-300">${job.constructionWage || 35}/hr</span>
                           </div>
-                          <div className="flex justify-between text-xs mt-1">
+                          <div className="flex justify-between text-xs mt-1" data-testid={`text-construction-spending-${job.scale}`}>
                             <span className="text-blue-600 dark:text-blue-400">Spending</span>
                             <span className="font-bold text-blue-700 dark:text-blue-300">{formatLargeNumber(job.constructionSpending || 0)}</span>
                           </div>
@@ -1618,21 +1618,21 @@ export default function Dashboard() {
                   </div>
                   
                   <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-center">
+                    <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-center" data-testid="stat-construction-total-jobs">
                       <p className="text-lg font-bold text-blue-800 dark:text-blue-200">
                         {expandedJobs.reduce((sum, j) => sum + (j.constructionJobs || 0), 0).toLocaleString()}
                       </p>
                       <p className="text-xs text-blue-600 dark:text-blue-400">Total Construction Jobs</p>
                     </div>
-                    <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-center">
+                    <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-center" data-testid="stat-construction-prevailing-wage">
                       <p className="text-lg font-bold text-blue-800 dark:text-blue-200">$32-35/hr</p>
                       <p className="text-xs text-blue-600 dark:text-blue-400">Prevailing Wage</p>
                     </div>
-                    <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-center">
+                    <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-center" data-testid="stat-construction-union-priority">
                       <p className="text-lg font-bold text-blue-800 dark:text-blue-200">100%</p>
                       <p className="text-xs text-blue-600 dark:text-blue-400">Union Labor Priority</p>
                     </div>
-                    <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-center">
+                    <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-center" data-testid="stat-construction-total-spending">
                       <p className="text-lg font-bold text-blue-800 dark:text-blue-200">
                         {formatLargeNumber(expandedJobs.reduce((sum, j) => sum + (j.constructionSpending || 0), 0))}
                       </p>
@@ -1640,7 +1640,7 @@ export default function Dashboard() {
                     </div>
                   </div>
                   
-                  <div className="mt-3 p-2 bg-white/50 dark:bg-black/20 rounded-lg">
+                  <div className="mt-3 p-2 bg-white/50 dark:bg-black/20 rounded-lg" data-testid="text-construction-union-trades">
                     <p className="text-xs text-blue-700 dark:text-blue-400">
                       <span className="font-bold">Union trades:</span> IBEW (electricians), UA (plumbers & pipefitters), SMART (HVAC), UBC (carpenters). All construction requires prevailing wage and local hire priority.
                     </p>
