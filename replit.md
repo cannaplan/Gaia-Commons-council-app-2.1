@@ -37,6 +37,21 @@ Gaia Commons Council is a full-stack dashboard application for tracking pilot pr
     - **53 School Districts (311 jobs)**:
       - Receiving Coordinators: ~103 jobs (1 per 5,000 students, min 1)
       - Cafeteria Distribution Staff: ~208 jobs (1 per 3,000 students, min 1)
+  - **Construction Phase Jobs (775+ skilled trades)**:
+    - **Phase 1 - Northern MN Hubs (325 jobs, 2-3 year build)**:
+      - General Construction: 130 (carpentry, concrete, framing)
+      - Electricians: 65 (grow lights, controls, panels)
+      - Plumbers: 50 (irrigation, hydroponics, water systems)
+      - HVAC Technicians: 50 (climate control, ventilation)
+      - Greenhouse Specialists: 30 (glass, structure, systems)
+    - **Phase 2 - 53 School Greenhouses (450 jobs, rolling 3-5 year build)**:
+      - General Construction: 160 (site prep, foundations)
+      - Electricians: 95 (school connections, lighting)
+      - Plumbers: 75 (water systems, drainage)
+      - HVAC Technicians: 70 (heating, cooling)
+      - Greenhouse Specialists: 50 (educational designs)
+    - Key difference: 100% local union labor (IBEW, UA, UBC) vs Twin Metals foreign contractors
+    - $35+/hr prevailing wage required, $81M+ construction spending stays in Minnesota
 - **Land & Water Conservation Fund**: 10% of annual endowment revenue dedicated to purchasing and protecting Minnesota's natural resources:
   - **Financial Projections**: ~$6.3M/year at statewide scale, $315M total over 50 years, 100K+ acres at $3,000/acre average
   - **Acquisition Priorities**: Forests (35%), Farmland (30%), Waterways (25%), Tribal Lands (10%)

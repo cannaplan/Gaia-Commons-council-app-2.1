@@ -1872,7 +1872,12 @@ export default function Dashboard() {
                           <td className="py-2 px-3 text-center text-emerald-600 dark:text-emerald-400 font-bold">Full property + payroll taxes</td>
                         </tr>
                         <tr className="border-b border-emerald-100 dark:border-emerald-800/50">
-                          <td className="py-2 px-3 font-medium">Jobs</td>
+                          <td className="py-2 px-3 font-medium">Construction Jobs</td>
+                          <td className="py-2 px-3 text-center text-red-600 dark:text-red-400">~400 (3-yr build)</td>
+                          <td className="py-2 px-3 text-center text-emerald-600 dark:text-emerald-400 font-bold">800+ (phased statewide)</td>
+                        </tr>
+                        <tr className="border-b border-emerald-100 dark:border-emerald-800/50">
+                          <td className="py-2 px-3 font-medium">Permanent Jobs</td>
                           <td className="py-2 px-3 text-center text-red-600 dark:text-red-400">~1,500 temporary</td>
                           <td className="py-2 px-3 text-center text-emerald-600 dark:text-emerald-400 font-bold">1,815+ permanent</td>
                         </tr>
@@ -2064,6 +2069,126 @@ export default function Dashboard() {
                         Zero risk of sulfide acid mine drainage into the Boundary Waters. Instead, {miningAlternatives.reduce((sum, a) => sum + a.co2Sequestered, 0).toLocaleString()} tons of CO2 sequestered annually, {(miningAlternatives.reduce((sum, a) => sum + a.localFoodProduction, 0) / 1000000).toFixed(1)} million lbs of specialty produce for schools, and 2.4x economic multiplier keeping dollars in these communities.
                       </p>
                     </div>
+                  </div>
+                </div>
+
+                {/* Construction Phase Jobs Breakdown */}
+                <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/30 rounded-xl border border-blue-200 dark:border-blue-800" data-testid="construction-jobs-section">
+                  <div className="flex items-start gap-3 mb-4">
+                    <HardHat className="h-5 w-5 text-blue-600 mt-0.5 shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-blue-800 dark:text-blue-300">Construction Phase Jobs — Building the Greenhouse Network</h4>
+                      <p className="text-sm text-blue-700 dark:text-blue-400 mt-1">
+                        Before permanent jobs begin, the greenhouse construction phase creates <span className="font-bold">800+ skilled trades jobs</span> for electricians, plumbers, HVAC technicians, and construction workers across Minnesota. Unlike mining construction (foreign contractors), Gaia prioritizes local union labor.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <h5 className="font-semibold text-blue-700 dark:text-blue-300 mb-3 flex items-center gap-2">
+                        <Building className="h-4 w-4" /> Northern MN Hubs (Phase 1: 960K sqft)
+                      </h5>
+                      <div className="grid grid-cols-2 gap-2">
+                        <div className="p-2 bg-white/70 dark:bg-black/30 rounded-lg">
+                          <p className="text-lg font-bold text-blue-800 dark:text-blue-200">130</p>
+                          <p className="text-xs text-blue-600 dark:text-blue-400">General Construction</p>
+                          <p className="text-[10px] text-blue-500">Carpentry, concrete, framing</p>
+                        </div>
+                        <div className="p-2 bg-white/70 dark:bg-black/30 rounded-lg">
+                          <p className="text-lg font-bold text-blue-800 dark:text-blue-200">65</p>
+                          <p className="text-xs text-blue-600 dark:text-blue-400">Electricians</p>
+                          <p className="text-[10px] text-blue-500">Grow lights, controls, panels</p>
+                        </div>
+                        <div className="p-2 bg-white/70 dark:bg-black/30 rounded-lg">
+                          <p className="text-lg font-bold text-blue-800 dark:text-blue-200">50</p>
+                          <p className="text-xs text-blue-600 dark:text-blue-400">Plumbers</p>
+                          <p className="text-[10px] text-blue-500">Irrigation, hydroponics, water</p>
+                        </div>
+                        <div className="p-2 bg-white/70 dark:bg-black/30 rounded-lg">
+                          <p className="text-lg font-bold text-blue-800 dark:text-blue-200">50</p>
+                          <p className="text-xs text-blue-600 dark:text-blue-400">HVAC Technicians</p>
+                          <p className="text-[10px] text-blue-500">Climate control, ventilation</p>
+                        </div>
+                        <div className="p-2 bg-white/70 dark:bg-black/30 rounded-lg">
+                          <p className="text-lg font-bold text-blue-800 dark:text-blue-200">30</p>
+                          <p className="text-xs text-blue-600 dark:text-blue-400">Greenhouse Specialists</p>
+                          <p className="text-[10px] text-blue-500">Glass, structure, systems</p>
+                        </div>
+                        <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg">
+                          <p className="text-lg font-bold text-blue-800 dark:text-blue-200">325</p>
+                          <p className="text-xs text-blue-700 dark:text-blue-300 font-medium">Phase 1 Total</p>
+                          <p className="text-[10px] text-blue-600">2-3 year build-out</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h5 className="font-semibold text-emerald-700 dark:text-emerald-300 mb-3 flex items-center gap-2">
+                        <School className="h-4 w-4" /> Statewide School Greenhouses (53 Districts)
+                      </h5>
+                      <div className="grid grid-cols-2 gap-2">
+                        <div className="p-2 bg-white/70 dark:bg-black/30 rounded-lg">
+                          <p className="text-lg font-bold text-emerald-800 dark:text-emerald-200">160</p>
+                          <p className="text-xs text-emerald-600 dark:text-emerald-400">General Construction</p>
+                          <p className="text-[10px] text-emerald-500">Site prep, foundations</p>
+                        </div>
+                        <div className="p-2 bg-white/70 dark:bg-black/30 rounded-lg">
+                          <p className="text-lg font-bold text-emerald-800 dark:text-emerald-200">95</p>
+                          <p className="text-xs text-emerald-600 dark:text-emerald-400">Electricians</p>
+                          <p className="text-[10px] text-emerald-500">School connections, lighting</p>
+                        </div>
+                        <div className="p-2 bg-white/70 dark:bg-black/30 rounded-lg">
+                          <p className="text-lg font-bold text-emerald-800 dark:text-emerald-200">75</p>
+                          <p className="text-xs text-emerald-600 dark:text-emerald-400">Plumbers</p>
+                          <p className="text-[10px] text-emerald-500">Water systems, drainage</p>
+                        </div>
+                        <div className="p-2 bg-white/70 dark:bg-black/30 rounded-lg">
+                          <p className="text-lg font-bold text-emerald-800 dark:text-emerald-200">70</p>
+                          <p className="text-xs text-emerald-600 dark:text-emerald-400">HVAC Technicians</p>
+                          <p className="text-[10px] text-emerald-500">Heating, cooling</p>
+                        </div>
+                        <div className="p-2 bg-white/70 dark:bg-black/30 rounded-lg">
+                          <p className="text-lg font-bold text-emerald-800 dark:text-emerald-200">50</p>
+                          <p className="text-xs text-emerald-600 dark:text-emerald-400">Greenhouse Specialists</p>
+                          <p className="text-[10px] text-emerald-500">Educational designs</p>
+                        </div>
+                        <div className="p-2 bg-emerald-100 dark:bg-emerald-900/50 rounded-lg">
+                          <p className="text-lg font-bold text-emerald-800 dark:text-emerald-200">450</p>
+                          <p className="text-xs text-emerald-700 dark:text-emerald-300 font-medium">Phase 2 Total</p>
+                          <p className="text-[10px] text-emerald-600">Rolling 3-5 year build</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
+                    <div className="p-3 bg-blue-100 dark:bg-blue-900/40 rounded-lg text-center">
+                      <p className="text-2xl font-bold text-blue-800 dark:text-blue-200">775+</p>
+                      <p className="text-xs text-blue-600 dark:text-blue-400">Total Construction Jobs</p>
+                      <p className="text-[10px] text-blue-500">(Northern MN + Schools)</p>
+                    </div>
+                    <div className="p-3 bg-blue-100 dark:bg-blue-900/40 rounded-lg text-center">
+                      <p className="text-2xl font-bold text-blue-800 dark:text-blue-200">$35+/hr</p>
+                      <p className="text-xs text-blue-600 dark:text-blue-400">Avg. Union Wage</p>
+                      <p className="text-[10px] text-blue-500">Prevailing wage required</p>
+                    </div>
+                    <div className="p-3 bg-blue-100 dark:bg-blue-900/40 rounded-lg text-center">
+                      <p className="text-2xl font-bold text-blue-800 dark:text-blue-200">100%</p>
+                      <p className="text-xs text-blue-600 dark:text-blue-400">Local Hire Priority</p>
+                      <p className="text-[10px] text-blue-500">MN contractors first</p>
+                    </div>
+                    <div className="p-3 bg-blue-100 dark:bg-blue-900/40 rounded-lg text-center">
+                      <p className="text-2xl font-bold text-blue-800 dark:text-blue-200">$81M+</p>
+                      <p className="text-xs text-blue-600 dark:text-blue-400">Construction Spending</p>
+                      <p className="text-[10px] text-blue-500">Stays in Minnesota</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 p-3 bg-white/70 dark:bg-black/30 rounded-lg">
+                    <p className="text-sm text-blue-700 dark:text-blue-400">
+                      <span className="font-bold">Key difference from mining:</span> Twin Metals would bring construction crews from Chile, UK, Canada, and Australia. Gaia's greenhouses use <span className="font-bold">Minnesota union labor</span> — electricians from IBEW, plumbers from UA, carpenters from UBC. Every construction dollar circulates locally with a 2.4x economic multiplier.
+                    </p>
                   </div>
                 </div>
               </CardContent>
