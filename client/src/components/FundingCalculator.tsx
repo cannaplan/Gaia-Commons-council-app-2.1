@@ -163,7 +163,7 @@ export function FundingCalculator() {
             <div className="p-3 bg-muted/50 rounded-lg">
               <p className="text-xs text-muted-foreground">
                 <strong>Note:</strong> These projections are estimates based on proposed surcharge rates. 
-                The core endowment target is $2.1B, with excess funds allocated to tribal programs, 
+                The core endowment target is $3B @ 3.9% = $117M/year, with excess funds allocated to tribal programs, 
                 mining alternatives, and distribution infrastructure.
               </p>
             </div>

@@ -304,7 +304,7 @@ async function seedDatabase() {
   if (timelineData.length === 0) {
     console.log("Seeding implementation timeline...");
     const milestones = [
-      { phase: "Foundation", quarter: "2027 Q1", milestone: "Board Elections & Corpus Receipt", details: "Board elections; receive $2.1B corpus from state filings", greenhouseCount: 0, jobsCreated: 50, studentsServed: 0 },
+      { phase: "Foundation", quarter: "2027 Q1", milestone: "Board Elections & Corpus Receipt", details: "Board elections; receive $3B corpus from state filings", greenhouseCount: 0, jobsCreated: 50, studentsServed: 0 },
       { phase: "Launch", quarter: "2027 Q2-Q4", milestone: "First 50 Greenhouses", details: "Build first 50 greenhouses; hire staff, train teachers", greenhouseCount: 50, jobsCreated: 260, studentsServed: 159000 },
       { phase: "Launch", quarter: "2027 Q3", milestone: "First Harvest", details: "First harvest; K-12 curriculum pilots with 9 school districts", greenhouseCount: 50, jobsCreated: 260, studentsServed: 159000 },
       { phase: "Scale", quarter: "2028 Q1-Q4", milestone: "Scale to 200 Greenhouses", details: "Expand to 200 greenhouses across all 8 congressional districts", greenhouseCount: 200, jobsCreated: 1040, studentsServed: 636000 },
@@ -609,10 +609,10 @@ async function seedDatabase() {
       status: "live"
     });
 
-    // Seed Endowment - v4.2 Locked ($2.1B statewide target)
+    // Seed Endowment - v4.2 Locked ($3B statewide target @ 3.9% = $117M)
     await storage.updateEndowmentStats({
-      size: "2.1B",
-      annual: "63M",
+      size: "3.0B",
+      annual: "117M",
       greenhouses: 275
     });
 
@@ -844,7 +844,7 @@ async function seedDatabase() {
       { n: 1, title: "Executive Summary", text: "5,630 Students | $12.8M NPV | 6 Greenhouses" },
       { n: 2, title: "The Problem", text: "875k MN kids face food insecurity annually" },
       { n: 3, title: "The Solution", text: "275 greenhouses = 875,000 meals/day, year-round" },
-      { n: 4, title: "Endowment Engine", text: "0.27% tax → $2.1B PERPETUAL endowment" },
+      { n: 4, title: "Endowment Engine", text: "0.27% tax → $3B PERPETUAL endowment @ 3.9% = $117M/yr" },
       { n: 5, title: "St. Paul Cluster", text: "2,793 → 3,212 students | SPA, Highland Park, Groveland" },
       { n: 6, title: "Mendota Cluster", text: "2,837 → 3,262 students | STA, Visitation, Two Rivers" },
       { n: 7, title: "Financial Model", text: "CAPEX $2.95M | 5-Yr NPV $12.8M | 435% ROI" },
@@ -866,7 +866,7 @@ async function seedDatabase() {
     await storage.createTimelineEvent({ year: "2026 Q2", event: "Principal Meetings Complete (Jan 20)" });
     await storage.createTimelineEvent({ year: "2026 Q4", event: "Ballot Signature Drive Begins" });
     await storage.createTimelineEvent({ year: "2027", event: "Statewide Expansion Planning" });
-    await storage.createTimelineEvent({ year: "2028", event: "Constitutional Amendment Vote - $2.1B Funded" });
+    await storage.createTimelineEvent({ year: "2028", event: "Constitutional Amendment Vote - $3B Funded" });
     await storage.createTimelineEvent({ year: "2030", event: "275 Greenhouses Deployed Statewide" });
     await storage.createTimelineEvent({ year: "2035", event: "National Rollout - 50 States" });
     await storage.createTimelineEvent({ year: "2040", event: "Global Deployment Initiated" });

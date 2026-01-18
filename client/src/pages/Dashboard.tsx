@@ -388,7 +388,7 @@ export default function Dashboard() {
                   <div className="p-4 bg-primary/10 rounded-xl">
                     <Leaf className="h-5 w-5 text-primary mx-auto mb-2" />
                     <p className="text-sm font-semibold text-foreground">Perpetual Endowment</p>
-                    <p className="text-xs text-muted-foreground">$2.1B principal protected forever</p>
+                    <p className="text-xs text-muted-foreground">$3B principal @ 3.9% = $117M/yr</p>
                   </div>
                   <div className="p-4 bg-secondary/10 rounded-xl">
                     <Users className="h-5 w-5 text-secondary mx-auto mb-2" />
@@ -637,7 +637,7 @@ export default function Dashboard() {
                       <Info className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
                       <div>
                         <p className="text-sm font-medium text-foreground">2028-2030 Statewide Expansion</p>
-                        <p className="text-xs text-muted-foreground">After ballot initiative passes, $2.1B endowment funds 275 greenhouses across all Minnesota school districts. 875,000 students fed daily with year-round fresh produce.</p>
+                        <p className="text-xs text-muted-foreground">After ballot initiative passes, $3B endowment @ 3.9% = $117M/yr funds 275 greenhouses across all Minnesota school districts. 830,000 students fed daily with year-round fresh produce.</p>
                       </div>
                     </div>
                   )}
@@ -948,7 +948,7 @@ export default function Dashboard() {
               </div>
               <div className="p-4 bg-emerald-50/50 dark:bg-emerald-950/20 rounded-lg border border-emerald-200 dark:border-emerald-800">
                 <h4 className="font-semibold text-emerald-700 dark:text-emerald-300 mb-2">Statewide (2028-30)</h4>
-                <p className="text-xs text-muted-foreground">Ballot initiative passes. $2.1B endowment funds 275 greenhouses across all Minnesota districts.</p>
+                <p className="text-xs text-muted-foreground">Ballot initiative passes. $3B endowment @ 3.9% = $117M/yr funds 275 greenhouses across all Minnesota districts.</p>
               </div>
               <div className="p-4 bg-purple-50/50 dark:bg-purple-950/20 rounded-lg border border-purple-200 dark:border-purple-800">
                 <h4 className="font-semibold text-purple-700 dark:text-purple-300 mb-2">National (2035)</h4>
@@ -1743,7 +1743,7 @@ export default function Dashboard() {
                 <Banknote className="h-5 w-5 text-primary" />
                 <div>
                   <CardTitle className="text-lg font-semibold">Endowment Funding Sources</CardTitle>
-                  <p className="text-sm text-muted-foreground mt-1">Potential annual revenue from proposed surcharges — $2.1B endowment target</p>
+                  <p className="text-sm text-muted-foreground mt-1">Potential annual revenue from proposed surcharges — $3B endowment target @ 3.9% = $117M/yr</p>
                 </div>
               </CardHeader>
               <CardContent>
