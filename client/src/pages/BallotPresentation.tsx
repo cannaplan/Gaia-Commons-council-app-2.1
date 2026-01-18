@@ -35,6 +35,8 @@ import {
   Citrus,
   TreeDeciduous,
   Flower,
+  X,
+  Check,
 } from "lucide-react";
 
 interface SlideData {
@@ -67,7 +69,7 @@ export default function BallotPresentation() {
           </div>
           <div className="flex gap-6 mt-8">
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
-              <div className="text-4xl font-bold">515,000+</div>
+              <div className="text-4xl font-bold">830,000+</div>
               <div className="text-sm opacity-80">Students Served</div>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
@@ -478,14 +480,14 @@ export default function BallotPresentation() {
               <Factory className="h-8 w-8" /> Twin Metals Mining
             </h3>
             <ul className="space-y-3 text-sm">
-              <li className="flex items-center gap-2">❌ 100% foreign owned (Chile)</li>
-              <li className="flex items-center gap-2">❌ 50% profits to billionaire family</li>
-              <li className="flex items-center gap-2">❌ 0.4% gross proceeds tax</li>
-              <li className="flex items-center gap-2">❌ ~1,500 temporary jobs</li>
-              <li className="flex items-center gap-2">❌ 20-25 year mine lifespan</li>
-              <li className="flex items-center gap-2">❌ Ore shipped out of state</li>
-              <li className="flex items-center gap-2">❌ MN pays cleanup costs</li>
-              <li className="flex items-center gap-2">❌ Threatens Boundary Waters</li>
+              <li className="flex items-center gap-2"><X className="h-4 w-4 text-red-300" /> 100% foreign owned (Chile)</li>
+              <li className="flex items-center gap-2"><X className="h-4 w-4 text-red-300" /> 50% profits to billionaire family</li>
+              <li className="flex items-center gap-2"><X className="h-4 w-4 text-red-300" /> 0.4% gross proceeds tax</li>
+              <li className="flex items-center gap-2"><X className="h-4 w-4 text-red-300" /> ~1,500 temporary jobs</li>
+              <li className="flex items-center gap-2"><X className="h-4 w-4 text-red-300" /> 20-25 year mine lifespan</li>
+              <li className="flex items-center gap-2"><X className="h-4 w-4 text-red-300" /> Ore shipped out of state</li>
+              <li className="flex items-center gap-2"><X className="h-4 w-4 text-red-300" /> MN pays cleanup costs</li>
+              <li className="flex items-center gap-2"><X className="h-4 w-4 text-red-300" /> Threatens Boundary Waters</li>
             </ul>
           </div>
           <div className="bg-green-500/30 backdrop-blur-lg rounded-2xl p-6 border-2 border-green-400/50">
@@ -493,14 +495,14 @@ export default function BallotPresentation() {
               <Sprout className="h-8 w-8" /> Gaia Commons
             </h3>
             <ul className="space-y-3 text-sm">
-              <li className="flex items-center gap-2">✅ 100% Minnesota owned</li>
-              <li className="flex items-center gap-2">✅ 100% reinvested locally</li>
-              <li className="flex items-center gap-2">✅ Revenue stays in communities</li>
-              <li className="flex items-center gap-2">✅ 1,815 permanent jobs</li>
-              <li className="flex items-center gap-2">✅ Forever - perpetual model</li>
-              <li className="flex items-center gap-2">✅ Food stays in Minnesota</li>
-              <li className="flex items-center gap-2">✅ Self-sustaining operations</li>
-              <li className="flex items-center gap-2">✅ Protects natural resources</li>
+              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> 100% Minnesota owned</li>
+              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> 100% reinvested locally</li>
+              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> Revenue stays in communities</li>
+              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> 1,815 permanent jobs</li>
+              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> Forever - perpetual model</li>
+              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> Food stays in Minnesota</li>
+              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> Self-sustaining operations</li>
+              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> Protects natural resources</li>
             </ul>
           </div>
         </div>
@@ -508,7 +510,7 @@ export default function BallotPresentation() {
     },
     {
       id: 10,
-      title: "53 School Districts",
+      title: "330 School Districts",
       subtitle: "Serving All of Minnesota",
       bgGradient: "from-blue-600 via-sky-500 to-cyan-400",
       icon: <MapPin className="h-24 w-24" />,
@@ -516,20 +518,20 @@ export default function BallotPresentation() {
         <div className="flex flex-col items-center gap-6">
           <div className="grid grid-cols-4 gap-4 w-full">
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-4 text-center">
-              <div className="text-3xl font-bold">515K</div>
+              <div className="text-3xl font-bold">830K</div>
               <p className="text-sm">Students</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-4 text-center">
-              <div className="text-3xl font-bold">53</div>
+              <div className="text-3xl font-bold">330</div>
               <p className="text-sm">Districts</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-4 text-center">
-              <div className="text-3xl font-bold">275</div>
+              <div className="text-3xl font-bold">3,100</div>
               <p className="text-sm">Schools</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-4 text-center">
-              <div className="text-3xl font-bold">3</div>
-              <p className="text-sm">Tribal Nations</p>
+              <div className="text-3xl font-bold">~710</div>
+              <p className="text-sm">Avg Sqft/School</p>
             </div>
           </div>
           <div className="grid grid-cols-3 gap-4 w-full text-sm">
@@ -771,12 +773,12 @@ export default function BallotPresentation() {
           <div className="grid grid-cols-3 gap-6 w-full max-w-4xl">
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
               <Sprout className="h-12 w-12 mx-auto mb-3" />
-              <p className="font-bold">53 Districts</p>
+              <p className="font-bold">330 Districts</p>
               <p className="text-sm opacity-80">Every corner of MN</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
               <Users className="h-12 w-12 mx-auto mb-3" />
-              <p className="font-bold">515,000 Students</p>
+              <p className="font-bold">830,000 Students</p>
               <p className="text-sm opacity-80">Fed fresh daily</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">

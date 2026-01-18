@@ -2,7 +2,9 @@
 
 ## Overview
 
-Gaia Commons Council is a full-stack dashboard application for tracking pilot program statistics, endowment data, and strategic timeline events for the "One Vote, Forever Fed" 2026 ballot initiative. The platform serves as an analytics and management interface for educational and environmental initiatives, displaying real-time metrics for student enrollment, facility square footage, school counts, and endowment financials. Features include interactive maps (Minnesota greenhouse locations with 53 school district sites), multi-scale deployment views (Pilot → Statewide → National → Global), and an interactive Cluster Builder tool.
+Gaia Commons Council is a full-stack dashboard application for tracking pilot program statistics, endowment data, and strategic timeline events for the "One Vote, Forever Fed" 2026 ballot initiative. The platform serves as an analytics and management interface for educational and environmental initiatives, displaying real-time metrics for student enrollment, facility square footage, school counts, and endowment financials. Features include interactive maps (Minnesota greenhouse locations), multi-scale deployment views (Pilot → Statewide → National → Global), and an interactive Cluster Builder tool.
+
+**Statewide Scope**: 330 school districts, ~3,100 schools, 830,000 students, 2.2M total sqft (~710 sqft avg per school)
 
 ## Recent Changes (January 2026)
 
@@ -39,7 +41,7 @@ Gaia Commons Council is a full-stack dashboard application for tracking pilot pr
       - Cafeteria Distribution Staff: ~208 jobs (1 per 3,000 students, min 1)
   - **Construction Phase Jobs (All Scales)**:
     - **Pilot (6 Schools)**: 76 jobs, 1-2 years, $7.65M spending
-    - **Statewide (275 Schools + Regional Hubs)**: 4,320 jobs, 5-7 years phased, $432M spending
+    - **Statewide (3,100 Schools + Regional Hubs)**: 4,320 jobs, 5-7 years phased, $432M spending
     - **National (130K Schools)**: 1.17M jobs, 10-15 years rolling, $117B spending
     - **Global (1M Schools)**: 6.5M jobs, 20-30 years phased, $650B spending
     - **Job breakdown by trade** (consistent across all scales):
