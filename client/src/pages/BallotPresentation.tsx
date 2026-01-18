@@ -71,7 +71,7 @@ export default function BallotPresentation() {
               <div className="text-sm opacity-80">Students Served</div>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
-              <div className="text-4xl font-bold">$88M</div>
+              <div className="text-4xl font-bold">$117M</div>
               <div className="text-sm opacity-80">Endowment Draw/Year</div>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
@@ -363,17 +363,17 @@ export default function BallotPresentation() {
         <div className="flex flex-col items-center gap-8">
           <div className="grid grid-cols-3 gap-6 w-full max-w-4xl">
             <div className="bg-white/20 backdrop-blur-lg rounded-3xl p-8 text-center">
-              <div className="text-5xl font-black mb-2">$2.1B</div>
+              <div className="text-5xl font-black mb-2">$3B</div>
               <p className="text-lg">Initial Endowment</p>
               <p className="text-sm opacity-70 mt-2">Principal never touched</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-3xl p-8 text-center">
-              <div className="text-5xl font-black mb-2">4.2%</div>
+              <div className="text-5xl font-black mb-2">3.9%</div>
               <p className="text-lg">Annual Distribution</p>
               <p className="text-sm opacity-70 mt-2">Conservative draw rate</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-3xl p-8 text-center">
-              <div className="text-5xl font-black mb-2">$88M</div>
+              <div className="text-5xl font-black mb-2">$117M</div>
               <p className="text-lg">Annual Draw</p>
               <p className="text-sm opacity-70 mt-2">Forever, inflation-adjusted</p>
             </div>
@@ -389,8 +389,8 @@ export default function BallotPresentation() {
                 <h3 className="text-2xl font-bold mb-2">How It Works</h3>
                 <p className="opacity-90">
                   Like university endowments, the principal grows tax-free while annual returns 
-                  fund operations. After 50 years: <span className="font-bold text-lime-300">$4.4 billion in total draws</span> while 
-                  principal remains at $2.1B+.
+                  fund operations. After 50 years: <span className="font-bold text-lime-300">$5.85 billion in total draws</span> while 
+                  principal remains at $3B+.
                 </p>
               </div>
             </div>

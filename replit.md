@@ -51,12 +51,12 @@ Gaia Commons Council is a full-stack dashboard application for tracking pilot pr
     - **Union labor**: IBEW (electricians), UA (plumbers & pipefitters), SMART (HVAC), UBC (carpenters)
     - **Prevailing wages**: $32-35/hr depending on scale, 100% local hire priority
     - Key difference: All scales use local union labor vs. foreign contractors at mining sites
-- **Endowment Model (Statewide)**: $2.1B principal @ 4.2% annual draw = $88.2M/year perpetual funding
+- **Endowment Model (Statewide)**: $3B principal @ 3.9% annual draw = $117M/year perpetual funding
   - Principal never touched, grows tax-free
-  - After 50 years: $4.4B total draws while principal remains $2.1B+
-  - Produce sales revenue (~$123M/year) covers operations; endowment provides safety buffer
+  - After 50 years: $5.85B total draws while principal remains $3B+
+  - Produce sales revenue (~$123M/year) covers operations; endowment provides additional safety buffer
 - **Land & Water Conservation Fund**: 10% of annual endowment draw dedicated to purchasing and protecting Minnesota's natural resources:
-  - **Financial Projections**: ~$8.8M/year at statewide scale, $440M total over 50 years, 145K+ acres at $3,000/acre average
+  - **Financial Projections**: ~$11.7M/year at statewide scale, $585M total over 50 years, 195K+ acres at $3,000/acre average
   - **Acquisition Priorities**: Forests (35%), Farmland (30%), Waterways (25%), Tribal Lands (10%)
   - **Acquisition Sources**: Private landowners (60%), Federal government (25%), State & County (15%)
   - **Perpetual Protection**: All lands held in permanent land trust — never to be sold or developed

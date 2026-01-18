@@ -1316,7 +1316,7 @@ export default function Dashboard() {
             <Card className="glass-panel" data-testid="card-endowment-projections">
               <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
                 <TrendingUp className="h-5 w-5 text-primary" />
-                <CardTitle className="text-lg font-semibold">50-Year Endowment Growth — 4.2% Annual Draw</CardTitle>
+                <CardTitle className="text-lg font-semibold">50-Year Endowment Growth — 3.9% Annual Draw</CardTitle>
                 <Badge variant="secondary" className="ml-auto">2027–2077</Badge>
               </CardHeader>
               <CardContent>
@@ -1340,7 +1340,7 @@ export default function Dashboard() {
                       />
                       <Legend />
                       <Area type="monotone" dataKey="corpus" name="Endowment Corpus" stroke="#22c55e" fillOpacity={1} fill="url(#colorCorpus)" />
-                      <Line type="monotone" dataKey="annualDraw" name="Annual Draw (4.2%)" stroke="#8b5cf6" strokeWidth={2} dot={false} />
+                      <Line type="monotone" dataKey="annualDraw" name="Annual Draw (3.9%)" stroke="#8b5cf6" strokeWidth={2} dot={false} />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
@@ -1790,21 +1790,21 @@ export default function Dashboard() {
                     <PiggyBank className="h-5 w-5 text-emerald-600" />
                     <div>
                       <p className="text-xs text-emerald-700 dark:text-emerald-400 font-medium">Core Endowment</p>
-                      <p className="font-semibold text-emerald-800 dark:text-emerald-300">$2.1 Billion</p>
+                      <p className="font-semibold text-emerald-800 dark:text-emerald-300">$3.0 Billion</p>
                     </div>
                   </div>
                   <div className="p-3 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-100 dark:border-amber-900/50 flex items-center gap-3">
                     <Trees className="h-5 w-5 text-amber-600" />
                     <div>
                       <p className="text-xs text-amber-700 dark:text-amber-400 font-medium">Excess Allocation</p>
-                      <p className="font-semibold text-amber-800 dark:text-amber-300">$1.5 Billion</p>
+                      <p className="font-semibold text-amber-800 dark:text-amber-300">$600 Million</p>
                     </div>
                   </div>
                   <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-100 dark:border-blue-900/50 flex items-center gap-3">
                     <TrendingUp className="h-5 w-5 text-blue-600" />
                     <div>
-                      <p className="text-xs text-blue-700 dark:text-blue-400 font-medium">Year 1 Draw (4.2%)</p>
-                      <p className="font-semibold text-blue-800 dark:text-blue-300">$88.2 Million</p>
+                      <p className="text-xs text-blue-700 dark:text-blue-400 font-medium">Year 1 Draw (3.9%)</p>
+                      <p className="font-semibold text-blue-800 dark:text-blue-300">$117 Million</p>
                     </div>
                   </div>
                 </div>
@@ -3143,7 +3143,7 @@ export default function Dashboard() {
             {endowment && (
               <>
                 <StatItem label="Total Principal" value={endowment.size} trend="Stable" trendUp={true} />
-                <StatItem label="Annual Draw (4.2%)" value={endowment.annual} />
+                <StatItem label="Annual Draw (3.9%)" value={endowment.annual} />
                 <StatItem label="Greenhouses Funded" value={endowment.greenhouses} />
               </>
             )}
