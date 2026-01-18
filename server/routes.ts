@@ -692,22 +692,23 @@ async function seedDatabase() {
       mealsPerDay: 15500
     });
 
+    // Statewide: 330 districts, 3,100 schools, 830K students, 2.64M sqft (+20% buffer)
     await storage.createScaleProjection({
       scale: "statewide",
-      schools: 275,
-      students: 875000,
+      schools: 3100,
+      students: 830000,
       greenhouses: 275,
-      sqft: 2200000,
-      capex: 2750000000,
-      annualRevenue: 168750000,
-      annualOpex: 16500000,
+      sqft: 2640000,        // 2.2M base + 20% buffer = 2.64M (~852 sqft/school avg)
+      capex: 224400000,     // $85/sqft construction
+      annualRevenue: 369600000,  // 2.64M × 40 lbs × $3.50/lb
+      annualOpex: 31680000,      // $12/sqft/yr operations
       npv5yr: 590000000,
       roiPct: 435,
-      endowmentTarget: 2100000000,
+      endowmentTarget: 3000000000,  // $3B @ 3.9% = $117M/yr
       endowmentYr15: 6450000000,
-      jobs: 1650,
-      co2TonsAnnual: 11275,
-      mealsPerDay: 875000
+      jobs: 1815,           // Permanent greenhouse + distribution jobs
+      co2TonsAnnual: 13543, // 2.64M sqft × 5.13 lbs CO2/sqft
+      mealsPerDay: 830000   // 830K students fed daily
     });
 
     await storage.createScaleProjection({

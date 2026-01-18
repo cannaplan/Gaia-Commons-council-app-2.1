@@ -392,7 +392,7 @@ export default function Dashboard() {
                   </div>
                   <div className="p-4 bg-secondary/10 rounded-xl">
                     <Users className="h-5 w-5 text-secondary mx-auto mb-2" />
-                    <p className="text-sm font-semibold text-foreground">875K Students Fed</p>
+                    <p className="text-sm font-semibold text-foreground">830K Students Fed</p>
                     <p className="text-xs text-muted-foreground">Fresh meals year-round</p>
                   </div>
                   <div className="p-4 bg-accent/10 rounded-xl">
