@@ -717,12 +717,20 @@ export default function Dashboard() {
                       </p>
                     </div>
                   </div>
-                  <Link href="/cluster-builder">
-                    <Button size="lg" className="gap-2" data-testid="button-goto-cluster-builder">
-                      <Calculator className="h-5 w-5" />
-                      Launch Cluster Builder
-                    </Button>
-                  </Link>
+                  <div className="flex gap-3">
+                    <Link href="/cluster-builder">
+                      <Button size="lg" className="gap-2" data-testid="button-goto-cluster-builder">
+                        <Calculator className="h-5 w-5" />
+                        Cluster Builder
+                      </Button>
+                    </Link>
+                    <Link href="/ballot-presentation">
+                      <Button size="lg" variant="outline" className="gap-2" data-testid="button-goto-presentation">
+                        <Vote className="h-5 w-5" />
+                        2026 Ballot Deck
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </CardContent>
             </Card>

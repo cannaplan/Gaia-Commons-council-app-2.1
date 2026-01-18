@@ -8,6 +8,7 @@ import { HighContrastProvider } from "@/components/HighContrastToggle";
 import { KeyboardNavProvider } from "@/components/KeyboardNav";
 import Dashboard from "@/pages/Dashboard";
 import ClusterBuilder from "@/pages/ClusterBuilder";
+import BallotPresentation from "@/pages/BallotPresentation";
 import NotFound from "@/pages/not-found";
 import './lib/i18n';
 
@@ -16,6 +17,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Dashboard} />
       <Route path="/cluster-builder" component={ClusterBuilder} />
+      <Route path="/ballot-presentation" component={BallotPresentation} />
       <Route component={NotFound} />
     </Switch>
   );

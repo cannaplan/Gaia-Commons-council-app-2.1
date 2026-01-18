@@ -58,7 +58,7 @@ interface SchoolGreenhouse {
 interface ProduceItem {
   id: string;
   name: string;
-  category: "greens" | "vegetables" | "fruits" | "herbs" | "specialty";
+  category: "greens" | "vegetables" | "berries" | "fruits" | "exotictrees" | "orchard" | "herbs" | "specialty";
   yieldPerSqft: number;
   growingDays: number;
   nutritionValue: string;
@@ -85,25 +85,121 @@ interface StaffPosition {
 }
 
 const PRODUCE_OPTIONS: ProduceItem[] = [
-  { id: "lettuce", name: "Lettuce", category: "greens", yieldPerSqft: 4.5, growingDays: 45, nutritionValue: "Vitamins A, K", selected: false, allocation: 0 },
-  { id: "spinach", name: "Spinach", category: "greens", yieldPerSqft: 3.8, growingDays: 40, nutritionValue: "Iron, Vitamins A, C", selected: false, allocation: 0 },
-  { id: "kale", name: "Kale", category: "greens", yieldPerSqft: 3.2, growingDays: 55, nutritionValue: "Vitamins K, A, C", selected: false, allocation: 0 },
-  { id: "arugula", name: "Arugula", category: "greens", yieldPerSqft: 4.0, growingDays: 35, nutritionValue: "Vitamin K, Folate", selected: false, allocation: 0 },
-  { id: "microgreens", name: "Microgreens", category: "greens", yieldPerSqft: 6.0, growingDays: 14, nutritionValue: "Concentrated nutrients", selected: false, allocation: 0 },
-  { id: "tomatoes", name: "Tomatoes", category: "vegetables", yieldPerSqft: 8.0, growingDays: 80, nutritionValue: "Vitamins C, K, Lycopene", selected: false, allocation: 0 },
-  { id: "cucumbers", name: "Cucumbers", category: "vegetables", yieldPerSqft: 6.5, growingDays: 55, nutritionValue: "Vitamin K, Hydration", selected: false, allocation: 0 },
-  { id: "peppers", name: "Bell Peppers", category: "vegetables", yieldPerSqft: 5.0, growingDays: 75, nutritionValue: "Vitamins C, A, B6", selected: false, allocation: 0 },
-  { id: "carrots", name: "Carrots", category: "vegetables", yieldPerSqft: 4.2, growingDays: 70, nutritionValue: "Vitamin A, Beta-carotene", selected: false, allocation: 0 },
-  { id: "beans", name: "Green Beans", category: "vegetables", yieldPerSqft: 3.5, growingDays: 60, nutritionValue: "Fiber, Vitamins C, K", selected: false, allocation: 0 },
-  { id: "squash", name: "Summer Squash", category: "vegetables", yieldPerSqft: 5.5, growingDays: 50, nutritionValue: "Vitamins C, B6", selected: false, allocation: 0 },
-  { id: "strawberries", name: "Strawberries", category: "fruits", yieldPerSqft: 2.8, growingDays: 90, nutritionValue: "Vitamin C, Antioxidants", selected: false, allocation: 0 },
-  { id: "melons", name: "Specialty Melons", category: "fruits", yieldPerSqft: 3.2, growingDays: 85, nutritionValue: "Vitamins A, C", selected: false, allocation: 0 },
-  { id: "basil", name: "Basil", category: "herbs", yieldPerSqft: 2.5, growingDays: 28, nutritionValue: "Vitamin K, Antioxidants", selected: false, allocation: 0 },
+  // SALAD GREENS
+  { id: "lettuce", name: "Butterhead Lettuce", category: "greens", yieldPerSqft: 4.5, growingDays: 45, nutritionValue: "Vitamins A, K", selected: false, allocation: 0 },
+  { id: "romaine", name: "Romaine Lettuce", category: "greens", yieldPerSqft: 4.2, growingDays: 50, nutritionValue: "Vitamins A, K, Folate", selected: false, allocation: 0 },
+  { id: "spinach", name: "Baby Spinach", category: "greens", yieldPerSqft: 3.8, growingDays: 40, nutritionValue: "Iron, Vitamins A, C", selected: false, allocation: 0 },
+  { id: "kale", name: "Tuscan Kale", category: "greens", yieldPerSqft: 3.2, growingDays: 55, nutritionValue: "Vitamins K, A, C", selected: false, allocation: 0 },
+  { id: "arugula", name: "Wild Arugula", category: "greens", yieldPerSqft: 4.0, growingDays: 35, nutritionValue: "Vitamin K, Folate", selected: false, allocation: 0 },
+  { id: "microgreens", name: "Microgreen Mix", category: "greens", yieldPerSqft: 6.0, growingDays: 14, nutritionValue: "40x concentrated nutrients", selected: false, allocation: 0 },
+  { id: "swisschard", name: "Rainbow Swiss Chard", category: "greens", yieldPerSqft: 3.5, growingDays: 50, nutritionValue: "Vitamins K, A, C, Magnesium", selected: false, allocation: 0 },
+  { id: "mizuna", name: "Mizuna", category: "greens", yieldPerSqft: 3.8, growingDays: 35, nutritionValue: "Vitamins A, C, K", selected: false, allocation: 0 },
+  { id: "bokchoy", name: "Baby Bok Choy", category: "greens", yieldPerSqft: 4.0, growingDays: 45, nutritionValue: "Vitamins A, C, Calcium", selected: false, allocation: 0 },
+  { id: "mustardgreens", name: "Mustard Greens", category: "greens", yieldPerSqft: 3.6, growingDays: 40, nutritionValue: "Vitamins K, A, C", selected: false, allocation: 0 },
+  
+  // VEGETABLES
+  { id: "tomatoes", name: "Heirloom Tomatoes", category: "vegetables", yieldPerSqft: 8.0, growingDays: 80, nutritionValue: "Vitamins C, K, Lycopene", selected: false, allocation: 0 },
+  { id: "cherrytomatoes", name: "Cherry Tomatoes", category: "vegetables", yieldPerSqft: 7.5, growingDays: 65, nutritionValue: "Vitamins C, K, Lycopene", selected: false, allocation: 0 },
+  { id: "cucumbers", name: "English Cucumbers", category: "vegetables", yieldPerSqft: 6.5, growingDays: 55, nutritionValue: "Vitamin K, Hydration", selected: false, allocation: 0 },
+  { id: "peppers", name: "Sweet Bell Peppers", category: "vegetables", yieldPerSqft: 5.0, growingDays: 75, nutritionValue: "Vitamins C, A, B6", selected: false, allocation: 0 },
+  { id: "hotpeppers", name: "Hot Peppers Mix", category: "vegetables", yieldPerSqft: 4.5, growingDays: 80, nutritionValue: "Vitamins C, A, Capsaicin", selected: false, allocation: 0 },
+  { id: "carrots", name: "Rainbow Carrots", category: "vegetables", yieldPerSqft: 4.2, growingDays: 70, nutritionValue: "Vitamin A, Beta-carotene", selected: false, allocation: 0 },
+  { id: "beans", name: "French Green Beans", category: "vegetables", yieldPerSqft: 3.5, growingDays: 60, nutritionValue: "Fiber, Vitamins C, K", selected: false, allocation: 0 },
+  { id: "squash", name: "Zucchini", category: "vegetables", yieldPerSqft: 5.5, growingDays: 50, nutritionValue: "Vitamins C, B6", selected: false, allocation: 0 },
+  { id: "yellowsquash", name: "Yellow Summer Squash", category: "vegetables", yieldPerSqft: 5.2, growingDays: 50, nutritionValue: "Vitamins C, B6, Manganese", selected: false, allocation: 0 },
+  { id: "eggplant", name: "Japanese Eggplant", category: "vegetables", yieldPerSqft: 4.8, growingDays: 70, nutritionValue: "Fiber, Antioxidants", selected: false, allocation: 0 },
+  { id: "radishes", name: "French Breakfast Radishes", category: "vegetables", yieldPerSqft: 3.8, growingDays: 25, nutritionValue: "Vitamin C, Potassium", selected: false, allocation: 0 },
+  { id: "beets", name: "Golden & Red Beets", category: "vegetables", yieldPerSqft: 3.5, growingDays: 55, nutritionValue: "Folate, Manganese, Nitrates", selected: false, allocation: 0 },
+  { id: "peas", name: "Sugar Snap Peas", category: "vegetables", yieldPerSqft: 2.8, growingDays: 60, nutritionValue: "Vitamins C, K, Fiber", selected: false, allocation: 0 },
+  { id: "snowpeas", name: "Snow Peas", category: "vegetables", yieldPerSqft: 2.6, growingDays: 55, nutritionValue: "Vitamins C, K", selected: false, allocation: 0 },
+  { id: "broccoli", name: "Broccoli", category: "vegetables", yieldPerSqft: 3.2, growingDays: 70, nutritionValue: "Vitamins C, K, Sulforaphane", selected: false, allocation: 0 },
+  { id: "cauliflower", name: "Colorful Cauliflower", category: "vegetables", yieldPerSqft: 3.0, growingDays: 75, nutritionValue: "Vitamins C, K, B6", selected: false, allocation: 0 },
+  { id: "kohlrabi", name: "Purple Kohlrabi", category: "vegetables", yieldPerSqft: 3.2, growingDays: 55, nutritionValue: "Vitamins C, B6, Potassium", selected: false, allocation: 0 },
+  { id: "leeks", name: "Baby Leeks", category: "vegetables", yieldPerSqft: 2.8, growingDays: 90, nutritionValue: "Vitamins K, A, Manganese", selected: false, allocation: 0 },
+  { id: "scallions", name: "Green Onions", category: "vegetables", yieldPerSqft: 3.5, growingDays: 60, nutritionValue: "Vitamins K, C", selected: false, allocation: 0 },
+  
+  // BERRIES
+  { id: "strawberries", name: "Everbearing Strawberries", category: "berries", yieldPerSqft: 2.8, growingDays: 90, nutritionValue: "Vitamin C, Antioxidants", selected: false, allocation: 0 },
+  { id: "alpinestrawberries", name: "Alpine Strawberries", category: "berries", yieldPerSqft: 1.8, growingDays: 100, nutritionValue: "Vitamin C, Intense flavor", selected: false, allocation: 0 },
+  { id: "blueberries", name: "Highbush Blueberries", category: "berries", yieldPerSqft: 1.5, growingDays: 120, nutritionValue: "Antioxidants, Vitamin C, K", selected: false, allocation: 0 },
+  { id: "raspberries", name: "Red Raspberries", category: "berries", yieldPerSqft: 1.8, growingDays: 110, nutritionValue: "Fiber, Vitamin C, Manganese", selected: false, allocation: 0 },
+  { id: "goldenraspberries", name: "Golden Raspberries", category: "berries", yieldPerSqft: 1.6, growingDays: 115, nutritionValue: "Vitamin C, Antioxidants", selected: false, allocation: 0 },
+  { id: "blackberries", name: "Thornless Blackberries", category: "berries", yieldPerSqft: 2.0, growingDays: 105, nutritionValue: "Vitamins C, K, Fiber", selected: false, allocation: 0 },
+  { id: "gooseberries", name: "Gooseberries", category: "berries", yieldPerSqft: 1.4, growingDays: 120, nutritionValue: "Vitamin C, Fiber", selected: false, allocation: 0 },
+  { id: "currants", name: "Red & Black Currants", category: "berries", yieldPerSqft: 1.5, growingDays: 110, nutritionValue: "Vitamin C, Iron, Potassium", selected: false, allocation: 0 },
+  { id: "mulberries", name: "Dwarf Mulberries", category: "berries", yieldPerSqft: 2.2, growingDays: 100, nutritionValue: "Vitamin C, Iron, Resveratrol", selected: false, allocation: 0 },
+  { id: "groundcherries", name: "Ground Cherries", category: "berries", yieldPerSqft: 2.5, growingDays: 75, nutritionValue: "Vitamins A, C, Antioxidants", selected: false, allocation: 0 },
+  { id: "honeyberries", name: "Honeyberries (Haskap)", category: "berries", yieldPerSqft: 1.3, growingDays: 130, nutritionValue: "Antioxidants, Vitamin C", selected: false, allocation: 0 },
+  { id: "lingonberries", name: "Lingonberries", category: "berries", yieldPerSqft: 1.2, growingDays: 140, nutritionValue: "Vitamin E, Antioxidants", selected: false, allocation: 0 },
+  { id: "goji", name: "Goji Berries", category: "berries", yieldPerSqft: 1.0, growingDays: 150, nutritionValue: "Vitamins A, C, Iron, Zeaxanthin", selected: false, allocation: 0 },
+  
+  // GREENHOUSE FRUITS
+  { id: "melons", name: "Charentais Melons", category: "fruits", yieldPerSqft: 3.2, growingDays: 85, nutritionValue: "Vitamins A, C", selected: false, allocation: 0 },
+  { id: "watermelon", name: "Personal Watermelons", category: "fruits", yieldPerSqft: 3.0, growingDays: 80, nutritionValue: "Vitamins A, C, Lycopene", selected: false, allocation: 0 },
+  { id: "honeydew", name: "Honeydew Melons", category: "fruits", yieldPerSqft: 2.8, growingDays: 90, nutritionValue: "Vitamins C, B6, Potassium", selected: false, allocation: 0 },
+  { id: "cantaloupe", name: "French Cantaloupe", category: "fruits", yieldPerSqft: 3.0, growingDays: 85, nutritionValue: "Vitamins A, C", selected: false, allocation: 0 },
+  { id: "passionfruit", name: "Passion Fruit", category: "fruits", yieldPerSqft: 1.8, growingDays: 180, nutritionValue: "Vitamins A, C, Iron, Fiber", selected: false, allocation: 0 },
+  { id: "figs", name: "Fresh Figs", category: "fruits", yieldPerSqft: 2.0, growingDays: 150, nutritionValue: "Fiber, Potassium, Calcium", selected: false, allocation: 0 },
+  { id: "kiwi", name: "Hardy Kiwi", category: "fruits", yieldPerSqft: 1.5, growingDays: 180, nutritionValue: "Vitamins C, K, E", selected: false, allocation: 0 },
+  { id: "grapes", name: "Table Grapes", category: "fruits", yieldPerSqft: 2.5, growingDays: 170, nutritionValue: "Vitamins C, K, Resveratrol", selected: false, allocation: 0 },
+  
+  // EXOTIC GREENHOUSE TREES
+  { id: "dwarflemons", name: "Meyer Lemon Trees", category: "exotictrees", yieldPerSqft: 0.8, growingDays: 365, nutritionValue: "Vitamin C, Citric acid", selected: false, allocation: 0 },
+  { id: "dwarflimes", name: "Key Lime Trees", category: "exotictrees", yieldPerSqft: 0.7, growingDays: 365, nutritionValue: "Vitamin C, Antioxidants", selected: false, allocation: 0 },
+  { id: "dwarforanges", name: "Calamondin Orange Trees", category: "exotictrees", yieldPerSqft: 0.9, growingDays: 365, nutritionValue: "Vitamins C, A", selected: false, allocation: 0 },
+  { id: "kumquats", name: "Nagami Kumquat Trees", category: "exotictrees", yieldPerSqft: 0.6, growingDays: 365, nutritionValue: "Vitamins C, A, Fiber", selected: false, allocation: 0 },
+  { id: "dwarfbananas", name: "Dwarf Cavendish Bananas", category: "exotictrees", yieldPerSqft: 1.2, growingDays: 270, nutritionValue: "Potassium, Vitamin B6", selected: false, allocation: 0 },
+  { id: "papaya", name: "Dwarf Papaya Trees", category: "exotictrees", yieldPerSqft: 1.5, growingDays: 240, nutritionValue: "Vitamins C, A, Papain enzyme", selected: false, allocation: 0 },
+  { id: "avocado", name: "Dwarf Avocado Trees", category: "exotictrees", yieldPerSqft: 0.5, growingDays: 365, nutritionValue: "Healthy fats, Vitamins K, E", selected: false, allocation: 0 },
+  { id: "guava", name: "Tropical Guava Trees", category: "exotictrees", yieldPerSqft: 0.8, growingDays: 300, nutritionValue: "Vitamin C, Fiber, Lycopene", selected: false, allocation: 0 },
+  { id: "pomegranate", name: "Dwarf Pomegranate Trees", category: "exotictrees", yieldPerSqft: 0.6, growingDays: 365, nutritionValue: "Antioxidants, Vitamin C, K", selected: false, allocation: 0 },
+  { id: "olivetrees", name: "Arbequina Olive Trees", category: "exotictrees", yieldPerSqft: 0.4, growingDays: 365, nutritionValue: "Healthy fats, Vitamin E", selected: false, allocation: 0 },
+  { id: "dragonfruit", name: "Dragon Fruit Cactus", category: "exotictrees", yieldPerSqft: 0.7, growingDays: 180, nutritionValue: "Vitamin C, Fiber, Antioxidants", selected: false, allocation: 0 },
+  { id: "cherimoya", name: "Cherimoya Trees", category: "exotictrees", yieldPerSqft: 0.5, growingDays: 365, nutritionValue: "Vitamins C, B6, Fiber", selected: false, allocation: 0 },
+  
+  // ORCHARD FRUIT TREES (Outdoor)
+  { id: "appletrees", name: "Apple Orchard (Outdoor)", category: "orchard", yieldPerSqft: 0.3, growingDays: 180, nutritionValue: "Fiber, Vitamin C, Antioxidants", selected: false, allocation: 0 },
+  { id: "peartrees", name: "Pear Orchard (Outdoor)", category: "orchard", yieldPerSqft: 0.3, growingDays: 180, nutritionValue: "Fiber, Vitamin C, K", selected: false, allocation: 0 },
+  { id: "cherrytrees", name: "Cherry Orchard (Outdoor)", category: "orchard", yieldPerSqft: 0.25, growingDays: 120, nutritionValue: "Antioxidants, Vitamin C, Melatonin", selected: false, allocation: 0 },
+  { id: "plumtrees", name: "Plum Orchard (Outdoor)", category: "orchard", yieldPerSqft: 0.28, growingDays: 150, nutritionValue: "Vitamins C, K, Fiber", selected: false, allocation: 0 },
+  { id: "peachtrees", name: "Peach Orchard (Outdoor)", category: "orchard", yieldPerSqft: 0.35, growingDays: 160, nutritionValue: "Vitamins A, C, Potassium", selected: false, allocation: 0 },
+  { id: "apricottrees", name: "Apricot Orchard (Outdoor)", category: "orchard", yieldPerSqft: 0.28, growingDays: 140, nutritionValue: "Vitamins A, C, E", selected: false, allocation: 0 },
+  { id: "hazelnuttrees", name: "Hazelnut Grove (Outdoor)", category: "orchard", yieldPerSqft: 0.15, growingDays: 200, nutritionValue: "Vitamin E, Healthy fats", selected: false, allocation: 0 },
+  { id: "walnuttrees", name: "Walnut Grove (Outdoor)", category: "orchard", yieldPerSqft: 0.12, growingDays: 210, nutritionValue: "Omega-3, Antioxidants", selected: false, allocation: 0 },
+  { id: "chestnuttrees", name: "Chestnut Grove (Outdoor)", category: "orchard", yieldPerSqft: 0.18, growingDays: 180, nutritionValue: "Fiber, Vitamins C, B6", selected: false, allocation: 0 },
+  { id: "elderberrytrees", name: "Elderberry Bushes (Outdoor)", category: "orchard", yieldPerSqft: 0.4, growingDays: 120, nutritionValue: "Antioxidants, Immune support", selected: false, allocation: 0 },
+  { id: "aronia", name: "Aronia Berry Bushes (Outdoor)", category: "orchard", yieldPerSqft: 0.5, growingDays: 110, nutritionValue: "Highest antioxidants of any berry", selected: false, allocation: 0 },
+  { id: "serviceberry", name: "Serviceberry Trees (Outdoor)", category: "orchard", yieldPerSqft: 0.35, growingDays: 100, nutritionValue: "Fiber, Manganese, Antioxidants", selected: false, allocation: 0 },
+  
+  // HERBS
+  { id: "basil", name: "Genovese Basil", category: "herbs", yieldPerSqft: 2.5, growingDays: 28, nutritionValue: "Vitamin K, Antioxidants", selected: false, allocation: 0 },
+  { id: "thaibasil", name: "Thai Basil", category: "herbs", yieldPerSqft: 2.3, growingDays: 30, nutritionValue: "Vitamins A, K", selected: false, allocation: 0 },
   { id: "cilantro", name: "Cilantro", category: "herbs", yieldPerSqft: 2.2, growingDays: 25, nutritionValue: "Vitamins A, C, K", selected: false, allocation: 0 },
-  { id: "parsley", name: "Parsley", category: "herbs", yieldPerSqft: 2.0, growingDays: 30, nutritionValue: "Vitamins K, C, A", selected: false, allocation: 0 },
-  { id: "mint", name: "Mint", category: "herbs", yieldPerSqft: 2.3, growingDays: 30, nutritionValue: "Vitamin A, Antioxidants", selected: false, allocation: 0 },
-  { id: "mushrooms", name: "Gourmet Mushrooms", category: "specialty", yieldPerSqft: 4.0, growingDays: 21, nutritionValue: "Vitamin D, B vitamins", selected: false, allocation: 0 },
-  { id: "edibleflowers", name: "Edible Flowers", category: "specialty", yieldPerSqft: 1.5, growingDays: 45, nutritionValue: "Antioxidants", selected: false, allocation: 0 },
+  { id: "parsley", name: "Italian Parsley", category: "herbs", yieldPerSqft: 2.0, growingDays: 30, nutritionValue: "Vitamins K, C, A", selected: false, allocation: 0 },
+  { id: "mint", name: "Spearmint", category: "herbs", yieldPerSqft: 2.3, growingDays: 30, nutritionValue: "Vitamin A, Antioxidants", selected: false, allocation: 0 },
+  { id: "peppermint", name: "Peppermint", category: "herbs", yieldPerSqft: 2.2, growingDays: 30, nutritionValue: "Menthol, Antioxidants", selected: false, allocation: 0 },
+  { id: "dill", name: "Fresh Dill", category: "herbs", yieldPerSqft: 1.8, growingDays: 40, nutritionValue: "Vitamins A, C, Manganese", selected: false, allocation: 0 },
+  { id: "chives", name: "Chives", category: "herbs", yieldPerSqft: 2.0, growingDays: 60, nutritionValue: "Vitamins K, A, C", selected: false, allocation: 0 },
+  { id: "oregano", name: "Greek Oregano", category: "herbs", yieldPerSqft: 1.8, growingDays: 45, nutritionValue: "Vitamin K, Antioxidants", selected: false, allocation: 0 },
+  { id: "thyme", name: "French Thyme", category: "herbs", yieldPerSqft: 1.5, growingDays: 50, nutritionValue: "Vitamin C, Manganese", selected: false, allocation: 0 },
+  { id: "rosemary", name: "Rosemary", category: "herbs", yieldPerSqft: 1.2, growingDays: 80, nutritionValue: "Vitamin A, Calcium, Iron", selected: false, allocation: 0 },
+  { id: "sage", name: "Garden Sage", category: "herbs", yieldPerSqft: 1.3, growingDays: 75, nutritionValue: "Vitamin K, Antioxidants", selected: false, allocation: 0 },
+  { id: "lemongrass", name: "Lemongrass", category: "herbs", yieldPerSqft: 1.8, growingDays: 100, nutritionValue: "Citral, Antioxidants", selected: false, allocation: 0 },
+  { id: "tarragon", name: "French Tarragon", category: "herbs", yieldPerSqft: 1.5, growingDays: 60, nutritionValue: "Vitamin A, Potassium", selected: false, allocation: 0 },
+  { id: "lavender", name: "Culinary Lavender", category: "herbs", yieldPerSqft: 1.0, growingDays: 90, nutritionValue: "Calming properties, Antioxidants", selected: false, allocation: 0 },
+  
+  // SPECIALTY CROPS
+  { id: "mushrooms", name: "Shiitake Mushrooms", category: "specialty", yieldPerSqft: 4.0, growingDays: 21, nutritionValue: "Vitamin D, B vitamins", selected: false, allocation: 0 },
+  { id: "oyster", name: "Oyster Mushrooms", category: "specialty", yieldPerSqft: 4.5, growingDays: 18, nutritionValue: "Protein, B vitamins, Iron", selected: false, allocation: 0 },
+  { id: "lionsmane", name: "Lion's Mane Mushrooms", category: "specialty", yieldPerSqft: 3.0, growingDays: 28, nutritionValue: "Nerve growth factors, Antioxidants", selected: false, allocation: 0 },
+  { id: "maitake", name: "Maitake Mushrooms", category: "specialty", yieldPerSqft: 2.5, growingDays: 35, nutritionValue: "Beta-glucans, Vitamin D", selected: false, allocation: 0 },
+  { id: "edibleflowers", name: "Edible Flower Mix", category: "specialty", yieldPerSqft: 1.5, growingDays: 45, nutritionValue: "Antioxidants, Natural colors", selected: false, allocation: 0 },
+  { id: "nasturtium", name: "Nasturtium Flowers", category: "specialty", yieldPerSqft: 1.8, growingDays: 50, nutritionValue: "Vitamin C, Peppery flavor", selected: false, allocation: 0 },
+  { id: "borage", name: "Borage Flowers", category: "specialty", yieldPerSqft: 1.3, growingDays: 55, nutritionValue: "Omega-6, Anti-inflammatory", selected: false, allocation: 0 },
+  { id: "sprouts", name: "Sprouted Seeds Mix", category: "specialty", yieldPerSqft: 8.0, growingDays: 7, nutritionValue: "Enzymes, Concentrated nutrients", selected: false, allocation: 0 },
+  { id: "wheatgrass", name: "Wheatgrass", category: "specialty", yieldPerSqft: 5.0, growingDays: 10, nutritionValue: "Chlorophyll, Vitamins A, C, E", selected: false, allocation: 0 },
+  { id: "sunflowergreens", name: "Sunflower Greens", category: "specialty", yieldPerSqft: 4.5, growingDays: 12, nutritionValue: "Protein, Vitamins E, B", selected: false, allocation: 0 },
+  { id: "peagreens", name: "Pea Shoot Greens", category: "specialty", yieldPerSqft: 4.0, growingDays: 14, nutritionValue: "Vitamins A, C, Folic acid", selected: false, allocation: 0 },
 ];
 
 const EQUIPMENT_LIST: EquipmentItem[] = [
@@ -143,7 +239,10 @@ const STAFF_POSITIONS: StaffPosition[] = [
 const CATEGORY_LABELS: Record<string, string> = {
   greens: "Salad Greens",
   vegetables: "Vegetables",
-  fruits: "Fruits",
+  berries: "Berries",
+  fruits: "Greenhouse Fruits",
+  exotictrees: "Exotic Trees (Indoor)",
+  orchard: "Orchard Trees (Outdoor)",
   herbs: "Fresh Herbs",
   specialty: "Specialty Crops"
 };
