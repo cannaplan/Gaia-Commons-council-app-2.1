@@ -4,7 +4,7 @@
 
 Gaia Commons Council is a full-stack dashboard application for tracking pilot program statistics, endowment data, and strategic timeline events for the "One Vote, Forever Fed" 2026 ballot initiative. The platform serves as an analytics and management interface for educational and environmental initiatives, displaying real-time metrics for student enrollment, facility square footage, school counts, and endowment financials. Features include interactive maps (Minnesota greenhouse locations), multi-scale deployment views (Pilot → Statewide → National → Global), and an interactive Cluster Builder tool.
 
-**Statewide Scope**: 330 school districts, ~3,100 schools, 830,000 students, 2.2M total sqft (~710 sqft avg per school)
+**Statewide Scope**: 330 school districts, ~3,100 schools, 830,000 students, 2.64M total sqft (+20% buffer for market surplus/low harvest flexibility, ~852 sqft avg per school)
 
 ## Recent Changes (January 2026)
 

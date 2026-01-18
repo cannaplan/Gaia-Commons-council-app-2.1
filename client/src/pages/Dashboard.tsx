@@ -170,7 +170,7 @@ import { ProgressBar } from "@/components/ProgressBar";
 
 const SCALE_LABELS: Record<string, string> = {
   pilot: "Pilot (6 Schools)",
-  statewide: "Statewide (275 Schools)",
+  statewide: "Statewide (3,100 Schools)",
   national: "National (130K Schools)",
   global: "Global (1M Schools)"
 };

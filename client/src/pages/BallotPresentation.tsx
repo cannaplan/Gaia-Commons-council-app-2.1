@@ -418,7 +418,7 @@ export default function BallotPresentation() {
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5">
               <div className="flex justify-between items-center">
-                <span>Statewide (275 Schools)</span>
+                <span>Statewide (3,100 Schools)</span>
                 <Badge className="bg-white/30 text-white">4,320 Jobs</Badge>
               </div>
             </div>

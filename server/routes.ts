@@ -308,7 +308,7 @@ async function seedDatabase() {
       { phase: "Launch", quarter: "2027 Q2-Q4", milestone: "First 50 Greenhouses", details: "Build first 50 greenhouses; hire staff, train teachers", greenhouseCount: 50, jobsCreated: 260, studentsServed: 159000 },
       { phase: "Launch", quarter: "2027 Q3", milestone: "First Harvest", details: "First harvest; K-12 curriculum pilots with 9 school districts", greenhouseCount: 50, jobsCreated: 260, studentsServed: 159000 },
       { phase: "Scale", quarter: "2028 Q1-Q4", milestone: "Scale to 200 Greenhouses", details: "Expand to 200 greenhouses across all 8 congressional districts", greenhouseCount: 200, jobsCreated: 1040, studentsServed: 636000 },
-      { phase: "Full Operation", quarter: "2028 Q4", milestone: "All 275 Greenhouses Operational", details: "875K students fed daily; 1,430 FTE jobs created; full statewide coverage", greenhouseCount: 275, jobsCreated: 1430, studentsServed: 875000 }
+      { phase: "Full Operation", quarter: "2028 Q4", milestone: "All 275 Greenhouses Operational", details: "830K students fed daily; 1,815 FTE jobs created; full statewide coverage", greenhouseCount: 275, jobsCreated: 1815, studentsServed: 830000 }
     ];
     for (const m of milestones) {
       await storage.createImplementationTimeline(m);
@@ -843,8 +843,8 @@ async function seedDatabase() {
     // Seed Ballot Slide Deck (15 slides from Python + extended)
     const slides = [
       { n: 1, title: "Executive Summary", text: "5,630 Students | $12.8M NPV | 6 Greenhouses" },
-      { n: 2, title: "The Problem", text: "875k MN kids face food insecurity annually" },
-      { n: 3, title: "The Solution", text: "275 greenhouses = 875,000 meals/day, year-round" },
+      { n: 2, title: "The Problem", text: "830k MN kids face food insecurity annually" },
+      { n: 3, title: "The Solution", text: "3,100 schools + 275 regional greenhouses = 830,000 meals/day, year-round" },
       { n: 4, title: "Endowment Engine", text: "0.27% tax → $3B PERPETUAL endowment @ 3.9% = $117M/yr" },
       { n: 5, title: "St. Paul Cluster", text: "2,793 → 3,212 students | SPA, Highland Park, Groveland" },
       { n: 6, title: "Mendota Cluster", text: "2,837 → 3,262 students | STA, Visitation, Two Rivers" },
@@ -885,7 +885,7 @@ async function seedDatabase() {
       { year: 2028, quarter: 1, schoolCount: 200, totalRevenue: 30500000, totalOpex: 3000000, totalYieldLbs: 6000000, endowmentValue: 700000000, studentsServed: 187680 },
       { year: 2028, quarter: 2, schoolCount: 225, totalRevenue: 34312500, totalOpex: 3375000, totalYieldLbs: 6750000, endowmentValue: 1050000000, studentsServed: 211140 },
       { year: 2028, quarter: 3, schoolCount: 250, totalRevenue: 38125000, totalOpex: 3750000, totalYieldLbs: 7500000, endowmentValue: 1400000000, studentsServed: 234600 },
-      { year: 2028, quarter: 4, schoolCount: 275, totalRevenue: 41937500, totalOpex: 4125000, totalYieldLbs: 8250000, endowmentValue: 2100000000, studentsServed: 875000 },
+      { year: 2028, quarter: 4, schoolCount: 3100, totalRevenue: 369600000, totalOpex: 31680000, totalYieldLbs: 105600000, endowmentValue: 3000000000, studentsServed: 830000 },
     ];
     for (const h of historicalData) {
       await storage.createHistoricalFinancial(h);
@@ -929,13 +929,13 @@ async function seedDatabase() {
     });
     await storage.createExpandedJobs({
       scale: "statewide",
-      fteJobs: 1430,
+      fteJobs: 1815,  // Updated: permanent greenhouse + distribution jobs
       studentInternships: 6600,
       volunteerPositions: 3025,
       hourlyWage: 28,
-      directWages: 83200000,
+      directWages: 105900000,  // 1815 jobs × $58,400 avg salary
       economicMultiplier: 2.4,
-      // Statewide: 275 schools × 15K sqft + 960K regional hubs = 5.085M sqft @ $85/sqft = $432M
+      // Statewide: 3,100 schools × 852 sqft avg = 2.64M sqft @ $85/sqft = $224.4M
       constructionJobs: 4320,
       constructionGeneral: 1728,
       constructionElectricians: 864,
@@ -1268,10 +1268,10 @@ async function seedDatabase() {
     
     // Monte Carlo Simulations - uncertainty analysis for key projections
     const monteCarloSims = [
-      { parameter: "CO2 Sequestration", scale: "statewide", baselineValue: 24750, p10Value: 19800, p25Value: 22000, p50Value: 24750, p75Value: 27500, p90Value: 29700, iterations: 10000, confidenceLevel: 0.95, unit: "tons/year", description: "Annual CO2 sequestration from 275 greenhouses with yield uncertainty" },
-      { parameter: "Job Creation", scale: "statewide", baselineValue: 1430, p10Value: 1143, p25Value: 1287, p50Value: 1430, p75Value: 1573, p90Value: 1716, iterations: 10000, confidenceLevel: 0.95, unit: "FTE jobs", description: "Direct employment with economic multiplier effects" },
+      { parameter: "CO2 Sequestration", scale: "statewide", baselineValue: 13543, p10Value: 12189, p25Value: 12866, p50Value: 13543, p75Value: 14220, p90Value: 14897, iterations: 10000, confidenceLevel: 0.95, unit: "tons/year", description: "Annual CO2 sequestration from 2.64M sqft across 3,100 schools with yield uncertainty" },
+      { parameter: "Job Creation", scale: "statewide", baselineValue: 1815, p10Value: 1634, p25Value: 1724, p50Value: 1815, p75Value: 1906, p90Value: 1997, iterations: 10000, confidenceLevel: 0.95, unit: "FTE jobs", description: "Direct employment with economic multiplier effects" },
       { parameter: "Endowment Growth", scale: "statewide", baselineValue: 3200000000, p10Value: 2400000000, p25Value: 2800000000, p50Value: 3200000000, p75Value: 3600000000, p90Value: 4000000000, iterations: 10000, confidenceLevel: 0.95, unit: "USD", description: "15-year endowment projection with market volatility" },
-      { parameter: "Student Meals Served", scale: "statewide", baselineValue: 875000, p10Value: 787500, p25Value: 831250, p50Value: 875000, p75Value: 918750, p90Value: 962500, iterations: 10000, confidenceLevel: 0.95, unit: "meals/day", description: "Daily meals with participation rate uncertainty" },
+      { parameter: "Student Meals Served", scale: "statewide", baselineValue: 830000, p10Value: 747000, p25Value: 788500, p50Value: 830000, p75Value: 871500, p90Value: 913000, iterations: 10000, confidenceLevel: 0.95, unit: "meals/day", description: "Daily meals with participation rate uncertainty" },
       { parameter: "Greenhouse Yield", scale: "statewide", baselineValue: 4950000, p10Value: 4207500, p25Value: 4578750, p50Value: 4950000, p75Value: 5321250, p90Value: 5692500, iterations: 10000, confidenceLevel: 0.95, unit: "lbs/year", description: "Annual produce yield with seasonal and pest variation" },
       { parameter: "Revenue Generation", scale: "national", baselineValue: 19500000000, p10Value: 15600000000, p25Value: 17550000000, p50Value: 19500000000, p75Value: 21450000000, p90Value: 23400000000, iterations: 10000, confidenceLevel: 0.95, unit: "USD/year", description: "National revenue with food price and demand uncertainty" }
     ];
@@ -1281,13 +1281,13 @@ async function seedDatabase() {
 
     // Scenario Comparisons - baseline vs optimistic vs conservative
     const scenarios = [
-      { metric: "Schools Deployed", category: "Infrastructure", baselineValue: 275, optimisticValue: 325, conservativeValue: 225, unit: "schools", description: "Number of schools with greenhouse installations", keyAssumptions: "Baseline: current plan; Optimistic: accelerated adoption; Conservative: regulatory delays" },
+      { metric: "Schools Deployed", category: "Infrastructure", baselineValue: 3100, optimisticValue: 3400, conservativeValue: 2800, unit: "schools", description: "Number of schools with greenhouse installations", keyAssumptions: "Baseline: current plan; Optimistic: accelerated adoption; Conservative: regulatory delays" },
       { metric: "Year 5 Endowment", category: "Financial", baselineValue: 3200000000, optimisticValue: 4100000000, conservativeValue: 2400000000, unit: "USD", description: "Endowment value after 5 years of operation", keyAssumptions: "Baseline: 7% return; Optimistic: 10% return; Conservative: 5% return + higher costs" },
-      { metric: "CO2 Reduction", category: "Climate", baselineValue: 24750, optimisticValue: 35000, conservativeValue: 18000, unit: "tons/year", description: "Annual CO2 sequestration and avoided emissions", keyAssumptions: "Baseline: standard yields; Optimistic: enhanced practices; Conservative: weather challenges" },
-      { metric: "Jobs Created", category: "Economic", baselineValue: 1430, optimisticValue: 1850, conservativeValue: 1100, unit: "FTE", description: "Full-time equivalent employment", keyAssumptions: "Baseline: standard staffing; Optimistic: expanded services; Conservative: automation" },
+      { metric: "CO2 Reduction", category: "Climate", baselineValue: 13543, optimisticValue: 18000, conservativeValue: 10000, unit: "tons/year", description: "Annual CO2 sequestration and avoided emissions", keyAssumptions: "Baseline: standard yields; Optimistic: enhanced practices; Conservative: weather challenges" },
+      { metric: "Jobs Created", category: "Economic", baselineValue: 1815, optimisticValue: 2200, conservativeValue: 1500, unit: "FTE", description: "Full-time equivalent employment", keyAssumptions: "Baseline: standard staffing; Optimistic: expanded services; Conservative: automation" },
       { metric: "Food Miles Saved", category: "Environmental", baselineValue: 12500000, optimisticValue: 18000000, conservativeValue: 9000000, unit: "miles/year", description: "Transportation emissions avoided through local production", keyAssumptions: "Baseline: current sourcing; Optimistic: full local; Conservative: partial implementation" },
       { metric: "Voter Support", category: "Political", baselineValue: 0.62, optimisticValue: 0.72, conservativeValue: 0.52, unit: "approval rate", description: "Expected ballot initiative approval", keyAssumptions: "Baseline: current polling; Optimistic: successful outreach; Conservative: opposition campaign" },
-      { metric: "Implementation Speed", category: "Operations", baselineValue: 24, optimisticValue: 18, conservativeValue: 36, unit: "months to full scale", description: "Time to reach 275-school deployment", keyAssumptions: "Baseline: standard timeline; Optimistic: streamlined permits; Conservative: supply chain issues" }
+      { metric: "Implementation Speed", category: "Operations", baselineValue: 24, optimisticValue: 18, conservativeValue: 36, unit: "months to full scale", description: "Time to reach 3,100-school deployment", keyAssumptions: "Baseline: standard timeline; Optimistic: streamlined permits; Conservative: supply chain issues" }
     ];
     for (const s of scenarios) {
       await storage.createScenarioComparison(s);
@@ -1298,7 +1298,7 @@ async function seedDatabase() {
       { targetMetric: "Net Zero Carbon", optimizationType: "minimize", currentValue: 24750, targetValue: 50000, optimalValue: 48500, constraintName: "Budget Cap", constraintValue: 2100000000, unit: "tons CO2/year", feasibility: "achievable", description: "Maximize carbon sequestration within budget constraints" },
       { targetMetric: "ROI Maximization", optimizationType: "maximize", currentValue: 0.12, targetValue: 0.18, optimalValue: 0.165, constraintName: "Risk Tolerance", constraintValue: 0.15, unit: "annual return", feasibility: "achievable", description: "Optimize endowment returns within risk parameters" },
       { targetMetric: "Jobs per Dollar", optimizationType: "maximize", currentValue: 0.68, targetValue: 1.0, optimalValue: 0.85, constraintName: "Wage Floor", constraintValue: 18, unit: "jobs per $1M", feasibility: "partially achievable", description: "Maximize employment while maintaining living wages" },
-      { targetMetric: "Student Coverage", optimizationType: "maximize", currentValue: 875000, targetValue: 950000, optimalValue: 920000, constraintName: "Greenhouse Capacity", constraintValue: 275, unit: "students/day", feasibility: "achievable", description: "Maximize student participation within infrastructure" },
+      { targetMetric: "Student Coverage", optimizationType: "maximize", currentValue: 830000, targetValue: 900000, optimalValue: 870000, constraintName: "Greenhouse Capacity", constraintValue: 275, unit: "students/day", feasibility: "achievable", description: "Maximize student participation within infrastructure" },
       { targetMetric: "Food Waste", optimizationType: "minimize", currentValue: 0.12, targetValue: 0.05, optimalValue: 0.06, constraintName: "Quality Standards", constraintValue: 0.95, unit: "waste fraction", feasibility: "achievable", description: "Minimize food waste while maintaining quality" }
     ];
     for (const o of optimizations) {
@@ -1372,7 +1372,7 @@ async function seedDatabase() {
       { regionName: "Southeast Asia", countryCode: "VN", latitude: 16.0, longitude: 108.0, category: "Agroforestry", projectName: "Mekong Regenerative Zone", description: "Rice-fish-tree integrated systems replacing monoculture", greenhouseFacilities: 180, jobsCreated: 680000, annualCarbonSequestrationTons: 42000000, peopleFed: 45000000, acresRestored: 25000000, waterSavedGallons: 680000000000, investmentMillions: 15000, status: "Active", impactHighlight: "45M people fed, 42M tons CO2 sequestered" },
       { regionName: "Australia Outback", countryCode: "AU", latitude: -25.3, longitude: 134.5, category: "Silvopasture", projectName: "Regenerative Rangelands Australia", description: "Holistic managed grazing with tree integration", greenhouseFacilities: 45, jobsCreated: 85000, annualCarbonSequestrationTons: 28000000, peopleFed: 5000000, acresRestored: 55000000, waterSavedGallons: 180000000000, investmentMillions: 9500, status: "Planning", impactHighlight: "55M acres restored, drought-resilient" },
       { regionName: "Mediterranean Basin", countryCode: "ES", latitude: 40.4, longitude: -3.7, category: "Drought-Resilient", projectName: "Mediterranean Food Forest Alliance", description: "Drought-resistant perennial food systems", greenhouseFacilities: 280, jobsCreated: 145000, annualCarbonSequestrationTons: 15000000, peopleFed: 22000000, acresRestored: 12000000, waterSavedGallons: 420000000000, investmentMillions: 18500, status: "Active", impactHighlight: "Climate adaptation model for dry regions" },
-      { regionName: "Midwest USA", countryCode: "US", latitude: 46.0, longitude: -94.0, category: "School Greenhouses", projectName: "Minnesota Gaia Commons Pilot", description: "School-integrated greenhouse network feeding students", greenhouseFacilities: 275, jobsCreated: 1430, annualCarbonSequestrationTons: 24750, peopleFed: 875000, acresRestored: 0, waterSavedGallons: 2800000000, investmentMillions: 2100, status: "Active", impactHighlight: "Model for nationwide school food security" },
+      { regionName: "Midwest USA", countryCode: "US", latitude: 46.0, longitude: -94.0, category: "School Greenhouses", projectName: "Minnesota Gaia Commons Pilot", description: "School-integrated greenhouse network feeding 830K students across 3,100 schools", greenhouseFacilities: 275, jobsCreated: 1815, annualCarbonSequestrationTons: 13543, peopleFed: 830000, acresRestored: 0, waterSavedGallons: 2800000000, investmentMillions: 3000, status: "Active", impactHighlight: "Model for nationwide school food security" },
       { regionName: "Southern Africa", countryCode: "ZA", latitude: -33.9, longitude: 18.4, category: "Water Security", projectName: "Cape Water-Food Nexus", description: "Integrated water harvesting and food production", greenhouseFacilities: 95, jobsCreated: 175000, annualCarbonSequestrationTons: 12000000, peopleFed: 15000000, acresRestored: 8500000, waterSavedGallons: 850000000000, investmentMillions: 11000, status: "Planning", impactHighlight: "Water-positive food production" },
       { regionName: "Central America", countryCode: "GT", latitude: 14.6, longitude: -90.5, category: "Indigenous Systems", projectName: "Mesoamerican Milpa Revival", description: "Traditional polyculture with modern enhancements", greenhouseFacilities: 65, jobsCreated: 280000, annualCarbonSequestrationTons: 18000000, peopleFed: 12000000, acresRestored: 9500000, waterSavedGallons: 220000000000, investmentMillions: 6500, status: "Active", impactHighlight: "Indigenous knowledge driving regeneration" },
       { regionName: "Eastern Europe", countryCode: "UA", latitude: 48.4, longitude: 31.2, category: "Soil Restoration", projectName: "Black Earth Revival", description: "Restoring degraded chernozem soils through regenerative practices", greenhouseFacilities: 185, jobsCreated: 320000, annualCarbonSequestrationTons: 38000000, peopleFed: 35000000, acresRestored: 28000000, waterSavedGallons: 480000000000, investmentMillions: 22000, status: "Planning", impactHighlight: "World's most fertile soils restored" },
