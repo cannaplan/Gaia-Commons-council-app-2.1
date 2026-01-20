@@ -8,7 +8,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { useMnSchoolDistricts } from "@/hooks/use-gaia";
 import { 
   ArrowLeft, 
   ArrowRight, 
@@ -275,7 +274,8 @@ const STEPS = [
 ];
 
 export default function ClusterBuilder() {
-  const { data: districts, isLoading } = useMnSchoolDistricts();
+  const districts: any[] = [];
+  const isLoading = false;
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedDistrict, setSelectedDistrict] = useState<string>("");
   const [schools, setSchools] = useState<SchoolGreenhouse[]>([]);

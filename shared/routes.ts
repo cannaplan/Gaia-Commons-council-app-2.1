@@ -43,9 +43,7 @@ import {
   scenarioComparisons,
   optimizationParams,
   sensitivityAnalysis,
-  greenhouseLocations,
   globalRegenerationRegions,
-  mnSchoolDistricts,
   miningAlternative
 } from './schema';
 
@@ -170,14 +168,8 @@ export const api = {
   sensitivityAnalysis: {
     list: { method: 'GET' as const, path: '/api/sensitivity-analysis', responses: { 200: z.array(z.custom<typeof sensitivityAnalysis.$inferSelect>()) } },
   },
-  greenhouseLocations: {
-    list: { method: 'GET' as const, path: '/api/greenhouse-locations', responses: { 200: z.array(z.custom<typeof greenhouseLocations.$inferSelect>()) } },
-  },
   globalRegenerationRegions: {
     list: { method: 'GET' as const, path: '/api/global-regeneration-regions', responses: { 200: z.array(z.custom<typeof globalRegenerationRegions.$inferSelect>()) } },
-  },
-  mnSchoolDistricts: {
-    list: { method: 'GET' as const, path: '/api/mn-school-districts', responses: { 200: z.array(z.custom<typeof mnSchoolDistricts.$inferSelect>()) } },
   },
   miningAlternatives: {
     list: { method: 'GET' as const, path: '/api/mining-alternatives', responses: { 200: z.array(z.custom<typeof miningAlternative.$inferSelect>()) } },

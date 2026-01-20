@@ -46,12 +46,8 @@ import {
   type ScenarioComparisonType, type InsertScenarioComparison,
   type OptimizationParamType, type InsertOptimizationParam,
   type SensitivityAnalysisType, type InsertSensitivityAnalysis,
-  greenhouseLocations,
-  type GreenhouseLocationType, type InsertGreenhouseLocation,
   globalRegenerationRegions,
   type GlobalRegenerationRegionType, type InsertGlobalRegenerationRegion,
-  mnSchoolDistricts,
-  type MnSchoolDistrictType, type InsertMnSchoolDistrict,
   miningAlternative,
   type MiningAlternativeType, type InsertMiningAlternative
 } from "@shared/schema";
@@ -136,12 +132,8 @@ export interface IStorage {
   createOptimizationParam(item: InsertOptimizationParam): Promise<OptimizationParamType>;
   getSensitivityAnalysis(): Promise<SensitivityAnalysisType[]>;
   createSensitivityAnalysis(item: InsertSensitivityAnalysis): Promise<SensitivityAnalysisType>;
-  getGreenhouseLocations(): Promise<GreenhouseLocationType[]>;
-  createGreenhouseLocation(item: InsertGreenhouseLocation): Promise<GreenhouseLocationType>;
   getGlobalRegenerationRegions(): Promise<GlobalRegenerationRegionType[]>;
   createGlobalRegenerationRegion(item: InsertGlobalRegenerationRegion): Promise<GlobalRegenerationRegionType>;
-  getMnSchoolDistricts(): Promise<MnSchoolDistrictType[]>;
-  createMnSchoolDistrict(item: InsertMnSchoolDistrict): Promise<MnSchoolDistrictType>;
   getMiningAlternatives(): Promise<MiningAlternativeType[]>;
   createMiningAlternative(item: InsertMiningAlternative): Promise<MiningAlternativeType>;
   isEmpty(): Promise<boolean>;
@@ -448,26 +440,12 @@ export class DatabaseStorage implements IStorage {
     const [s] = await db.insert(sensitivityAnalysis).values(item).returning();
     return s;
   }
-  async getGreenhouseLocations(): Promise<GreenhouseLocationType[]> {
-    return await db.select().from(greenhouseLocations);
-  }
-  async createGreenhouseLocation(item: InsertGreenhouseLocation): Promise<GreenhouseLocationType> {
-    const [g] = await db.insert(greenhouseLocations).values(item).returning();
-    return g;
-  }
   async getGlobalRegenerationRegions(): Promise<GlobalRegenerationRegionType[]> {
     return await db.select().from(globalRegenerationRegions);
   }
   async createGlobalRegenerationRegion(item: InsertGlobalRegenerationRegion): Promise<GlobalRegenerationRegionType> {
     const [r] = await db.insert(globalRegenerationRegions).values(item).returning();
     return r;
-  }
-  async getMnSchoolDistricts(): Promise<MnSchoolDistrictType[]> {
-    return await db.select().from(mnSchoolDistricts);
-  }
-  async createMnSchoolDistrict(item: InsertMnSchoolDistrict): Promise<MnSchoolDistrictType> {
-    const [d] = await db.insert(mnSchoolDistricts).values(item).returning();
-    return d;
   }
   async getMiningAlternatives(): Promise<MiningAlternativeType[]> {
     return await db.select().from(miningAlternative);

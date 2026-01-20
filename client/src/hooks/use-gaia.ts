@@ -470,18 +470,6 @@ export function useSensitivityAnalysis() {
   });
 }
 
-// Greenhouse Locations (Interactive Map)
-export function useGreenhouseLocations() {
-  return useQuery({
-    queryKey: [api.greenhouseLocations.list.path],
-    queryFn: async () => {
-      const res = await fetch(api.greenhouseLocations.list.path);
-      if (!res.ok) throw new Error("Failed to fetch greenhouse locations");
-      return api.greenhouseLocations.list.responses[200].parse(await res.json());
-    },
-  });
-}
-
 // Global Regeneration Regions (World Map)
 export function useGlobalRegenerationRegions() {
   return useQuery({
@@ -490,18 +478,6 @@ export function useGlobalRegenerationRegions() {
       const res = await fetch(api.globalRegenerationRegions.list.path);
       if (!res.ok) throw new Error("Failed to fetch global regeneration regions");
       return api.globalRegenerationRegions.list.responses[200].parse(await res.json());
-    },
-  });
-}
-
-// MN School Districts (Interactive Map)
-export function useMnSchoolDistricts() {
-  return useQuery({
-    queryKey: [api.mnSchoolDistricts.list.path],
-    queryFn: async () => {
-      const res = await fetch(api.mnSchoolDistricts.list.path);
-      if (!res.ok) throw new Error("Failed to fetch MN school districts");
-      return api.mnSchoolDistricts.list.responses[200].parse(await res.json());
     },
   });
 }

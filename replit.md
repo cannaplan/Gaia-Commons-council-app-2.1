@@ -2,7 +2,7 @@
 
 ## Overview
 
-Gaia Commons Council is a full-stack dashboard application for tracking pilot program statistics, endowment data, and strategic timeline events for the "One Vote, Forever Fed" 2026 ballot initiative. The platform serves as an analytics and management interface for educational and environmental initiatives, displaying real-time metrics for student enrollment, facility square footage, school counts, and endowment financials. Features include interactive maps (Minnesota greenhouse locations), multi-scale deployment views (Pilot → Statewide → National → Global), and an interactive Cluster Builder tool.
+Gaia Commons Council is a full-stack dashboard application for tracking pilot program statistics, endowment data, and strategic timeline events for the "One Vote, Forever Fed" 2026 ballot initiative. The platform serves as an analytics and management interface for educational and environmental initiatives, displaying real-time metrics for student enrollment, facility square footage, school counts, and endowment financials. Features include multi-scale deployment views (Pilot → Statewide → National → Global), interactive data visualization charts (Endowment Growth, Jobs Breakdown), and an interactive Cluster Builder tool.
 
 **Statewide Scope**: 330 school districts, ~3,100 schools, 830,000 students, 2.64M total sqft (+20% buffer for market surplus/low harvest flexibility, ~852 sqft avg per school)
 
@@ -63,7 +63,6 @@ Gaia Commons Council is a full-stack dashboard application for tracking pilot pr
   - **Acquisition Sources**: Private landowners (60%), Federal government (25%), State & County (15%)
   - **Perpetual Protection**: All lands held in permanent land trust — never to be sold or developed
 - **Cluster Builder Tool**: Added interactive 4-step wizard for students/teachers to design custom greenhouse pilot programs. Users can select schools, choose produce varieties, and generate pilot proposals with complete metrics (sqft, production, jobs, costs, environmental impact).
-- **MN School Districts Map**: Added 53 Minnesota school districts with greenhouse candidate data, dual-mode toggle (active sites vs all districts), and filtering by size/south-facing score.
 - **Tribal Community Priority**: Included Cass Lake-Bena, Red Lake, and Nay Ah Shing districts as High Priority for food sovereignty initiatives.
 
 ## Gaia Commons Brand Guidelines

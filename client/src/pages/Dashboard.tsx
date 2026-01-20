@@ -163,7 +163,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { InteractiveMap } from "@/components/InteractiveMap";
 import { GlobalRegenerationMap } from "@/components/GlobalRegenerationMap";
 import { QuickNav } from "@/components/QuickNav";
 import { FundingCalculator } from "@/components/FundingCalculator";
@@ -2388,11 +2387,6 @@ export default function Dashboard() {
             </Card>
           </motion.div>
         )}
-
-        {/* Interactive Greenhouse Map */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.49 }} className="mb-8">
-          <InteractiveMap />
-        </motion.div>
 
         {/* Global Regeneration Map */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.495 }} className="mb-8">

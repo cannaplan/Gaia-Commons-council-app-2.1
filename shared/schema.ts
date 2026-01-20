@@ -563,24 +563,6 @@ export const sensitivityAnalysis = pgTable("sensitivity_analysis", {
   description: text("description").notNull(),
 });
 
-// Greenhouse Locations - Interactive Map Data
-export const greenhouseLocations = pgTable("greenhouse_locations", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  congressionalDistrict: text("congressional_district").notNull(),
-  schoolDistrict: text("school_district").notNull(),
-  latitude: real("latitude").notNull(),
-  longitude: real("longitude").notNull(),
-  greenhouseCount: integer("greenhouse_count").notNull(),
-  studentsServed: integer("students_served").notNull(),
-  annualFoodLbs: real("annual_food_lbs").notNull(),
-  produceTypes: text("produce_types").notNull(),
-  sqft: integer("sqft").notNull(),
-  status: text("status").notNull(),
-});
-
-export const insertGreenhouseLocationSchema = createInsertSchema(greenhouseLocations).omit({ id: true });
-
 // Global Regeneration Regions - World Map Data
 export const globalRegenerationRegions = pgTable("global_regeneration_regions", {
   id: serial("id").primaryKey(),
@@ -604,32 +586,6 @@ export const globalRegenerationRegions = pgTable("global_regeneration_regions", 
 
 export const insertGlobalRegenerationRegionSchema = createInsertSchema(globalRegenerationRegions).omit({ id: true });
 
-// Minnesota School Districts with Greenhouse Candidate Sites
-export const mnSchoolDistricts = pgTable("mn_school_districts", {
-  id: serial("id").primaryKey(),
-  districtName: text("district_name").notNull(),
-  districtNumber: text("district_number").notNull(),
-  county: text("county").notNull(),
-  latitude: real("latitude").notNull(),
-  longitude: real("longitude").notNull(),
-  totalSchools: integer("total_schools").notNull(),
-  totalEnrollment: integer("total_enrollment").notNull(),
-  candidateSites: integer("candidate_sites").notNull(),
-  avgSouthFacingScore: real("avg_south_facing_score").notNull(),
-  estimatedGreenhouseSqft: integer("estimated_greenhouse_sqft").notNull(),
-  topCandidateSchool: text("top_candidate_school").notNull(),
-  topCandidateSqft: integer("top_candidate_sqft").notNull(),
-  topCandidateScore: real("top_candidate_score").notNull(),
-  status: text("status").notNull(),
-  notes: text("notes").notNull(),
-  // Distribution receiving infrastructure per district
-  receivingCoordinators: integer("receiving_coordinators"),
-  cafeteriaDistributionStaff: integer("cafeteria_distribution_staff"),
-  totalDistrictDistributionJobs: integer("total_district_distribution_jobs"),
-  annualProduceReceivedLbs: integer("annual_produce_received_lbs"),
-});
-
-export const insertMnSchoolDistrictSchema = createInsertSchema(mnSchoolDistricts).omit({ id: true });
 
 export const insertPlanetaryBoundariesSchema = createInsertSchema(planetaryBoundaries).omit({ id: true });
 export const insertCalibrationTargetsSchema = createInsertSchema(calibrationTargets).omit({ id: true });
@@ -682,9 +638,7 @@ export type MonteCarloSimulationType = typeof monteCarloSimulations.$inferSelect
 export type ScenarioComparisonType = typeof scenarioComparisons.$inferSelect;
 export type OptimizationParamType = typeof optimizationParams.$inferSelect;
 export type SensitivityAnalysisType = typeof sensitivityAnalysis.$inferSelect;
-export type GreenhouseLocationType = typeof greenhouseLocations.$inferSelect;
 export type GlobalRegenerationRegionType = typeof globalRegenerationRegions.$inferSelect;
-export type MnSchoolDistrictType = typeof mnSchoolDistricts.$inferSelect;
 
 // Insert types
 export type InsertPilotStats = z.infer<typeof insertPilotStatsSchema>;
@@ -726,6 +680,4 @@ export type InsertMonteCarloSimulation = z.infer<typeof insertMonteCarloSimulati
 export type InsertScenarioComparison = z.infer<typeof insertScenarioComparisonsSchema>;
 export type InsertOptimizationParam = z.infer<typeof insertOptimizationParamsSchema>;
 export type InsertSensitivityAnalysis = z.infer<typeof insertSensitivityAnalysisSchema>;
-export type InsertGreenhouseLocation = z.infer<typeof insertGreenhouseLocationSchema>;
 export type InsertGlobalRegenerationRegion = z.infer<typeof insertGlobalRegenerationRegionSchema>;
-export type InsertMnSchoolDistrict = z.infer<typeof insertMnSchoolDistrictSchema>;
