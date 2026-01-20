@@ -840,23 +840,23 @@ async function seedDatabase() {
       complianceHash: "sha256:gaia-pilot-v4.1"
     });
 
-    // Seed Ballot Slide Deck (15 slides from Python + extended)
+    // Seed Ballot Slide Deck (15 slides matching UI in BallotPresentation.tsx)
     const slides = [
-      { n: 1, title: "Executive Summary", text: "5,630 Students | $12.8M NPV | 6 Greenhouses" },
-      { n: 2, title: "The Problem", text: "830K MN kids face food insecurity annually" },
-      { n: 3, title: "The Solution", text: "3,100 schools + 275 regional greenhouses = 830,000 meals/day, year-round" },
-      { n: 4, title: "Endowment Engine", text: "0.27% tax → $3B PERPETUAL endowment @ 3.9% = $117M/yr" },
-      { n: 5, title: "St. Paul Cluster", text: "2,793 → 3,212 students | SPA, Highland Park, Groveland" },
-      { n: 6, title: "Mendota Cluster", text: "2,837 → 3,262 students | STA, Visitation, Two Rivers" },
-      { n: 7, title: "Financial Model", text: "CAPEX $2.95M | 5-Yr NPV $12.8M | 435% ROI" },
-      { n: 8, title: "Year-Round Production", text: "365-day HVAC/geothermal/passive solar aquaponics" },
-      { n: 9, title: "Climate Impact", text: "246,000 tons CO2 sequestered annually" },
-      { n: 10, title: "National Vision", text: "MN → 50 States | $48B → $740B by Year 15" },
-      { n: 11, title: "Job Creation", text: "250,000 jobs nationally | $13B economic impact" },
-      { n: 12, title: "Governance", text: "7-Member Board | Tri-Cameral | Planetary Boundaries" },
-      { n: 13, title: "Legal Framework", text: "501(c)(3) Trust | Constitutional Amendment Path" },
-      { n: 14, title: "Timeline", text: "2026 Pilots → 2028 Ballot → 2030 Full Deployment" },
-      { n: 15, title: "The Ask", text: "$5M Seed → $48B National | Vote Yes on Gaia" }
+      { n: 1, title: "One Vote, Forever Fed", text: "830,000+ Students | $117M/Year | Forever - Minnesota 2026 Ballot Initiative" },
+      { n: 2, title: "The Problem", text: "1 in 6 MN children face food insecurity | 87% of school produce from outside MN | $2.8B spent on out-of-state produce" },
+      { n: 3, title: "Our Solution", text: "Greenhouses at every district + Orchards + Exotic Trees + Perpetual Endowment" },
+      { n: 4, title: "What We'll Grow", text: "100+ Varieties: Salad Greens, Vegetables, Berries, Herbs & Specialty" },
+      { n: 5, title: "Exotic Greenhouse Trees", text: "Year-Round Tropical Fruits: Meyer Lemons, Key Limes, Dwarf Bananas, Papaya, Avocado, Dragon Fruit" },
+      { n: 6, title: "Outdoor Orchards", text: "Traditional Cold-Hardy Trees: Apple, Pear, Cherry, Peach + Nut Trees + Berry Bushes" },
+      { n: 7, title: "The Endowment Model", text: "$3B Initial Endowment | 3.9% Annual Draw | $117M/Year Forever - Principal never touched" },
+      { n: 8, title: "Jobs Created", text: "1,815 Permanent MN Jobs: 1,152 Greenhouse Staff + 96 Educators + 256 Distribution + 311 School Staff | 100% Union Labor $32-35/hr" },
+      { n: 9, title: "vs. Foreign Mining", text: "Twin Metals (100% Chilean-owned, 50% profits abroad, temporary jobs) vs Gaia (100% MN-owned, 1,815 permanent jobs, forever)" },
+      { n: 10, title: "330 School Districts", text: "830K Students | 330 Districts | 3,100 Schools | Priority: Tribal food sovereignty" },
+      { n: 11, title: "Land Conservation", text: "10% of Revenue: $6.3M Annual | $315M over 50 Years | 100K+ Acres Protected Forever" },
+      { n: 12, title: "Environmental Impact", text: "280B Gallons Water Saved | 85,000 Tons CO2 Sequestered | 1.5B Food Miles Eliminated | Zero Pesticides" },
+      { n: 13, title: "Educational Benefits", text: "STEM Integration + Agriculture + Career Pathways | K-12 participation from seed planting to internships" },
+      { n: 14, title: "Scaling Beyond Minnesota", text: "Pilot (6 Schools) → Statewide (275) → National (130K) → Global (1M Schools, 350M children, 6.5M jobs)" },
+      { n: 15, title: "Vote YES in 2026", text: "330 Districts | 830,000 Students | Forever - One Vote to Feed Minnesota Forever" }
     ];
     for (const s of slides) {
       await storage.createSlide({ slideNumber: s.n, title: s.title, content: s.text });
