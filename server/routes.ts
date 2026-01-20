@@ -843,7 +843,7 @@ async function seedDatabase() {
     // Seed Ballot Slide Deck (15 slides from Python + extended)
     const slides = [
       { n: 1, title: "Executive Summary", text: "5,630 Students | $12.8M NPV | 6 Greenhouses" },
-      { n: 2, title: "The Problem", text: "830k MN kids face food insecurity annually" },
+      { n: 2, title: "The Problem", text: "830K MN kids face food insecurity annually" },
       { n: 3, title: "The Solution", text: "3,100 schools + 275 regional greenhouses = 830,000 meals/day, year-round" },
       { n: 4, title: "Endowment Engine", text: "0.27% tax → $3B PERPETUAL endowment @ 3.9% = $117M/yr" },
       { n: 5, title: "St. Paul Cluster", text: "2,793 → 3,212 students | SPA, Highland Park, Groveland" },
@@ -892,10 +892,11 @@ async function seedDatabase() {
     }
 
     // Seed 50-Year Endowment Projections (from ballot deck slide 5)
+    // Starting 2028 when $3B corpus is funded via ballot initiative @ 3.9% draw
     const endowmentYears = [
-      { year: 2027, corpus: 2100000000, annualDraw: 73500000, inflationAdjusted: 73500000 },
-      { year: 2032, corpus: 2800000000, annualDraw: 98000000, inflationAdjusted: 85000000 },
-      { year: 2037, corpus: 3950000000, annualDraw: 121200000, inflationAdjusted: 95000000 },
+      { year: 2028, corpus: 3000000000, annualDraw: 117000000, inflationAdjusted: 117000000 },
+      { year: 2032, corpus: 3200000000, annualDraw: 124800000, inflationAdjusted: 108000000 },
+      { year: 2037, corpus: 3500000000, annualDraw: 136500000, inflationAdjusted: 105000000 },
       { year: 2047, corpus: 7850000000, annualDraw: 274750000, inflationAdjusted: 165000000 },
       { year: 2057, corpus: 17380000000, annualDraw: 520700000, inflationAdjusted: 245000000 },
       { year: 2067, corpus: 39500000000, annualDraw: 1185000000, inflationAdjusted: 430000000 },
@@ -1295,7 +1296,7 @@ async function seedDatabase() {
 
     // Optimization Parameters - target-seeking analysis
     const optimizations = [
-      { targetMetric: "Net Zero Carbon", optimizationType: "minimize", currentValue: 24750, targetValue: 50000, optimalValue: 48500, constraintName: "Budget Cap", constraintValue: 2100000000, unit: "tons CO2/year", feasibility: "achievable", description: "Maximize carbon sequestration within budget constraints" },
+      { targetMetric: "Net Zero Carbon", optimizationType: "minimize", currentValue: 13543, targetValue: 50000, optimalValue: 48500, constraintName: "Budget Cap", constraintValue: 3000000000, unit: "tons CO2/year", feasibility: "achievable", description: "Maximize carbon sequestration within budget constraints" },
       { targetMetric: "ROI Maximization", optimizationType: "maximize", currentValue: 0.12, targetValue: 0.18, optimalValue: 0.165, constraintName: "Risk Tolerance", constraintValue: 0.15, unit: "annual return", feasibility: "achievable", description: "Optimize endowment returns within risk parameters" },
       { targetMetric: "Jobs per Dollar", optimizationType: "maximize", currentValue: 0.68, targetValue: 1.0, optimalValue: 0.85, constraintName: "Wage Floor", constraintValue: 18, unit: "jobs per $1M", feasibility: "partially achievable", description: "Maximize employment while maintaining living wages" },
       { targetMetric: "Student Coverage", optimizationType: "maximize", currentValue: 830000, targetValue: 900000, optimalValue: 870000, constraintName: "Greenhouse Capacity", constraintValue: 275, unit: "students/day", feasibility: "achievable", description: "Maximize student participation within infrastructure" },
