@@ -147,7 +147,7 @@ The `shared/` directory contains code used by both frontend and backend:
 - **Zod**: Runtime type validation shared between client and server
 - **i18next / react-i18next**: Internationalization framework for multi-language support
 - **html2canvas / jsPDF**: PDF export functionality
-- **xlsx**: Excel export functionality
+- **exceljs**: Excel export functionality
 
 ### Development Tools
 - **Vite**: Frontend build tool and dev server

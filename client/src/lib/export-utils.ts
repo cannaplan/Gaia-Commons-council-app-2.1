@@ -1,6 +1,6 @@
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import * as XLSX from 'xlsx';
+import ExcelJS from 'exceljs';
 
 export interface ExportData {
   title: string;
@@ -48,27 +48,44 @@ export async function exportToPDF(elementId: string, filename: string): Promise<
   }
 }
 
-export function exportToExcel(data: ExportData[], filename: string): void {
+export async function exportToExcel(data: ExportData[], filename: string): Promise<void> {
   try {
-    const workbook = XLSX.utils.book_new();
+    const workbook = new ExcelJS.Workbook();
 
     data.forEach((sheet) => {
-      const worksheetData = sheet.data.map((row) => {
-        if (sheet.columns) {
-          const newRow: Record<string, unknown> = {};
-          sheet.columns.forEach((col) => {
-            newRow[col.label] = row[col.key];
-          });
-          return newRow;
-        }
-        return row;
-      });
+      const worksheet = workbook.addWorksheet(sheet.title.substring(0, 31));
+      
+      if (sheet.data.length === 0) return;
 
-      const worksheet = XLSX.utils.json_to_sheet(worksheetData);
-      XLSX.utils.book_append_sheet(workbook, worksheet, sheet.title.substring(0, 31));
+      const columns = sheet.columns || Object.keys(sheet.data[0]).map(key => ({ key, label: key }));
+      
+      worksheet.columns = columns.map(col => ({
+        header: col.label,
+        key: col.key,
+        width: 20
+      }));
+
+      sheet.data.forEach((row) => {
+        const rowData: Record<string, unknown> = {};
+        columns.forEach((col) => {
+          rowData[col.key] = row[col.key];
+        });
+        worksheet.addRow(rowData);
+      });
     });
 
-    XLSX.writeFile(workbook, `${filename}.xlsx`);
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    
+    link.setAttribute('href', url);
+    link.setAttribute('download', `${filename}.xlsx`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   } catch (error) {
     console.error('Error exporting to Excel:', error);
   }
@@ -76,8 +93,26 @@ export function exportToExcel(data: ExportData[], filename: string): void {
 
 export function exportToCSV(data: Record<string, unknown>[], filename: string): void {
   try {
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const csv = XLSX.utils.sheet_to_csv(worksheet);
+    if (data.length === 0) {
+      console.error('No data to export');
+      return;
+    }
+
+    const headers = Object.keys(data[0]);
+    const csvRows: string[] = [];
+
+    csvRows.push(headers.map(h => `"${String(h).replace(/"/g, '""')}"`).join(','));
+
+    data.forEach(row => {
+      const values = headers.map(header => {
+        const value = row[header];
+        const stringValue = value === null || value === undefined ? '' : String(value);
+        return `"${stringValue.replace(/"/g, '""')}"`;
+      });
+      csvRows.push(values.join(','));
+    });
+
+    const csv = csvRows.join('\n');
     
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
@@ -89,6 +124,7 @@ export function exportToCSV(data: Record<string, unknown>[], filename: string): 
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   } catch (error) {
     console.error('Error exporting to CSV:', error);
   }

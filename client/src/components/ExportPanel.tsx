@@ -50,7 +50,7 @@ export function ExportPanel({
     }
   };
 
-  const handleExcelExport = () => {
+  const handleExcelExport = async () => {
     if (data.length === 0) {
       toast({
         title: 'No Data',
@@ -59,11 +59,19 @@ export function ExportPanel({
       });
       return;
     }
-    exportToExcel(data, filename);
-    toast({
-      title: 'Export Complete',
-      description: 'Excel file has been downloaded successfully.',
-    });
+    try {
+      await exportToExcel(data, filename);
+      toast({
+        title: 'Export Complete',
+        description: 'Excel file has been downloaded successfully.',
+      });
+    } catch (error) {
+      toast({
+        title: 'Export Failed',
+        description: 'Could not export to Excel. Please try again.',
+        variant: 'destructive',
+      });
+    }
   };
 
   const handleCSVExport = () => {
