@@ -5,6 +5,8 @@ import { Header } from "@/components/Header";
 import { StatsCard, StatItem } from "@/components/StatsCard";
 import { Timeline } from "@/components/Timeline";
 import { EngagementFooter } from "@/components/EngagementPanel";
+import EndowmentGrowthChart from "@/components/EndowmentGrowthChart";
+import JobsBreakdownChart from "@/components/JobsBreakdownChart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tooltip as UITooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -1658,6 +1660,20 @@ export default function Dashboard() {
             </Card>
           </motion.div>
         )}
+
+        {/* Interactive Data Visualizations */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.475 }}
+          className="mb-8"
+          data-testid="section-interactive-charts"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <EndowmentGrowthChart initialCorpus={3000000000} drawRate={0.039} growthRate={0.07} />
+            <JobsBreakdownChart defaultScale={["pilot", "statewide", "national", "global"].includes(selectedScale) ? selectedScale as "pilot" | "statewide" | "national" | "global" : "statewide"} />
+          </div>
+        </motion.div>
 
         {/* K-12 NGSS Curriculum & Coalition Partners Row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 xl:gap-8 mb-8">

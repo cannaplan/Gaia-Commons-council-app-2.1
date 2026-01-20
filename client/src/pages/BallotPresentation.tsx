@@ -37,6 +37,7 @@ import {
   Flower,
   X,
   Check,
+  FlaskConical,
 } from "lucide-react";
 
 interface SlideData {
@@ -662,17 +663,17 @@ export default function BallotPresentation() {
         <div className="flex flex-col items-center gap-8">
           <div className="grid grid-cols-3 gap-6 w-full max-w-4xl">
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
-              <div className="text-5xl mb-3">🧬</div>
+              <FlaskConical className="h-12 w-12 mx-auto mb-3 text-cyan-300" />
               <h3 className="font-bold text-lg">STEM Integration</h3>
               <p className="text-sm opacity-80 mt-2">Biology, chemistry, physics, math - all in one living lab</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
-              <div className="text-5xl mb-3">🌱</div>
+              <Sprout className="h-12 w-12 mx-auto mb-3 text-green-300" />
               <h3 className="font-bold text-lg">Agriculture</h3>
               <p className="text-sm opacity-80 mt-2">Modern farming techniques and food systems</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
-              <div className="text-5xl mb-3">💼</div>
+              <Briefcase className="h-12 w-12 mx-auto mb-3 text-amber-300" />
               <h3 className="font-bold text-lg">Career Pathways</h3>
               <p className="text-sm opacity-80 mt-2">Real work experience and job skills</p>
             </div>
