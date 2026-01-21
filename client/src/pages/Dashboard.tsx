@@ -964,6 +964,182 @@ export default function Dashboard() {
           </CollapsibleSection>
         </motion.div>
 
+        {/* Expanded Jobs: FTE + Internships + Volunteers - Moved to top */}
+        {expandedJobs && expandedJobs.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.31 }} className="mb-8">
+            <Card className="glass-panel" data-testid="card-expanded-jobs">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <Briefcase className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Job Creation — FTE, Internships & Volunteers</CardTitle>
+                <Badge variant="secondary" className="ml-auto">2.4× Economic Multiplier</Badge>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {expandedJobs.map((job) => (
+                    <div key={job.id} className="p-4 bg-muted/30 rounded-xl border border-border/50" data-testid={`job-scale-${job.scale}`}>
+                      <div className="flex items-center gap-2 mb-3">
+                        <Badge className={SCALE_COLORS[job.scale as keyof typeof SCALE_COLORS]}>{SCALE_LABELS[job.scale]}</Badge>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground flex items-center gap-1">
+                            <Users className="h-3 w-3" /> FTE Jobs
+                          </span>
+                          <span className="font-semibold text-foreground">{job.fteJobs.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground flex items-center gap-1">
+                            <GraduationCap className="h-3 w-3" /> Internships
+                          </span>
+                          <span className="font-semibold text-foreground">{job.studentInternships.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground flex items-center gap-1">
+                            <Handshake className="h-3 w-3" /> Volunteers
+                          </span>
+                          <span className="font-semibold text-foreground">{job.volunteerPositions.toLocaleString()}</span>
+                        </div>
+                        <div className="pt-2 mt-2 border-t border-border/30">
+                          <div className="flex justify-between items-center">
+                            <span className="text-xs text-muted-foreground">Direct Wages</span>
+                            <span className="text-sm font-semibold text-primary">{formatLargeNumber(job.directWages)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 p-3 bg-primary/5 rounded-lg border border-primary/10 flex items-center gap-2">
+                  <DollarSign className="h-4 w-4 text-primary" />
+                  <span className="text-sm text-muted-foreground">Student internships pay</span>
+                  <span className="font-semibold text-foreground">${expandedJobs[0]?.hourlyWage || 15}/hr</span>
+                  <span className="text-sm text-muted-foreground ml-2">| Economic multiplier effect:</span>
+                  <span className="font-semibold text-primary">{expandedJobs[0]?.economicMultiplier || 2.4}×</span>
+                </div>
+
+                {/* Construction Phase Jobs */}
+                <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/30 rounded-xl border border-blue-200 dark:border-blue-800" data-testid="section-construction-jobs">
+                  <div className="flex items-center gap-2 mb-4">
+                    <HardHat className="h-5 w-5 text-blue-600" />
+                    <h4 className="font-semibold text-blue-800 dark:text-blue-300">Construction Phase Jobs — All Scales</h4>
+                    <Badge variant="outline" className="ml-auto bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 border-blue-300 dark:border-blue-700">
+                      Skilled Trades
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-blue-700 dark:text-blue-400 mb-4">
+                    Before permanent jobs begin, greenhouse construction creates skilled trades jobs for electricians, plumbers, HVAC technicians, and construction workers. All scales use local union labor with prevailing wages.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {expandedJobs.map((job) => (
+                      <div key={job.id} className="p-3 bg-white/70 dark:bg-black/30 rounded-lg border border-blue-100 dark:border-blue-800/50" data-testid={`card-construction-${job.scale}`}>
+                        <div className="flex items-center gap-2 mb-2">
+                          <Badge className={SCALE_COLORS[job.scale as keyof typeof SCALE_COLORS]}>{SCALE_LABELS[job.scale]}</Badge>
+                        </div>
+                        <p className="text-2xl font-bold text-blue-800 dark:text-blue-200" data-testid={`text-construction-jobs-${job.scale}`}>{(job.constructionJobs || 0).toLocaleString()}</p>
+                        <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">Construction Jobs</p>
+                        <p className="text-[10px] text-blue-500 dark:text-blue-500 mt-1" data-testid={`text-construction-duration-${job.scale}`}>{job.constructionDurationYears || "TBD"}</p>
+                        
+                        <div className="mt-3 pt-2 border-t border-blue-200 dark:border-blue-700/50 space-y-1">
+                          <div className="flex justify-between text-xs" data-testid={`row-construction-${job.scale}-general`}>
+                            <span className="text-blue-600 dark:text-blue-400">General</span>
+                            <span className="font-medium text-blue-700 dark:text-blue-300">{(job.constructionGeneral || 0).toLocaleString()}</span>
+                          </div>
+                          <div className="flex justify-between text-xs" data-testid={`row-construction-${job.scale}-electricians`}>
+                            <span className="text-blue-600 dark:text-blue-400">Electricians</span>
+                            <span className="font-medium text-blue-700 dark:text-blue-300">{(job.constructionElectricians || 0).toLocaleString()}</span>
+                          </div>
+                          <div className="flex justify-between text-xs" data-testid={`row-construction-${job.scale}-plumbers`}>
+                            <span className="text-blue-600 dark:text-blue-400">Plumbers</span>
+                            <span className="font-medium text-blue-700 dark:text-blue-300">{(job.constructionPlumbers || 0).toLocaleString()}</span>
+                          </div>
+                          <div className="flex justify-between text-xs" data-testid={`row-construction-${job.scale}-hvac`}>
+                            <span className="text-blue-600 dark:text-blue-400">HVAC</span>
+                            <span className="font-medium text-blue-700 dark:text-blue-300">{(job.constructionHvac || 0).toLocaleString()}</span>
+                          </div>
+                          <div className="flex justify-between text-xs" data-testid={`row-construction-${job.scale}-specialists`}>
+                            <span className="text-blue-600 dark:text-blue-400">Specialists</span>
+                            <span className="font-medium text-blue-700 dark:text-blue-300">{(job.constructionSpecialists || 0).toLocaleString()}</span>
+                          </div>
+                        </div>
+                        
+                        <div className="mt-2 pt-2 border-t border-blue-200 dark:border-blue-700/50">
+                          <div className="flex justify-between text-xs" data-testid={`text-construction-wage-${job.scale}`}>
+                            <span className="text-blue-600 dark:text-blue-400">Avg. Wage</span>
+                            <span className="font-bold text-blue-700 dark:text-blue-300">${job.constructionWage || 35}/hr</span>
+                          </div>
+                          <div className="flex justify-between text-xs mt-1" data-testid={`text-construction-spending-${job.scale}`}>
+                            <span className="text-blue-600 dark:text-blue-400">Spending</span>
+                            <span className="font-bold text-blue-700 dark:text-blue-300">{formatLargeNumber(job.constructionSpending || 0)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-center" data-testid="stat-construction-total-jobs">
+                      <p className="text-lg font-bold text-blue-800 dark:text-blue-200">
+                        {expandedJobs.reduce((sum, j) => sum + (j.constructionJobs || 0), 0).toLocaleString()}
+                      </p>
+                      <p className="text-xs text-blue-600 dark:text-blue-400">Total Construction Jobs</p>
+                    </div>
+                    <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-center" data-testid="stat-construction-prevailing-wage">
+                      <p className="text-lg font-bold text-blue-800 dark:text-blue-200">$32-35/hr</p>
+                      <p className="text-xs text-blue-600 dark:text-blue-400">Prevailing Wage</p>
+                    </div>
+                    <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-center" data-testid="stat-construction-union-priority">
+                      <p className="text-lg font-bold text-blue-800 dark:text-blue-200">100%</p>
+                      <p className="text-xs text-blue-600 dark:text-blue-400">Union Labor Priority</p>
+                    </div>
+                    <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-center" data-testid="stat-construction-total-spending">
+                      <p className="text-lg font-bold text-blue-800 dark:text-blue-200">
+                        {formatLargeNumber(expandedJobs.reduce((sum, j) => sum + (j.constructionSpending || 0), 0))}
+                      </p>
+                      <p className="text-xs text-blue-600 dark:text-blue-400">Total Construction $</p>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-3 p-2 bg-white/50 dark:bg-black/20 rounded-lg" data-testid="text-construction-union-trades">
+                    <p className="text-xs text-blue-700 dark:text-blue-400">
+                      <span className="font-bold">Union trades:</span> IBEW (electricians), UA (plumbers & pipefitters), SMART (HVAC), UBC (carpenters). All construction requires prevailing wage and local hire priority.
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* K-12 NGSS Curriculum - Moved to top */}
+        {curriculum && curriculum.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.32 }} className="mb-8">
+            <Card className="glass-panel" data-testid="card-curriculum">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
+                <BookOpen className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">K-12 NGSS Curriculum</CardTitle>
+                <Badge variant="secondary" className="ml-auto">Standards-Aligned</Badge>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {curriculum.map((unit) => (
+                    <div key={unit.id} className="p-3 bg-muted/30 rounded-lg border border-border/50" data-testid={`curriculum-${unit.gradeRange}`}>
+                      <div className="flex items-center justify-between mb-2">
+                        <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">{unit.gradeRange}</Badge>
+                        <span className="text-xs text-muted-foreground flex items-center gap-1">
+                          <Clock className="h-3 w-3" /> {unit.durationWeeks} weeks
+                        </span>
+                      </div>
+                      <h4 className="font-semibold text-foreground">{unit.title}</h4>
+                      <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{unit.description}</p>
+                      <p className="text-xs text-muted-foreground/70 mt-2 italic">{unit.standards}</p>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
         {/* Financial Engine & Climate (original sections) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-6 xl:gap-8 mb-8">
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.35 }}>
@@ -1515,152 +1691,6 @@ export default function Dashboard() {
           </Card>
         </motion.div>
 
-        {/* Expanded Jobs: FTE + Internships + Volunteers */}
-        {expandedJobs && expandedJobs.length > 0 && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.47 }} className="mb-8">
-            <Card className="glass-panel" data-testid="card-expanded-jobs">
-              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
-                <Briefcase className="h-5 w-5 text-primary" />
-                <CardTitle className="text-lg font-semibold">Job Creation — FTE, Internships & Volunteers</CardTitle>
-                <Badge variant="secondary" className="ml-auto">2.4× Economic Multiplier</Badge>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {expandedJobs.map((job) => (
-                    <div key={job.id} className="p-4 bg-muted/30 rounded-xl border border-border/50" data-testid={`job-scale-${job.scale}`}>
-                      <div className="flex items-center gap-2 mb-3">
-                        <Badge className={SCALE_COLORS[job.scale as keyof typeof SCALE_COLORS]}>{SCALE_LABELS[job.scale]}</Badge>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm text-muted-foreground flex items-center gap-1">
-                            <Users className="h-3 w-3" /> FTE Jobs
-                          </span>
-                          <span className="font-semibold text-foreground">{job.fteJobs.toLocaleString()}</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm text-muted-foreground flex items-center gap-1">
-                            <GraduationCap className="h-3 w-3" /> Internships
-                          </span>
-                          <span className="font-semibold text-foreground">{job.studentInternships.toLocaleString()}</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm text-muted-foreground flex items-center gap-1">
-                            <Handshake className="h-3 w-3" /> Volunteers
-                          </span>
-                          <span className="font-semibold text-foreground">{job.volunteerPositions.toLocaleString()}</span>
-                        </div>
-                        <div className="pt-2 mt-2 border-t border-border/30">
-                          <div className="flex justify-between items-center">
-                            <span className="text-xs text-muted-foreground">Direct Wages</span>
-                            <span className="text-sm font-semibold text-primary">{formatLargeNumber(job.directWages)}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-4 p-3 bg-primary/5 rounded-lg border border-primary/10 flex items-center gap-2">
-                  <DollarSign className="h-4 w-4 text-primary" />
-                  <span className="text-sm text-muted-foreground">Student internships pay</span>
-                  <span className="font-semibold text-foreground">${expandedJobs[0]?.hourlyWage || 15}/hr</span>
-                  <span className="text-sm text-muted-foreground ml-2">| Economic multiplier effect:</span>
-                  <span className="font-semibold text-primary">{expandedJobs[0]?.economicMultiplier || 2.4}×</span>
-                </div>
-
-                {/* Construction Phase Jobs */}
-                <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/30 rounded-xl border border-blue-200 dark:border-blue-800" data-testid="section-construction-jobs">
-                  <div className="flex items-center gap-2 mb-4">
-                    <HardHat className="h-5 w-5 text-blue-600" />
-                    <h4 className="font-semibold text-blue-800 dark:text-blue-300">Construction Phase Jobs — All Scales</h4>
-                    <Badge variant="outline" className="ml-auto bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 border-blue-300 dark:border-blue-700">
-                      Skilled Trades
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-blue-700 dark:text-blue-400 mb-4">
-                    Before permanent jobs begin, greenhouse construction creates skilled trades jobs for electricians, plumbers, HVAC technicians, and construction workers. All scales use local union labor with prevailing wages.
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {expandedJobs.map((job) => (
-                      <div key={job.id} className="p-3 bg-white/70 dark:bg-black/30 rounded-lg border border-blue-100 dark:border-blue-800/50" data-testid={`card-construction-${job.scale}`}>
-                        <div className="flex items-center gap-2 mb-2">
-                          <Badge className={SCALE_COLORS[job.scale as keyof typeof SCALE_COLORS]}>{SCALE_LABELS[job.scale]}</Badge>
-                        </div>
-                        <p className="text-2xl font-bold text-blue-800 dark:text-blue-200" data-testid={`text-construction-jobs-${job.scale}`}>{(job.constructionJobs || 0).toLocaleString()}</p>
-                        <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">Construction Jobs</p>
-                        <p className="text-[10px] text-blue-500 dark:text-blue-500 mt-1" data-testid={`text-construction-duration-${job.scale}`}>{job.constructionDurationYears || "TBD"}</p>
-                        
-                        <div className="mt-3 pt-2 border-t border-blue-200 dark:border-blue-700/50 space-y-1">
-                          <div className="flex justify-between text-xs" data-testid={`row-construction-${job.scale}-general`}>
-                            <span className="text-blue-600 dark:text-blue-400">General</span>
-                            <span className="font-medium text-blue-700 dark:text-blue-300">{(job.constructionGeneral || 0).toLocaleString()}</span>
-                          </div>
-                          <div className="flex justify-between text-xs" data-testid={`row-construction-${job.scale}-electricians`}>
-                            <span className="text-blue-600 dark:text-blue-400">Electricians</span>
-                            <span className="font-medium text-blue-700 dark:text-blue-300">{(job.constructionElectricians || 0).toLocaleString()}</span>
-                          </div>
-                          <div className="flex justify-between text-xs" data-testid={`row-construction-${job.scale}-plumbers`}>
-                            <span className="text-blue-600 dark:text-blue-400">Plumbers</span>
-                            <span className="font-medium text-blue-700 dark:text-blue-300">{(job.constructionPlumbers || 0).toLocaleString()}</span>
-                          </div>
-                          <div className="flex justify-between text-xs" data-testid={`row-construction-${job.scale}-hvac`}>
-                            <span className="text-blue-600 dark:text-blue-400">HVAC</span>
-                            <span className="font-medium text-blue-700 dark:text-blue-300">{(job.constructionHvac || 0).toLocaleString()}</span>
-                          </div>
-                          <div className="flex justify-between text-xs" data-testid={`row-construction-${job.scale}-specialists`}>
-                            <span className="text-blue-600 dark:text-blue-400">Specialists</span>
-                            <span className="font-medium text-blue-700 dark:text-blue-300">{(job.constructionSpecialists || 0).toLocaleString()}</span>
-                          </div>
-                        </div>
-                        
-                        <div className="mt-2 pt-2 border-t border-blue-200 dark:border-blue-700/50">
-                          <div className="flex justify-between text-xs" data-testid={`text-construction-wage-${job.scale}`}>
-                            <span className="text-blue-600 dark:text-blue-400">Avg. Wage</span>
-                            <span className="font-bold text-blue-700 dark:text-blue-300">${job.constructionWage || 35}/hr</span>
-                          </div>
-                          <div className="flex justify-between text-xs mt-1" data-testid={`text-construction-spending-${job.scale}`}>
-                            <span className="text-blue-600 dark:text-blue-400">Spending</span>
-                            <span className="font-bold text-blue-700 dark:text-blue-300">{formatLargeNumber(job.constructionSpending || 0)}</span>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-center" data-testid="stat-construction-total-jobs">
-                      <p className="text-lg font-bold text-blue-800 dark:text-blue-200">
-                        {expandedJobs.reduce((sum, j) => sum + (j.constructionJobs || 0), 0).toLocaleString()}
-                      </p>
-                      <p className="text-xs text-blue-600 dark:text-blue-400">Total Construction Jobs</p>
-                    </div>
-                    <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-center" data-testid="stat-construction-prevailing-wage">
-                      <p className="text-lg font-bold text-blue-800 dark:text-blue-200">$32-35/hr</p>
-                      <p className="text-xs text-blue-600 dark:text-blue-400">Prevailing Wage</p>
-                    </div>
-                    <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-center" data-testid="stat-construction-union-priority">
-                      <p className="text-lg font-bold text-blue-800 dark:text-blue-200">100%</p>
-                      <p className="text-xs text-blue-600 dark:text-blue-400">Union Labor Priority</p>
-                    </div>
-                    <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-center" data-testid="stat-construction-total-spending">
-                      <p className="text-lg font-bold text-blue-800 dark:text-blue-200">
-                        {formatLargeNumber(expandedJobs.reduce((sum, j) => sum + (j.constructionSpending || 0), 0))}
-                      </p>
-                      <p className="text-xs text-blue-600 dark:text-blue-400">Total Construction $</p>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-3 p-2 bg-white/50 dark:bg-black/20 rounded-lg" data-testid="text-construction-union-trades">
-                    <p className="text-xs text-blue-700 dark:text-blue-400">
-                      <span className="font-bold">Union trades:</span> IBEW (electricians), UA (plumbers & pipefitters), SMART (HVAC), UBC (carpenters). All construction requires prevailing wage and local hire priority.
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
-
         {/* Interactive Data Visualizations */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -1675,38 +1705,8 @@ export default function Dashboard() {
           </div>
         </motion.div>
 
-        {/* K-12 NGSS Curriculum & Coalition Partners Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 xl:gap-8 mb-8">
-          {/* K-12 Curriculum */}
-          {curriculum && curriculum.length > 0 && (
-            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.48 }}>
-              <Card className="glass-panel h-full" data-testid="card-curriculum">
-                <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
-                  <BookOpen className="h-5 w-5 text-primary" />
-                  <CardTitle className="text-lg font-semibold">K-12 NGSS Curriculum</CardTitle>
-                  <Badge variant="secondary" className="ml-auto">Standards-Aligned</Badge>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {curriculum.map((unit) => (
-                      <div key={unit.id} className="p-3 bg-muted/30 rounded-lg border border-border/50" data-testid={`curriculum-${unit.gradeRange}`}>
-                        <div className="flex items-center justify-between mb-2">
-                          <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">{unit.gradeRange}</Badge>
-                          <span className="text-xs text-muted-foreground flex items-center gap-1">
-                            <Clock className="h-3 w-3" /> {unit.durationWeeks} weeks
-                          </span>
-                        </div>
-                        <h4 className="font-semibold text-foreground">{unit.title}</h4>
-                        <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{unit.description}</p>
-                        <p className="text-xs text-muted-foreground/70 mt-2 italic">{unit.standards}</p>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          )}
-
+        {/* Coalition Partners Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {/* Coalition Partners */}
           {coalition && coalition.length > 0 && (
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.49 }}>
