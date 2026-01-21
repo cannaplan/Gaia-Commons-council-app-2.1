@@ -171,7 +171,7 @@ import { ProgressBar } from "@/components/ProgressBar";
 
 const SCALE_LABELS: Record<string, string> = {
   pilot: "Pilot (6 Schools)",
-  statewide: "Statewide (3,100 Schools)",
+  statewide: "Statewide (1,200 Greenhouses)",
   national: "National (130K Schools)",
   global: "Global (1M Schools)"
 };
@@ -389,11 +389,11 @@ export default function Dashboard() {
                   <div className="p-4 bg-primary/10 rounded-xl">
                     <Leaf className="h-5 w-5 text-primary mx-auto mb-2" />
                     <p className="text-sm font-semibold text-foreground">Perpetual Endowment</p>
-                    <p className="text-xs text-muted-foreground">$3B principal @ 3.9% = $117M/yr</p>
+                    <p className="text-xs text-muted-foreground">$5B principal @ 4.5% = $225M/yr</p>
                   </div>
                   <div className="p-4 bg-secondary/10 rounded-xl">
                     <Users className="h-5 w-5 text-secondary mx-auto mb-2" />
-                    <p className="text-sm font-semibold text-foreground">830K Students Fed</p>
+                    <p className="text-sm font-semibold text-foreground">712,500 Students Fed</p>
                     <p className="text-xs text-muted-foreground">Fresh meals year-round</p>
                   </div>
                   <div className="p-4 bg-accent/10 rounded-xl">
@@ -638,7 +638,7 @@ export default function Dashboard() {
                       <Info className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
                       <div>
                         <p className="text-sm font-medium text-foreground">2028-2030 Statewide Expansion</p>
-                        <p className="text-xs text-muted-foreground">After ballot initiative passes, $3B endowment @ 3.9% = $117M/yr funds 275 greenhouses across all Minnesota school districts. 830,000 students fed daily with year-round fresh produce.</p>
+                        <p className="text-xs text-muted-foreground">After ballot initiative passes, $5B endowment @ 4.5% = $225M/yr funds 1,200 greenhouses across all Minnesota school districts. 712,500 students fed daily with year-round fresh produce.</p>
                       </div>
                     </div>
                   )}
@@ -948,8 +948,8 @@ export default function Dashboard() {
                 <p className="text-xs text-muted-foreground">6 St. Paul/Mendota schools prove the model works. 5,630 students receive fresh produce daily.</p>
               </div>
               <div className="p-4 bg-emerald-50/50 dark:bg-emerald-950/20 rounded-lg border border-emerald-200 dark:border-emerald-800">
-                <h4 className="font-semibold text-emerald-700 dark:text-emerald-300 mb-2">Statewide (2028-30)</h4>
-                <p className="text-xs text-muted-foreground">Ballot initiative passes. $3B endowment @ 3.9% = $117M/yr funds 275 greenhouses across all Minnesota districts.</p>
+                <h4 className="font-semibold text-emerald-700 dark:text-emerald-300 mb-2">Statewide (2026-29)</h4>
+                <p className="text-xs text-muted-foreground">Ballot initiative passes. $5B endowment @ 4.5% = $225M/yr funds 1,200 greenhouses across all Minnesota districts.</p>
               </div>
               <div className="p-4 bg-purple-50/50 dark:bg-purple-950/20 rounded-lg border border-purple-200 dark:border-purple-800">
                 <h4 className="font-semibold text-purple-700 dark:text-purple-300 mb-2">National (2035)</h4>
@@ -1317,7 +1317,7 @@ export default function Dashboard() {
             <Card className="glass-panel" data-testid="card-endowment-projections">
               <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
                 <TrendingUp className="h-5 w-5 text-primary" />
-                <CardTitle className="text-lg font-semibold">50-Year Endowment Growth — 3.9% Annual Draw</CardTitle>
+                <CardTitle className="text-lg font-semibold">50-Year Endowment Growth — 4.5% Annual Draw</CardTitle>
                 <Badge variant="secondary" className="ml-auto">2027–2077</Badge>
               </CardHeader>
               <CardContent>
@@ -1341,7 +1341,7 @@ export default function Dashboard() {
                       />
                       <Legend />
                       <Area type="monotone" dataKey="corpus" name="Endowment Corpus" stroke="#22c55e" fillOpacity={1} fill="url(#colorCorpus)" />
-                      <Line type="monotone" dataKey="annualDraw" name="Annual Draw (3.9%)" stroke="#8b5cf6" strokeWidth={2} dot={false} />
+                      <Line type="monotone" dataKey="annualDraw" name="Annual Draw (4.5%)" stroke="#8b5cf6" strokeWidth={2} dot={false} />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
@@ -1669,7 +1669,7 @@ export default function Dashboard() {
           data-testid="section-interactive-charts"
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <EndowmentGrowthChart initialCorpus={3000000000} drawRate={0.039} growthRate={0.07} />
+            <EndowmentGrowthChart initialCorpus={5000000000} drawRate={0.045} growthRate={0.07} />
             <JobsBreakdownChart defaultScale={["pilot", "statewide", "national", "global"].includes(selectedScale) ? selectedScale as "pilot" | "statewide" | "national" | "global" : "statewide"} />
           </div>
         </motion.div>
@@ -1758,7 +1758,7 @@ export default function Dashboard() {
                 <Banknote className="h-5 w-5 text-primary" />
                 <div>
                   <CardTitle className="text-lg font-semibold">Endowment Funding Sources</CardTitle>
-                  <p className="text-sm text-muted-foreground mt-1">Potential annual revenue from proposed surcharges — $3B endowment target @ 3.9% = $117M/yr</p>
+                  <p className="text-sm text-muted-foreground mt-1">Potential annual revenue from proposed surcharges — $5B endowment target @ 4.5% = $225M/yr</p>
                 </div>
               </CardHeader>
               <CardContent>
@@ -1818,8 +1818,8 @@ export default function Dashboard() {
                   <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-100 dark:border-blue-900/50 flex items-center gap-3">
                     <TrendingUp className="h-5 w-5 text-blue-600" />
                     <div>
-                      <p className="text-xs text-blue-700 dark:text-blue-400 font-medium">Year 1 Draw (3.9%)</p>
-                      <p className="font-semibold text-blue-800 dark:text-blue-300">$117 Million</p>
+                      <p className="text-xs text-blue-700 dark:text-blue-400 font-medium">Year 1 Draw (4.5%)</p>
+                      <p className="font-semibold text-blue-800 dark:text-blue-300">$225 Million</p>
                     </div>
                   </div>
                 </div>
@@ -1991,7 +1991,7 @@ export default function Dashboard() {
                         <tr className="border-b border-emerald-100 dark:border-emerald-800/50">
                           <td className="py-2 px-3 font-medium">Permanent Jobs</td>
                           <td className="py-2 px-3 text-center text-red-600 dark:text-red-400">~1,500 temporary</td>
-                          <td className="py-2 px-3 text-center text-emerald-600 dark:text-emerald-400 font-bold">1,815+ permanent</td>
+                          <td className="py-2 px-3 text-center text-emerald-600 dark:text-emerald-400 font-bold">2,400 permanent</td>
                         </tr>
                         <tr className="border-b border-emerald-100 dark:border-emerald-800/50">
                           <td className="py-2 px-3 font-medium">Job Duration</td>
@@ -3153,7 +3153,7 @@ export default function Dashboard() {
             {endowment && (
               <>
                 <StatItem label="Total Principal" value={endowment.size} trend="Stable" trendUp={true} />
-                <StatItem label="Annual Draw (3.9%)" value={endowment.annual} />
+                <StatItem label="Annual Draw (4.5%)" value={endowment.annual} />
                 <StatItem label="Greenhouses Funded" value={endowment.greenhouses} />
               </>
             )}

@@ -70,11 +70,11 @@ export default function BallotPresentation() {
           </div>
           <div className="flex gap-6 mt-8">
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
-              <div className="text-4xl font-bold">830,000+</div>
+              <div className="text-4xl font-bold">712,500</div>
               <div className="text-sm opacity-80">Students Served</div>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
-              <div className="text-4xl font-bold">$117M</div>
+              <div className="text-4xl font-bold">$225M</div>
               <div className="text-sm opacity-80">Endowment Draw/Year</div>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
@@ -366,17 +366,17 @@ export default function BallotPresentation() {
         <div className="flex flex-col items-center gap-8">
           <div className="grid grid-cols-3 gap-6 w-full max-w-4xl">
             <div className="bg-white/20 backdrop-blur-lg rounded-3xl p-8 text-center">
-              <div className="text-5xl font-black mb-2">$3B</div>
+              <div className="text-5xl font-black mb-2">$5B</div>
               <p className="text-lg">Initial Endowment</p>
               <p className="text-sm opacity-70 mt-2">Principal never touched</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-3xl p-8 text-center">
-              <div className="text-5xl font-black mb-2">3.9%</div>
+              <div className="text-5xl font-black mb-2">4.5%</div>
               <p className="text-lg">Annual Distribution</p>
               <p className="text-sm opacity-70 mt-2">Conservative draw rate</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-3xl p-8 text-center">
-              <div className="text-5xl font-black mb-2">$117M</div>
+              <div className="text-5xl font-black mb-2">$225M</div>
               <p className="text-lg">Annual Draw</p>
               <p className="text-sm opacity-70 mt-2">Forever, inflation-adjusted</p>
             </div>
@@ -392,8 +392,8 @@ export default function BallotPresentation() {
                 <h3 className="text-2xl font-bold mb-2">How It Works</h3>
                 <p className="opacity-90">
                   Like university endowments, the principal grows tax-free while annual returns 
-                  fund operations. After 50 years: <span className="font-bold text-lime-300">$5.85 billion in total draws</span> while 
-                  principal remains at $3B+.
+                  fund operations. After 50 years: <span className="font-bold text-lime-300">$11.25 billion in total draws</span> while 
+                  principal remains at $5B+.
                 </p>
               </div>
             </div>
@@ -419,8 +419,8 @@ export default function BallotPresentation() {
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5">
               <div className="flex justify-between items-center">
-                <span>Statewide (3,100 Schools)</span>
-                <Badge className="bg-white/30 text-white">4,320 Jobs</Badge>
+                <span>Statewide (1,200 Greenhouses)</span>
+                <Badge className="bg-white/30 text-white">13,900 Jobs</Badge>
               </div>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5">
@@ -439,24 +439,24 @@ export default function BallotPresentation() {
           <div className="space-y-4">
             <h3 className="text-2xl font-bold mb-4">Permanent Operations</h3>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5">
-              <div className="text-4xl font-bold mb-2">1,815</div>
+              <div className="text-4xl font-bold mb-2">2,400</div>
               <p>Permanent jobs in Minnesota</p>
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="bg-white/10 rounded-xl p-3 text-center">
-                <div className="text-xl font-bold">1,152</div>
+                <div className="text-xl font-bold">1,440</div>
                 <p className="text-xs">Greenhouse Staff</p>
               </div>
               <div className="bg-white/10 rounded-xl p-3 text-center">
-                <div className="text-xl font-bold">96</div>
+                <div className="text-xl font-bold">240</div>
                 <p className="text-xs">Educators</p>
               </div>
               <div className="bg-white/10 rounded-xl p-3 text-center">
-                <div className="text-xl font-bold">256</div>
+                <div className="text-xl font-bold">360</div>
                 <p className="text-xs">Distribution</p>
               </div>
               <div className="bg-white/10 rounded-xl p-3 text-center">
-                <div className="text-xl font-bold">311</div>
+                <div className="text-xl font-bold">360</div>
                 <p className="text-xs">School Staff</p>
               </div>
             </div>
@@ -499,7 +499,7 @@ export default function BallotPresentation() {
               <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> 100% Minnesota owned</li>
               <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> 100% reinvested locally</li>
               <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> Revenue stays in communities</li>
-              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> 1,815 permanent jobs</li>
+              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> 2,400 permanent jobs</li>
               <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> Forever - perpetual model</li>
               <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> Food stays in Minnesota</li>
               <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> Self-sustaining operations</li>
@@ -519,7 +519,7 @@ export default function BallotPresentation() {
         <div className="flex flex-col items-center gap-6">
           <div className="grid grid-cols-4 gap-4 w-full">
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-4 text-center">
-              <div className="text-3xl font-bold">830K</div>
+              <div className="text-3xl font-bold">712.5K</div>
               <p className="text-sm">Students</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-4 text-center">
@@ -527,12 +527,12 @@ export default function BallotPresentation() {
               <p className="text-sm">Districts</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-4 text-center">
-              <div className="text-3xl font-bold">3,100</div>
-              <p className="text-sm">Schools</p>
+              <div className="text-3xl font-bold">1,200</div>
+              <p className="text-sm">Greenhouses</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-4 text-center">
-              <div className="text-3xl font-bold">~710</div>
-              <p className="text-sm">Avg Sqft/School</p>
+              <div className="text-3xl font-bold">7,500</div>
+              <p className="text-sm">Avg Sqft/Greenhouse</p>
             </div>
           </div>
           <div className="grid grid-cols-3 gap-4 w-full text-sm">
@@ -779,7 +779,7 @@ export default function BallotPresentation() {
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
               <Users className="h-12 w-12 mx-auto mb-3" />
-              <p className="font-bold">830,000 Students</p>
+              <p className="font-bold">712,500 Students</p>
               <p className="text-sm opacity-80">Fed fresh daily</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">

@@ -36,9 +36,9 @@ export function FundingCalculator() {
     });
     
     const totalRevenue = revenues.reduce((a, b) => a + b, 0);
-    const endowmentTarget = 2100;
+    const endowmentTarget = 5000;
     const excessRevenue = Math.max(0, totalRevenue - endowmentTarget);
-    const yearlyDraw = endowmentTarget * 0.035;
+    const yearlyDraw = endowmentTarget * 0.045;
     
     const jobsPerMillion = 8.5;
     const totalJobs = Math.round(totalRevenue * jobsPerMillion);
@@ -163,7 +163,7 @@ export function FundingCalculator() {
             <div className="p-3 bg-muted/50 rounded-lg">
               <p className="text-xs text-muted-foreground">
                 <strong>Note:</strong> These projections are estimates based on proposed surcharge rates. 
-                The core endowment target is $3B @ 3.9% = $117M/year, with excess funds allocated to tribal programs, 
+                The core endowment target is $5B @ 4.5% = $225M/year, with excess funds allocated to tribal programs, 
                 mining alternatives, and distribution infrastructure.
               </p>
             </div>

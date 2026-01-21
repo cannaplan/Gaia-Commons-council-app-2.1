@@ -28,8 +28,8 @@ interface EndowmentGrowthChartProps {
 }
 
 const generateEndowmentData = (
-  initialCorpus: number = 3000000000,
-  drawRate: number = 0.039,
+  initialCorpus: number = 5000000000,
+  drawRate: number = 0.045,
   growthRate: number = 0.07
 ): EndowmentDataPoint[] => {
   const data: EndowmentDataPoint[] = [];
@@ -80,8 +80,8 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 export default function EndowmentGrowthChart({
-  initialCorpus = 3000000000,
-  drawRate = 0.039,
+  initialCorpus = 5000000000,
+  drawRate = 0.045,
   growthRate = 0.07
 }: EndowmentGrowthChartProps = {}) {
   const [viewMode, setViewMode] = useState<"growth" | "draws">("growth");
@@ -241,7 +241,7 @@ export default function EndowmentGrowthChart({
 
         <div className="mt-4 p-4 bg-muted/50 rounded-lg">
           <p className="text-sm text-muted-foreground text-center">
-            <strong>Key Insight:</strong> With a 3.9% annual draw rate and 7% average market returns, 
+            <strong>Key Insight:</strong> With a 4.5% annual draw rate and 7% average market returns, 
             the endowment grows to <strong>{formatCurrency(endData.corpus)}</strong> over 50 years 
             while distributing <strong>{formatCurrency(endData.cumulativeDraws)}</strong> in total funding.
           </p>
