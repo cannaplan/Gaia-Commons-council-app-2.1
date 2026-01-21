@@ -4,7 +4,7 @@
 
 Gaia Commons Council is a full-stack dashboard application for tracking pilot program statistics, endowment data, and strategic timeline events for the "One Vote, Forever Fed" 2026 ballot initiative. The platform serves as an analytics and management interface for educational and environmental initiatives, displaying real-time metrics for student enrollment, facility square footage, school counts, and endowment financials. Features include multi-scale deployment views (Pilot → Statewide → National → Global), interactive data visualization charts (Endowment Growth, Jobs Breakdown), and an interactive Cluster Builder tool.
 
-**Statewide Scope**: 330 school districts, ~3,100 schools, 830,000 students, 2.64M total sqft (+20% buffer for market surplus/low harvest flexibility, ~852 sqft avg per school)
+**Statewide Scope**: 1,200 high school greenhouses (7,500 sqft avg, 9M sqft total), 712,500 students served (75% of 950K K-12 enrollment), 75 lb produce per student annually (53.4M lb total), $5B endowment (4.5% yield = $225M/year), 2,400 FTE jobs, 3,100+ schools with curriculum. Anti-Boundary Waters mining alternative.
 
 ## Recent Changes (January 2026)
 
@@ -30,18 +30,16 @@ Gaia Commons Council is a full-stack dashboard application for tracking pilot pr
   - **Production & distribution**: 38.4M lbs annual specialty crops — 60% to 53 school districts, 40% excess sold to stores/markets
   - **Revenue modeling**: $53.8M annual sales revenue @ $3.50/lb wholesale, $42.2M net after operations
   - **Specialty crops by community**: Mushrooms, microgreens, edible flowers, year-round strawberries, specialty melons, gourmet vegetables
-  - **1,815 permanent jobs** funded by endowment vs. ~1,500 temporary mining jobs (Twin Metals estimate):
-    - **5 Northern MN Hubs (1,504 jobs)**:
-      - Greenhouse Operations: 1,152 jobs (growing, harvesting, maintenance)
-      - School Greenhouse Educators: 96 jobs
-      - Store/Market Distribution: 104 jobs (52 sorting/packaging, 38 delivery drivers, 14 warehouse/logistics)
-      - School Distribution: 152 jobs (76 sorting/packaging, 56 delivery drivers, 20 logistics coordinators)
-    - **53 School Districts (311 jobs)**:
-      - Receiving Coordinators: ~103 jobs (1 per 5,000 students, min 1)
-      - Cafeteria Distribution Staff: ~208 jobs (1 per 3,000 students, min 1)
+  - **2,400 permanent jobs** funded by $5B endowment vs. ~1,500 temporary mining jobs (Twin Metals estimate):
+    - **1,200 Greenhouses (1,800 jobs)**:
+      - Greenhouse Operations: 1,440 jobs (growing, harvesting, maintenance)
+      - School Greenhouse Educators: 240 jobs
+      - Distribution: 360 jobs (sorting, packaging, delivery)
+    - **School Staff (600 jobs)**:
+      - Receiving Coordinators and Cafeteria Distribution Staff across districts
   - **Construction Phase Jobs (All Scales)**:
-    - **Pilot (6 Schools)**: 76 jobs, 1-2 years, $7.65M spending
-    - **Statewide (3,100 Schools + Regional Hubs)**: 4,320 jobs, 5-7 years phased, $432M spending
+    - **Pilot (6 Schools)**: 76 jobs, 1-2 years, $7-13M spending
+    - **Statewide (1,200 Greenhouses)**: 13,900 jobs, 4 years (2026-2029), $1.39B spending
     - **National (130K Schools)**: 1.17M jobs, 10-15 years rolling, $117B spending
     - **Global (1M Schools)**: 6.5M jobs, 20-30 years phased, $650B spending
     - **Job breakdown by trade** (consistent across all scales):
@@ -53,9 +51,9 @@ Gaia Commons Council is a full-stack dashboard application for tracking pilot pr
     - **Union labor**: IBEW (electricians), UA (plumbers & pipefitters), SMART (HVAC), UBC (carpenters)
     - **Prevailing wages**: $32-35/hr depending on scale, 100% local hire priority
     - Key difference: All scales use local union labor vs. foreign contractors at mining sites
-- **Endowment Model (Statewide)**: $3B principal @ 3.9% annual draw = $117M/year perpetual funding
+- **Endowment Model (Statewide)**: $5B principal @ 4.5% annual draw = $225M/year perpetual funding
   - Principal never touched, grows tax-free
-  - After 50 years: $5.85B total draws while principal remains $3B+
+  - After 50 years: $11.25B total draws while principal remains $5B+
   - Produce sales revenue (~$123M/year) covers operations; endowment provides additional safety buffer
 - **Land & Water Conservation Fund**: 10% of annual endowment draw dedicated to purchasing and protecting Minnesota's natural resources:
   - **Financial Projections**: ~$11.7M/year at statewide scale, $585M total over 50 years, 195K+ acres at $3,000/acre average
