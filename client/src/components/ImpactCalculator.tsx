@@ -53,7 +53,8 @@ export function ImpactCalculator() {
     const jobsFTE = inputs.schoolCount * 2;
     const constructionJobs = Math.round(inputs.schoolCount * 11.58);
     const annualCO2Tons = Math.round(totalSqft * 5.93 / 2000);
-    const annualValue = annualProduceLbs * 2.3;
+    // State savings: Students × 180 school days × $1.82/meal (1/3 of $5.45 meal cost = fruits/vegetables)
+    const annualValue = totalStudents * 180 * 1.82;
     const endowmentShare = (inputs.schoolCount / 1200) * 5000000000;
 
     return {
@@ -243,10 +244,10 @@ export function ImpactCalculator() {
             <div className="p-4 bg-muted/50 rounded-lg border border-border/50" data-testid="result-value">
               <div className="flex items-center gap-2 mb-2">
                 <DollarSign className="h-4 w-4 text-foreground" />
-                <span className="text-sm font-medium text-foreground" data-testid="label-result-value">Annual Value</span>
+                <span className="text-sm font-medium text-foreground" data-testid="label-result-value">State Savings</span>
               </div>
               <p className="text-2xl font-bold text-foreground" data-testid="value-result-value">{formatCurrency(impact.annualValue)}</p>
-              <p className="text-xs text-muted-foreground">produce @ $2.30/lb</p>
+              <p className="text-xs text-muted-foreground">$1.82/meal × 180 days</p>
             </div>
           </div>
         </div>

@@ -604,8 +604,8 @@ async function seedDatabase() {
   const scaleData = await storage.getScaleProjections();
   if (scaleData.length === 0) {
     console.log("Seeding scale projections...");
-    // Produce Value = Students × 180 days × $3.50/lunch × 28.5% (fruits/vegetables portion)
-    // This represents the value of produce greenhouses provide, replacing state purchases
+    // State Savings = Students × 180 school days × $1.82/meal (1/3 of $5.45 meal cost = fruits/vegetables)
+    // This represents money the state saves when greenhouses provide produce instead of purchasing it
     await storage.createScaleProjection({
       scale: "pilot",
       schools: 6,
@@ -613,7 +613,7 @@ async function seedDatabase() {
       greenhouses: 6,
       sqft: 45050,
       capex: 2950000,
-      annualRevenue: 1010000,    // 5,630 × $630/yr × 28.5% = ~$1.01M produce value
+      annualRevenue: 1844000,    // 5,630 × 180 days × $1.82/meal = ~$1.84M state savings
       annualOpex: 360000,
       npv5yr: 12847000,
       roiPct: 435,
@@ -625,7 +625,7 @@ async function seedDatabase() {
     });
 
     // Statewide: 1,200 high school greenhouses (7,500 sqft avg), 9M sqft total, 712,500 students (75% of 950K)
-    // Produce Value: 712,500 students × 180 days × $3.50/lunch × 28.5% = ~$128M/year
+    // State Savings: 712,500 students × 180 days × $1.82/meal = ~$233M/year
     await storage.createScaleProjection({
       scale: "statewide",
       schools: 3100,         // Schools with curriculum (statewide)
@@ -633,7 +633,7 @@ async function seedDatabase() {
       greenhouses: 1200,     // 1,200 high school greenhouses
       sqft: 9000000,         // 1,200 × 7,500 sqft avg = 9M sqft total
       capex: 1390000000,     // $1.39B-$2.69B capex range (mid-point ~$1.39B)
-      annualRevenue: 128000000,   // Produce value: 712,500 × $630/yr × 28.5% = ~$128M state savings
+      annualRevenue: 233415000,   // State savings: 712,500 × 180 days × $1.82/meal = ~$233M
       annualOpex: 90000000,       // 1,200 greenhouses × $75K/yr avg opex
       npv5yr: 950000000,
       roiPct: 435,
@@ -644,7 +644,7 @@ async function seedDatabase() {
       mealsPerDay: 712500    // 712,500 students served daily
     });
 
-    // National: 50M students × $630/yr × 28.5% = ~$9B produce value
+    // National: 50M students × 180 days × $1.82/meal = ~$16.4B state savings
     await storage.createScaleProjection({
       scale: "national",
       schools: 130000,
@@ -652,7 +652,7 @@ async function seedDatabase() {
       greenhouses: 130000,
       sqft: 1040000000,
       capex: 48000000000,
-      annualRevenue: 9000000000,  // 50M × $630 × 28.5% = ~$9B produce value
+      annualRevenue: 16380000000,  // 50M × 180 days × $1.82/meal = ~$16.4B state savings
       annualOpex: 7800000000,
       npv5yr: 740000000000,
       roiPct: 435,
@@ -663,7 +663,7 @@ async function seedDatabase() {
       mealsPerDay: 50000000
     });
 
-    // Global: 500M students × $630/yr × 28.5% = ~$90B produce value
+    // Global: 500M students × 180 days × $1.82/meal = ~$163.8B state savings
     await storage.createScaleProjection({
       scale: "global",
       schools: 1000000,
@@ -671,7 +671,7 @@ async function seedDatabase() {
       greenhouses: 1000000,
       sqft: 8000000000,
       capex: 370000000000,
-      annualRevenue: 90000000000,  // 500M × $630 × 28.5% = ~$90B produce value
+      annualRevenue: 163800000000,  // 500M × 180 days × $1.82/meal = ~$163.8B state savings
       annualOpex: 60000000000,
       npv5yr: 5700000000000,
       roiPct: 435,
@@ -707,15 +707,15 @@ async function seedDatabase() {
       initialInvestment: 2950000,
       annualOpex: 360000,
       yieldPerSchool: 120000,
-      foodPricePerLb: 2.5,
+      foodPricePerLb: 1.82,             // $1.82/meal state savings (1/3 of $5.45 meal cost)
       discountRate: 0.08,
       npv10yr: 12847000,
       roi10yrPct: 435,
       investmentPerSchool: 491667,
       opexPerSchool: 60000,
-      annualRevenuePerSchool: 168000,   // Per school produce value: ~940 students × $630/yr × 28.5%
+      annualRevenuePerSchool: 307000,   // Per school state savings: ~938 students × 180 days × $1.82/meal
       totalAnnualYield: 720000,
-      totalAnnualRevenue: 1010000,     // Total produce value: 5,630 × $630/yr × 28.5% = ~$1.01M
+      totalAnnualRevenue: 1844000,     // Total state savings: 5,630 × 180 days × $1.82/meal = ~$1.84M
       paybackYears: 0.8
     });
 

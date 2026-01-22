@@ -689,8 +689,8 @@ export default function Dashboard() {
                     </div>
                     <div className="p-4 bg-teal-50 dark:bg-teal-950/30 rounded-xl border border-teal-100 dark:border-teal-900/50 text-center">
                       <Leaf className="h-5 w-5 text-teal-600 mx-auto mb-2" />
-                      <p className="text-xs text-teal-800 dark:text-teal-400 font-medium">Produce Value</p>
-                      <p className="text-xl font-bold text-teal-700 dark:text-teal-300" data-testid="text-scale-produce-value">{formatLargeNumber(currentScale.annualRevenue)}</p>
+                      <p className="text-xs text-teal-800 dark:text-teal-400 font-medium">State Savings</p>
+                      <p className="text-xl font-bold text-teal-700 dark:text-teal-300" data-testid="text-scale-state-savings">{formatLargeNumber(currentScale.annualRevenue)}</p>
                     </div>
                     <div className="p-4 bg-green-50 dark:bg-green-950/30 rounded-xl border border-green-100 dark:border-green-900/50 text-center">
                       <TrendingUp className="h-5 w-5 text-green-600 mx-auto mb-2" />
@@ -1240,7 +1240,7 @@ export default function Dashboard() {
                         <p className="font-semibold text-foreground">${(financials.annualOpex / 1e3).toFixed(0)}K</p>
                       </div>
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <p className="text-xs text-muted-foreground">Produce Value</p>
+                        <p className="text-xs text-muted-foreground">State Savings</p>
                         <p className="font-semibold text-foreground">${(financials.totalAnnualRevenue / 1e6).toFixed(1)}M</p>
                       </div>
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
@@ -1474,8 +1474,8 @@ export default function Dashboard() {
                 <div className="p-4 bg-emerald-50 dark:bg-emerald-950/30 rounded-xl border border-emerald-200 dark:border-emerald-800 text-center">
                   <Trees className="h-8 w-8 text-emerald-600 mx-auto mb-2" />
                   <p className="text-2xl font-bold text-emerald-800 dark:text-emerald-300">10%</p>
-                  <p className="text-sm text-emerald-700 dark:text-emerald-400 font-medium">Produce Value</p>
-                  <p className="text-xs text-emerald-600 dark:text-emerald-500 mt-1">~$6.3M/year at statewide scale</p>
+                  <p className="text-sm text-emerald-700 dark:text-emerald-400 font-medium">Endowment Draw</p>
+                  <p className="text-xs text-emerald-600 dark:text-emerald-500 mt-1">~$23.3M/year at statewide scale</p>
                 </div>
                 <div className="p-4 bg-blue-50 dark:bg-blue-950/30 rounded-xl border border-blue-200 dark:border-blue-800 text-center">
                   <Droplets className="h-8 w-8 text-blue-600 mx-auto mb-2" />
@@ -2054,7 +2054,7 @@ export default function Dashboard() {
                   </div>
                   
                   <div className="p-4 bg-teal-50 dark:bg-teal-950/30 rounded-xl border border-teal-200 dark:border-teal-800">
-                    <p className="text-sm text-teal-700 dark:text-teal-400 font-medium">Net Produce Value</p>
+                    <p className="text-sm text-teal-700 dark:text-teal-400 font-medium">Net State Savings</p>
                     <p className="text-2xl font-bold text-teal-800 dark:text-teal-300">
                       ${(miningAlternatives.reduce((sum, a) => sum + (a.netAnnualRevenue || 0), 0) / 1000000).toFixed(1)}M
                     </p>
