@@ -25,9 +25,7 @@ import {
   DollarSign,
   Leaf,
   School,
-  ArrowRight,
-  Check,
-  X
+  ArrowRight
 } from "lucide-react";
 
 interface CommunityData {
@@ -119,15 +117,6 @@ export function CommunityComparison() {
     },
   ];
 
-  const miningComparison = [
-    { metric: "Ownership", gaia: "Minnesota communities", mining: "Chilean billionaires (Luksic family)", gaiaWins: true },
-    { metric: "Job Duration", gaia: "Permanent (50+ years)", mining: "Temporary (20-25 years)", gaiaWins: true },
-    { metric: "Profit Destination", gaia: "Stays in Minnesota", mining: "50%+ leaves USA", gaiaWins: true },
-    { metric: "Environmental Impact", gaia: "Regenerative", mining: "Destructive", gaiaWins: true },
-    { metric: "Water Use", gaia: "Recirculating systems", mining: "Billions of gallons/year", gaiaWins: true },
-    { metric: "Post-Closure", gaia: "Assets remain", mining: "Cleanup liability", gaiaWins: true },
-  ];
-
   return (
     <Card className="glass-panel" data-testid="card-community-comparison">
       <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
@@ -214,42 +203,6 @@ export function CommunityComparison() {
           </Table>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-border/50">
-          <h4 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2" data-testid="heading-gaia-vs-mining">
-            <Scale className="h-4 w-4 text-muted-foreground" />
-            Gaia Commons vs. Twin Metals Mining — Side by Side
-          </h4>
-          <div className="overflow-x-auto">
-            <Table data-testid="table-gaia-vs-mining">
-              <TableHeader>
-                <TableRow>
-                  <TableHead data-testid="th-comparison">Comparison</TableHead>
-                  <TableHead data-testid="th-gaia">Gaia Commons</TableHead>
-                  <TableHead data-testid="th-mining">Twin Metals Mining</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {miningComparison.map((row, idx) => (
-                  <TableRow key={row.metric} data-testid={`row-mining-${idx}`}>
-                    <TableCell className="text-foreground" data-testid={`cell-mining-metric-${idx}`}>{row.metric}</TableCell>
-                    <TableCell data-testid={`cell-gaia-value-${idx}`}>
-                      <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
-                        <Check className="h-4 w-4" />
-                        {row.gaia}
-                      </div>
-                    </TableCell>
-                    <TableCell data-testid={`cell-mining-value-${idx}`}>
-                      <div className="flex items-center gap-2 text-red-600 dark:text-red-400">
-                        <X className="h-4 w-4" />
-                        {row.mining}
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </div>
       </CardContent>
     </Card>
   );
