@@ -11,7 +11,6 @@ import {
   Mail, 
   MessageCircle,
   QrCode,
-  Link2,
   Users
 } from "lucide-react";
 import { SiFacebook, SiX, SiLinkedin, SiReddit } from "react-icons/si";
@@ -48,37 +47,31 @@ export function SocialSharing() {
       name: "Facebook",
       icon: <SiFacebook className="h-4 w-4" />,
       url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(SHARE_URL)}&quote=${encodeURIComponent(SHARE_TEXT)}`,
-      color: "bg-blue-600 hover:bg-blue-700",
     },
     {
-      name: "X (Twitter)",
+      name: "X",
       icon: <SiX className="h-4 w-4" />,
       url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(SHARE_URL)}&text=${encodeURIComponent(SHARE_TEXT)}`,
-      color: "bg-black hover:bg-gray-800",
     },
     {
       name: "LinkedIn",
       icon: <SiLinkedin className="h-4 w-4" />,
       url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(SHARE_URL)}`,
-      color: "bg-blue-700 hover:bg-blue-800",
     },
     {
       name: "Reddit",
       icon: <SiReddit className="h-4 w-4" />,
       url: `https://reddit.com/submit?url=${encodeURIComponent(SHARE_URL)}&title=${encodeURIComponent(SHARE_TITLE)}`,
-      color: "bg-orange-600 hover:bg-orange-700",
     },
     {
       name: "Email",
       icon: <Mail className="h-4 w-4" />,
       url: `mailto:?subject=${encodeURIComponent(SHARE_TITLE)}&body=${encodeURIComponent(SHARE_TEXT + '\n\n' + SHARE_URL)}`,
-      color: "bg-gray-600 hover:bg-gray-700",
     },
     {
       name: "SMS",
       icon: <MessageCircle className="h-4 w-4" />,
       url: `sms:?body=${encodeURIComponent(SHARE_TEXT + ' ' + SHARE_URL)}`,
-      color: "bg-green-600 hover:bg-green-700",
     },
   ];
 
@@ -89,7 +82,7 @@ export function SocialSharing() {
   return (
     <Card className="glass-panel" data-testid="card-social-sharing">
       <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
-        <Share2 className="h-5 w-5 text-primary" />
+        <Share2 className="h-5 w-5 text-muted-foreground" />
         <CardTitle className="text-lg font-semibold">Share & Spread the Word</CardTitle>
         <Badge variant="secondary" className="ml-auto">Outreach</Badge>
       </CardHeader>
@@ -104,7 +97,7 @@ export function SocialSharing() {
               key={link.name}
               variant="outline"
               size="sm"
-              className={`flex flex-col items-center gap-1 h-auto py-3 text-white border-0 ${link.color}`}
+              className="flex flex-col items-center gap-1"
               onClick={() => link.url.startsWith('mailto:') || link.url.startsWith('sms:') 
                 ? window.location.href = link.url 
                 : openShare(link.url)
@@ -147,7 +140,7 @@ export function SocialSharing() {
         </div>
 
         {showQR && (
-          <div className="mt-4 p-4 bg-white rounded-lg border border-border/50 flex flex-col items-center">
+          <div className="mt-4 p-4 bg-white rounded-lg border border-border/50 flex flex-col items-center" data-testid="qr-code-section">
             <div className="w-32 h-32 bg-muted flex items-center justify-center rounded">
               <QrCode className="h-16 w-16 text-muted-foreground" />
             </div>
@@ -155,11 +148,11 @@ export function SocialSharing() {
           </div>
         )}
 
-        <div className="mt-6 p-4 bg-primary/5 rounded-lg border border-primary/20">
+        <div className="mt-6 p-4 bg-muted/30 rounded-lg border border-border/50">
           <div className="flex items-start gap-3">
-            <Users className="h-5 w-5 text-primary mt-0.5" />
+            <Users className="h-5 w-5 text-muted-foreground mt-0.5" />
             <div>
-              <p className="font-medium text-foreground text-sm">Join 101M+ Coalition Members</p>
+              <p className="font-medium text-foreground text-sm" data-testid="text-coalition-members">Join 101M+ Coalition Members</p>
               <p className="text-xs text-muted-foreground mt-1">
                 Every share helps reach our goal of 58%+ voter support for the 2026 ballot initiative.
               </p>

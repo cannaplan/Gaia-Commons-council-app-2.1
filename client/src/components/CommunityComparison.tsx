@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { 
   Select,
@@ -9,6 +8,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { 
   Scale, 
   MapPin,
@@ -124,7 +131,7 @@ export function CommunityComparison() {
   return (
     <Card className="glass-panel" data-testid="card-community-comparison">
       <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
-        <Scale className="h-5 w-5 text-primary" />
+        <Scale className="h-5 w-5 text-muted-foreground" />
         <div>
           <CardTitle className="text-lg font-semibold">Community Comparison Tool</CardTitle>
           <CardDescription>Compare impact across Minnesota regions</CardDescription>
@@ -134,14 +141,14 @@ export function CommunityComparison() {
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div>
-            <label className="text-sm font-medium text-foreground mb-2 block">First Community</label>
+            <label className="text-sm font-medium text-foreground mb-2 block" data-testid="label-community-1">First Community</label>
             <Select value={community1} onValueChange={setCommunity1}>
               <SelectTrigger data-testid="select-community-1">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 {MINNESOTA_COMMUNITIES.map(c => (
-                  <SelectItem key={c.name} value={c.name}>
+                  <SelectItem key={c.name} value={c.name} data-testid={`option-community-1-${c.name.toLowerCase().replace(/[^a-z]/g, '-')}`}>
                     <span className="flex items-center gap-2">
                       <MapPin className="h-3 w-3" />
                       {c.name}
@@ -158,14 +165,14 @@ export function CommunityComparison() {
           </div>
 
           <div>
-            <label className="text-sm font-medium text-foreground mb-2 block">Second Community</label>
+            <label className="text-sm font-medium text-foreground mb-2 block" data-testid="label-community-2">Second Community</label>
             <Select value={community2} onValueChange={setCommunity2}>
               <SelectTrigger data-testid="select-community-2">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 {MINNESOTA_COMMUNITIES.map(c => (
-                  <SelectItem key={c.name} value={c.name}>
+                  <SelectItem key={c.name} value={c.name} data-testid={`option-community-2-${c.name.toLowerCase().replace(/[^a-z]/g, '-')}`}>
                     <span className="flex items-center gap-2">
                       <MapPin className="h-3 w-3" />
                       {c.name}
@@ -178,69 +185,69 @@ export function CommunityComparison() {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-border/50">
-                <th className="text-left py-3 px-2 text-sm font-medium text-muted-foreground">Metric</th>
-                <th className="text-right py-3 px-2 text-sm font-medium text-primary">{community1}</th>
-                <th className="text-right py-3 px-2 text-sm font-medium text-blue-600">{community2}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {comparisonMetrics.map((metric) => (
-                <tr key={metric.label} className="border-b border-border/30">
-                  <td className="py-3 px-2">
-                    <div className="flex items-center gap-2 text-sm text-foreground">
+          <Table data-testid="table-community-comparison">
+            <TableHeader>
+              <TableRow>
+                <TableHead data-testid="th-metric">Metric</TableHead>
+                <TableHead className="text-right" data-testid="th-community-1">{community1}</TableHead>
+                <TableHead className="text-right" data-testid="th-community-2">{community2}</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {comparisonMetrics.map((metric, idx) => (
+                <TableRow key={metric.label} data-testid={`row-metric-${idx}`}>
+                  <TableCell>
+                    <div className="flex items-center gap-2 text-sm text-foreground" data-testid={`cell-metric-label-${idx}`}>
                       {metric.icon}
                       {metric.label}
                     </div>
-                  </td>
-                  <td className="text-right py-3 px-2 text-sm font-medium text-primary">
+                  </TableCell>
+                  <TableCell className="text-right text-sm font-medium" data-testid={`cell-metric-value1-${idx}`}>
                     {metric.format(metric.value1)}
-                  </td>
-                  <td className="text-right py-3 px-2 text-sm font-medium text-blue-600">
+                  </TableCell>
+                  <TableCell className="text-right text-sm font-medium" data-testid={`cell-metric-value2-${idx}`}>
                     {metric.format(metric.value2)}
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
 
         <div className="mt-8 pt-6 border-t border-border/50">
-          <h4 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">
-            <Scale className="h-4 w-4 text-primary" />
+          <h4 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2" data-testid="heading-gaia-vs-mining">
+            <Scale className="h-4 w-4 text-muted-foreground" />
             Gaia Commons vs. Twin Metals Mining — Side by Side
           </h4>
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-border/50">
-                  <th className="text-left py-2 px-2 font-medium text-muted-foreground">Comparison</th>
-                  <th className="text-left py-2 px-2 font-medium text-emerald-600">Gaia Commons</th>
-                  <th className="text-left py-2 px-2 font-medium text-red-600">Twin Metals Mining</th>
-                </tr>
-              </thead>
-              <tbody>
-                {miningComparison.map((row) => (
-                  <tr key={row.metric} className="border-b border-border/30">
-                    <td className="py-2 px-2 text-foreground">{row.metric}</td>
-                    <td className="py-2 px-2">
-                      <div className="flex items-center gap-2 text-emerald-600">
+            <Table data-testid="table-gaia-vs-mining">
+              <TableHeader>
+                <TableRow>
+                  <TableHead data-testid="th-comparison">Comparison</TableHead>
+                  <TableHead data-testid="th-gaia">Gaia Commons</TableHead>
+                  <TableHead data-testid="th-mining">Twin Metals Mining</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {miningComparison.map((row, idx) => (
+                  <TableRow key={row.metric} data-testid={`row-mining-${idx}`}>
+                    <TableCell className="text-foreground" data-testid={`cell-mining-metric-${idx}`}>{row.metric}</TableCell>
+                    <TableCell data-testid={`cell-gaia-value-${idx}`}>
+                      <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
                         <Check className="h-4 w-4" />
                         {row.gaia}
                       </div>
-                    </td>
-                    <td className="py-2 px-2">
-                      <div className="flex items-center gap-2 text-red-600">
+                    </TableCell>
+                    <TableCell data-testid={`cell-mining-value-${idx}`}>
+                      <div className="flex items-center gap-2 text-red-600 dark:text-red-400">
                         <X className="h-4 w-4" />
                         {row.mining}
                       </div>
-                    </td>
-                  </tr>
+                    </TableCell>
+                  </TableRow>
                 ))}
-              </tbody>
-            </table>
+              </TableBody>
+            </Table>
           </div>
         </div>
       </CardContent>

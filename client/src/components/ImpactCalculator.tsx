@@ -85,7 +85,7 @@ export function ImpactCalculator() {
   return (
     <Card className="glass-panel" data-testid="card-impact-calculator">
       <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
-        <Calculator className="h-5 w-5 text-primary" />
+        <Calculator className="h-5 w-5 text-muted-foreground" />
         <div>
           <CardTitle className="text-lg font-semibold">Impact Calculator</CardTitle>
           <CardDescription>See what Gaia Commons means for YOUR community</CardDescription>
@@ -96,8 +96,8 @@ export function ImpactCalculator() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="space-y-6">
             <div>
-              <Label className="flex items-center gap-2 mb-3">
-                <School className="h-4 w-4 text-primary" />
+              <Label className="flex items-center gap-2 mb-3" data-testid="label-school-count">
+                <School className="h-4 w-4 text-muted-foreground" />
                 Number of Schools in Your District
               </Label>
               <div className="flex items-center gap-4">
@@ -121,8 +121,8 @@ export function ImpactCalculator() {
             </div>
 
             <div>
-              <Label className="flex items-center gap-2 mb-3">
-                <Users className="h-4 w-4 text-primary" />
+              <Label className="flex items-center gap-2 mb-3" data-testid="label-students">
+                <Users className="h-4 w-4 text-muted-foreground" />
                 Average Students per School
               </Label>
               <div className="flex items-center gap-4">
@@ -146,8 +146,8 @@ export function ImpactCalculator() {
             </div>
 
             <div>
-              <Label className="flex items-center gap-2 mb-3">
-                <Building className="h-4 w-4 text-primary" />
+              <Label className="flex items-center gap-2 mb-3" data-testid="label-sqft">
+                <Building className="h-4 w-4 text-muted-foreground" />
                 Greenhouse Size (sqft per school)
               </Label>
               <div className="flex items-center gap-4">
@@ -170,93 +170,94 @@ export function ImpactCalculator() {
               </div>
             </div>
 
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setInputs({
-                schoolCount: 6,
-                avgStudentsPerSchool: 938,
-                avgGreenhouseSqft: 7500,
-              })}
-              className="mr-2"
-              data-testid="button-reset-pilot"
-            >
-              Reset to Pilot (6 schools)
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setInputs(STATEWIDE_DEFAULTS)}
-              data-testid="button-reset-statewide"
-            >
-              Use Statewide Average
-            </Button>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setInputs({
+                  schoolCount: 6,
+                  avgStudentsPerSchool: 938,
+                  avgGreenhouseSqft: 7500,
+                })}
+                data-testid="button-reset-pilot"
+              >
+                Reset to Pilot (6 schools)
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setInputs(STATEWIDE_DEFAULTS)}
+                data-testid="button-reset-statewide"
+              >
+                Use Statewide Average
+              </Button>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-900/50" data-testid="result-students">
               <div className="flex items-center gap-2 mb-2">
-                <Users className="h-4 w-4 text-blue-600" />
-                <span className="text-sm font-medium text-blue-700 dark:text-blue-400">Students Fed</span>
+                <Users className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                <span className="text-sm font-medium text-blue-700 dark:text-blue-400" data-testid="label-result-students">Students Fed</span>
               </div>
-              <p className="text-2xl font-bold text-blue-600">{formatNumber(impact.totalStudents)}</p>
+              <p className="text-2xl font-bold text-blue-600 dark:text-blue-400" data-testid="value-result-students">{formatNumber(impact.totalStudents)}</p>
               <p className="text-xs text-muted-foreground">daily fresh produce</p>
             </div>
 
             <div className="p-4 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-900/50" data-testid="result-produce">
               <div className="flex items-center gap-2 mb-2">
-                <Salad className="h-4 w-4 text-green-600" />
-                <span className="text-sm font-medium text-green-700 dark:text-green-400">Annual Produce</span>
+                <Salad className="h-4 w-4 text-green-600 dark:text-green-400" />
+                <span className="text-sm font-medium text-green-700 dark:text-green-400" data-testid="label-result-produce">Annual Produce</span>
               </div>
-              <p className="text-2xl font-bold text-green-600">{formatNumber(impact.annualProduceLbs)} lb</p>
+              <p className="text-2xl font-bold text-green-600 dark:text-green-400" data-testid="value-result-produce">{formatNumber(impact.annualProduceLbs)} lb</p>
               <p className="text-xs text-muted-foreground">75 lb per student/year</p>
             </div>
 
             <div className="p-4 bg-purple-50 dark:bg-purple-950/20 rounded-lg border border-purple-200 dark:border-purple-900/50" data-testid="result-jobs">
               <div className="flex items-center gap-2 mb-2">
-                <Briefcase className="h-4 w-4 text-purple-600" />
-                <span className="text-sm font-medium text-purple-700 dark:text-purple-400">FTE Jobs</span>
+                <Briefcase className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+                <span className="text-sm font-medium text-purple-700 dark:text-purple-400" data-testid="label-result-jobs">FTE Jobs</span>
               </div>
-              <p className="text-2xl font-bold text-purple-600">{impact.jobsFTE.toLocaleString()}</p>
+              <p className="text-2xl font-bold text-purple-600 dark:text-purple-400" data-testid="value-result-jobs">{impact.jobsFTE.toLocaleString()}</p>
               <p className="text-xs text-muted-foreground">permanent positions</p>
             </div>
 
             <div className="p-4 bg-amber-50 dark:bg-amber-950/20 rounded-lg border border-amber-200 dark:border-amber-900/50" data-testid="result-construction">
               <div className="flex items-center gap-2 mb-2">
-                <Building className="h-4 w-4 text-amber-600" />
-                <span className="text-sm font-medium text-amber-700 dark:text-amber-400">Construction Jobs</span>
+                <Building className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                <span className="text-sm font-medium text-amber-700 dark:text-amber-400" data-testid="label-result-construction">Construction Jobs</span>
               </div>
-              <p className="text-2xl font-bold text-amber-600">{impact.constructionJobs.toLocaleString()}</p>
+              <p className="text-2xl font-bold text-amber-600 dark:text-amber-400" data-testid="value-result-construction">{impact.constructionJobs.toLocaleString()}</p>
               <p className="text-xs text-muted-foreground">during build phase</p>
             </div>
 
             <div className="p-4 bg-emerald-50 dark:bg-emerald-950/20 rounded-lg border border-emerald-200 dark:border-emerald-900/50" data-testid="result-co2">
               <div className="flex items-center gap-2 mb-2">
-                <Leaf className="h-4 w-4 text-emerald-600" />
-                <span className="text-sm font-medium text-emerald-700 dark:text-emerald-400">CO2 Sequestered</span>
+                <Leaf className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                <span className="text-sm font-medium text-emerald-700 dark:text-emerald-400" data-testid="label-result-co2">CO2 Sequestered</span>
               </div>
-              <p className="text-2xl font-bold text-emerald-600">{impact.annualCO2Tons.toLocaleString()} tons</p>
+              <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400" data-testid="value-result-co2">{impact.annualCO2Tons.toLocaleString()} tons</p>
               <p className="text-xs text-muted-foreground">annually</p>
             </div>
 
-            <div className="p-4 bg-primary/10 rounded-lg border border-primary/30" data-testid="result-value">
+            <div className="p-4 bg-muted/50 rounded-lg border border-border/50" data-testid="result-value">
               <div className="flex items-center gap-2 mb-2">
-                <DollarSign className="h-4 w-4 text-primary" />
-                <span className="text-sm font-medium text-primary">Annual Value</span>
+                <DollarSign className="h-4 w-4 text-foreground" />
+                <span className="text-sm font-medium text-foreground" data-testid="label-result-value">Annual Value</span>
               </div>
-              <p className="text-2xl font-bold text-primary">{formatCurrency(impact.annualValue)}</p>
+              <p className="text-2xl font-bold text-foreground" data-testid="value-result-value">{formatCurrency(impact.annualValue)}</p>
               <p className="text-xs text-muted-foreground">produce @ $2.30/lb</p>
             </div>
           </div>
         </div>
 
-        <div className="mt-6 p-4 bg-muted/30 rounded-lg border border-border/50">
-          <div className="flex items-center justify-between">
+        <div className="mt-6 p-4 bg-muted/30 rounded-lg border border-border/50" data-testid="result-endowment">
+          <div className="flex items-center justify-between flex-wrap gap-2">
             <div>
-              <p className="text-sm font-medium text-foreground">Your District's Share of $5B Endowment</p>
+              <p className="text-sm font-medium text-foreground" data-testid="label-endowment-share">Your District's Share of $5B Endowment</p>
               <p className="text-xs text-muted-foreground">Proportional funding based on school count</p>
             </div>
-            <p className="text-2xl font-bold text-primary">{formatCurrency(impact.endowmentShare)}</p>
+            <p className="text-2xl font-bold text-foreground" data-testid="value-endowment-share">{formatCurrency(impact.endowmentShare)}</p>
           </div>
         </div>
       </CardContent>
