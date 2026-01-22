@@ -491,12 +491,12 @@ export default function Dashboard() {
                               <span className="font-semibold">{((cluster.totalSqft * 40) / 1e6).toFixed(1)}M lbs</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-muted-foreground">Revenue (@$2.50/lb):</span>
+                              <span className="text-muted-foreground">State Savings (@$2.50/lb):</span>
                               <span className="font-semibold text-emerald-600">${((cluster.totalSqft * 40 * 2.50) / 1e6).toFixed(2)}M</span>
                             </div>
                           </div>
                           <div className="mt-2 pt-2 border-t border-border/30 flex justify-between text-xs">
-                            <span className="text-muted-foreground">Net Annual Surplus:</span>
+                            <span className="text-muted-foreground">Net Annual State Savings:</span>
                             <span className="font-bold text-emerald-600">${(((cluster.totalSqft * 40 * 2.50) - (cluster.totalSqft * 12)) / 1e6).toFixed(2)}M</span>
                           </div>
                         </div>
