@@ -538,51 +538,65 @@ async function seedDatabase() {
     });
   }
   
-  // Seed Funding Sources if empty (separated billionaires from sports, updated rates)
+  // Seed Funding Sources if empty (updated per user specifications - $8.84B total)
   const fundingData = await storage.getFundingSources();
   if (fundingData.length === 0) {
-    console.log("Seeding funding sources with updated rates...");
+    console.log("Seeding funding sources with corrected rates...");
     await storage.createFundingSource({
-      sourceType: "Fortune 500",
-      description: "0.27% pre-tax profit redirect from Minnesota Fortune 500 companies",
-      targetAmount: 1890000000,
-      percentage: 0.27,
-      entities: "Target, UnitedHealth, Best Buy, 3M, General Mills, US Bancorp, Xcel Energy, CHS, Land O'Lakes, Hormel, Polaris, Fastenal, Patterson, CH Robinson, Graco, Pentair, Donaldson"
+      sourceType: "Top 20 Local Corps",
+      description: "0.4% contribution from top 20 Minnesota-headquartered corporations",
+      targetAmount: 1000000000,
+      percentage: 0.4,
+      entities: "Target, UnitedHealth, Best Buy, 3M, General Mills, US Bancorp, Xcel Energy, CHS, Land O'Lakes, Hormel, Polaris, Fastenal, Patterson, CH Robinson, Graco, Pentair, Donaldson, Ameriprise, Ecolab, Thrivent"
     });
     await storage.createFundingSource({
-      sourceType: "MN Billionaires",
-      description: "Voluntary large-gift contributions from Minnesota billionaires",
-      targetAmount: 150000000,
-      percentage: null,
-      entities: "Glen Taylor (Wolves, Lynx, Star Tribune), Whitney MacMillan (Cargill heir), Stanley Hubbard (Hubbard Broadcasting), Marilyn Carlson Nelson (Carlson Companies), Robert Carlson (Carlson Companies), Richard Schulze (Best Buy founder)"
-    });
-    await storage.createFundingSource({
-      sourceType: "Sports Franchises",
-      description: "0.27% contribution from Minnesota professional sports franchises annual revenue",
-      targetAmount: 85000000,
-      percentage: 0.27,
+      sourceType: "Pro Sports Franchises",
+      description: "3% contribution from Minnesota professional sports franchises annual revenue",
+      targetAmount: 60000000,
+      percentage: 3.0,
       entities: "Minnesota Vikings (NFL), Minnesota Twins (MLB), Minnesota Timberwolves (NBA), Minnesota Lynx (WNBA), Minnesota Wild (NHL), Minnesota United FC (MLS), St. Paul Saints (MiLB)"
     });
     await storage.createFundingSource({
-      sourceType: "Data Center Giants",
-      description: "3% surcharge on major tech companies with MN data center operations",
-      targetAmount: 510000000,
-      percentage: 3.0,
-      entities: "Amazon Web Services, Microsoft Azure, Google Cloud, Meta, Apple, Equinix, Digital Realty, CyrusOne, Cologix"
+      sourceType: "Local Med/Ins",
+      description: "0.4% contribution from Minnesota-based healthcare and insurance companies",
+      targetAmount: 600000000,
+      percentage: 0.4,
+      entities: "UnitedHealth Group, Medtronic, Mayo Clinic, Allina Health, Fairview Health, HealthPartners, Blue Cross Blue Shield of MN, Securian Financial"
+    });
+    await storage.createFundingSource({
+      sourceType: "Out-State Corp/Med/Ins",
+      description: "0.45% surcharge on out-of-state corporations, medical, and insurance companies with significant MN presence",
+      targetAmount: 3150000000,
+      percentage: 0.45,
+      entities: "Major out-of-state insurers, banks, retailers, healthcare systems, and ag-conglomerates with >$100M MN revenue"
+    });
+    await storage.createFundingSource({
+      sourceType: "Data/Online Retail",
+      description: "2.5% surcharge on major tech data centers and online retail operations in Minnesota",
+      targetAmount: 2620000000,
+      percentage: 2.5,
+      entities: "Amazon, Microsoft, Google, Meta, Apple, Walmart.com, Target.com, Best Buy online, Wayfair, and major data center operators"
     });
     await storage.createFundingSource({
       sourceType: "Out-of-Country Mining",
-      description: "5% surcharge on out-of-country mining corporations operating in Minnesota",
-      targetAmount: 750000000,
-      percentage: 5.0,
-      entities: "Codelco (Chile), Antofagasta (Chile), Vale (Brazil), SQM (Chile), Glencore (Switzerland), Rio Tinto (UK/Australia), BHP (Australia), Anglo American (UK), Teck Resources (Canada)"
+      description: "10% surcharge on out-of-country mining corporations seeking to operate in Minnesota",
+      targetAmount: 1000000000,
+      percentage: 10.0,
+      entities: "Antofagasta (Chile/UK - Twin Metals owner), Codelco (Chile), Vale (Brazil), Glencore (Switzerland), Rio Tinto (UK/Australia), BHP (Australia), Anglo American (UK), Teck Resources (Canada)"
     });
     await storage.createFundingSource({
-      sourceType: "Out-of-State Corporations",
-      description: "0.5% surcharge on out-of-state corps with >$1B MN revenue",
-      targetAmount: 240000000,
-      percentage: 0.5,
-      entities: "Major insurers, banks, retailers, ag-conglomerates with significant MN presence"
+      sourceType: "Federal Government",
+      description: "Federal grants and matching funds for food security and education initiatives",
+      targetAmount: 500000000,
+      percentage: null,
+      entities: "USDA Farm to School, USDA Community Food Projects, Dept of Education, EPA Environmental Education, HHS Community Health"
+    });
+    await storage.createFundingSource({
+      sourceType: "Local Billionaires",
+      description: "Voluntary philanthropic contributions from Minnesota billionaires",
+      targetAmount: 200000000,
+      percentage: null,
+      entities: "Glen Taylor (Wolves, Lynx, Star Tribune), Whitney MacMillan (Cargill heir), Stanley Hubbard (Hubbard Broadcasting), Marilyn Carlson Nelson (Carlson Companies), Richard Schulze (Best Buy founder)"
     });
   }
   
