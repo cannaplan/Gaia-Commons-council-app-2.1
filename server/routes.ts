@@ -600,6 +600,89 @@ async function seedDatabase() {
     });
   }
   
+  // Seed Scale Projections if empty (may have been cleared for updates)
+  const scaleData = await storage.getScaleProjections();
+  if (scaleData.length === 0) {
+    console.log("Seeding scale projections...");
+    // Produce Value = Students × 180 days × $3.50/lunch × 28.5% (fruits/vegetables portion)
+    // This represents the value of produce greenhouses provide, replacing state purchases
+    await storage.createScaleProjection({
+      scale: "pilot",
+      schools: 6,
+      students: 5630,
+      greenhouses: 6,
+      sqft: 45050,
+      capex: 2950000,
+      annualRevenue: 1010000,    // 5,630 × $630/yr × 28.5% = ~$1.01M produce value
+      annualOpex: 360000,
+      npv5yr: 12847000,
+      roiPct: 435,
+      endowmentTarget: 5000000,
+      endowmentYr15: 15400000,
+      jobs: 36,
+      co2TonsAnnual: 246,
+      mealsPerDay: 15500
+    });
+
+    // Statewide: 1,200 high school greenhouses (7,500 sqft avg), 9M sqft total, 712,500 students (75% of 950K)
+    // Produce Value: 712,500 students × 180 days × $3.50/lunch × 28.5% = ~$128M/year
+    await storage.createScaleProjection({
+      scale: "statewide",
+      schools: 3100,         // Schools with curriculum (statewide)
+      students: 712500,      // 75% of 950K K-12 enrollment = 712,500 lunch participation
+      greenhouses: 1200,     // 1,200 high school greenhouses
+      sqft: 9000000,         // 1,200 × 7,500 sqft avg = 9M sqft total
+      capex: 1390000000,     // $1.39B-$2.69B capex range (mid-point ~$1.39B)
+      annualRevenue: 128000000,   // Produce value: 712,500 × $630/yr × 28.5% = ~$128M state savings
+      annualOpex: 90000000,       // 1,200 greenhouses × $75K/yr avg opex
+      npv5yr: 950000000,
+      roiPct: 435,
+      endowmentTarget: 5000000000,  // $5B @ 4.5% = $225M/yr
+      endowmentYr15: 12000000000,
+      jobs: 2400,            // 2,400 FTE jobs
+      co2TonsAnnual: 53370,  // 9M sqft × 5.93 lbs CO2/sqft sequestration
+      mealsPerDay: 712500    // 712,500 students served daily
+    });
+
+    // National: 50M students × $630/yr × 28.5% = ~$9B produce value
+    await storage.createScaleProjection({
+      scale: "national",
+      schools: 130000,
+      students: 50000000,
+      greenhouses: 130000,
+      sqft: 1040000000,
+      capex: 48000000000,
+      annualRevenue: 9000000000,  // 50M × $630 × 28.5% = ~$9B produce value
+      annualOpex: 7800000000,
+      npv5yr: 740000000000,
+      roiPct: 435,
+      endowmentTarget: 48000000000,
+      endowmentYr15: 740000000000,
+      jobs: 250000,
+      co2TonsAnnual: 5330000,
+      mealsPerDay: 50000000
+    });
+
+    // Global: 500M students × $630/yr × 28.5% = ~$90B produce value
+    await storage.createScaleProjection({
+      scale: "global",
+      schools: 1000000,
+      students: 500000000,
+      greenhouses: 1000000,
+      sqft: 8000000000,
+      capex: 370000000000,
+      annualRevenue: 90000000000,  // 500M × $630 × 28.5% = ~$90B produce value
+      annualOpex: 60000000000,
+      npv5yr: 5700000000000,
+      roiPct: 435,
+      endowmentTarget: 370000000000,
+      endowmentYr15: 5700000000000,
+      jobs: 2000000,
+      co2TonsAnnual: 41000000,
+      mealsPerDay: 500000000
+    });
+  }
+
   if (isEmpty) {
     console.log("Seeding database with GAIA v4.1 MASTER PLATFORM data...");
     
@@ -630,9 +713,9 @@ async function seedDatabase() {
       roi10yrPct: 435,
       investmentPerSchool: 491667,
       opexPerSchool: 60000,
-      annualRevenuePerSchool: 610000,
+      annualRevenuePerSchool: 168000,   // Per school produce value: ~940 students × $630/yr × 28.5%
       totalAnnualYield: 720000,
-      totalAnnualRevenue: 3660000,
+      totalAnnualRevenue: 1010000,     // Total produce value: 5,630 × $630/yr × 28.5% = ~$1.01M
       paybackYears: 0.8
     });
 
@@ -674,80 +757,6 @@ async function seedDatabase() {
     await storage.createSchool({ clusterId: mendotaCluster.id, name: "Saint Thomas Academy (STA)", enrollment: 588, grades: "6-12", sqftTarget: 4700 });
     await storage.createSchool({ clusterId: mendotaCluster.id, name: "Visitation School", enrollment: 601, grades: "PK-12", sqftTarget: 4800 });
     await storage.createSchool({ clusterId: mendotaCluster.id, name: "Two Rivers High School", enrollment: 1648, grades: "9-12", sqftTarget: 13200 });
-
-    // Seed Multi-Scale Projections (Pilot, Statewide, National, Global)
-    await storage.createScaleProjection({
-      scale: "pilot",
-      schools: 6,
-      students: 5630,
-      greenhouses: 6,
-      sqft: 45050,
-      capex: 2950000,
-      annualRevenue: 3660000,
-      annualOpex: 360000,
-      npv5yr: 12847000,
-      roiPct: 435,
-      endowmentTarget: 5000000,
-      endowmentYr15: 15400000,
-      jobs: 36,
-      co2TonsAnnual: 246,
-      mealsPerDay: 15500
-    });
-
-    // Statewide: 1,200 high school greenhouses (7,500 sqft avg), 9M sqft total, 712,500 students (75% of 950K)
-    await storage.createScaleProjection({
-      scale: "statewide",
-      schools: 3100,         // Schools with curriculum (statewide)
-      students: 712500,      // 75% of 950K K-12 enrollment = 712,500 lunch participation
-      greenhouses: 1200,     // 1,200 high school greenhouses
-      sqft: 9000000,         // 1,200 × 7,500 sqft avg = 9M sqft total
-      capex: 1390000000,     // $1.39B-$2.69B capex range (mid-point ~$1.39B)
-      annualRevenue: 186900000,  // 53.4M lbs × $3.50/lb
-      annualOpex: 90000000,      // 1,200 greenhouses × $75K/yr avg opex
-      npv5yr: 950000000,
-      roiPct: 435,
-      endowmentTarget: 5000000000,  // $5B @ 4.5% = $225M/yr
-      endowmentYr15: 12000000000,
-      jobs: 2400,            // 2,400 FTE jobs
-      co2TonsAnnual: 53370,  // 9M sqft × 5.93 lbs CO2/sqft sequestration
-      mealsPerDay: 712500    // 712,500 students served daily
-    });
-
-    await storage.createScaleProjection({
-      scale: "national",
-      schools: 130000,
-      students: 50000000,
-      greenhouses: 130000,
-      sqft: 1040000000,
-      capex: 48000000000,
-      annualRevenue: 600000000000,
-      annualOpex: 7800000000,
-      npv5yr: 740000000000,
-      roiPct: 435,
-      endowmentTarget: 48000000000,
-      endowmentYr15: 740000000000,
-      jobs: 250000,
-      co2TonsAnnual: 5330000,
-      mealsPerDay: 50000000
-    });
-
-    await storage.createScaleProjection({
-      scale: "global",
-      schools: 1000000,
-      students: 500000000,
-      greenhouses: 1000000,
-      sqft: 8000000000,
-      capex: 370000000000,
-      annualRevenue: 4600000000000,
-      annualOpex: 60000000000,
-      npv5yr: 5700000000000,
-      roiPct: 435,
-      endowmentTarget: 370000000000,
-      endowmentYr15: 5700000000000,
-      jobs: 2000000,
-      co2TonsAnnual: 41000000,
-      mealsPerDay: 500000000
-    });
 
     // Seed Environmental Impact by Scale
     await storage.createEnvironmentalImpact({
