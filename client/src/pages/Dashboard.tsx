@@ -666,7 +666,7 @@ export default function Dashboard() {
                 </div>
 
                 {currentScale && (
-                  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
                     <div className="p-4 bg-blue-50 dark:bg-blue-950/30 rounded-xl border border-blue-100 dark:border-blue-900/50 text-center">
                       <School className="h-5 w-5 text-blue-600 mx-auto mb-2" />
                       <p className="text-xs text-blue-800 dark:text-blue-400 font-medium">Schools</p>
@@ -686,6 +686,11 @@ export default function Dashboard() {
                       <DollarSign className="h-5 w-5 text-amber-600 mx-auto mb-2" />
                       <p className="text-xs text-amber-800 dark:text-amber-400 font-medium">CAPEX</p>
                       <p className="text-xl font-bold text-amber-700 dark:text-amber-300" data-testid="text-scale-capex">{formatLargeNumber(currentScale.capex)}</p>
+                    </div>
+                    <div className="p-4 bg-teal-50 dark:bg-teal-950/30 rounded-xl border border-teal-100 dark:border-teal-900/50 text-center">
+                      <Leaf className="h-5 w-5 text-teal-600 mx-auto mb-2" />
+                      <p className="text-xs text-teal-800 dark:text-teal-400 font-medium">Produce Value</p>
+                      <p className="text-xl font-bold text-teal-700 dark:text-teal-300" data-testid="text-scale-produce-value">{formatLargeNumber(currentScale.annualRevenue)}</p>
                     </div>
                     <div className="p-4 bg-green-50 dark:bg-green-950/30 rounded-xl border border-green-100 dark:border-green-900/50 text-center">
                       <TrendingUp className="h-5 w-5 text-green-600 mx-auto mb-2" />
