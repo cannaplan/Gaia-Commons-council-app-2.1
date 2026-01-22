@@ -167,6 +167,9 @@ import { QuickNav } from "@/components/QuickNav";
 import { FundingCalculator } from "@/components/FundingCalculator";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { ProgressBar } from "@/components/ProgressBar";
+import { SocialSharing } from "@/components/SocialSharing";
+import { ImpactCalculator } from "@/components/ImpactCalculator";
+import { CommunityComparison } from "@/components/CommunityComparison";
 
 const SCALE_LABELS: Record<string, string> = {
   pilot: "Pilot (6 Schools)",
@@ -1138,6 +1141,21 @@ export default function Dashboard() {
             </Card>
           </motion.div>
         )}
+
+        {/* Interactive Tools Section - Impact Calculator & Community Comparison */}
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 xl:gap-8 mb-8">
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.33 }}>
+            <ImpactCalculator />
+          </motion.div>
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.34 }}>
+            <CommunityComparison />
+          </motion.div>
+        </div>
+
+        {/* Social Sharing for Outreach */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.35 }} className="mb-8">
+          <SocialSharing />
+        </motion.div>
 
         {/* Financial Engine & Climate (original sections) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-6 xl:gap-8 mb-8">
