@@ -2390,53 +2390,6 @@ export default function Dashboard() {
           </motion.div>
         )}
 
-        {/* 2026 Ballot Initiative Deck - Moved below Political Roadmap */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.515 }} className="mb-8">
-          <Card className="glass-panel" data-testid="card-slides">
-            <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
-              <Presentation className="h-5 w-5 text-primary" />
-              <CardTitle className="text-lg font-semibold">2026 Ballot Initiative Deck — One Vote, Forever Fed</CardTitle>
-              <Badge variant="secondary" className="ml-auto">{slides?.length || 0} Slides</Badge>
-            </CardHeader>
-            <CardContent>
-              {slides && slides.length > 0 ? (
-                <Carousel
-                  opts={{
-                    align: "start",
-                    loop: true,
-                  }}
-                  className="w-full"
-                  data-testid="carousel-slides"
-                >
-                  <CarouselContent className="-ml-2 md:-ml-4">
-                    {slides.map((slide) => (
-                      <CarouselItem key={slide.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
-                        <div className="p-4 bg-muted/30 rounded-lg border border-border/50 hover:border-primary/30 transition-colors h-full min-h-[120px]" data-testid={`slide-${slide.slideNumber}`}>
-                          <div className="flex items-center gap-2 mb-2">
-                            <span className="text-sm font-bold text-primary bg-primary/10 px-2 py-0.5 rounded">#{slide.slideNumber}</span>
-                          </div>
-                          <h4 className="text-sm font-semibold text-foreground mb-2">{slide.title}</h4>
-                          <p className="text-xs text-muted-foreground line-clamp-3">{slide.content}</p>
-                        </div>
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <div className="flex items-center justify-center gap-4 mt-4">
-                    <CarouselPrevious className="static translate-y-0" data-testid="button-slides-prev" />
-                    <span className="text-sm text-muted-foreground">Swipe or use arrows to navigate</span>
-                    <CarouselNext className="static translate-y-0" data-testid="button-slides-next" />
-                  </div>
-                </Carousel>
-              ) : (
-                <div className="text-center py-8 text-muted-foreground">
-                  <Presentation className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                  <p>Ballot initiative presentation slides coming soon.</p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </motion.div>
-
         {/* Stress Tests / Resilience - Using CollapsibleSection */}
         {stressTests && stressTests.length > 0 && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.52 }} className="mb-8">
