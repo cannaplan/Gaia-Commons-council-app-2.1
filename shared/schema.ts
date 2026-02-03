@@ -411,7 +411,7 @@ export const miningAlternative = pgTable("mining_alternative", {
   deliveryDriverJobs: integer("delivery_driver_jobs"),
   warehouseLogisticsJobs: integer("warehouse_logistics_jobs"),
   totalDistributionJobs: integer("total_distribution_jobs"),
-  // School Distribution Jobs (for 60% to 53 school districts)
+  // School Distribution Jobs (for 60% to 330 school districts)
   schoolSortingJobs: integer("school_sorting_jobs"),
   schoolDeliveryDrivers: integer("school_delivery_drivers"),
   schoolLogisticsCoordinators: integer("school_logistics_coordinators"),

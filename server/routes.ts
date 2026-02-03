@@ -1395,7 +1395,7 @@ async function seedDatabase() {
         co2Sequestered: 6750,
         status: "Proposed Alternative",
         specialtyCrops: "Mushrooms, Microgreens, Specialty Peppers",
-        suppliesAllSchools: "Yes - Supplies all 53 MN school districts",
+        suppliesAllSchools: "Yes - Supplies all 330 MN school districts",
         // Financial & Production
         annualProductionLbs: 9000000,      // 225K × 40 lbs/sqft
         schoolDistributionLbs: 5400000,    // 60% to schools
@@ -1410,7 +1410,7 @@ async function seedDatabase() {
         deliveryDriverJobs: 9,             // ~1 per 400K lbs/year
         warehouseLogisticsJobs: 3,         // Supervisors/coordinators
         totalDistributionJobs: 24,
-        // School Distribution Jobs (for 5.4M lbs to 53 school districts)
+        // School Distribution Jobs (for 5.4M lbs to 330 school districts)
         schoolSortingJobs: 18,             // Sorting/packaging for schools
         schoolDeliveryDrivers: 14,         // Refrigerated trucks to districts
         schoolLogisticsCoordinators: 4,    // Route planning/scheduling
@@ -1440,7 +1440,7 @@ async function seedDatabase() {
         co2Sequestered: 3825,
         status: "Proposed Alternative",
         specialtyCrops: "Edible Flowers, Exotic Herbs, Gourmet Greens",
-        suppliesAllSchools: "Yes - Supplies all 53 MN school districts",
+        suppliesAllSchools: "Yes - Supplies all 330 MN school districts",
         // Financial & Production
         annualProductionLbs: 5100000,      // 127.5K × 40 lbs/sqft
         schoolDistributionLbs: 3060000,    // 60% to schools
@@ -1455,7 +1455,7 @@ async function seedDatabase() {
         deliveryDriverJobs: 5,
         warehouseLogisticsJobs: 2,
         totalDistributionJobs: 14,
-        // School Distribution Jobs (for 3.06M lbs to 53 school districts)
+        // School Distribution Jobs (for 3.06M lbs to 330 school districts)
         schoolSortingJobs: 10,
         schoolDeliveryDrivers: 8,
         schoolLogisticsCoordinators: 2,
@@ -1485,7 +1485,7 @@ async function seedDatabase() {
         co2Sequestered: 11250,
         status: "Proposed Alternative",
         specialtyCrops: "Year-Round Strawberries, Specialty Melons, Heirloom Tomatoes",
-        suppliesAllSchools: "Yes - Supplies all 53 MN school districts",
+        suppliesAllSchools: "Yes - Supplies all 330 MN school districts",
         // Financial & Production
         annualProductionLbs: 15000000,     // 375K × 40 lbs/sqft
         schoolDistributionLbs: 9000000,    // 60% to schools
@@ -1500,7 +1500,7 @@ async function seedDatabase() {
         deliveryDriverJobs: 15,
         warehouseLogisticsJobs: 5,
         totalDistributionJobs: 40,
-        // School Distribution Jobs (for 9M lbs to 53 school districts - main hub)
+        // School Distribution Jobs (for 9M lbs to 330 school districts - main hub)
         schoolSortingJobs: 30,
         schoolDeliveryDrivers: 23,
         schoolLogisticsCoordinators: 7,
@@ -1530,7 +1530,7 @@ async function seedDatabase() {
         co2Sequestered: 1575,
         status: "Proposed Alternative",
         specialtyCrops: "Specialty Squash, Artisan Cucumbers",
-        suppliesAllSchools: "Yes - Supplies all 53 MN school districts",
+        suppliesAllSchools: "Yes - Supplies all 330 MN school districts",
         // Financial & Production
         annualProductionLbs: 2100000,      // 52.5K × 40 lbs/sqft
         schoolDistributionLbs: 1260000,    // 60% to schools
@@ -1545,7 +1545,7 @@ async function seedDatabase() {
         deliveryDriverJobs: 2,
         warehouseLogisticsJobs: 1,
         totalDistributionJobs: 6,
-        // School Distribution Jobs (for 1.26M lbs to 53 school districts)
+        // School Distribution Jobs (for 1.26M lbs to 330 school districts)
         schoolSortingJobs: 4,
         schoolDeliveryDrivers: 3,
         schoolLogisticsCoordinators: 1,
@@ -1575,7 +1575,7 @@ async function seedDatabase() {
         co2Sequestered: 5400,
         status: "Proposed Alternative",
         specialtyCrops: "Gourmet Mushrooms, Asian Vegetables, Baby Root Vegetables",
-        suppliesAllSchools: "Yes - Supplies all 53 MN school districts",
+        suppliesAllSchools: "Yes - Supplies all 330 MN school districts",
         // Financial & Production
         annualProductionLbs: 7200000,      // 180K × 40 lbs/sqft
         schoolDistributionLbs: 4320000,    // 60% to schools
@@ -1590,7 +1590,7 @@ async function seedDatabase() {
         deliveryDriverJobs: 7,
         warehouseLogisticsJobs: 3,
         totalDistributionJobs: 20,
-        // School Distribution Jobs (for 4.32M lbs to 53 school districts)
+        // School Distribution Jobs (for 4.32M lbs to 330 school districts)
         schoolSortingJobs: 14,
         schoolDeliveryDrivers: 11,
         schoolLogisticsCoordinators: 3,

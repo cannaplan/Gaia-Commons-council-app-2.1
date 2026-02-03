@@ -155,7 +155,7 @@ export default function BallotPresentation() {
           </div>
           <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 max-w-3xl text-center">
             <p className="text-xl leading-relaxed">
-              Build greenhouses at all 53 Minnesota school districts, complete with year-round 
+              Build greenhouses at all 330 Minnesota school districts, complete with year-round 
               production of <span className="font-bold text-lime-300">vegetables, berries, fruits, herbs</span>, 
               and even <span className="font-bold text-yellow-300">exotic citrus trees</span> - all funded 
               by a perpetual endowment that never runs out.
@@ -720,9 +720,9 @@ export default function BallotPresentation() {
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5 text-center transform hover:scale-105 transition-transform">
               <div className="text-lg font-bold text-green-300">STATEWIDE</div>
-              <div className="text-3xl font-bold my-2">275</div>
-              <p className="text-sm">Schools</p>
-              <p className="text-xs opacity-70 mt-2">$432M Investment</p>
+              <div className="text-3xl font-bold my-2">1,200</div>
+              <p className="text-sm">Greenhouses</p>
+              <p className="text-xs opacity-70 mt-2">$1.39B Investment</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5 text-center transform hover:scale-105 transition-transform">
               <div className="text-lg font-bold text-blue-300">NATIONAL</div>

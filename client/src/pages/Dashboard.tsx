@@ -1750,7 +1750,7 @@ export default function Dashboard() {
                           </div>
                           <div className="p-3 bg-white/50 dark:bg-black/20 rounded-lg">
                             <p className="text-sm font-medium text-blue-700 dark:text-blue-300">Distribution Infrastructure</p>
-                            <p className="text-xs text-muted-foreground mt-1">Statewide produce delivery network connecting greenhouses to 53 school districts</p>
+                            <p className="text-xs text-muted-foreground mt-1">Statewide produce delivery network connecting greenhouses to 330 school districts</p>
                           </div>
                         </div>
                       </div>
@@ -2037,7 +2037,7 @@ export default function Dashboard() {
                     <p className="text-2xl font-bold text-amber-800 dark:text-amber-300">
                       {(miningAlternatives.reduce((sum, a) => sum + (a.schoolDistributionLbs || 0), 0) / 1000000).toFixed(1)}M lbs
                     </p>
-                    <p className="text-xs text-amber-600 dark:text-amber-400">60% to 53 school districts</p>
+                    <p className="text-xs text-amber-600 dark:text-amber-400">60% to 330 school districts</p>
                   </div>
                   
                   <div className="p-4 bg-orange-50 dark:bg-orange-950/30 rounded-xl border border-orange-200 dark:border-orange-800">
@@ -2077,9 +2077,9 @@ export default function Dashboard() {
                   <div className="flex items-start gap-3">
                     <Truck className="h-5 w-5 text-amber-600 mt-0.5 shrink-0" />
                     <div>
-                      <h4 className="font-semibold text-amber-800 dark:text-amber-300">Specialty Crops for All 53 School Districts</h4>
+                      <h4 className="font-semibold text-amber-800 dark:text-amber-300">Specialty Crops for All 330 School Districts</h4>
                       <p className="text-sm text-amber-700 dark:text-amber-400 mt-1">
-                        These massive regional greenhouse complexes grow specialty produce that school greenhouses don't: mushrooms, microgreens, edible flowers, year-round strawberries, specialty melons, and gourmet vegetables. All production is distributed to the 53 participating Minnesota school districts, supplementing what each school grows on-site.
+                        These massive regional greenhouse complexes grow specialty produce that school greenhouses don't: mushrooms, microgreens, edible flowers, year-round strawberries, specialty melons, and gourmet vegetables. All production is distributed to the 330 participating Minnesota school districts, supplementing what each school grows on-site.
                       </p>
                     </div>
                   </div>
@@ -2150,7 +2150,7 @@ export default function Dashboard() {
 
                     <div>
                       <h5 className="font-semibold text-emerald-700 dark:text-emerald-300 mb-3 flex items-center gap-2">
-                        <School className="h-4 w-4" /> Statewide School Greenhouses (53 Districts)
+                        <School className="h-4 w-4" /> Statewide School Greenhouses (330 Districts)
                       </h5>
                       <div className="grid grid-cols-2 gap-2">
                         <div className="p-2 bg-white/70 dark:bg-black/30 rounded-lg">
