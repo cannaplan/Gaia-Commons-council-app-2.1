@@ -904,15 +904,16 @@ async function seedDatabase() {
     }
 
     // Seed 50-Year Endowment Projections
-    // Starting 2029 when $5B corpus is funded @ 4.5% draw = $225M/year
+    // Starting 2028 with $5B corpus @ 4.5% draw, 7% avg returns = 2.5% net growth per year
+    // Formula: corpus = corpus × (1 + 0.07 - 0.045) = corpus × 1.025 annually
     const endowmentYears = [
-      { year: 2029, corpus: 5000000000, annualDraw: 225000000, inflationAdjusted: 225000000 },
-      { year: 2032, corpus: 5500000000, annualDraw: 247500000, inflationAdjusted: 215000000 },
-      { year: 2037, corpus: 6200000000, annualDraw: 279000000, inflationAdjusted: 210000000 },
-      { year: 2047, corpus: 12500000000, annualDraw: 562500000, inflationAdjusted: 280000000 },
-      { year: 2057, corpus: 25000000000, annualDraw: 1125000000, inflationAdjusted: 420000000 },
-      { year: 2067, corpus: 50000000000, annualDraw: 2250000000, inflationAdjusted: 650000000 },
-      { year: 2077, corpus: 100000000000, annualDraw: 4500000000, inflationAdjusted: 1100000000 }
+      { year: 2028, corpus: 5000000000, annualDraw: 225000000, inflationAdjusted: 225000000 },
+      { year: 2033, corpus: 5657000000, annualDraw: 255000000, inflationAdjusted: 210000000 },
+      { year: 2038, corpus: 6400000000, annualDraw: 288000000, inflationAdjusted: 195000000 },
+      { year: 2048, corpus: 8193000000, annualDraw: 369000000, inflationAdjusted: 185000000 },
+      { year: 2058, corpus: 10491000000, annualDraw: 472000000, inflationAdjusted: 175000000 },
+      { year: 2068, corpus: 13435000000, annualDraw: 605000000, inflationAdjusted: 170000000 },
+      { year: 2078, corpus: 17203000000, annualDraw: 774000000, inflationAdjusted: 165000000 }
     ];
     for (const e of endowmentYears) {
       await storage.createEndowmentProjection(e);

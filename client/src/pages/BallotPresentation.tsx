@@ -103,7 +103,7 @@ export default function BallotPresentation() {
               <p className="text-lg">Average miles food travels to schools</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6">
-              <div className="text-5xl font-bold mb-2">$2.8B</div>
+              <div className="text-5xl font-bold mb-2">$200M+</div>
               <p className="text-lg">Spent annually on out-of-state produce</p>
             </div>
           </div>
@@ -131,21 +131,16 @@ export default function BallotPresentation() {
       icon: <Sprout className="h-24 w-24" />,
       content: (
         <div className="flex flex-col items-center gap-8">
-          <div className="grid grid-cols-4 gap-6 w-full max-w-4xl">
+          <div className="grid grid-cols-3 gap-6 w-full max-w-3xl">
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center transform hover:scale-105 transition-transform">
               <Sprout className="h-12 w-12 mx-auto mb-3" />
               <div className="text-2xl font-bold">Greenhouses</div>
-              <p className="text-sm opacity-80 mt-2">At every school district</p>
+              <p className="text-sm opacity-80 mt-2">Year-round produce & citrus</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center transform hover:scale-105 transition-transform">
               <TreeDeciduous className="h-12 w-12 mx-auto mb-3" />
               <div className="text-2xl font-bold">Orchards</div>
-              <p className="text-sm opacity-80 mt-2">Outdoor fruit trees</p>
-            </div>
-            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center transform hover:scale-105 transition-transform">
-              <Citrus className="h-12 w-12 mx-auto mb-3" />
-              <div className="text-2xl font-bold">Exotic Trees</div>
-              <p className="text-sm opacity-80 mt-2">Year-round citrus</p>
+              <p className="text-sm opacity-80 mt-2">Outdoor fruit & nut trees</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center transform hover:scale-105 transition-transform">
               <DollarSign className="h-12 w-12 mx-auto mb-3" />
@@ -222,80 +217,19 @@ export default function BallotPresentation() {
           </div>
           <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5 space-y-3">
             <div className="flex items-center gap-2">
-              <Flower className="h-8 w-8 text-yellow-300" />
-              <h3 className="font-bold text-lg">Herbs & Specialty</h3>
+              <Citrus className="h-8 w-8 text-yellow-300" />
+              <h3 className="font-bold text-lg">Citrus & Specialty</h3>
             </div>
             <ul className="text-sm space-y-1 opacity-90">
-              <li>Genovese Basil</li>
-              <li>French Thyme</li>
-              <li>Greek Oregano</li>
+              <li>Meyer Lemons</li>
+              <li>Key Limes</li>
+              <li>Kumquats</li>
+              <li>Dwarf Bananas</li>
               <li>Shiitake Mushrooms</li>
               <li>Lion's Mane</li>
-              <li>Edible Flowers</li>
               <li>Microgreens</li>
-              <li>Wheatgrass</li>
+              <li>Edible Flowers</li>
             </ul>
-          </div>
-        </div>
-      ),
-    },
-    {
-      id: 5,
-      title: "Exotic Greenhouse Trees",
-      subtitle: "Year-Round Tropical Fruits in Minnesota",
-      bgGradient: "from-orange-500 via-yellow-500 to-amber-400",
-      icon: <Banana className="h-24 w-24" />,
-      content: (
-        <div className="flex flex-col items-center gap-8">
-          <p className="text-xl text-center max-w-3xl opacity-90">
-            Climate-controlled greenhouses allow us to grow tropical and subtropical 
-            fruit trees right here in Minnesota - all year round!
-          </p>
-          <div className="grid grid-cols-4 gap-5">
-            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5 text-center transform hover:scale-105 transition-transform">
-              <Citrus className="h-12 w-12 mx-auto mb-3 text-yellow-300" />
-              <h3 className="font-bold">Meyer Lemons</h3>
-              <p className="text-sm opacity-80">Year-round citrus</p>
-            </div>
-            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5 text-center transform hover:scale-105 transition-transform">
-              <Citrus className="h-12 w-12 mx-auto mb-3 text-green-300" />
-              <h3 className="font-bold">Key Limes</h3>
-              <p className="text-sm opacity-80">Fresh for cooking</p>
-            </div>
-            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5 text-center transform hover:scale-105 transition-transform">
-              <Banana className="h-12 w-12 mx-auto mb-3 text-yellow-200" />
-              <h3 className="font-bold">Dwarf Bananas</h3>
-              <p className="text-sm opacity-80">Sweet & nutritious</p>
-            </div>
-            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5 text-center transform hover:scale-105 transition-transform">
-              <Apple className="h-12 w-12 mx-auto mb-3 text-orange-300" />
-              <h3 className="font-bold">Papaya Trees</h3>
-              <p className="text-sm opacity-80">Tropical vitamins</p>
-            </div>
-            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5 text-center transform hover:scale-105 transition-transform">
-              <Leaf className="h-12 w-12 mx-auto mb-3 text-green-400" />
-              <h3 className="font-bold">Avocado Trees</h3>
-              <p className="text-sm opacity-80">Healthy fats</p>
-            </div>
-            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5 text-center transform hover:scale-105 transition-transform">
-              <Citrus className="h-12 w-12 mx-auto mb-3 text-orange-300" />
-              <h3 className="font-bold">Kumquats</h3>
-              <p className="text-sm opacity-80">Bite-sized citrus</p>
-            </div>
-            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5 text-center transform hover:scale-105 transition-transform">
-              <Apple className="h-12 w-12 mx-auto mb-3 text-pink-300" />
-              <h3 className="font-bold">Guava Trees</h3>
-              <p className="text-sm opacity-80">Vitamin C rich</p>
-            </div>
-            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5 text-center transform hover:scale-105 transition-transform">
-              <Flower className="h-12 w-12 mx-auto mb-3 text-pink-400" />
-              <h3 className="font-bold">Dragon Fruit</h3>
-              <p className="text-sm opacity-80">Exotic superfood</p>
-            </div>
-          </div>
-          <div className="bg-black/20 backdrop-blur-lg rounded-2xl p-6 flex items-center gap-4">
-            <Sun className="h-12 w-12 text-yellow-300" />
-            <p className="text-lg">LED grow lights + climate control = tropical harvests in -20°F winters</p>
           </div>
         </div>
       ),
@@ -620,7 +554,7 @@ export default function BallotPresentation() {
                 <Droplets className="h-8 w-8 text-blue-300" />
                 <span className="font-bold text-lg">Water Saved</span>
               </div>
-              <div className="text-3xl font-bold">280 Billion Gallons/Year</div>
+              <div className="text-3xl font-bold">9 Billion Gallons/Year</div>
               <p className="text-sm opacity-70">90% less water than traditional farming</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5">
@@ -628,7 +562,7 @@ export default function BallotPresentation() {
                 <Globe className="h-8 w-8 text-green-300" />
                 <span className="font-bold text-lg">Carbon Sequestered</span>
               </div>
-              <div className="text-3xl font-bold">85,000 Tons/Year</div>
+              <div className="text-3xl font-bold">53,370 Tons/Year</div>
               <p className="text-sm opacity-70">Net carbon negative operations</p>
             </div>
           </div>
@@ -638,7 +572,7 @@ export default function BallotPresentation() {
                 <Factory className="h-8 w-8 text-amber-300" />
                 <span className="font-bold text-lg">Food Miles Eliminated</span>
               </div>
-              <div className="text-3xl font-bold">1.5 Billion Miles/Year</div>
+              <div className="text-3xl font-bold">100+ Million Miles/Year</div>
               <p className="text-sm opacity-70">Local food = zero transport emissions</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5">
