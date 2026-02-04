@@ -56,7 +56,7 @@ Gaia Commons Council is a full-stack dashboard application for tracking pilot pr
   - After 50 years: $11.25B total draws while principal remains $5B+
   - Produce sales revenue (~$123M/year) covers operations; endowment provides additional safety buffer
 - **Land & Water Conservation Fund**: 10% of annual endowment draw dedicated to purchasing and protecting Minnesota's natural resources:
-  - **Financial Projections**: ~$11.7M/year at statewide scale, $585M total over 50 years, 195K+ acres at $3,000/acre average
+  - **Financial Projections**: $22.5M/year (10% of $225M endowment draw), $1.125B total over 50 years, 375K+ acres at $3,000/acre average
   - **Acquisition Priorities**: Forests (35%), Farmland (30%), Waterways (25%), Tribal Lands (10%)
   - **Acquisition Sources**: Private landowners (60%), Federal government (25%), State & County (15%)
   - **Perpetual Protection**: All lands held in permanent land trust — never to be sold or developed
