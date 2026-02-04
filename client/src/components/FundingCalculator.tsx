@@ -44,20 +44,12 @@ export function FundingCalculator() {
     const excessRevenue = Math.max(0, totalRevenue - endowmentTarget);
     const yearlyDraw = endowmentTarget * 0.045;
     
-    const jobsPerMillion = 8.5;
-    const totalJobs = Math.round(totalRevenue * jobsPerMillion);
-    
-    const studentsPerMillion = 450;
-    const studentsFed = Math.round(totalRevenue * studentsPerMillion);
-
     return {
       revenues,
       totalRevenue,
       endowmentTarget,
       excessRevenue,
       yearlyDraw,
-      totalJobs,
-      studentsFed,
     };
   }, [rates]);
 
@@ -145,22 +137,6 @@ export function FundingCalculator() {
                   <span className="text-xs text-muted-foreground">Excess for Expansion</span>
                 </div>
                 <p className="text-2xl font-bold text-emerald-600">{formatMoney(calculations.excessRevenue)}</p>
-              </div>
-              
-              <div className="p-4 bg-blue-500/10 rounded-xl">
-                <div className="flex items-center gap-2 mb-1">
-                  <Users className="h-4 w-4 text-blue-600" />
-                  <span className="text-xs text-muted-foreground">Jobs Created</span>
-                </div>
-                <p className="text-2xl font-bold text-blue-600">{calculations.totalJobs.toLocaleString()}</p>
-              </div>
-              
-              <div className="p-4 bg-amber-500/10 rounded-xl">
-                <div className="flex items-center gap-2 mb-1">
-                  <Users className="h-4 w-4 text-amber-600" />
-                  <span className="text-xs text-muted-foreground">Students Fed</span>
-                </div>
-                <p className="text-2xl font-bold text-amber-600">{calculations.studentsFed.toLocaleString()}</p>
               </div>
             </motion.div>
 

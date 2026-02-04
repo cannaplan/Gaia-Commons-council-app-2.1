@@ -2536,41 +2536,29 @@ export default function Dashboard() {
           </motion.div>
         )}
 
-        {/* Regenerative Agriculture */}
-        {regenerativeAgriculture && regenerativeAgriculture.length > 0 && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.55 }} className="mb-8">
-            <Card className="glass-panel" data-testid="card-regenerative-ag">
+        {/* Labor Transition */}
+        {laborTransition && laborTransition.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.57 }} className="mb-8">
+            <Card className="glass-panel" data-testid="card-labor-transition">
               <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
-                <Wheat className="h-5 w-5 text-primary" />
-                <CardTitle className="text-lg font-semibold">Regenerative Agriculture — 144M Acres Transformed</CardTitle>
-                <Badge variant="secondary" className="ml-auto">5 Operation Types</Badge>
+                <HardHat className="h-5 w-5 text-primary" />
+                <CardTitle className="text-lg font-semibold">Labor Transition Program</CardTitle>
+                <Badge variant="secondary" className="ml-auto">{laborTransition.reduce((sum, l) => sum + l.workersAffected, 0).toLocaleString()} Workers</Badge>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
-                  {regenerativeAgriculture.map((op) => (
-                    <div key={op.id} className="p-4 bg-muted/30 rounded-lg border border-border/50" data-testid={`ag-op-${op.id}`}>
-                      <div className="flex items-center gap-2 mb-2">
-                        <Leaf className="h-4 w-4 text-emerald-500" />
-                        <span className="font-semibold text-foreground">{op.name}</span>
+                <p className="text-sm text-muted-foreground mb-4">
+                  125% income guarantee for 3 years + $45K retraining. Workers choose timing and pathway.
+                </p>
+                <div className="space-y-3">
+                  {laborTransition.map((sector) => (
+                    <div key={sector.id} className="p-3 bg-muted/30 rounded-lg" data-testid={`labor-sector-${sector.id}`}>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="font-medium text-foreground">{sector.sector}</span>
+                        <span className="text-sm font-bold text-primary">{sector.workersAffected.toLocaleString()}</span>
                       </div>
-                      <p className="text-xs text-muted-foreground mb-3">{op.description}</p>
-                      <div className="grid grid-cols-3 gap-2 text-center">
-                        <div className="p-2 bg-background/50 rounded">
-                          <p className="text-sm font-bold text-emerald-600">{formatNumber(op.totalJobs)}</p>
-                          <p className="text-xs text-muted-foreground">Jobs</p>
-                        </div>
-                        <div className="p-2 bg-background/50 rounded">
-                          <p className="text-sm font-bold text-blue-600">${formatNumber(op.totalRevenue)}</p>
-                          <p className="text-xs text-muted-foreground">Revenue</p>
-                        </div>
-                        <div className="p-2 bg-background/50 rounded">
-                          <p className="text-sm font-bold text-primary">{formatNumber(op.totalCarbonSequestered)}</p>
-                          <p className="text-xs text-muted-foreground">CO2 Tons</p>
-                        </div>
-                      </div>
-                      <div className="mt-3 pt-3 border-t border-border/50 flex justify-between text-xs text-muted-foreground">
-                        <span>${op.revenuePerAcre}/acre</span>
-                        <span>{op.avgWage.toLocaleString()} avg wage</span>
+                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <span>{(sector.successRate * 100).toFixed(0)}% success rate</span>
+                        <span>Total: ${formatNumber(sector.totalCost)}</span>
                       </div>
                     </div>
                   ))}
@@ -2579,76 +2567,6 @@ export default function Dashboard() {
             </Card>
           </motion.div>
         )}
-
-        {/* Nationwide Food Security & Labor Transition */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-6 xl:gap-8 mb-8">
-          {nationwideFoodSecurity && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.56 }}>
-              <Card className="glass-panel h-full" data-testid="card-food-security">
-                <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
-                  <Utensils className="h-5 w-5 text-primary" />
-                  <CardTitle className="text-lg font-semibold">Nationwide Food Security</CardTitle>
-                  <Badge variant="secondary" className="ml-auto">{nationwideFoodSecurity.scope}</Badge>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 gap-3 mb-4">
-                    <div className="p-3 bg-muted/30 rounded-lg text-center">
-                      <p className="text-xl font-bold text-primary">{formatNumber(nationwideFoodSecurity.totalStudents)}</p>
-                      <p className="text-xs text-muted-foreground">Students Served</p>
-                    </div>
-                    <div className="p-3 bg-muted/30 rounded-lg text-center">
-                      <p className="text-xl font-bold text-emerald-600">{formatNumber(nationwideFoodSecurity.facilitiesNeeded)}</p>
-                      <p className="text-xs text-muted-foreground">Facilities</p>
-                    </div>
-                    <div className="p-3 bg-muted/30 rounded-lg text-center">
-                      <p className="text-xl font-bold text-blue-600">{formatNumber(nationwideFoodSecurity.jobsCreated)}</p>
-                      <p className="text-xs text-muted-foreground">Jobs Created</p>
-                    </div>
-                    <div className="p-3 bg-muted/30 rounded-lg text-center">
-                      <p className="text-xl font-bold text-amber-600">${formatNumber(nationwideFoodSecurity.constructionCost)}</p>
-                      <p className="text-xs text-muted-foreground">Investment</p>
-                    </div>
-                  </div>
-                  <div className="p-3 bg-emerald-50/50 dark:bg-emerald-950/20 rounded-lg border border-emerald-200 dark:border-emerald-900/50">
-                    <p className="text-xs text-emerald-700 dark:text-emerald-400"><span className="font-medium">Model:</span> {nationwideFoodSecurity.replicationModel}</p>
-                    <p className="text-xs text-emerald-700 dark:text-emerald-400 mt-1"><span className="font-medium">Pesticides:</span> {nationwideFoodSecurity.pesticideElimination}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          )}
-
-          {laborTransition && laborTransition.length > 0 && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.57 }}>
-              <Card className="glass-panel h-full" data-testid="card-labor-transition">
-                <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
-                  <HardHat className="h-5 w-5 text-primary" />
-                  <CardTitle className="text-lg font-semibold">Labor Transition Program</CardTitle>
-                  <Badge variant="secondary" className="ml-auto">{laborTransition.reduce((sum, l) => sum + l.workersAffected, 0).toLocaleString()} Workers</Badge>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    125% income guarantee for 3 years + $45K retraining. Workers choose timing and pathway.
-                  </p>
-                  <div className="space-y-3">
-                    {laborTransition.map((sector) => (
-                      <div key={sector.id} className="p-3 bg-muted/30 rounded-lg" data-testid={`labor-sector-${sector.id}`}>
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="font-medium text-foreground">{sector.sector}</span>
-                          <span className="text-sm font-bold text-primary">{sector.workersAffected.toLocaleString()}</span>
-                        </div>
-                        <div className="flex items-center justify-between text-xs text-muted-foreground">
-                          <span>{(sector.successRate * 100).toFixed(0)}% success rate</span>
-                          <span>Total: ${formatNumber(sector.totalCost)}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          )}
-        </div>
 
         {/* Political Coalition */}
         {politicalCoalitionData && politicalCoalitionData.length > 0 && (
