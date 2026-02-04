@@ -537,7 +537,7 @@ async function seedDatabase() {
     });
   }
   
-  // Seed Funding Sources if empty (updated per user specifications - $8.84B total)
+  // Seed Funding Sources if empty (updated per user specifications - $9.13B total)
   const fundingData = await storage.getFundingSources();
   if (fundingData.length === 0) {
     console.log("Seeding funding sources with corrected rates...");
@@ -770,10 +770,10 @@ async function seedDatabase() {
 
     await storage.createEnvironmentalImpact({
       scale: "statewide",
-      co2SequesteredTons: 11275,
-      waterSavedGallons: 115000000,
+      co2SequesteredTons: 53370,
+      waterSavedGallons: 9000000000,
       landPreservedAcres: 2300,
-      foodMilesReduced: 23000000,
+      foodMilesReduced: 100000000,
       renewableEnergyPct: 85,
       wasteReducedTons: 5500
     });

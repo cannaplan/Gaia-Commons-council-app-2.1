@@ -501,17 +501,17 @@ export default function BallotPresentation() {
           <div className="grid grid-cols-3 gap-6 w-full max-w-4xl">
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
               <Droplets className="h-12 w-12 mx-auto mb-3 text-blue-300" />
-              <div className="text-3xl font-bold">$6.3M</div>
+              <div className="text-3xl font-bold">$22.5M</div>
               <p className="text-sm">Annual Conservation Fund</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
               <TreePine className="h-12 w-12 mx-auto mb-3 text-green-300" />
-              <div className="text-3xl font-bold">$315M</div>
+              <div className="text-3xl font-bold">$1.125B</div>
               <p className="text-sm">Total Over 50 Years</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
               <MapPin className="h-12 w-12 mx-auto mb-3 text-amber-300" />
-              <div className="text-3xl font-bold">100K+</div>
+              <div className="text-3xl font-bold">375K+</div>
               <p className="text-sm">Acres Protected Forever</p>
             </div>
           </div>
