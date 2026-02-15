@@ -41,14 +41,14 @@ interface CommunityData {
 }
 
 const MINNESOTA_COMMUNITIES: CommunityData[] = [
-  { name: "Twin Cities Metro", region: "Metro", schools: 450, students: 267750, greenhouseSqft: 3375000, jobs: 900, produceAnnual: 20081250, endowmentShare: 1875000000, co2Tons: 20014 },
-  { name: "Rochester Area", region: "Southeast", schools: 45, students: 26775, greenhouseSqft: 337500, jobs: 90, produceAnnual: 2008125, endowmentShare: 187500000, co2Tons: 2001 },
-  { name: "Duluth/Iron Range", region: "Northeast", schools: 85, students: 50575, greenhouseSqft: 637500, jobs: 170, produceAnnual: 3793125, endowmentShare: 354166667, co2Tons: 3780 },
-  { name: "St. Cloud Area", region: "Central", schools: 55, students: 32725, greenhouseSqft: 412500, jobs: 110, produceAnnual: 2454375, endowmentShare: 229166667, co2Tons: 2446 },
-  { name: "Mankato/Southern MN", region: "South", schools: 75, students: 44625, greenhouseSqft: 562500, jobs: 150, produceAnnual: 3346875, endowmentShare: 312500000, co2Tons: 3336 },
-  { name: "Moorhead/Red River Valley", region: "Northwest", schools: 40, students: 23800, greenhouseSqft: 300000, jobs: 80, produceAnnual: 1785000, endowmentShare: 166666667, co2Tons: 1779 },
-  { name: "Alexandria/Lakes Region", region: "West Central", schools: 35, students: 20825, greenhouseSqft: 262500, jobs: 70, produceAnnual: 1561875, endowmentShare: 145833333, co2Tons: 1557 },
-  { name: "Tribal Nations (Combined)", region: "Statewide", schools: 25, students: 14875, greenhouseSqft: 187500, jobs: 50, produceAnnual: 1115625, endowmentShare: 104166667, co2Tons: 1112 },
+  { name: "Twin Cities Metro", region: "Metro", schools: 660, students: 391875, greenhouseSqft: 4950000, jobs: 1320, produceAnnual: 29370000, endowmentShare: 2750000000, co2Tons: 29354 },
+  { name: "Rochester Area", region: "Southeast", schools: 65, students: 38593, greenhouseSqft: 487500, jobs: 130, produceAnnual: 2892500, endowmentShare: 270833333, co2Tons: 2891 },
+  { name: "Duluth/Iron Range", region: "Northeast", schools: 125, students: 74219, greenhouseSqft: 937500, jobs: 250, produceAnnual: 5562500, endowmentShare: 520833333, co2Tons: 5559 },
+  { name: "St. Cloud Area", region: "Central", schools: 80, students: 47500, greenhouseSqft: 600000, jobs: 160, produceAnnual: 3560000, endowmentShare: 333333333, co2Tons: 3558 },
+  { name: "Mankato/Southern MN", region: "South", schools: 110, students: 65313, greenhouseSqft: 825000, jobs: 220, produceAnnual: 4895000, endowmentShare: 458333333, co2Tons: 4892 },
+  { name: "Moorhead/Red River Valley", region: "Northwest", schools: 60, students: 35625, greenhouseSqft: 450000, jobs: 120, produceAnnual: 2670000, endowmentShare: 250000000, co2Tons: 2669 },
+  { name: "Alexandria/Lakes Region", region: "West Central", schools: 55, students: 32656, greenhouseSqft: 412500, jobs: 110, produceAnnual: 2447500, endowmentShare: 229166667, co2Tons: 2446 },
+  { name: "Tribal Nations (Combined)", region: "Statewide", schools: 45, students: 26719, greenhouseSqft: 337500, jobs: 90, produceAnnual: 2002500, endowmentShare: 187500001, co2Tons: 2001 },
 ];
 
 const formatNumber = (num: number): string => {

@@ -27,7 +27,7 @@ Gaia Commons Council is a full-stack dashboard application for tracking pilot pr
   - **Side-by-Side Comparison Table**: Mining vs Gaia on ownership, profits, taxes, jobs, duration, wages, resources, environment, post-closure, foreign workers
   - **Halved greenhouse sqft**: 960K total (225K Ely, 127.5K Babbitt, 375K Hibbing, 52.5K Tower, 180K Virginia)
   - **Complete financial modeling**: $85/sqft construction cost, $12/sqft/year operations, 40 lbs/sqft/year production
-  - **Production & distribution**: 38.4M lbs annual specialty crops — 60% to 53 school districts, 40% excess sold to stores/markets
+  - **Production & distribution**: 38.4M lbs annual specialty crops — 60% to 330 school districts, 40% excess sold to stores/markets
   - **Revenue modeling**: $53.8M annual sales revenue @ $3.50/lb wholesale, $42.2M net after operations
   - **Specialty crops by community**: Mushrooms, microgreens, edible flowers, year-round strawberries, specialty melons, gourmet vegetables
   - **2,400 permanent jobs** funded by $5B endowment vs. ~1,500 temporary mining jobs (Twin Metals estimate):
