@@ -1389,63 +1389,6 @@ export default function Dashboard() {
           </motion.div>
         )}
 
-        {/* 50-Year Endowment Growth Chart */}
-        {endowmentProjections && endowmentProjections.length > 0 && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.46 }} className="mb-8">
-            <Card className="glass-panel" data-testid="card-endowment-projections">
-              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
-                <TrendingUp className="h-5 w-5 text-primary" />
-                <CardTitle className="text-lg font-semibold">50-Year Endowment Growth — 4.5% Annual Draw</CardTitle>
-                <Badge variant="secondary" className="ml-auto">2027–2077</Badge>
-              </CardHeader>
-              <CardContent>
-                <div className="h-72">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={endowmentProjections}>
-                      <defs>
-                        <linearGradient id="colorCorpus" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#22c55e" stopOpacity={0.3}/>
-                          <stop offset="95%" stopColor="#22c55e" stopOpacity={0}/>
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                      <XAxis dataKey="year" className="text-xs" />
-                      <YAxis className="text-xs" tickFormatter={(v) => formatLargeNumber(v)} />
-                      <Tooltip 
-                        formatter={(value: number, name: string) => [
-                          formatLargeNumber(value), 
-                          name === 'corpus' ? 'Corpus' : name === 'annualDraw' ? 'Annual Draw' : 'Inflation-Adjusted'
-                        ]} 
-                      />
-                      <Legend />
-                      <Area type="monotone" dataKey="corpus" name="Endowment Corpus" stroke="#22c55e" fillOpacity={1} fill="url(#colorCorpus)" />
-                      <Line type="monotone" dataKey="annualDraw" name="Annual Draw (4.5%)" stroke="#8b5cf6" strokeWidth={2} dot={false} />
-                    </AreaChart>
-                  </ResponsiveContainer>
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-                  <div className="text-center p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg border border-emerald-100 dark:border-emerald-900/50">
-                    <p className="text-xs text-emerald-700 dark:text-emerald-400 font-medium">Year 1 ({endowmentProjections[0]?.year || 2028})</p>
-                    <p className="font-semibold text-emerald-800 dark:text-emerald-300">{formatLargeNumber(endowmentProjections[0]?.corpus || 0)}</p>
-                  </div>
-                  <div className="text-center p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-100 dark:border-blue-900/50">
-                    <p className="text-xs text-blue-700 dark:text-blue-400 font-medium">Year 20 ({(endowmentProjections[0]?.year || 2028) + 20})</p>
-                    <p className="font-semibold text-blue-800 dark:text-blue-300">{formatLargeNumber(endowmentProjections.find(e => e.year === (endowmentProjections[0]?.year || 2028) + 20)?.corpus || 0)}</p>
-                  </div>
-                  <div className="text-center p-3 bg-purple-50 dark:bg-purple-950/30 rounded-lg border border-purple-100 dark:border-purple-900/50">
-                    <p className="text-xs text-purple-700 dark:text-purple-400 font-medium">Year 40 ({(endowmentProjections[0]?.year || 2028) + 40})</p>
-                    <p className="font-semibold text-purple-800 dark:text-purple-300">{formatLargeNumber(endowmentProjections.find(e => e.year === (endowmentProjections[0]?.year || 2028) + 40)?.corpus || 0)}</p>
-                  </div>
-                  <div className="text-center p-3 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-100 dark:border-amber-900/50">
-                    <p className="text-xs text-amber-700 dark:text-amber-400 font-medium">Year 50 ({endowmentProjections[endowmentProjections.length - 1]?.year || 2078})</p>
-                    <p className="font-semibold text-amber-800 dark:text-amber-300">{formatLargeNumber(endowmentProjections[endowmentProjections.length - 1]?.corpus || 0)}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
-
         {/* Land & Water Conservation Fund */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.462 }} className="mb-8">
           <Card className="glass-panel border-2 border-teal-200 dark:border-teal-800" data-testid="card-land-conservation">
@@ -2301,53 +2244,6 @@ export default function Dashboard() {
           </motion.div>
         )}
 
-        {/* Implementation Timeline */}
-        {implementationTimeline && implementationTimeline.length > 0 && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.50 }} className="mb-8">
-            <Card className="glass-panel" data-testid="card-implementation-timeline">
-              <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
-                <Calendar className="h-5 w-5 text-primary" />
-                <CardTitle className="text-lg font-semibold">Implementation Timeline — Greenhouse Rollout 2027-2028</CardTitle>
-                <Badge variant="secondary" className="ml-auto">{implementationTimeline.length} Milestones</Badge>
-              </CardHeader>
-              <CardContent>
-                <div className="relative">
-                  <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-primary/20" />
-                  <div className="space-y-4">
-                    {implementationTimeline.map((item, idx) => (
-                      <div key={item.id} className="relative pl-10" data-testid={`timeline-item-${item.id}`}>
-                        <div className={`absolute left-2 w-4 h-4 rounded-full border-2 ${idx === implementationTimeline.length - 1 ? 'bg-primary border-primary' : 'bg-background border-primary'}`} />
-                        <div className="p-4 bg-muted/30 rounded-lg border border-border/50">
-                          <div className="flex flex-wrap items-center gap-2 mb-2">
-                            <Badge variant="outline" className="text-xs">{item.phase}</Badge>
-                            <span className="text-sm font-semibold text-primary">{item.quarter}</span>
-                            <span className="text-sm font-medium text-foreground">{item.milestone}</span>
-                          </div>
-                          <p className="text-sm text-muted-foreground mb-3">{item.details}</p>
-                          <div className="grid grid-cols-3 gap-3 text-center">
-                            <div className="p-2 bg-background/50 rounded">
-                              <p className="text-lg font-bold text-primary">{item.greenhouseCount}</p>
-                              <p className="text-xs text-muted-foreground">Greenhouses</p>
-                            </div>
-                            <div className="p-2 bg-background/50 rounded">
-                              <p className="text-lg font-bold text-emerald-600">{item.jobsCreated?.toLocaleString()}</p>
-                              <p className="text-xs text-muted-foreground">Jobs</p>
-                            </div>
-                            <div className="p-2 bg-background/50 rounded">
-                              <p className="text-lg font-bold text-blue-600">{item.studentsServed?.toLocaleString()}</p>
-                              <p className="text-xs text-muted-foreground">Students</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
-
         {/* Political Roadmap */}
         {politicalRoadmap && politicalRoadmap.length > 0 && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.51 }} className="mb-8">
@@ -2985,22 +2881,6 @@ export default function Dashboard() {
             )}
           </StatsCard>
 
-          <StatsCard title="Pilot Program Status" icon={<Sprout className="h-5 w-5" />} delay={0.55}>
-            {pilot && (
-              <>
-                <StatItem label="Students Served" value={pilot.students.toLocaleString()} trend="+12%" trendUp={true} />
-                <StatItem label="Schools Active" value={pilot.schools} />
-                <StatItem label="Total Sq Ft" value={`${(pilot.sqft / 1000).toFixed(1)}k`} />
-                <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 mt-2">
-                  <Activity className="w-3 h-3 mr-1.5" />Status: {pilot.status}
-                </Badge>
-              </>
-            )}
-          </StatsCard>
-
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.6 }} className="h-full">
-            {timeline && <Timeline events={timeline} />}
-          </motion.div>
         </div>
 
         {/* Footer */}
