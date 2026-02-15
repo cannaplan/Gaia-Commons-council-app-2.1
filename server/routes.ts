@@ -556,9 +556,9 @@ async function seedDatabase() {
     });
     await storage.createFundingSource({
       sourceType: "Pro Sports Franchises",
-      description: "3% contribution from Minnesota professional sports franchises annual revenue",
-      targetAmount: 60000000,
-      percentage: 3.0,
+      description: "5% contribution from Minnesota professional sports franchises annual revenue",
+      targetAmount: 100000000,
+      percentage: 5.0,
       entities: "Minnesota Vikings (NFL), Minnesota Twins (MLB), Minnesota Timberwolves (NBA), Minnesota Lynx (WNBA), Minnesota Wild (NHL), Minnesota United FC (MLS), St. Paul Saints (MiLB)"
     });
     await storage.createFundingSource({
@@ -577,9 +577,9 @@ async function seedDatabase() {
     });
     await storage.createFundingSource({
       sourceType: "Data/Online Retail",
-      description: "2.5% surcharge on major tech data centers and online retail operations in Minnesota",
-      targetAmount: 2620000000,
-      percentage: 2.5,
+      description: "2% surcharge on major tech data centers and online retail operations in Minnesota",
+      targetAmount: 2100000000,
+      percentage: 2.0,
       entities: "Amazon, Microsoft, Google, Meta, Apple, Walmart.com, Target.com, Best Buy online, Wayfair, and major data center operators"
     });
     await storage.createFundingSource({
@@ -633,7 +633,7 @@ async function seedDatabase() {
     // State Savings: 712,500 students × 180 days × $1.82/meal = ~$233M/year
     await storage.createScaleProjection({
       scale: "statewide",
-      schools: 3100,         // Schools with curriculum (statewide)
+      schools: 1200,         // 1,200 high school greenhouses (statewide)
       students: 712500,      // 75% of 950K K-12 enrollment = 712,500 lunch participation
       greenhouses: 1200,     // 1,200 high school greenhouses
       sqft: 9000000,         // 1,200 × 7,500 sqft avg = 9M sqft total
@@ -870,7 +870,7 @@ async function seedDatabase() {
       { n: 7, title: "The Endowment Model", text: "$5B Initial Endowment | 4.5% Annual Draw | $225M/Year Forever - Principal never touched" },
       { n: 8, title: "Jobs Created", text: "2,400 Permanent MN Jobs: 1,440 Greenhouse Staff + 240 Educators + 360 Distribution + 360 School Staff | 100% Union Labor $32-35/hr" },
       { n: 9, title: "vs. Foreign Mining", text: "Twin Metals (100% Chilean-owned, 50% profits abroad, temporary jobs) vs Gaia (100% MN-owned, 2,400 permanent jobs, forever)" },
-      { n: 10, title: "330 School Districts", text: "712,500 Students | 330 Districts | 1,200 Greenhouses | 3,100+ Schools w/ Curriculum | Priority: Tribal food sovereignty" },
+      { n: 10, title: "330 School Districts", text: "712,500 Students | 330 Districts | 1,200 Greenhouses | Priority: Tribal food sovereignty" },
       { n: 11, title: "Land Conservation", text: "10% of Revenue: $22.5M Annual | $1.125B over 50 Years | 375K+ Acres Protected Forever" },
       { n: 12, title: "Environmental Impact", text: "450M Gallons Water Saved | 5,200 Metric Tons CO2 Emissions Avoided | 1.6M Truck-Miles Eliminated | Zero Pesticides" },
       { n: 13, title: "Educational Benefits", text: "STEM Integration + Agriculture + Career Pathways | K-12 participation from seed planting to internships" },

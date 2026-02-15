@@ -4,7 +4,7 @@
 
 Gaia Commons Council is a full-stack dashboard application for tracking pilot program statistics, endowment data, and strategic timeline events for the "One Vote, Forever Fed" 2026 ballot initiative. The platform serves as an analytics and management interface for educational and environmental initiatives, displaying real-time metrics for student enrollment, facility square footage, school counts, and endowment financials. Features include multi-scale deployment views (Pilot → Statewide → National → Global), interactive data visualization charts (Endowment Growth, Jobs Breakdown), and an interactive Cluster Builder tool.
 
-**Statewide Scope**: 1,200 high school greenhouses (7,500 sqft avg, 9M sqft total), 712,500 students served (75% of 950K K-12 enrollment), 75 lb produce per student annually (53.4M lb total), $5B endowment (4.5% yield = $225M/year), 2,400 FTE jobs, 3,100+ schools with curriculum. Anti-Boundary Waters mining alternative.
+**Statewide Scope**: 1,200 high school greenhouses (7,500 sqft avg, 9M sqft total), 712,500 students served (75% of 950K K-12 enrollment), 75 lb produce per student annually (53.4M lb total), $5B endowment (4.5% yield = $225M/year), 2,400 FTE jobs, 1,200 schools. Anti-Boundary Waters mining alternative.
 
 ## Recent Changes (January 2026)
 

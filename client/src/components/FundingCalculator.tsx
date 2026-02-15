@@ -16,10 +16,10 @@ interface FundingSource {
 
 const fundingSources: FundingSource[] = [
   { name: "Top 20 Local Corps", baseRate: 0.4, baseRevenue: 1000, maxRate: 1.5, icon: <Building2 className="h-4 w-4" />, color: "bg-blue-500" },
-  { name: "Pro Sports Franchises", baseRate: 3, baseRevenue: 60, maxRate: 10, icon: <Trophy className="h-4 w-4" />, color: "bg-orange-500" },
+  { name: "Pro Sports Franchises", baseRate: 5, baseRevenue: 100, maxRate: 10, icon: <Trophy className="h-4 w-4" />, color: "bg-orange-500" },
   { name: "Local Med/Ins", baseRate: 0.4, baseRevenue: 600, maxRate: 1.5, icon: <Heart className="h-4 w-4" />, color: "bg-red-500" },
   { name: "Out-State Corp/Med/Ins", baseRate: 0.45, baseRevenue: 3150, maxRate: 1.5, icon: <Globe className="h-4 w-4" />, color: "bg-emerald-500" },
-  { name: "Data/Online Retail", baseRate: 2.5, baseRevenue: 2620, maxRate: 8, icon: <Server className="h-4 w-4" />, color: "bg-purple-500" },
+  { name: "Data/Online Retail", baseRate: 2, baseRevenue: 2100, maxRate: 8, icon: <Server className="h-4 w-4" />, color: "bg-purple-500" },
   { name: "Out-of-Country Mining", baseRate: 10, baseRevenue: 1000, maxRate: 25, icon: <Leaf className="h-4 w-4" />, color: "bg-amber-500" },
   { name: "Federal Government", baseRate: 1, baseRevenue: 500, maxRate: 3, icon: <Building2 className="h-4 w-4" />, color: "bg-indigo-500" },
   { name: "Local Billionaires", baseRate: 1, baseRevenue: 200, maxRate: 5, icon: <Users className="h-4 w-4" />, color: "bg-pink-500" },
