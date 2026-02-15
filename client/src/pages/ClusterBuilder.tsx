@@ -373,9 +373,12 @@ export default function ClusterBuilder() {
     const annualOperatingCost = (totalGreenhouseSqft * 12) + annualLaborCost;
     const costPerMeal = annualOperatingCost / (totalEnrollment * mealsPerStudentPerYear);
     
-    const carbonSequesteredTons = (totalGreenhouseSqft / 1000) * 0.9;
-    const waterSavedGallons = totalGreenhouseSqft * 25;
-    const foodMilesSaved = totalProduceNeededLbs * 1500;
+    // Avoided transport emissions: produce weight × avg distance × EPA emission factor
+    // EPA: 161.8 g CO2/ton-mile, avg food transport: 1,200 miles
+    const produceTons = annualProductionLbs / 2000;
+    const carbonAvoidedTons = produceTons * 1200 * 161.8 / 1000000;
+    const waterSavedGallons = annualProductionLbs * 2.6; // conservative 10x water savings per lb (Arizona State research)
+    const foodMilesSaved = (produceTons / 20) * 1200; // truck-miles eliminated
 
     return {
       sqftNeeded: totalGreenhouseSqft,
@@ -389,7 +392,7 @@ export default function ClusterBuilder() {
       constructionCost: totalConstructionCost,
       annualOperatingCost,
       costPerMeal,
-      carbonSequesteredTons,
+      carbonAvoidedTons,
       waterSavedGallons,
       foodMilesSaved,
       studentsServed: totalEnrollment,
@@ -1393,8 +1396,8 @@ export default function ClusterBuilder() {
                         </h3>
                         <div className="grid md:grid-cols-3 gap-4 text-center">
                           <div>
-                            <p className="text-xl font-bold text-green-600">{pilotMetrics.carbonSequesteredTons.toFixed(1)}</p>
-                            <p className="text-xs text-muted-foreground">Tons CO2 Sequestered/Year</p>
+                            <p className="text-xl font-bold text-green-600">{pilotMetrics.carbonAvoidedTons.toFixed(1)}</p>
+                            <p className="text-xs text-muted-foreground">Metric Tons CO2 Avoided/Year</p>
                           </div>
                           <div>
                             <p className="text-xl font-bold text-blue-600">{(pilotMetrics.waterSavedGallons / 1000000).toFixed(1)}M</p>

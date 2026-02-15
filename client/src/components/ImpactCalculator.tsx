@@ -52,7 +52,10 @@ export function ImpactCalculator() {
     const annualProduceLbs = totalStudents * 75;
     const jobsFTE = inputs.schoolCount * 2;
     const constructionJobs = Math.round(inputs.schoolCount * 11.58);
-    const annualCO2Tons = Math.round(totalSqft * 5.93 / 2000);
+    // Avoided transport emissions: produce weight × avg distance × EPA emission factor
+    // EPA: 161.8 g CO2/ton-mile for freight trucks, avg food transport: 1,200 miles
+    const produceTons = annualProduceLbs / 2000;
+    const annualCO2Tons = Math.round(produceTons * 1200 * 161.8 / 1000000);
     // State savings: Students × 180 school days × $1.82/meal (1/3 of $5.45 meal cost = fruits/vegetables)
     const annualValue = totalStudents * 180 * 1.82;
     const endowmentShare = (inputs.schoolCount / 1200) * 5000000000;
@@ -235,7 +238,7 @@ export function ImpactCalculator() {
             <div className="p-4 bg-emerald-50 dark:bg-emerald-950/20 rounded-lg border border-emerald-200 dark:border-emerald-900/50" data-testid="result-co2">
               <div className="flex items-center gap-2 mb-2">
                 <Leaf className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                <span className="text-sm font-medium text-emerald-700 dark:text-emerald-400" data-testid="label-result-co2">CO2 Sequestered</span>
+                <span className="text-sm font-medium text-emerald-700 dark:text-emerald-400" data-testid="label-result-co2">CO2 Emissions Avoided</span>
               </div>
               <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400" data-testid="value-result-co2">{impact.annualCO2Tons.toLocaleString()} tons</p>
               <p className="text-xs text-muted-foreground">annually</p>

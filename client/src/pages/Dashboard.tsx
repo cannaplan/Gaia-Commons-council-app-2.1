@@ -407,7 +407,7 @@ export default function Dashboard() {
                   <div className="p-4 bg-emerald-500/10 rounded-xl">
                     <Trees className="h-5 w-5 text-emerald-600 mx-auto mb-2" />
                     <p className="text-sm font-semibold text-foreground">Climate Action</p>
-                    <p className="text-xs text-muted-foreground">246K tons CO₂ sequestered/yr</p>
+                    <p className="text-xs text-muted-foreground">5,200 tons CO₂ emissions avoided/yr</p>
                   </div>
                 </div>
               </div>
@@ -659,7 +659,7 @@ export default function Dashboard() {
                       <Info className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />
                       <div>
                         <p className="text-sm font-medium text-foreground">2040+ Global Impact</p>
-                        <p className="text-xs text-muted-foreground">International partners replicate the model. 1 million schools serve 500 million children with food security. 41M tons CO2 sequestered annually, transforming global food systems.</p>
+                        <p className="text-xs text-muted-foreground">International partners replicate the model. 1 million schools serve 500 million children with food security. 3.6M metric tons CO2 emissions avoided annually, transforming global food systems.</p>
                       </div>
                     </div>
                   )}
@@ -783,7 +783,7 @@ export default function Dashboard() {
                       <div className="p-4 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/30 dark:to-emerald-950/30 rounded-xl border border-green-100 dark:border-green-900/50">
                         <div className="flex items-center gap-2 mb-2">
                           <Trees className="h-4 w-4 text-green-600" />
-                          <span className="text-xs font-medium text-green-800 dark:text-green-400 uppercase">CO2 Sequestered</span>
+                          <span className="text-xs font-medium text-green-800 dark:text-green-400 uppercase">CO2 Avoided</span>
                         </div>
                         <p className="text-2xl font-bold text-green-700 dark:text-green-300" data-testid="text-env-co2">
                           {formatNumber(currentEnv.co2SequesteredTons)} tons/yr
@@ -952,7 +952,7 @@ export default function Dashboard() {
                   </tr>
                   <tr className="border-b border-border/50 hover:bg-muted/20">
                     <td className="p-3 text-muted-foreground flex items-center gap-2">
-                      <Leaf className="h-4 w-4" /> CO2 Sequestered (tons/yr)
+                      <Leaf className="h-4 w-4" /> CO2 Avoided (metric tons/yr)
                     </td>
                     {scaleProjections?.map(s => (
                       <td key={s.scale} className="text-center p-3 font-medium">{formatNumber(s.co2TonsAnnual)}</td>
@@ -2091,7 +2091,7 @@ export default function Dashboard() {
                     <div>
                       <h4 className="font-semibold text-emerald-800 dark:text-emerald-300">Environmental Protection Guarantee</h4>
                       <p className="text-sm text-emerald-700 dark:text-emerald-400 mt-1">
-                        Zero risk of sulfide acid mine drainage into the Boundary Waters. Instead, {miningAlternatives.reduce((sum, a) => sum + a.co2Sequestered, 0).toLocaleString()} tons of CO2 sequestered annually, {(miningAlternatives.reduce((sum, a) => sum + a.localFoodProduction, 0) / 1000000).toFixed(1)} million lbs of specialty produce for schools, and 2.4x economic multiplier keeping dollars in these communities.
+                        Zero risk of sulfide acid mine drainage into the Boundary Waters. Instead, {miningAlternatives.reduce((sum, a) => sum + a.co2Sequestered, 0).toLocaleString()} metric tons of CO2 emissions avoided annually, {(miningAlternatives.reduce((sum, a) => sum + a.localFoodProduction, 0) / 1000000).toFixed(1)} million lbs of specialty produce for schools, and 2.4x economic multiplier keeping dollars in these communities.
                       </p>
                     </div>
                   </div>

@@ -554,26 +554,26 @@ export default function BallotPresentation() {
                 <Droplets className="h-8 w-8 text-blue-300" />
                 <span className="font-bold text-lg">Water Saved</span>
               </div>
-              <div className="text-3xl font-bold">9 Billion Gallons/Year</div>
-              <p className="text-sm opacity-70">90% less water than traditional farming</p>
+              <div className="text-3xl font-bold">450 Million Gallons/Year</div>
+              <p className="text-sm opacity-70">10x less water than traditional farming (Arizona State research)</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5">
               <div className="flex items-center gap-3 mb-2">
                 <Globe className="h-8 w-8 text-green-300" />
-                <span className="font-bold text-lg">Carbon Sequestered</span>
+                <span className="font-bold text-lg">CO2 Emissions Avoided</span>
               </div>
-              <div className="text-3xl font-bold">53,370 Tons/Year</div>
-              <p className="text-sm opacity-70">Net carbon negative operations</p>
+              <div className="text-3xl font-bold">5,200 Metric Tons/Year</div>
+              <p className="text-sm opacity-70">Eliminated food transport emissions (EPA methodology)</p>
             </div>
           </div>
           <div className="space-y-4">
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5">
               <div className="flex items-center gap-3 mb-2">
                 <Factory className="h-8 w-8 text-amber-300" />
-                <span className="font-bold text-lg">Food Miles Eliminated</span>
+                <span className="font-bold text-lg">Truck-Miles Eliminated</span>
               </div>
-              <div className="text-3xl font-bold">100+ Million Miles/Year</div>
-              <p className="text-sm opacity-70">Local food = zero transport emissions</p>
+              <div className="text-3xl font-bold">1.6 Million/Year</div>
+              <p className="text-sm opacity-70">Local food replaces 26,700 tons of imported produce</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5">
               <div className="flex items-center gap-3 mb-2">

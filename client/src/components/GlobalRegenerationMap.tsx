@@ -328,7 +328,7 @@ export function GlobalRegenerationMap() {
                       <div className="flex items-center justify-between py-2 border-b border-border/50">
                         <span className="flex items-center gap-2 text-sm text-muted-foreground">
                           <Leaf className="h-4 w-4" />
-                          Carbon Sequestered/Year
+                          Carbon Avoided/Year
                         </span>
                         <span className="font-semibold">{formatLargeNumber(selectedRegion.annualCarbonSequestrationTons)} tons</span>
                       </div>
