@@ -633,7 +633,7 @@ async function seedDatabase() {
     // State Savings: 712,500 students × 180 days × $1.82/meal = ~$233M/year
     await storage.createScaleProjection({
       scale: "statewide",
-      schools: 1200,         // 1,200 high school greenhouses (statewide)
+      schools: 3100,         // ~3,100 total MN schools (1,200 get greenhouses)
       students: 712500,      // 75% of 950K K-12 enrollment = 712,500 lunch participation
       greenhouses: 1200,     // 1,200 high school greenhouses
       sqft: 9000000,         // 1,200 × 7,500 sqft avg = 9M sqft total
