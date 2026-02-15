@@ -863,7 +863,7 @@ async function seedDatabase() {
     const slides = [
       { n: 1, title: "One Vote, Forever Fed", text: "712,500 Students | $225M/Year | Forever - Minnesota 2026 Ballot Initiative" },
       { n: 2, title: "The Problem", text: "1 in 6 MN children face food insecurity | 87% of school produce from outside MN | $2.8B spent on out-of-state produce" },
-      { n: 3, title: "Our Solution", text: "1,200 Greenhouses at high schools + Orchards + Exotic Trees + $5B Perpetual Endowment" },
+      { n: 3, title: "Our Solution", text: "1,200 Greenhouses at schools with proper infrastructure + Orchards + Exotic Trees + $5B Perpetual Endowment" },
       { n: 4, title: "What We'll Grow", text: "100+ Varieties: Salad Greens, Vegetables, Berries, Herbs & Specialty | 53.4M lb/year" },
       { n: 5, title: "Exotic Greenhouse Trees", text: "Year-Round Tropical Fruits: Meyer Lemons, Key Limes, Dwarf Bananas, Papaya, Avocado, Dragon Fruit" },
       { n: 6, title: "Outdoor Orchards", text: "Traditional Cold-Hardy Trees: Apple, Pear, Cherry, Peach + Nut Trees + Berry Bushes" },
