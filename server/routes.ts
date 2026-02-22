@@ -605,9 +605,14 @@ async function seedDatabase() {
     });
   }
   
-  // Seed Scale Projections if empty (may have been cleared for updates)
+  // Seed Scale Projections if empty, or update stale statewide data
   const scaleData = await storage.getScaleProjections();
-  if (scaleData.length === 0) {
+  const statewide = scaleData.find(s => s.scale === 'statewide');
+  if (statewide && (statewide.greenhouses !== 1200 || statewide.schools !== 3100 || statewide.students !== 712500)) {
+    console.log("Updating stale scale projections to current values...");
+    await storage.deleteAllScaleProjections();
+  }
+  if (scaleData.length === 0 || (statewide && statewide.greenhouses !== 1200)) {
     console.log("Seeding scale projections...");
     // State Savings = Students × 180 school days × $1.82/meal (1/3 of $5.45 meal cost = fruits/vegetables)
     // This represents money the state saves when greenhouses provide produce instead of purchasing it

@@ -76,6 +76,7 @@ export interface IStorage {
   getScaleProjections(): Promise<ScaleProjection[]>;
   getScaleProjection(scale: string): Promise<ScaleProjection | undefined>;
   createScaleProjection(projection: InsertScaleProjection): Promise<ScaleProjection>;
+  deleteAllScaleProjections(): Promise<void>;
   getEnvironmentalImpacts(): Promise<EnvironmentalImpactType[]>;
   createEnvironmentalImpact(impact: InsertEnvironmentalImpact): Promise<EnvironmentalImpactType>;
   getJobCreations(): Promise<JobCreationType[]>;
@@ -240,6 +241,9 @@ export class DatabaseStorage implements IStorage {
   async createScaleProjection(projection: InsertScaleProjection): Promise<ScaleProjection> {
     const [p] = await db.insert(scaleProjections).values(projection).returning();
     return p;
+  }
+  async deleteAllScaleProjections(): Promise<void> {
+    await db.delete(scaleProjections);
   }
   async getEnvironmentalImpacts(): Promise<EnvironmentalImpactType[]> {
     return await db.select().from(environmentalImpact);
