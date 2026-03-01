@@ -103,20 +103,41 @@
     background: white !important;
     color: black !important;
   }
-  
-  .print\\:hidden {
+
+  nav,
+  footer,
+  button,
+  [role="button"],
+  input,
+  select,
+  textarea,
+  .no-print,
+  .print\:hidden {
     display: none !important;
   }
-  
-  .no-print {
-    display: none !important;
-  }
-  
+
   .card, [class*="card"] {
     break-inside: avoid;
     page-break-inside: avoid;
+    box-shadow: none !important;
   }
-  
+
+  table, [class*="chart"], [class*="Chart"] {
+    visibility: visible !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  body, html {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
   @page {
     margin: 1.5cm;
   }

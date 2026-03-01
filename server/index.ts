@@ -2,9 +2,15 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
+import { pool } from "./db";
+import rateLimit from "express-rate-limit";
 
 const app = express();
 const httpServer = createServer(app);
+
+pool.on("error", (err) => {
+  log(`Unexpected database pool error: ${err.message}`, "db");
+});
 
 declare module "http" {
   interface IncomingMessage {
@@ -60,6 +66,16 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  const healthLimiter = rateLimit({ windowMs: 60_000, max: 30 });
+  app.get("/health", healthLimiter, async (_req: Request, res: Response) => {
+    try {
+      await pool.query("SELECT 1");
+      res.status(200).json({ status: "healthy", timestamp: new Date().toISOString() });
+    } catch {
+      res.status(503).json({ status: "unhealthy", timestamp: new Date().toISOString() });
+    }
+  });
+
   await registerRoutes(httpServer, app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {

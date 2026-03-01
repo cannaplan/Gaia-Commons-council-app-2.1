@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/lib/theme-context";
 import { HighContrastProvider } from "@/components/HighContrastToggle";
 import { KeyboardNavProvider } from "@/components/KeyboardNav";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import Dashboard from "@/pages/Dashboard";
 import ClusterBuilder from "@/pages/ClusterBuilder";
 import BallotPresentation from "@/pages/BallotPresentation";
@@ -30,11 +31,13 @@ function App() {
         <HighContrastProvider>
           <KeyboardNavProvider>
             <TooltipProvider>
-              <a href="#main-content" className="skip-link">
-                Skip to main content
-              </a>
-              <Toaster />
-              <Router />
+              <ErrorBoundary>
+                <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-primary focus:text-primary-foreground">
+                  Skip to main content
+                </a>
+                <Toaster />
+                <Router />
+              </ErrorBoundary>
             </TooltipProvider>
           </KeyboardNavProvider>
         </HighContrastProvider>
