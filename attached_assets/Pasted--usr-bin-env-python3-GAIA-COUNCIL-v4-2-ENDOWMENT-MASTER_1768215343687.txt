@@ -93,7 +93,7 @@ SLIDE_DECK = [
     {"n": 1, "title": "The Problem", "text": "900k MN kids face food insecurity"},
     {"n": 2, "title": "The Solution", "text": f"1,200 greenhouses = {GAIA_ENDOWMENT.students:,} meals/day"},
     {"n": 3, "title": "Endowment Engine", "text": f"0.27% tax → ${GAIA_ENDOWMENT.endowment_target/1e9:.1f}B PERPETUAL"},
-    {"n": 4, "title": "Math Works", "text": f"3% draw = ${EndowmentFinancials.annual_budget(GAIA_ENDOWMENT.endowment_target()):,.0f}/yr"},
+    {"n": 4, "title": "Math Works", "text": f"4.5% draw = ${EndowmentFinancials.annual_budget(GAIA_ENDOWMENT.endowment_target()):,.0f}/yr"},
     {"n": 5, "title": "St. Paul Pilot", "chart": f"{ST_PAUL.students} students | {ST_PAUL.sq_ft:,} sqft"},
     {"n": 6, "title": "Mendota Pilot", "chart": f"{MENDOTA.students} students | {MENDOTA.sq_ft:,} sqft"},
     {"n": 7, "title": "MCS Yield Model", "data": EndowmentFinancials.mcs_yield_model(GAIA_ENDOWMENT.avg_sqft * GAIA_ENDOWMENT.greenhouses)},
