@@ -70,7 +70,7 @@ export default function BallotPresentation() {
           </div>
           <div className="flex gap-6 mt-8">
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
-              <div className="text-4xl font-bold">712,500</div>
+              <div className="text-4xl font-bold">900,000</div>
               <div className="text-sm opacity-80">Students Served</div>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
@@ -354,7 +354,7 @@ export default function BallotPresentation() {
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5">
               <div className="flex justify-between items-center">
                 <span>Statewide (1,200 Greenhouses)</span>
-                <Badge className="bg-white/30 text-white">13,900 Jobs</Badge>
+                <Badge className="bg-white/30 text-white">9,260 Jobs</Badge>
               </div>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5">
@@ -562,7 +562,7 @@ export default function BallotPresentation() {
                 <Globe className="h-8 w-8 text-green-300" />
                 <span className="font-bold text-lg">CO2 Emissions Avoided</span>
               </div>
-              <div className="text-3xl font-bold">5,200 Metric Tons/Year</div>
+              <div className="text-3xl font-bold">6,553 Metric Tons/Year</div>
               <p className="text-sm opacity-70">Eliminated food transport emissions (EPA methodology)</p>
             </div>
           </div>
@@ -656,7 +656,7 @@ export default function BallotPresentation() {
               <div className="text-lg font-bold text-green-300">STATEWIDE</div>
               <div className="text-3xl font-bold my-2">1,200</div>
               <p className="text-sm">Greenhouses</p>
-              <p className="text-xs opacity-70 mt-2">$1.39B Investment</p>
+              <p className="text-xs opacity-70 mt-2">$926M Investment</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5 text-center transform hover:scale-105 transition-transform">
               <div className="text-lg font-bold text-blue-300">NATIONAL</div>
@@ -713,7 +713,7 @@ export default function BallotPresentation() {
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
               <Users className="h-12 w-12 mx-auto mb-3" />
-              <p className="font-bold">712,500 Students</p>
+              <p className="font-bold">900,000 Students</p>
               <p className="text-sm opacity-80">Fed fresh daily</p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">

@@ -396,7 +396,7 @@ export default function Dashboard() {
                   </div>
                   <div className="p-4 bg-secondary/10 rounded-xl">
                     <Users className="h-5 w-5 text-secondary mx-auto mb-2" />
-                    <p className="text-sm font-semibold text-foreground">712,500 Students Fed</p>
+                    <p className="text-sm font-semibold text-foreground">900,000 Students Fed</p>
                     <p className="text-xs text-muted-foreground">Fresh meals year-round</p>
                   </div>
                   <div className="p-4 bg-accent/10 rounded-xl">
@@ -407,7 +407,7 @@ export default function Dashboard() {
                   <div className="p-4 bg-emerald-500/10 rounded-xl">
                     <Trees className="h-5 w-5 text-emerald-600 mx-auto mb-2" />
                     <p className="text-sm font-semibold text-foreground">Climate Action</p>
-                    <p className="text-xs text-muted-foreground">5,200 tons CO₂ emissions avoided/yr</p>
+                    <p className="text-xs text-muted-foreground">6,553 tons CO₂ emissions avoided/yr</p>
                   </div>
                 </div>
               </div>
@@ -641,7 +641,7 @@ export default function Dashboard() {
                       <Info className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
                       <div>
                         <p className="text-sm font-medium text-foreground">2028-2030 Statewide Expansion</p>
-                        <p className="text-xs text-muted-foreground">After ballot initiative passes, $5B endowment @ 4.5% = $225M/yr funds 1,200 greenhouses across all Minnesota school districts. 712,500 students fed daily with year-round fresh produce.</p>
+                        <p className="text-xs text-muted-foreground">After ballot initiative passes, $5B endowment @ 4.5% = $225M/yr funds 1,200 greenhouses across all Minnesota school districts. 900,000 students fed daily with year-round fresh produce (12M sqft; 70% hydro towers, 30% soil beds).</p>
                       </div>
                     </div>
                   )}
