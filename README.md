@@ -6,7 +6,7 @@ A full-stack analytics and management dashboard for Minnesota's statewide school
 
 ## What Is This?
 
-The Gaia Commons Council is building a program to place 1,200 greenhouses at Minnesota schools with proper infrastructure and space, feeding 712,500 students year-round fresh produce. Funded by a $5 billion perpetual endowment generating $225 million per year, the program creates 2,400 permanent jobs and eliminates 5,200 metric tons of CO2 emissions annually from reduced food transportation.
+The Gaia Commons Council is building a program to place 1,200 greenhouses at Minnesota schools with proper infrastructure and space, feeding 900,000 students year-round fresh produce. Funded by a $5 billion perpetual endowment generating $225 million per year, the program creates 2,400 permanent jobs and eliminates 6,553 metric tons of CO2 emissions annually from reduced food transportation.
 
 ## Key Features
 
@@ -27,14 +27,18 @@ The Gaia Commons Council is building a program to place 1,200 greenhouses at Min
 |--------|-------|
 | Total Schools | ~3,100 |
 | Schools with Greenhouses | 1,200 |
-| Greenhouse Size (avg) | 7,500 sqft |
-| Total Greenhouse Space | 9,000,000 sqft |
-| Students Served | 712,500 |
+| Greenhouse Size (avg) | 10,000 sqft |
+| Total Greenhouse Space | 12,000,000 sqft |
+| Hydro Towers | 8,400,000 sqft (150,000 units) |
+| Soil Beds | 3,600,000 sqft (112,500 beds) |
+| Students Served | 900,000 |
 | Permanent Jobs | 2,400 |
+| Capex | $926,000,000 |
+| Annual Revenue | $1,610,000,000 |
 | Endowment | $5B @ 4.5% = $225M/year |
-| CO2 Avoided | 5,200 metric tons/year |
-| Water Saved | 450M gallons/year |
-| Truck-Miles Eliminated | 1.6M/year |
+| CO2 Avoided | 6,553 metric tons/year |
+| Water Saved | 567M gallons/year |
+| Truck-Miles Eliminated | 2.025M/year |
 
 ## Tech Stack
 

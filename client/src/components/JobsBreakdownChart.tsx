@@ -53,7 +53,7 @@ const scaleData: Record<Scale, ScaleData> = {
   },
   statewide: {
     permanentJobs: 2400,
-    constructionJobs: 13900,
+    constructionJobs: 9260,
     categories: [
       { name: "Greenhouse Staff", jobs: 1440, color: "#10b981", icon: "sprout" },
       { name: "Educators", jobs: 240, color: "#3b82f6", icon: "graduation" },
@@ -61,11 +61,11 @@ const scaleData: Record<Scale, ScaleData> = {
       { name: "School Staff", jobs: 360, color: "#8b5cf6", icon: "building" },
     ],
     constructionBreakdown: [
-      { name: "General Construction", jobs: 5560, color: "#6b7280", icon: "hammer" },
-      { name: "Electricians", jobs: 2780, color: "#f59e0b", icon: "zap" },
-      { name: "Plumbers", jobs: 2085, color: "#3b82f6", icon: "droplet" },
-      { name: "HVAC Technicians", jobs: 2085, color: "#10b981", icon: "wind" },
-      { name: "Greenhouse Specialists", jobs: 1390, color: "#22c55e", icon: "leaf" },
+      { name: "General Construction", jobs: 3704, color: "#6b7280", icon: "hammer" },
+      { name: "Electricians", jobs: 1852, color: "#f59e0b", icon: "zap" },
+      { name: "Plumbers", jobs: 1389, color: "#3b82f6", icon: "droplet" },
+      { name: "HVAC Technicians", jobs: 1389, color: "#10b981", icon: "wind" },
+      { name: "Greenhouse Specialists", jobs: 926, color: "#22c55e", icon: "leaf" },
     ],
   },
   national: {

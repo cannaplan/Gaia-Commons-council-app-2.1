@@ -17,7 +17,7 @@ import { SiFacebook, SiX, SiLinkedin, SiReddit } from "react-icons/si";
 
 const SHARE_URL = typeof window !== 'undefined' ? window.location.href : 'https://gaia-commons.replit.app';
 const SHARE_TITLE = "One Vote, Forever Fed — 2026 Ballot Initiative";
-const SHARE_TEXT = "Support the Gaia Commons Council 2026 ballot initiative: $5B endowment to feed 712,500 Minnesota students daily through 1,200 school greenhouses. Vote for perpetual food security!";
+const SHARE_TEXT = "Support the Gaia Commons Council 2026 ballot initiative: $5B endowment to feed 900,000 Minnesota students daily through 1,200 school greenhouses (12M sqft). Vote for perpetual food security!";
 
 export function SocialSharing() {
   const [copied, setCopied] = useState(false);

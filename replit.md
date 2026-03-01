@@ -4,7 +4,7 @@
 
 Gaia Commons Council is a full-stack dashboard application for tracking pilot program statistics, endowment data, and strategic timeline events for the "One Vote, Forever Fed" 2026 ballot initiative. The platform serves as an analytics and management interface for educational and environmental initiatives, displaying real-time metrics for student enrollment, facility square footage, school counts, and endowment financials. Features include multi-scale deployment views (Pilot → Statewide → National → Global), interactive data visualization charts (Endowment Growth, Jobs Breakdown), and an interactive Cluster Builder tool.
 
-**Statewide Scope**: 1,200 school greenhouses (7,500 sqft avg, 9M sqft total) at schools with proper infrastructure and space, 712,500 students served (75% of 950K K-12 enrollment), 75 lb produce per student annually (53.4M lb total), $5B endowment (4.5% yield = $225M/year), 2,400 FTE jobs, ~3,100 total schools (1,200 with greenhouses). Anti-Boundary Waters mining alternative.
+**Statewide Scope**: 1,200 school greenhouses (10,000 sqft avg, 12M sqft total; 70% hydro towers = 8,400,000 sqft/150,000 units, 30% soil beds = 3,600,000 sqft/112,500 beds) at schools with proper infrastructure and space, 900,000 students served, 75 lb produce per student annually (67.5M lb total), $5B endowment (4.5% yield = $225M/year), capex $926M, revenue $1.61B/year, 2,400 FTE jobs, ~3,100 total schools (1,200 with greenhouses). Anti-Boundary Waters mining alternative.
 
 ## Recent Changes (January 2026)
 
@@ -39,7 +39,7 @@ Gaia Commons Council is a full-stack dashboard application for tracking pilot pr
       - Receiving Coordinators and Cafeteria Distribution Staff across districts
   - **Construction Phase Jobs (All Scales)**:
     - **Pilot (6 Schools)**: 76 jobs, 1-2 years, $7-13M spending
-    - **Statewide (1,200 Greenhouses)**: 13,900 jobs, 4 years (2026-2029), $1.39B spending
+    - **Statewide (1,200 Greenhouses)**: 9,260 jobs, 4 years (2026-2029), $926M spending
     - **National (130K Schools)**: 1.17M jobs, 10-15 years rolling, $117B spending
     - **Global (1M Schools)**: 6.5M jobs, 20-30 years phased, $650B spending
     - **Job breakdown by trade** (consistent across all scales):
