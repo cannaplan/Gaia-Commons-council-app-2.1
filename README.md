@@ -63,7 +63,7 @@ The app runs on port 5000.
 - Pro Sports Franchises (5%) -- $100M
 - Local Medical/Insurance (0.4%) -- $600M
 - Out-of-State Corp/Med/Ins (0.45%) -- $3.15B
-- Data/Online Retail (2%) -- $2.1B
+- Data/Online Retail (2.5%) -- $2.62B
 - Out-of-Country Mining (10%) -- $1.0B
 - Federal Government -- $500M
 - Local Billionaires -- $200M

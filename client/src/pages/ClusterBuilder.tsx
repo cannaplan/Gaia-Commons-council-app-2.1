@@ -852,7 +852,7 @@ export default function ClusterBuilder() {
                                   {school.name} - Greenhouse Dimensions
                                 </CardTitle>
                                 <CardDescription>
-                                  Minimum size: {MIN_GREENHOUSE_SQFT.toLocaleString()} sqft | Average statewide: ~7,500 sqft
+                                  Minimum size: {MIN_GREENHOUSE_SQFT.toLocaleString()} sqft | Average statewide: ~10,000 sqft
                                 </CardDescription>
                               </CardHeader>
                               <CardContent>

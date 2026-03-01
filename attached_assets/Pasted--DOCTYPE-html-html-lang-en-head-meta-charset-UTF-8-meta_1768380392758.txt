@@ -174,13 +174,13 @@
         <div class="fill-height">
             <ul class="text-lg" style="color: var(--color-text-secondary);">
                 <li><strong>One-time ballot initiative:</strong> Minnesota voters approve 0.27% redirect of Fortune-500 pre-tax profit</li>
-                <li><strong>Corpus created:</strong> $2.1B endowment (2027)</li>
-                <li><strong>Annual draw:</strong> 3.5% ($73.5M year 1, growing with inflation)</li>
+                <li><strong>Corpus created:</strong> $5B endowment (2027)</li>
+                <li><strong>Annual draw:</strong> 4.5% ($225M year 1, growing with inflation)</li>
                 <li>
                     <svg class="gh-icon" viewBox="0 0 24 24" role="presentation" aria-hidden="true">
                         <path fill="currentColor" d="M2 5h20l-1 11H3L2 5zm16 2H6v2h12V7zM4 19h16v2H4v-2z"/>
                     </svg>
-                    <strong>What it funds forever:</strong> 275 school greenhouses, 875K students fed daily, 1,430 jobs, 6,600 internships
+                    <strong>What it funds forever:</strong> 1,200 school greenhouses, 900,000 students fed daily, 2,400 jobs, 6,600 internships
                 </li>
                 <li><strong>This model never asks again.</strong> One vote. Funded for generations.</li>
             </ul>
@@ -193,7 +193,7 @@
         <div class="fill-height row gap-lg">
             <div class="fill-width">
                 <div class="stat-box">
-                    <div class="stat-number">875K</div>
+                    <div class="stat-number">900,000</div>
                     <div class="stat-label">Students fed daily (100% coverage)</div>
                 </div>
                 <div class="stat-box">
@@ -201,18 +201,18 @@
                         <svg class="gh-icon" viewBox="0 0 24 24" role="presentation" aria-hidden="true">
                             <path fill="currentColor" d="M2 5h20l-1 11H3L2 5zm16 2H6v2h12V7zM4 19h16v2H4v-2z"/>
                         </svg>
-                        275
+                        1,200
                     </div>
-                    <div class="stat-label">Greenhouses (8,000 sqft each)</div>
+                    <div class="stat-label">Greenhouses (10,000 sqft each)</div>
                 </div>
             </div>
             <div class="fill-width">
                 <div class="stat-box">
-                    <div class="stat-number">$2.1B</div>
+                    <div class="stat-number">$5B</div>
                     <div class="stat-label">Endowment corpus (one-time ballot)</div>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-number">$73.5M</div>
+                    <div class="stat-number">$225M</div>
                     <div class="stat-label">Annual spendable income (year 1)</div>
                 </div>
             </div>
@@ -249,8 +249,8 @@
                     <tbody>
                         <tr>
                             <td>2027</td>
-                            <td>$2.1B</td>
-                            <td>$73.5M</td>
+                            <td>$5B</td>
+                            <td>$225M</td>
                         </tr>
                         <tr>
                             <td>2037</td>
@@ -270,7 +270,7 @@
                     </tbody>
                 </table>
                 <p class="growth-table-caption">
-                    Assumes diversified portfolio, ~8% long-run returns, 3.5% smoothed spending policy, and inflation-adjusted draws over 50 years.
+                    Assumes diversified portfolio, ~8% long-run returns, 4.5% smoothed spending policy, and inflation-adjusted draws over 50 years.
                 </p>
                 <p style="color: var(--color-text-muted); font-size: 0.85rem; margin-top: 0.75rem;">
                     50-year stress tests: RESILIENT across bear markets, inflation surges, combined shocks. 99%+ solvency probability.
@@ -319,12 +319,12 @@
                 <li><strong>Fortune-500 combined revenue (MN):</strong> ~$700B annually</li>
                 <li><strong>0.27% × $700B = $1.89B</strong> (corporate contribution)</li>
                 <li><strong>Billionaires + sports teams:</strong> +$200M (voluntary, large-gift strategy)</li>
-                <li><strong>Total corpus: $2.1B</strong> (exactly covers 275 greenhouses + perpetual operations)</li>
+                <li><strong>Total corpus: $5B</strong> (exactly covers 1,200 greenhouses + perpetual operations)</li>
                 <li><strong>Corporate benefit:</strong> $1M gift = $700K net cost (30% combined fed/state tax deduction)</li>
                 <li><strong>No annual tax increase.</strong> One-time redirect. Structured as charitable contributions.</li>
             </ul>
             <p class="footnote">
-                Minnesota hosts 17 Fortune 500 companies with combined revenues well above $700B; redirecting 0.27% as deductible gifts creates the $2.1B endowment while preserving competitiveness.[web:2][web:6]
+                Minnesota hosts 17 Fortune 500 companies with combined revenues well above $700B; redirecting 0.27% as deductible gifts creates the $5B endowment while preserving competitiveness.[web:2][web:6]
             </p>
         </div>
     </section>
@@ -368,7 +368,7 @@
                     <svg class="gh-icon" viewBox="0 0 24 24" role="presentation" aria-hidden="true">
                         <path fill="currentColor" d="M2 5h20l-1 11H3L2 5zm16 2H6v2h12V7zM4 19h16v2H4v-2z"/>
                     </svg>
-                    <strong>2028 Q4:</strong> All 275 greenhouses operational; 875K students fed; 1,430 FTE jobs created
+                    <strong>2028 Q4:</strong> All 1,200 greenhouses operational; 900,000 students fed; 2,400 FTE jobs created
                 </li>
             </ul>
         </div>
