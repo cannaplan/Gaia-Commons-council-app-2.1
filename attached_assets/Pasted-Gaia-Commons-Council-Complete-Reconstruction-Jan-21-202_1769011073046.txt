@@ -1,18 +1,18 @@
 Gaia Commons Council - Complete Reconstruction 
 (Jan 21, 2026)
-Core Mission: 1,200 high school greenhouses (7,500 sqft avg, 9M sqft total) feed 712,500 MN students (75% of 950k) 75 lb fruits/veggies annually via $5B endowment. Anti-Boundary Waters mining alternative.
+Core Mission: 1,200 high school greenhouses (10,000 sqft avg, 12M sqft total) feed 900,000 MN students (75% of 950k) 75 lb fruits/veggies annually via $5B endowment. Anti-Boundary Waters mining alternative.
 1. Student & Production Targets
 
 Metric                                 Value
 
 Total K-12 Enrollment  950,000
 
-Lunch Participation     712,500
+Lunch Participation     900,000
 
 Produce per Student   75 lb
 Per Year
 
-Total Annual Produce 53.4M lb
+Total Annual Produce 67.5M lb
 
 Yield:Vertical Towers  10lb/sqft
 
@@ -30,10 +30,10 @@ Year | New Sites | Cum Sqft | Capex         | Opex       | Revenue
 2026 | 6         | 45k      | $7.0-13.4M   | $0.5-0.9M | $0.3-0.6M  
 2027 | 44        | 375k     | $51.1-98.6M  | $3.8-7.5M | $2.6-5.1M  
 2028 | 350       | 3M       | $406-784M    | $30-60M   | $20.5-41M  
-2029 | 800       | 9M       | $929-1,792M  | $90-180M  | $61.5-123M 
+2029 | 800       | 12M      | $929-1,792M  | $90-180M  | $61.5-123M 
 
-Grand Total Capex: $1.39B-$2.69B
-4. Per-Greenhouse Costs (7,500 sqft)
+Grand Total Capex: $926M
+4. Per-Greenhouse Costs (10,000 sqft)
 Capex ($1.21M-$2.26M):
 
 Structure           $112k-$300k
@@ -60,11 +60,11 @@ TOTAL RAISED             -       $8.84B
 
 Surplus: $3.84B reserves/expansion.
 
-Students Served:     712,500 annually
-Annual Produce:      53.4M lb
+Students Served:     900,000 annually
+Annual Produce:      67.5M lb
 Jobs Created:        2,400 FTE
 Greenhouses:         1,200 sites
-Total Footprint:     9M sqft
+Total Footprint:     12M sqft
 Schools w/ Curriculum: 3,100+ statewide
 Breakeven Year:      2028
 Pilot (2026):        6 greenhouses, $7-13M

@@ -577,9 +577,9 @@ async function seedDatabase() {
     });
     await storage.createFundingSource({
       sourceType: "Data/Online Retail",
-      description: "2% surcharge on major tech data centers and online retail operations in Minnesota",
-      targetAmount: 2100000000,
-      percentage: 2.0,
+      description: "2.5% surcharge on major tech data centers and online retail operations in Minnesota",
+      targetAmount: 2620000000,
+      percentage: 2.5,
       entities: "Amazon, Microsoft, Google, Meta, Apple, Walmart.com, Target.com, Best Buy online, Wayfair, and major data center operators"
     });
     await storage.createFundingSource({

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 GAIA COMMONS COUNCIL v5.0 - COMPLETE ENTERPRISE PLATFORM
-10-Step Compliance | $2.1B Endowment | St. Paul/Mendota Live
+10-Step Compliance | $5B Endowment | St. Paul/Mendota Live
 ETL → PostgreSQL → Models → Tableau → Compliance Audit
 """
 
@@ -180,9 +180,9 @@ class PostgresETL:
 
 class GaiaModeling:
     def __init__(self):
-        self.endowment = 2.1e9
-        self.greenhouses = 275
-        self.students = 875000
+        self.endowment = 5.0e9
+        self.greenhouses = 1200
+        self.students = 900000
     
     def run_scenarios(self) -> Dict:
         """Monte Carlo: Base, Optimistic, Pessimistic."""
@@ -190,7 +190,7 @@ class GaiaModeling:
         for scenario in ['base', 'optimistic', 'pessimistic']:
             np.random.seed(42 + {'base':0, 'optimistic':1, 'pessimistic':2}[scenario])
             endowment_var = self.endowment * np.random.normal(1, 0.1, 1000)
-            annual_draws = endowment_var * 0.03
+            annual_draws = endowment_var * 0.045
             scenarios[scenario] = {
                 'mean_annual': np.mean(annual_draws)/1e6,
                 'p10': np.percentile(annual_draws, 10)/1e6,
@@ -276,9 +276,9 @@ class GaiaPlatformV5:
         
         # Financials
         financials = {
-            "endowment_size": 2.1e9,
-            "annual_draw": 2.1e9 * 0.03,
-            "capex_275gh": 275 * 10e6,
+            "endowment_size": 5.0e9,
+            "annual_draw": 5.0e9 * 0.045,
+            "capex_275gh": 1200 * 10e6,
             "npv_20yr": 1.25e9
         }
         

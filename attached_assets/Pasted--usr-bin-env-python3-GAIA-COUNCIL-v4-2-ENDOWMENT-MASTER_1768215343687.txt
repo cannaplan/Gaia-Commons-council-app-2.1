@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 GAIA-COUNCIL v4.2 ENDOWMENT MASTER - JAN 3 MODEL LOCKED
-$2.1B MN Tax Redirect → 275 Greenhouses → 875k Students Perpetual
+$5B Endowment → 1,200 Greenhouses → 900k Students Perpetual
 Ballot Slides + Trust Docs + MCS Analytics COMPLETE
 """
 
@@ -20,11 +20,11 @@ import numpy as np
 @dataclass
 class EndowmentModel:
     tax_redirect_pct: float = 0.27  # MN ballot initiative
-    endowment_target: float = 2.1e9  # $2.1B one-time
-    annual_draw_pct: float = 0.03    # Perpetual funding
-    greenhouses: int = 275
-    students: int = 875000
-    avg_sqft: int = 8000
+    endowment_target: float = 5.0e9  # $5B one-time
+    annual_draw_pct: float = 0.045   # Perpetual funding
+    greenhouses: int = 1200
+    students: int = 900000
+    avg_sqft: int = 10000
 
 GAIA_ENDOWMENT = EndowmentModel()
 
@@ -52,7 +52,7 @@ GAIA_TRUST_CHARTER = {
         "1x Student/Parent",
         "1x MCS Analytics"
     ],
-    "spending_rule": "3% annual draw, inflation-adjusted",
+    "spending_rule": "4.5% annual draw, inflation-adjusted",
     "recapitalization": "Excess returns >5% reinvested",
     "boundaries_clause": "No spend if planetary boundaries breached"
 }
@@ -63,7 +63,7 @@ GAIA_TRUST_CHARTER = {
 
 class EndowmentFinancials:
     @staticmethod
-    def annual_budget(endowment: float, draw_pct: float = 0.03) -> float:
+    def annual_budget(endowment: float, draw_pct: float = 0.045) -> float:
         return endowment * draw_pct
     
     @staticmethod
@@ -90,8 +90,8 @@ class EndowmentFinancials:
 # =============================================================================
 
 SLIDE_DECK = [
-    {"n": 1, "title": "The Problem", "text": "875k MN kids face food insecurity"},
-    {"n": 2, "title": "The Solution", "text": f"275 greenhouses = {GAIA_ENDOWMENT.students:,} meals/day"},
+    {"n": 1, "title": "The Problem", "text": "900k MN kids face food insecurity"},
+    {"n": 2, "title": "The Solution", "text": f"1,200 greenhouses = {GAIA_ENDOWMENT.students:,} meals/day"},
     {"n": 3, "title": "Endowment Engine", "text": f"0.27% tax → ${GAIA_ENDOWMENT.endowment_target/1e9:.1f}B PERPETUAL"},
     {"n": 4, "title": "Math Works", "text": f"3% draw = ${EndowmentFinancials.annual_budget(GAIA_ENDOWMENT.endowment_target()):,.0f}/yr"},
     {"n": 5, "title": "St. Paul Pilot", "chart": f"{ST_PAUL.students} students | {ST_PAUL.sq_ft:,} sqft"},
@@ -145,8 +145,8 @@ class GaiaPlatform:
             "timeline": {
                 "2026_q1": "St. Paul/Mendota Pilots Live",
                 "2026_q4": "Ballot Signature Drive",
-                "2028": "$2.1B Funded",
-                "2030": "275 Greenhouses Deployed"
+                "2028": "$5B Funded",
+                "2030": "1,200 Greenhouses Deployed"
             },
             "data_sources": ["MN DEED", "NOAA", "USDA", "MCS Analytics"],
             "timestamp": datetime.now().isoformat()
@@ -168,7 +168,7 @@ class GaiaPlatform:
         # Trust Docs Stub
         trust_doc = {
             "articles_of_incorporation": GAIA_TRUST_CHARTER,
-            "bylaws": "3% Draw | Recapitalization | Boundaries Veto"
+            "bylaws": "4.5% Draw | Recapitalization | Boundaries Veto"
         }
         with open("gaia_trust_docs.json", "w") as f:
             json.dump(trust_doc, f, indent=2)
@@ -209,7 +209,7 @@ async def main():
     print("🏛️ GAIA COMMONS COUNCIL v4.2 - JAN 3 MODEL ACTIVATED")
     print("=" * 80)
     print(f"✅ ENDOWMENT: 0.27% MN Tax → ${GAIA_ENDOWMENT.endowment_target/1e9:.1f}B PERPETUAL")
-    print(f"✅ 275 Greenhouses | {GAIA_ENDOWMENT.students:,} Students | ${EndowmentFinancials.annual_budget(GAIA_ENDOWMENT.endowment_target()):,.0f}/yr")
+    print(f"✅ 1,200 Greenhouses | {GAIA_ENDOWMENT.students:,} Students | ${EndowmentFinancials.annual_budget(GAIA_ENDOWMENT.endowment_target()):,.0f}/yr")
     print("✅ St. Paul/Mendota Pilots VALIDATED")
     print("\nGenerating FULL PLATFORM...")
     

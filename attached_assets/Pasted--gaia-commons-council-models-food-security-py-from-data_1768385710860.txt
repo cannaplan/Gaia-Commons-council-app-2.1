@@ -6,10 +6,10 @@ from typing import Dict, List, Any
 class SchoolGreenhouseNetwork:
     """Minnesota Cannabis Society style food security network"""
     
-    facility_size_sqft: int = 6500
-    students_per_facility: int = 3000
+    facility_size_sqft: int = 10000
+    students_per_facility: int = 750
     staff_per_facility: int = 4
-    construction_cost: int = 400_000
+    construction_cost: int = 771_667
     annual_operating_cost: int = 150_000
     
     def calculate_state_network(self, state_student_population: int) -> Dict[str, Any]:
