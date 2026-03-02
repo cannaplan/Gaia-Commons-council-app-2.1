@@ -10,6 +10,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import Dashboard from "@/pages/Dashboard";
 import ClusterBuilder from "@/pages/ClusterBuilder";
 import BallotPresentation from "@/pages/BallotPresentation";
+import DAO from "@/pages/DAO";
 import NotFound from "@/pages/not-found";
 import './lib/i18n';
 
@@ -19,6 +20,7 @@ function Router() {
       <Route path="/" component={Dashboard} />
       <Route path="/cluster-builder" component={ClusterBuilder} />
       <Route path="/ballot-presentation" component={BallotPresentation} />
+      <Route path="/dao" component={DAO} />
       <Route component={NotFound} />
     </Switch>
   );

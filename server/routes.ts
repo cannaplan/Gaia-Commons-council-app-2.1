@@ -3,6 +3,44 @@ import type { Server } from "http";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
 
+// In-memory DAO signature store (easily migrated to Postgres later)
+interface DAOSignature {
+  name: string;
+  email: string;
+  timestamp: string;
+}
+const daoSignatures: DAOSignature[] = [];
+
+const DAO_SIGNATURE_GOAL = 120_000; // MN Stat. § 204B.09 — 5% of 2024 turnout
+const DAO_FILING_DEADLINE = new Date("2026-07-01T00:00:00.000Z");
+
+const ACTIVE_PROPOSALS = [
+  {
+    id: 1,
+    title: "Endowment Yield Allocation — FY2026",
+    description: "Allocate $225M/year (4.5% draw) across greenhouse ops, school programs, and tribal partnerships.",
+    quorumRequired: 67,
+    votesFor: 48,
+    votesAgainst: 12,
+  },
+  {
+    id: 2,
+    title: "Expand School Partnerships to 900,000 Students",
+    description: "Extend the fresh produce program to all 330 MN districts serving 900,000 students.",
+    quorumRequired: 51,
+    votesFor: 39,
+    votesAgainst: 5,
+  },
+  {
+    id: 3,
+    title: "Carbon Reduction Target — 6,553 MT/year",
+    description: "Ratify the canonical CO₂ avoidance target of 6,553 metric tons per year.",
+    quorumRequired: 51,
+    votesFor: 44,
+    votesAgainst: 3,
+  },
+];
+
 export async function registerRoutes(
   httpServer: Server,
   app: Express
@@ -254,6 +292,47 @@ export async function registerRoutes(
   app.get(api.miningAlternatives.list.path, async (_req, res) => {
     const data = await storage.getMiningAlternatives();
     res.json(data);
+  });
+
+  // === DAO Stats ===
+  app.get("/api/dao/stats", (_req, res) => {
+    const uniqueEmails = new Set(daoSignatures.map((s) => s.email)).size;
+    const now = new Date();
+    const msPerDay = 1000 * 60 * 60 * 24;
+    const daysRemaining = Math.max(0, Math.ceil((DAO_FILING_DEADLINE.getTime() - now.getTime()) / msPerDay));
+    res.json({
+      totalSignatures: daoSignatures.length,
+      uniqueVoters: uniqueEmails,
+      goalPercentage: parseFloat(((daoSignatures.length / DAO_SIGNATURE_GOAL) * 100).toFixed(2)),
+      signatureGoal: DAO_SIGNATURE_GOAL,
+      daysRemaining,
+      filingDeadline: DAO_FILING_DEADLINE.toISOString(),
+      activeProposals: ACTIVE_PROPOSALS,
+    });
+  });
+
+  // === DAO Signature Submission ===
+  app.post("/api/dao/signature", (req, res) => {
+    const { name, email } = req.body as { name?: string; email?: string };
+    if (!name || !email) {
+      return res.status(400).json({ message: "name and email are required" });
+    }
+    const emailLower = email.toLowerCase().trim();
+    // Basic email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailLower)) {
+      return res.status(400).json({ message: "Invalid email address" });
+    }
+    const sanitizedName = name.trim().slice(0, 200);
+    if (!sanitizedName) {
+      return res.status(400).json({ message: "name is required" });
+    }
+    const duplicate = daoSignatures.some((s) => s.email === emailLower);
+    if (duplicate) {
+      return res.status(409).json({ message: "This email has already signed." });
+    }
+    daoSignatures.push({ name: sanitizedName, email: emailLower, timestamp: new Date().toISOString() });
+    res.json({ success: true, totalSignatures: daoSignatures.length });
   });
 
   // === Seed Data ===

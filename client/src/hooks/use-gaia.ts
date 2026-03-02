@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@shared/routes";
 
 // Health
@@ -490,6 +490,35 @@ export function useMiningAlternatives() {
       const res = await fetch(api.miningAlternatives.list.path);
       if (!res.ok) throw new Error("Failed to fetch mining alternatives");
       return api.miningAlternatives.list.responses[200].parse(await res.json());
+    },
+  });
+}
+
+// DAO Stats
+export function useDAOStats() {
+  return useQuery({
+    queryKey: ['dao-stats'],
+    queryFn: () => fetch('/api/dao/stats').then((r) => r.json()),
+  });
+}
+
+// Submit DAO Signature
+export function useSubmitSignature({ onSuccess }: { onSuccess?: () => void } = {}) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ name, email }: { name: string; email: string }) => {
+      const r = await fetch('/api/dao/signature', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email }),
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data?.message ?? 'Submission failed');
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['dao-stats'] });
+      onSuccess?.();
     },
   });
 }
