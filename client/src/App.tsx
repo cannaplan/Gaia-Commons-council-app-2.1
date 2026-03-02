@@ -11,6 +11,8 @@ import Dashboard from "@/pages/Dashboard";
 import ClusterBuilder from "@/pages/ClusterBuilder";
 import BallotPresentation from "@/pages/BallotPresentation";
 import DAO from "@/pages/DAO";
+import LeechLake from "@/pages/LeechLake";
+import About from "@/pages/About";
 import NotFound from "@/pages/not-found";
 import './lib/i18n';
 
@@ -21,6 +23,8 @@ function Router() {
       <Route path="/cluster-builder" component={ClusterBuilder} />
       <Route path="/ballot-presentation" component={BallotPresentation} />
       <Route path="/dao" component={DAO} />
+      <Route path="/leech-lake" component={LeechLake} />
+      <Route path="/about" component={About} />
       <Route component={NotFound} />
     </Switch>
   );
