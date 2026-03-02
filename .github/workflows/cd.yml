@@ -1,0 +1,203 @@
+name: CD
+
+# Only deploy on pushes to main — not on pull requests.
+on:
+  push:
+    branches: [main]
+
+# Prevent concurrent deployments; cancel any in-progress run for the same branch.
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+# ---------------------------------------------------------------------------
+# Required GitHub Actions secrets (configure under Settings → Secrets):
+#
+#   For Vercel:
+#     VERCEL_TOKEN        – API token from vercel.com/account/tokens
+#     VERCEL_ORG_ID       – from .vercel/project.json after `vercel link`
+#     VERCEL_PROJECT_ID   – from .vercel/project.json after `vercel link`
+#
+#   For Railway:
+#     RAILWAY_TOKEN       – from railway.app project settings
+#
+#   For Fly.io:
+#     FLY_API_TOKEN       – from `fly tokens create`
+#
+#   For Docker Hub / custom SSH deploy:
+#     DOCKER_USERNAME, DOCKER_PASSWORD  – Docker Hub credentials
+#     SSH_HOST, SSH_USER, SSH_KEY       – target server credentials
+#
+#   Database (production):
+#     PRODUCTION_DATABASE_URL  – PostgreSQL connection string for production
+# ---------------------------------------------------------------------------
+
+jobs:
+  # --------------------------------------------------------------------------
+  # Job 1: Run the full test suite before doing anything else.
+  # --------------------------------------------------------------------------
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+  # --------------------------------------------------------------------------
+  # Job 2: Build the frontend (Vite → dist/public/) and the backend (esbuild).
+  # --------------------------------------------------------------------------
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      # Upload the compiled artifacts so the deploy job can download them
+      # without re-building.
+      - name: Upload build artefacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
+
+  # --------------------------------------------------------------------------
+  # Job 3: Deploy – plug in your hosting provider below.
+  #
+  # Only ONE of the provider sections needs to be active.  Comment out or
+  # delete the sections you are not using.
+  # --------------------------------------------------------------------------
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+    environment:
+      name: production
+      # Replace with your actual deployment URL once the provider is configured.
+      url: ${{ steps.deploy.outputs.url }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      # -----------------------------------------------------------------------
+      # OPTION A — Vercel
+      # Uncomment this section and remove the others to deploy to Vercel.
+      # Requires: VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID secrets.
+      # -----------------------------------------------------------------------
+      # - name: Deploy to Vercel
+      #   id: deploy
+      #   uses: amondnet/vercel-action@v25
+      #   with:
+      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+      #     vercel-args: '--prod'
+
+      # -----------------------------------------------------------------------
+      # OPTION B — Railway
+      # Uncomment this section and remove the others to deploy to Railway.
+      # Requires: RAILWAY_TOKEN secret.
+      # -----------------------------------------------------------------------
+      # - name: Install Railway CLI
+      #   run: npm install -g @railway/cli
+      #
+      # - name: Deploy to Railway
+      #   id: deploy
+      #   run: railway up --service your-service-name
+      #   env:
+      #     RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
+      # -----------------------------------------------------------------------
+      # OPTION C — Fly.io
+      # Uncomment this section and remove the others to deploy to Fly.io.
+      # Requires: FLY_API_TOKEN secret and a fly.toml in the repository root.
+      # -----------------------------------------------------------------------
+      # - name: Set up flyctl
+      #   uses: superfly/flyctl-actions/setup-flyctl@master
+      #
+      # - name: Deploy to Fly.io
+      #   id: deploy
+      #   run: flyctl deploy --remote-only
+      #   env:
+      #     FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      # -----------------------------------------------------------------------
+      # OPTION D — Docker build + push (then pull on your server via SSH)
+      # Uncomment this section and remove the others to deploy via Docker.
+      # Requires: DOCKER_USERNAME, DOCKER_PASSWORD, SSH_HOST, SSH_USER,
+      #           SSH_KEY secrets.
+      # -----------------------------------------------------------------------
+      # - name: Log in to Docker Hub
+      #   uses: docker/login-action@v3
+      #   with:
+      #     username: ${{ secrets.DOCKER_USERNAME }}
+      #     password: ${{ secrets.DOCKER_PASSWORD }}
+      #
+      # - name: Build and push Docker image
+      #   uses: docker/build-push-action@v6
+      #   with:
+      #     context: .
+      #     push: true
+      #     tags: ${{ secrets.DOCKER_USERNAME }}/gaia-commons:latest
+      #
+      # - name: SSH deploy
+      #   id: deploy
+      #   uses: appleboy/ssh-action@v1
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     username: ${{ secrets.SSH_USER }}
+      #     key: ${{ secrets.SSH_KEY }}
+      #     script: |
+      #       docker pull ${{ secrets.DOCKER_USERNAME }}/gaia-commons:latest
+      #       docker compose up -d
+
+      # -----------------------------------------------------------------------
+      # PLACEHOLDER — remove this step once a real provider is configured.
+      # -----------------------------------------------------------------------
+      - name: Deploy (placeholder — configure a provider above)
+        id: deploy
+        run: |
+          echo "No deployment provider configured yet."
+          echo "Edit .github/workflows/cd.yml and uncomment one of the"
+          echo "provider sections (Vercel, Railway, Fly.io, or Docker/SSH)."
+          echo "url=https://example.com" >> $GITHUB_OUTPUT
