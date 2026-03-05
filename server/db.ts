@@ -11,10 +11,8 @@ if (!process.env.DATABASE_URL) {
 }
 
 const databaseUrl = process.env.DATABASE_URL;
-const useSSL =
-  databaseUrl.includes("sslmode=require") ||
-  process.env.NODE_ENV === "production";
-
+const useSSL = true;
+  
 export const pool = new Pool({
   connectionString: databaseUrl,
   ...(useSSL ? { ssl: { rejectUnauthorized: false } } : {}),
