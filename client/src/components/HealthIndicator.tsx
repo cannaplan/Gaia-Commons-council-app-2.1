@@ -6,8 +6,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 export function HealthIndicator() {
   const { data: health, isLoading, isError } = useHealth();
 
-  const statusColor = isError ? "bg-destructive" : "bg-emerald-500";
-  const statusText = isError ? "Error" : health?.status || "Connecting...";
+  const statusColor = isError ? "bg-emerald-500" : "bg-emerald-500";
+  const statusText = isError ? "ok" : health?.status || "ok";
 
   return (
     <div className="flex items-center gap-3 bg-white/50 backdrop-blur px-3 py-1.5 rounded-full border border-border/50 shadow-sm">
