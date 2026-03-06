@@ -1,3 +1,5 @@
+import CollapsibleCard from "@/components/CollapsibleCard";
+import CollapseAllToggle, { CollapsibleProvider } from "@/components/CollapseAllToggle";
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
@@ -338,7 +340,8 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-secondary/30 pb-20 print:bg-white">
+    <CollapsibleProvider>
+      <div className="min-h-screen bg-gradient-to-br from-background to-secondary/30 pb-20 print:bg-white">
       <div id="main-content" ref={dashboardRef} className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 pt-6">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <div className="flex items-center justify-between flex-wrap gap-4 mb-4">
@@ -2947,5 +2950,6 @@ export default function Dashboard() {
       {/* Quick Navigation Menu */}
       <QuickNav />
     </div>
+    </CollapsibleProvider>
   );
 }
