@@ -10,6 +10,11 @@ concurrency:
   group: deploy-${{ github.ref }}
   cancel-in-progress: true
 
+# Top-level: restrict all jobs to read-only by default.
+# Individual jobs can escalate only what they need.
+permissions:
+  contents: read
+
 # ---------------------------------------------------------------------------
 # Required GitHub Actions secrets (configure under Settings → Secrets):
 #
@@ -39,8 +44,6 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -64,8 +67,6 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     needs: test
-    permissions:
-      contents: read
 
     steps:
       - uses: actions/checkout@v4

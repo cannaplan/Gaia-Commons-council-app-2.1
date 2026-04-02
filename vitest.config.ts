@@ -8,9 +8,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./client/src/test-setup.ts'],
-    environmentMatchGlobs: [
-      ['server/**', 'node'],
-    ],
+    environmentMatchGlobs: [['server/**', 'node']],
     include: ['**/*.test.ts', '**/*.test.tsx'],
     exclude: ['node_modules/**', 'dist/**'],
   },

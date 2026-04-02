@@ -24,7 +24,7 @@ vi.mock('framer-motion', async () => {
           (_target, tag: string) =>
           ({ children, initial: _i, animate: _a, transition: _t, exit: _e, ...props }: any) =>
             React.createElement(tag, props, children),
-      }
+      },
     ),
     AnimatePresence: ({ children }: any) => children,
   };
@@ -33,7 +33,11 @@ vi.mock('framer-motion', async () => {
 vi.mock('wouter', async () => {
   const { default: React } = await import('react');
   return {
-    Link: ({ href, children, ...props }: { href: string; children?: React.ReactNode } & React.HTMLAttributes<HTMLAnchorElement>) =>
+    Link: ({
+      href,
+      children,
+      ...props
+    }: { href: string; children?: React.ReactNode } & React.HTMLAttributes<HTMLAnchorElement>) =>
       React.createElement('a', { href, ...props }, children),
   };
 });
@@ -67,12 +71,22 @@ vi.mock('recharts', async () => {
 });
 
 vi.mock('html2canvas', () => ({ default: vi.fn().mockResolvedValue({ toDataURL: () => '' }) }));
-vi.mock('jspdf', () => ({ default: vi.fn().mockImplementation(() => ({ addImage: vi.fn(), save: vi.fn() })) }));
+vi.mock('jspdf', () => ({
+  default: vi.fn().mockImplementation(() => ({ addImage: vi.fn(), save: vi.fn() })),
+}));
 
 vi.mock('@/lib/theme-context', () => ({
   ThemeProvider: ({ children }: any) => children,
   useColorScheme: () => ({ colorScheme: 'default', setColorScheme: vi.fn() }),
-  colorSchemes: [{ id: 'default', name: 'Emerald', description: 'Fresh green theme', primary: '#10b981', accent: '#34d399' }],
+  colorSchemes: [
+    {
+      id: 'default',
+      name: 'Emerald',
+      description: 'Fresh green theme',
+      primary: '#10b981',
+      accent: '#34d399',
+    },
+  ],
 }));
 
 vi.mock('react-i18next', () => ({
@@ -93,8 +107,14 @@ const emptyArr = { data: [], isLoading: false };
 
 vi.mock('@/hooks/use-gaia', () => ({
   useHealth: () => ({ data: { status: 'healthy' }, isLoading: false }),
-  usePilotStats: () => ({ data: { id: 1, students: 5630, sqft: 49250, schools: 6, status: 'live' }, isLoading: false }),
-  useEndowmentStats: () => ({ data: { id: 1, size: '5.0B', annual: '225M', greenhouses: 1200 }, isLoading: false }),
+  usePilotStats: () => ({
+    data: { id: 1, students: 5630, sqft: 49250, schools: 6, status: 'live' },
+    isLoading: false,
+  }),
+  useEndowmentStats: () => ({
+    data: { id: 1, size: '5.0B', annual: '225M', greenhouses: 1200 },
+    isLoading: false,
+  }),
   useTimeline: () => emptyArr,
   useFinancialMetrics: () => ({ data: { id: 1 }, isLoading: false }),
   useClimateMetrics: () => ({ data: { id: 1 }, isLoading: false }),
@@ -178,9 +198,7 @@ function Wrapper({ children }: { children: React.ReactNode }) {
   const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   return (
     <QueryClientProvider client={qc}>
-      <TooltipProvider>
-        {children}
-      </TooltipProvider>
+      <TooltipProvider>{children}</TooltipProvider>
     </QueryClientProvider>
   );
 }

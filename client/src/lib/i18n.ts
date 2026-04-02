@@ -11,7 +11,7 @@ const resources = {
   en: { translation: en },
   es: { translation: es },
   so: { translation: so },
-  hmn: { translation: hmn }
+  hmn: { translation: hmn },
 };
 
 i18n
@@ -21,12 +21,12 @@ i18n
     resources,
     fallbackLng: 'en',
     interpolation: {
-      escapeValue: false
+      escapeValue: false,
     },
     detection: {
       order: ['localStorage', 'navigator'],
-      caches: ['localStorage']
-    }
+      caches: ['localStorage'],
+    },
   });
 
 export default i18n;
@@ -35,5 +35,5 @@ export const languages = [
   { code: 'en', name: 'English', nativeName: 'English' },
   { code: 'es', name: 'Spanish', nativeName: 'Español' },
   { code: 'so', name: 'Somali', nativeName: 'Soomaali' },
-  { code: 'hmn', name: 'Hmong', nativeName: 'Hmoob' }
+  { code: 'hmn', name: 'Hmong', nativeName: 'Hmoob' },
 ];

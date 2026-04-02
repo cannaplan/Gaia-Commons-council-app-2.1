@@ -24,7 +24,7 @@ describe('useDAOStats hook', () => {
           filingDeadline: '2026-07-01T00:00:00.000Z',
           activeProposals: [],
         }),
-      })
+      }),
     );
   });
 
@@ -47,7 +47,7 @@ describe('useSubmitSignature hook', () => {
       vi.fn().mockResolvedValue({
         ok: true,
         json: async () => ({ success: true }),
-      })
+      }),
     );
   });
 

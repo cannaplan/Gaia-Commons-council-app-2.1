@@ -12,7 +12,7 @@ vi.mock('framer-motion', async () => {
           (_target, tag: string) =>
           ({ children, initial: _i, animate: _a, transition: _t, exit: _e, ...props }: any) =>
             React.createElement(tag, props, children),
-      }
+      },
     ),
     AnimatePresence: ({ children }: any) => children,
   };
@@ -21,7 +21,11 @@ vi.mock('framer-motion', async () => {
 vi.mock('wouter', async () => {
   const { default: React } = await import('react');
   return {
-    Link: ({ href, children, ...props }: { href: string; children?: React.ReactNode } & React.HTMLAttributes<HTMLAnchorElement>) =>
+    Link: ({
+      href,
+      children,
+      ...props
+    }: { href: string; children?: React.ReactNode } & React.HTMLAttributes<HTMLAnchorElement>) =>
       React.createElement('a', { href, ...props }, children),
   };
 });

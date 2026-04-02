@@ -9,7 +9,13 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { exportToPDF, exportToExcel, exportToCSV, printElement, ExportData } from '@/lib/export-utils';
+import {
+  exportToPDF,
+  exportToExcel,
+  exportToCSV,
+  printElement,
+  ExportData,
+} from '@/lib/export-utils';
 import { useToast } from '@/hooks/use-toast';
 
 interface ExportPanelProps {
@@ -20,12 +26,12 @@ interface ExportPanelProps {
   showShare?: boolean;
 }
 
-export function ExportPanel({ 
+export function ExportPanel({
   elementId = 'main-content',
   data = [],
   filename = 'gaia-commons-export',
   showPrint = true,
-  showShare = true
+  showShare = true,
 }: ExportPanelProps) {
   const { t } = useTranslation();
   const { toast } = useToast();
@@ -125,7 +131,12 @@ export function ExportPanel({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" disabled={isExporting} data-testid="button-export-panel">
+        <Button
+          variant="outline"
+          size="sm"
+          disabled={isExporting}
+          data-testid="button-export-panel"
+        >
           <Download className="h-4 w-4 mr-2" />
           {t('common.export')}
         </Button>

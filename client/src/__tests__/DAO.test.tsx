@@ -14,7 +14,7 @@ vi.mock('framer-motion', async () => {
           (_target, tag: string) =>
           ({ children, initial: _i, animate: _a, transition: _t, exit: _e, ...props }: any) =>
             React.createElement(tag, props, children),
-      }
+      },
     ),
   };
 });

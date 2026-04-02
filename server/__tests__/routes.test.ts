@@ -18,12 +18,18 @@ vi.mock('../storage', () => ({
     getGlobalRegenerationSummary: vi.fn().mockResolvedValue({ id: 1 }),
     getK12Curriculum: vi.fn().mockResolvedValue([{ id: 1 }]),
     getFundingSources: vi.fn().mockResolvedValue([{ id: 1 }]),
-    getScaleProjections: vi.fn().mockResolvedValue([
-      { id: 1, scale: 'statewide', greenhouses: 1200, schools: 3100, students: 900000 },
-    ]),
+    getScaleProjections: vi
+      .fn()
+      .mockResolvedValue([
+        { id: 1, scale: 'statewide', greenhouses: 1200, schools: 3100, students: 900000 },
+      ]),
     // Route handlers – return appropriate data
-    getPilotStats: vi.fn().mockResolvedValue({ id: 1, students: 5630, sqft: 49250, schools: 6, status: 'live' }),
-    getEndowmentStats: vi.fn().mockResolvedValue({ id: 1, size: '5.0B', annual: '225M', greenhouses: 1200 }),
+    getPilotStats: vi
+      .fn()
+      .mockResolvedValue({ id: 1, students: 5630, sqft: 49250, schools: 6, status: 'live' }),
+    getEndowmentStats: vi
+      .fn()
+      .mockResolvedValue({ id: 1, size: '5.0B', annual: '225M', greenhouses: 1200 }),
     getTimelineEvents: vi.fn().mockResolvedValue([]),
     getFinancialMetrics: vi.fn().mockResolvedValue({ id: 1 }),
     getClimateMetrics: vi.fn().mockResolvedValue({ id: 1 }),
@@ -137,7 +143,9 @@ describe('GET /api/dao/stats', () => {
   it('activeProposals has 3 proposals with canonical values', async () => {
     const res = await supertest(app).get('/api/dao/stats');
     expect(res.body.activeProposals).toHaveLength(3);
-    const descriptions = res.body.activeProposals.map((p: { description: string }) => p.description).join(' ');
+    const descriptions = res.body.activeProposals
+      .map((p: { description: string }) => p.description)
+      .join(' ');
     expect(descriptions).toContain('$225M/year');
     expect(descriptions).toContain('900,000 students');
     expect(descriptions).toContain('6,553 metric tons');
@@ -164,9 +172,7 @@ describe('POST /api/dao/signature', () => {
   });
 
   it('missing email returns 400', async () => {
-    const res = await supertest(app)
-      .post('/api/dao/signature')
-      .send({ name: 'No Email' });
+    const res = await supertest(app).post('/api/dao/signature').send({ name: 'No Email' });
     expect(res.status).toBe(400);
   });
 

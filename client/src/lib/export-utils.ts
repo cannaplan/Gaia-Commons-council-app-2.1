@@ -20,7 +20,7 @@ export async function exportToPDF(elementId: string, filename: string): Promise<
       scale: 2,
       useCORS: true,
       logging: false,
-      backgroundColor: '#ffffff'
+      backgroundColor: '#ffffff',
     });
 
     const imgWidth = 210;
@@ -54,15 +54,16 @@ export async function exportToExcel(data: ExportData[], filename: string): Promi
 
     data.forEach((sheet) => {
       const worksheet = workbook.addWorksheet(sheet.title.substring(0, 31));
-      
+
       if (sheet.data.length === 0) return;
 
-      const columns = sheet.columns || Object.keys(sheet.data[0]).map(key => ({ key, label: key }));
-      
-      worksheet.columns = columns.map(col => ({
+      const columns =
+        sheet.columns || Object.keys(sheet.data[0]).map((key) => ({ key, label: key }));
+
+      worksheet.columns = columns.map((col) => ({
         header: col.label,
         key: col.key,
-        width: 20
+        width: 20,
       }));
 
       sheet.data.forEach((row) => {
@@ -75,10 +76,12 @@ export async function exportToExcel(data: ExportData[], filename: string): Promi
     });
 
     const buffer = await workbook.xlsx.writeBuffer();
-    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const blob = new Blob([buffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
-    
+
     link.setAttribute('href', url);
     link.setAttribute('download', `${filename}.xlsx`);
     link.style.visibility = 'hidden';
@@ -101,10 +104,10 @@ export function exportToCSV(data: Record<string, unknown>[], filename: string): 
     const headers = Object.keys(data[0]);
     const csvRows: string[] = [];
 
-    csvRows.push(headers.map(h => `"${String(h).replace(/"/g, '""')}"`).join(','));
+    csvRows.push(headers.map((h) => `"${String(h).replace(/"/g, '""')}"`).join(','));
 
-    data.forEach(row => {
-      const values = headers.map(header => {
+    data.forEach((row) => {
+      const values = headers.map((header) => {
         const value = row[header];
         const stringValue = value === null || value === undefined ? '' : String(value);
         return `"${stringValue.replace(/"/g, '""')}"`;
@@ -113,11 +116,11 @@ export function exportToCSV(data: Record<string, unknown>[], filename: string): 
     });
 
     const csv = csvRows.join('\n');
-    
+
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
-    
+
     link.setAttribute('href', url);
     link.setAttribute('download', `${filename}.csv`);
     link.style.visibility = 'hidden';
@@ -167,7 +170,7 @@ export function printElement(elementId: string): void {
 
   printWindow.document.close();
   printWindow.focus();
-  
+
   setTimeout(() => {
     printWindow.print();
     printWindow.close();

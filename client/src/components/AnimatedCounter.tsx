@@ -16,7 +16,7 @@ export function AnimatedCounter({
   prefix = '',
   suffix = '',
   decimals = 0,
-  className = ''
+  className = '',
 }: AnimatedCounterProps) {
   const [isInView, setIsInView] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
@@ -29,7 +29,7 @@ export function AnimatedCounter({
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (ref.current) {
@@ -40,11 +40,15 @@ export function AnimatedCounter({
   }, []);
 
   const spring = useSpring(0, { duration: duration * 1000 });
-  const display = useTransform(spring, (current) =>
-    prefix + current.toLocaleString(undefined, { 
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals 
-    }) + suffix
+  const display = useTransform(
+    spring,
+    (current) =>
+      prefix +
+      current.toLocaleString(undefined, {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      }) +
+      suffix,
   );
 
   useEffect(() => {
@@ -75,7 +79,7 @@ export function AnimatedProgress({
   className = '',
   barClassName = '',
   showLabel = true,
-  label = ''
+  label = '',
 }: AnimatedProgressProps) {
   const percentage = Math.min((value / max) * 100, 100);
 
@@ -110,13 +114,13 @@ export function AnimatedBadge({
   children,
   variant = 'default',
   pulse = false,
-  className = ''
+  className = '',
 }: AnimatedBadgeProps) {
   const variants = {
     default: 'bg-primary/10 text-primary border-primary/20',
     success: 'bg-green-500/10 text-green-600 border-green-500/20',
     warning: 'bg-amber-500/10 text-amber-600 border-amber-500/20',
-    destructive: 'bg-red-500/10 text-red-600 border-red-500/20'
+    destructive: 'bg-red-500/10 text-red-600 border-red-500/20',
   };
 
   return (

@@ -22,14 +22,16 @@ export function ThemeSelector() {
 
   useEffect(() => {
     const root = document.documentElement;
-    
+
     if (theme === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light';
       root.classList.toggle('dark', systemTheme === 'dark');
     } else {
       root.classList.toggle('dark', theme === 'dark');
     }
-    
+
     localStorage.setItem('theme', theme);
   }, [theme]);
 
@@ -59,7 +61,7 @@ export function ThemeSelector() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem 
+        <DropdownMenuItem
           onClick={() => setTheme('light')}
           className={theme === 'light' ? 'bg-accent' : ''}
           data-testid="menu-item-theme-light"
@@ -67,7 +69,7 @@ export function ThemeSelector() {
           <Sun className="h-4 w-4 mr-2" />
           {t('theme.light')}
         </DropdownMenuItem>
-        <DropdownMenuItem 
+        <DropdownMenuItem
           onClick={() => setTheme('dark')}
           className={theme === 'dark' ? 'bg-accent' : ''}
           data-testid="menu-item-theme-dark"
@@ -75,7 +77,7 @@ export function ThemeSelector() {
           <Moon className="h-4 w-4 mr-2" />
           {t('theme.dark')}
         </DropdownMenuItem>
-        <DropdownMenuItem 
+        <DropdownMenuItem
           onClick={() => setTheme('system')}
           className={theme === 'system' ? 'bg-accent' : ''}
           data-testid="menu-item-theme-system"

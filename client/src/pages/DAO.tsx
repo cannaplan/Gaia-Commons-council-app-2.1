@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { CheckCircle, Users, Target, Calendar, FileText } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { useDAOStats, useSubmitSignature } from "@/hooks/use-gaia";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { CheckCircle, Users, Target, Calendar, FileText } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import { useDAOStats, useSubmitSignature } from '@/hooks/use-gaia';
 
 export default function DAO() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState('');
 
   const { data: stats, isLoading } = useDAOStats();
   const { mutate: submitSignature, isPending } = useSubmitSignature({
@@ -20,14 +20,14 @@ export default function DAO() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setErrorMsg("");
+    setErrorMsg('');
     submitSignature(
       { name, email },
       {
         onError: (err: unknown) => {
-          setErrorMsg(err instanceof Error ? err.message : "Submission failed. Please try again.");
+          setErrorMsg(err instanceof Error ? err.message : 'Submission failed. Please try again.');
         },
-      }
+      },
     );
   }
 
@@ -75,7 +75,7 @@ export default function DAO() {
             <CardContent className="pt-4 text-center">
               <FileText className="h-6 w-6 text-green-600 mx-auto mb-1" />
               <div className="text-2xl font-bold text-green-800">
-                {isLoading ? "—" : totalSigs.toLocaleString()}
+                {isLoading ? '—' : totalSigs.toLocaleString()}
               </div>
               <div className="text-xs text-gray-500">Signatures</div>
             </CardContent>
@@ -84,7 +84,7 @@ export default function DAO() {
             <CardContent className="pt-4 text-center">
               <Target className="h-6 w-6 text-green-600 mx-auto mb-1" />
               <div className="text-2xl font-bold text-green-800">
-                {isLoading ? "—" : `${goalPct.toFixed(1)}%`}
+                {isLoading ? '—' : `${goalPct.toFixed(1)}%`}
               </div>
               <div className="text-xs text-gray-500">of 120,000 goal</div>
             </CardContent>
@@ -93,7 +93,7 @@ export default function DAO() {
             <CardContent className="pt-4 text-center">
               <Users className="h-6 w-6 text-green-600 mx-auto mb-1" />
               <div className="text-2xl font-bold text-green-800">
-                {isLoading ? "—" : uniqueVoters.toLocaleString()}
+                {isLoading ? '—' : uniqueVoters.toLocaleString()}
               </div>
               <div className="text-xs text-gray-500">Unique Voters</div>
             </CardContent>
@@ -102,7 +102,7 @@ export default function DAO() {
             <CardContent className="pt-4 text-center">
               <Calendar className="h-6 w-6 text-green-600 mx-auto mb-1" />
               <div className="text-2xl font-bold text-green-800">
-                {isLoading ? "—" : daysRemaining}
+                {isLoading ? '—' : daysRemaining}
               </div>
               <div className="text-xs text-gray-500">Days Remaining</div>
             </CardContent>
@@ -142,12 +142,10 @@ export default function DAO() {
                 {submitted ? (
                   <div className="flex flex-col items-center gap-3 py-6 text-center">
                     <CheckCircle className="h-12 w-12 text-green-500" />
-                    <p className="text-lg font-semibold text-green-800">
-                      Thank you, {name}!
-                    </p>
+                    <p className="text-lg font-semibold text-green-800">Thank you, {name}!</p>
                     <p className="text-sm text-gray-600">
-                      Your signature has been recorded. Together we&apos;re building
-                      a permanent food future for Minnesota.
+                      Your signature has been recorded. Together we&apos;re building a permanent
+                      food future for Minnesota.
                     </p>
                   </div>
                 ) : (
@@ -186,19 +184,17 @@ export default function DAO() {
                         className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                       />
                     </div>
-                    {errorMsg && (
-                      <p className="text-sm text-red-600">{errorMsg}</p>
-                    )}
+                    {errorMsg && <p className="text-sm text-red-600">{errorMsg}</p>}
                     <Button
                       type="submit"
                       disabled={isPending}
                       className="w-full bg-green-600 hover:bg-green-700 text-white"
                     >
-                      {isPending ? "Submitting…" : "Sign the Initiative"}
+                      {isPending ? 'Submitting…' : 'Sign the Initiative'}
                     </Button>
                     <p className="text-xs text-gray-500 text-center">
-                      Your information is used solely for ballot initiative
-                      verification per MN Stat. § 204B.09.
+                      Your information is used solely for ballot initiative verification per MN
+                      Stat. § 204B.09.
                     </p>
                   </form>
                 )}
@@ -224,11 +220,9 @@ export default function DAO() {
                   return (
                     <div key={proposal.id} className="border rounded-lg p-3 space-y-2">
                       <div className="flex items-start justify-between gap-2">
-                        <p className="text-sm font-medium text-gray-800 flex-1">
-                          {proposal.title}
-                        </p>
-                        <Badge variant={quorumReached ? "default" : "secondary"}>
-                          {quorumReached ? "Quorum ✓" : `${totalVotes}/${proposal.quorumRequired}`}
+                        <p className="text-sm font-medium text-gray-800 flex-1">{proposal.title}</p>
+                        <Badge variant={quorumReached ? 'default' : 'secondary'}>
+                          {quorumReached ? 'Quorum ✓' : `${totalVotes}/${proposal.quorumRequired}`}
                         </Badge>
                       </div>
                       <p className="text-xs text-gray-500">{proposal.description}</p>

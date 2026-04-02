@@ -1,35 +1,45 @@
-import { useState, useMemo } from "react";
-import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
-import { useGlobalRegenerationRegions } from "@/hooks/use-gaia";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Loader2, Globe, Users, Leaf, Factory, Droplets, DollarSign, TreeDeciduous, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useMemo } from 'react';
+import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps';
+import { useGlobalRegenerationRegions } from '@/hooks/use-gaia';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import {
+  Loader2,
+  Globe,
+  Users,
+  Leaf,
+  Factory,
+  Droplets,
+  DollarSign,
+  TreeDeciduous,
+  X,
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+const geoUrl = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json';
 
 const categoryColors: Record<string, string> = {
-  "Regenerative Agriculture": "#22c55e",
-  "Market Gardens": "#10b981",
-  "Forest Restoration": "#059669",
-  "Desert Restoration": "#f59e0b",
-  "Indoor Agriculture": "#3b82f6",
-  "Food Security": "#8b5cf6",
-  "Agroforestry": "#06b6d4",
-  "Silvopasture": "#84cc16",
-  "Drought-Resilient": "#eab308",
-  "School Greenhouses": "#ec4899",
-  "Water Security": "#0ea5e9",
-  "Indigenous Systems": "#f97316",
-  "Soil Restoration": "#a3e635",
-  "Carbon Farming": "#6366f1",
+  'Regenerative Agriculture': '#22c55e',
+  'Market Gardens': '#10b981',
+  'Forest Restoration': '#059669',
+  'Desert Restoration': '#f59e0b',
+  'Indoor Agriculture': '#3b82f6',
+  'Food Security': '#8b5cf6',
+  Agroforestry: '#06b6d4',
+  Silvopasture: '#84cc16',
+  'Drought-Resilient': '#eab308',
+  'School Greenhouses': '#ec4899',
+  'Water Security': '#0ea5e9',
+  'Indigenous Systems': '#f97316',
+  'Soil Restoration': '#a3e635',
+  'Carbon Farming': '#6366f1',
 };
 
 const statusBadgeColors: Record<string, string> = {
-  "Active": "bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20",
-  "Planning": "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20",
+  Active: 'bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20',
+  Planning: 'bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20',
 };
 
 interface GlobalRegion {
@@ -67,7 +77,7 @@ export function GlobalRegenerationMap() {
 
   const categories = useMemo(() => {
     if (!regions) return [];
-    const catSet = new Set(regions.map(r => r.category));
+    const catSet = new Set(regions.map((r) => r.category));
     const cats = Array.from(catSet);
     return cats.sort();
   }, [regions]);
@@ -75,12 +85,18 @@ export function GlobalRegenerationMap() {
   const filteredRegions = useMemo(() => {
     if (!regions) return [];
     if (!activeFilter) return regions;
-    return regions.filter(r => r.category === activeFilter);
+    return regions.filter((r) => r.category === activeFilter);
   }, [regions, activeFilter]);
 
   const summaryStats = useMemo(() => {
     if (!filteredRegions || filteredRegions.length === 0) {
-      return { totalRegions: 0, totalJobs: 0, totalCarbon: 0, totalPeopleFed: 0, totalInvestment: 0 };
+      return {
+        totalRegions: 0,
+        totalJobs: 0,
+        totalCarbon: 0,
+        totalPeopleFed: 0,
+        totalInvestment: 0,
+      };
     }
     return {
       totalRegions: filteredRegions.length,
@@ -121,15 +137,15 @@ export function GlobalRegenerationMap() {
               Global Regeneration Network
             </CardTitle>
             <div className="flex flex-wrap items-center gap-2">
-              <Badge variant="outline" className={statusBadgeColors["Active"]}>
-                {filteredRegions.filter(r => r.status === "Active").length} Active Projects
+              <Badge variant="outline" className={statusBadgeColors['Active']}>
+                {filteredRegions.filter((r) => r.status === 'Active').length} Active Projects
               </Badge>
-              <Badge variant="outline" className={statusBadgeColors["Planning"]}>
-                {filteredRegions.filter(r => r.status === "Planning").length} Planning
+              <Badge variant="outline" className={statusBadgeColors['Planning']}>
+                {filteredRegions.filter((r) => r.status === 'Planning').length} Planning
               </Badge>
             </div>
           </div>
-          
+
           <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
             <span className="flex items-center gap-1">
               <Users className="h-4 w-4" />
@@ -144,15 +160,15 @@ export function GlobalRegenerationMap() {
               {formatLargeNumber(summaryStats.totalPeopleFed)} people fed
             </span>
             <span className="flex items-center gap-1">
-              <DollarSign className="h-4 w-4" />
-              ${formatLargeNumber(summaryStats.totalInvestment * 1000000)} invested
+              <DollarSign className="h-4 w-4" />$
+              {formatLargeNumber(summaryStats.totalInvestment * 1000000)} invested
             </span>
           </div>
 
           <ScrollArea className="w-full whitespace-nowrap">
             <div className="flex gap-2 pb-2">
               <Button
-                variant={activeFilter === null ? "default" : "outline"}
+                variant={activeFilter === null ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setActiveFilter(null)}
                 data-testid="button-filter-all"
@@ -162,15 +178,15 @@ export function GlobalRegenerationMap() {
               {categories.map((cat) => (
                 <Button
                   key={cat}
-                  variant={activeFilter === cat ? "default" : "outline"}
+                  variant={activeFilter === cat ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => setActiveFilter(cat)}
                   className="shrink-0"
                   data-testid={`button-filter-${cat.toLowerCase().replace(/\s+/g, '-')}`}
                 >
-                  <span 
-                    className="w-2 h-2 rounded-full mr-1.5" 
-                    style={{ backgroundColor: categoryColors[cat] || "#6b7280" }}
+                  <span
+                    className="w-2 h-2 rounded-full mr-1.5"
+                    style={{ backgroundColor: categoryColors[cat] || '#6b7280' }}
                   />
                   {cat}
                 </Button>
@@ -179,20 +195,24 @@ export function GlobalRegenerationMap() {
           </ScrollArea>
         </div>
       </CardHeader>
-      
+
       <CardContent className="p-0 relative">
         <div className="flex flex-col lg:flex-row">
-          <div className="w-full lg:w-2/3 relative" style={{ height: "520px" }}>
+          <div className="w-full lg:w-2/3 relative" style={{ height: '520px' }}>
             <ComposableMap
               projection="geoMercator"
               projectionConfig={{
                 scale: 130,
-                center: [20, 20]
+                center: [20, 20],
               }}
-              style={{ width: "100%", height: "100%" }}
+              style={{ width: '100%', height: '100%' }}
             >
               <Geographies geography={geoUrl}>
-                {({ geographies }: { geographies: Array<{ rsmKey: string; properties: { name: string } }> }) =>
+                {({
+                  geographies,
+                }: {
+                  geographies: Array<{ rsmKey: string; properties: { name: string } }>;
+                }) =>
                   geographies.map((geo) => (
                     <Geography
                       key={geo.rsmKey}
@@ -201,21 +221,21 @@ export function GlobalRegenerationMap() {
                       stroke="hsl(var(--border))"
                       strokeWidth={0.5}
                       style={{
-                        default: { outline: "none" },
-                        hover: { outline: "none", fill: "hsl(var(--muted-foreground) / 0.2)" },
-                        pressed: { outline: "none" },
+                        default: { outline: 'none' },
+                        hover: { outline: 'none', fill: 'hsl(var(--muted-foreground) / 0.2)' },
+                        pressed: { outline: 'none' },
                       }}
                     />
                   ))
                 }
               </Geographies>
-              
+
               {filteredRegions.map((region) => {
                 const isSelected = selectedRegion?.id === region.id;
                 const isHovered = hoveredRegion === region.id;
-                const color = categoryColors[region.category] || "#6b7280";
+                const color = categoryColors[region.category] || '#6b7280';
                 const size = Math.min(12, Math.max(6, Math.log10(region.peopleFed) * 1.5));
-                
+
                 return (
                   <Marker
                     key={region.id}
@@ -228,22 +248,22 @@ export function GlobalRegenerationMap() {
                       r={isHovered || isSelected ? size * 1.4 : size}
                       fill={color}
                       fillOpacity={isSelected ? 1 : 0.8}
-                      stroke={isSelected ? "hsl(var(--foreground))" : "white"}
+                      stroke={isSelected ? 'hsl(var(--foreground))' : 'white'}
                       strokeWidth={isSelected ? 2.5 : 1.5}
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                     />
                     {(isHovered || isSelected) && (
                       <motion.text
                         textAnchor="middle"
                         y={-size - 8}
                         style={{
-                          fontSize: "11px",
+                          fontSize: '11px',
                           fontWeight: 600,
-                          fill: "hsl(var(--foreground))",
-                          paintOrder: "stroke",
-                          stroke: "hsl(var(--background))",
+                          fill: 'hsl(var(--foreground))',
+                          paintOrder: 'stroke',
+                          stroke: 'hsl(var(--background))',
                           strokeWidth: 3,
                         }}
                         initial={{ opacity: 0, y: 5 }}
@@ -274,8 +294,8 @@ export function GlobalRegenerationMap() {
                       <h3 className="font-semibold text-lg">{selectedRegion.regionName}</h3>
                       <p className="text-sm text-muted-foreground">{selectedRegion.projectName}</p>
                     </div>
-                    <Button 
-                      variant="ghost" 
+                    <Button
+                      variant="ghost"
                       size="icon"
                       onClick={() => setSelectedRegion(null)}
                       data-testid="button-close-region-details"
@@ -283,13 +303,13 @@ export function GlobalRegenerationMap() {
                       <X className="h-4 w-4" />
                     </Button>
                   </div>
-                  
+
                   <div className="flex flex-wrap gap-2 mb-4">
-                    <Badge 
+                    <Badge
                       variant="outline"
-                      style={{ 
+                      style={{
                         borderColor: categoryColors[selectedRegion.category],
-                        color: categoryColors[selectedRegion.category]
+                        color: categoryColors[selectedRegion.category],
                       }}
                     >
                       {selectedRegion.category}
@@ -299,9 +319,7 @@ export function GlobalRegenerationMap() {
                     </Badge>
                   </div>
 
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {selectedRegion.description}
-                  </p>
+                  <p className="text-sm text-muted-foreground mb-4">{selectedRegion.description}</p>
 
                   <div className="bg-muted/50 rounded-lg p-3 mb-4">
                     <p className="text-sm font-medium text-primary">
@@ -316,49 +334,63 @@ export function GlobalRegenerationMap() {
                           <Factory className="h-4 w-4" />
                           Greenhouse Facilities
                         </span>
-                        <span className="font-semibold">{selectedRegion.greenhouseFacilities.toLocaleString()}</span>
+                        <span className="font-semibold">
+                          {selectedRegion.greenhouseFacilities.toLocaleString()}
+                        </span>
                       </div>
                       <div className="flex items-center justify-between py-2 border-b border-border/50">
                         <span className="flex items-center gap-2 text-sm text-muted-foreground">
                           <Users className="h-4 w-4" />
                           Jobs Created
                         </span>
-                        <span className="font-semibold">{formatLargeNumber(selectedRegion.jobsCreated)}</span>
+                        <span className="font-semibold">
+                          {formatLargeNumber(selectedRegion.jobsCreated)}
+                        </span>
                       </div>
                       <div className="flex items-center justify-between py-2 border-b border-border/50">
                         <span className="flex items-center gap-2 text-sm text-muted-foreground">
                           <Leaf className="h-4 w-4" />
                           Carbon Avoided/Year
                         </span>
-                        <span className="font-semibold">{formatLargeNumber(selectedRegion.annualCarbonSequestrationTons)} tons</span>
+                        <span className="font-semibold">
+                          {formatLargeNumber(selectedRegion.annualCarbonSequestrationTons)} tons
+                        </span>
                       </div>
                       <div className="flex items-center justify-between py-2 border-b border-border/50">
                         <span className="flex items-center gap-2 text-sm text-muted-foreground">
                           <Users className="h-4 w-4" />
                           People Fed
                         </span>
-                        <span className="font-semibold">{formatLargeNumber(selectedRegion.peopleFed)}</span>
+                        <span className="font-semibold">
+                          {formatLargeNumber(selectedRegion.peopleFed)}
+                        </span>
                       </div>
                       <div className="flex items-center justify-between py-2 border-b border-border/50">
                         <span className="flex items-center gap-2 text-sm text-muted-foreground">
                           <TreeDeciduous className="h-4 w-4" />
                           Acres Restored
                         </span>
-                        <span className="font-semibold">{formatLargeNumber(selectedRegion.acresRestored)}</span>
+                        <span className="font-semibold">
+                          {formatLargeNumber(selectedRegion.acresRestored)}
+                        </span>
                       </div>
                       <div className="flex items-center justify-between py-2 border-b border-border/50">
                         <span className="flex items-center gap-2 text-sm text-muted-foreground">
                           <Droplets className="h-4 w-4" />
                           Water Saved
                         </span>
-                        <span className="font-semibold">{formatLargeNumber(selectedRegion.waterSavedGallons)} gal</span>
+                        <span className="font-semibold">
+                          {formatLargeNumber(selectedRegion.waterSavedGallons)} gal
+                        </span>
                       </div>
                       <div className="flex items-center justify-between py-2">
                         <span className="flex items-center gap-2 text-sm text-muted-foreground">
                           <DollarSign className="h-4 w-4" />
                           Investment
                         </span>
-                        <span className="font-semibold">${formatLargeNumber(selectedRegion.investmentMillions * 1000000)}</span>
+                        <span className="font-semibold">
+                          ${formatLargeNumber(selectedRegion.investmentMillions * 1000000)}
+                        </span>
                       </div>
                     </div>
                   </ScrollArea>
@@ -387,15 +419,22 @@ export function GlobalRegenerationMap() {
                           data-testid={`button-region-${region.id}`}
                         >
                           <div className="flex items-center gap-2">
-                            <span 
-                              className="w-3 h-3 rounded-full shrink-0" 
-                              style={{ backgroundColor: categoryColors[region.category] || "#6b7280" }}
+                            <span
+                              className="w-3 h-3 rounded-full shrink-0"
+                              style={{
+                                backgroundColor: categoryColors[region.category] || '#6b7280',
+                              }}
                             />
                             <div className="min-w-0 flex-1">
                               <p className="font-medium text-sm truncate">{region.regionName}</p>
-                              <p className="text-xs text-muted-foreground truncate">{region.category}</p>
+                              <p className="text-xs text-muted-foreground truncate">
+                                {region.category}
+                              </p>
                             </div>
-                            <Badge variant="outline" className={`text-xs ${statusBadgeColors[region.status]}`}>
+                            <Badge
+                              variant="outline"
+                              className={`text-xs ${statusBadgeColors[region.status]}`}
+                            >
                               {region.status}
                             </Badge>
                           </div>

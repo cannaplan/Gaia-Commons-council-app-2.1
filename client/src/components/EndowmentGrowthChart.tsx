@@ -1,6 +1,6 @@
-import { useState, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useState, useMemo } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import {
   AreaChart,
   Area,
@@ -10,9 +10,9 @@ import {
   Tooltip,
   ResponsiveContainer,
   Legend,
-} from "recharts";
-import { TrendingUp, DollarSign, Calendar } from "lucide-react";
-import { motion } from "framer-motion";
+} from 'recharts';
+import { TrendingUp, DollarSign, Calendar } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface EndowmentDataPoint {
   year: number;
@@ -30,7 +30,7 @@ interface EndowmentGrowthChartProps {
 const generateEndowmentData = (
   initialCorpus: number = 5000000000,
   drawRate: number = 0.045,
-  growthRate: number = 0.07
+  growthRate: number = 0.07,
 ): EndowmentDataPoint[] => {
   const data: EndowmentDataPoint[] = [];
   let corpus = initialCorpus;
@@ -39,7 +39,7 @@ const generateEndowmentData = (
   for (let year = 2028; year <= 2078; year++) {
     const annualDraw = corpus * drawRate;
     cumulativeDraws += annualDraw;
-    
+
     data.push({
       year,
       corpus: Math.round(corpus),
@@ -82,17 +82,17 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 export default function EndowmentGrowthChart({
   initialCorpus = 5000000000,
   drawRate = 0.045,
-  growthRate = 0.07
+  growthRate = 0.07,
 }: EndowmentGrowthChartProps = {}) {
-  const [viewMode, setViewMode] = useState<"growth" | "draws">("growth");
+  const [viewMode, setViewMode] = useState<'growth' | 'draws'>('growth');
   const data = useMemo(
     () => generateEndowmentData(initialCorpus, drawRate, growthRate),
-    [initialCorpus, drawRate, growthRate]
+    [initialCorpus, drawRate, growthRate],
   );
 
   const startData = data[0];
   const endData = data[data.length - 1];
-  const year25Data = data.find(d => d.year === 2053) || data[25];
+  const year25Data = data.find((d) => d.year === 2053) || data[25];
 
   return (
     <Card className="w-full" data-testid="endowment-growth-chart">
@@ -104,16 +104,16 @@ export default function EndowmentGrowthChart({
         <div className="flex gap-2">
           <Button
             size="sm"
-            variant={viewMode === "growth" ? "default" : "outline"}
-            onClick={() => setViewMode("growth")}
+            variant={viewMode === 'growth' ? 'default' : 'outline'}
+            onClick={() => setViewMode('growth')}
             data-testid="btn-view-growth"
           >
             Corpus Growth
           </Button>
           <Button
             size="sm"
-            variant={viewMode === "draws" ? "default" : "outline"}
-            onClick={() => setViewMode("draws")}
+            variant={viewMode === 'draws' ? 'default' : 'outline'}
+            onClick={() => setViewMode('draws')}
             data-testid="btn-view-draws"
           >
             Cumulative Draws
@@ -169,7 +169,7 @@ export default function EndowmentGrowthChart({
           data-testid={`chart-container-${viewMode}`}
         >
           <ResponsiveContainer width="100%" height="100%">
-            {viewMode === "growth" ? (
+            {viewMode === 'growth' ? (
               <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorCorpus" x1="0" y1="0" x2="0" y2="1">
@@ -241,9 +241,10 @@ export default function EndowmentGrowthChart({
 
         <div className="mt-4 p-4 bg-muted/50 rounded-lg">
           <p className="text-sm text-muted-foreground text-center">
-            <strong>Key Insight:</strong> With a 4.5% annual draw rate and 7% average market returns, 
-            the endowment grows to <strong>{formatCurrency(endData.corpus)}</strong> over 50 years 
-            while distributing <strong>{formatCurrency(endData.cumulativeDraws)}</strong> in total funding.
+            <strong>Key Insight:</strong> With a 4.5% annual draw rate and 7% average market
+            returns, the endowment grows to <strong>{formatCurrency(endData.corpus)}</strong> over
+            50 years while distributing <strong>{formatCurrency(endData.cumulativeDraws)}</strong>{' '}
+            in total funding.
           </p>
         </div>
       </CardContent>

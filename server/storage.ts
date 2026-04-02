@@ -1,57 +1,127 @@
-import { db } from "./db";
+import { db } from './db';
 import {
-  pilotStats, endowmentStats, timelineEvents, financialMetrics, climateMetrics, slideDeck, historicalFinancials,
-  schoolClusters, schools, scaleProjections, environmentalImpact, jobCreation, legalFramework,
-  endowmentProjections, expandedJobs, k12Curriculum, coalitionPartners, fundingSources,
-  transparencyFeatures, accountabilityMechanisms, tribalPartnerships,
-  implementationTimeline, politicalRoadmap, stressTests,
-  tieredCarbonPricing, regenerativeAgriculture, nationwideFoodSecurity, laborTransition, politicalCoalition, globalRegenerationSummary,
-  planetaryBoundaries, calibrationTargets, modelMaturity, historicalClimateData,
-  monteCarloSimulations, scenarioComparisons, optimizationParams, sensitivityAnalysis,
-  type PilotStats, type InsertPilotStats,
-  type EndowmentStats, type InsertEndowmentStats,
-  type TimelineEvent, type InsertTimelineEvent,
-  type FinancialMetric, type InsertFinancialMetrics,
-  type ClimateMetric, type InsertClimateMetrics,
-  type Slide, type InsertSlide,
-  type HistoricalFinancial, type InsertHistoricalFinancial,
-  type SchoolCluster, type InsertSchoolCluster,
-  type School, type InsertSchool,
-  type ScaleProjection, type InsertScaleProjection,
-  type EnvironmentalImpactType, type InsertEnvironmentalImpact,
-  type JobCreationType, type InsertJobCreation,
-  type LegalFrameworkType, type InsertLegalFramework,
-  type EndowmentProjection, type InsertEndowmentProjection,
-  type ExpandedJobs, type InsertExpandedJobs,
-  type K12Curriculum, type InsertK12Curriculum,
-  type CoalitionPartner, type InsertCoalitionPartner,
-  type FundingSource, type InsertFundingSource,
-  type TransparencyFeature, type InsertTransparencyFeature,
-  type AccountabilityMechanism, type InsertAccountabilityMechanism,
-  type TribalPartnership, type InsertTribalPartnership,
-  type ImplementationTimelineType, type InsertImplementationTimeline,
-  type PoliticalRoadmapType, type InsertPoliticalRoadmap,
-  type StressTest, type InsertStressTest,
-  type TieredCarbonPricingType, type InsertTieredCarbonPricing,
-  type RegenerativeAgricultureType, type InsertRegenerativeAgriculture,
-  type NationwideFoodSecurityType, type InsertNationwideFoodSecurity,
-  type LaborTransitionType, type InsertLaborTransition,
-  type PoliticalCoalitionType, type InsertPoliticalCoalition,
-  type GlobalRegenerationSummaryType, type InsertGlobalRegenerationSummary,
-  type PlanetaryBoundaryType, type InsertPlanetaryBoundary,
-  type CalibrationTargetType, type InsertCalibrationTarget,
-  type ModelMaturityType, type InsertModelMaturity,
-  type HistoricalClimateDataType, type InsertHistoricalClimateData,
-  type MonteCarloSimulationType, type InsertMonteCarloSimulation,
-  type ScenarioComparisonType, type InsertScenarioComparison,
-  type OptimizationParamType, type InsertOptimizationParam,
-  type SensitivityAnalysisType, type InsertSensitivityAnalysis,
+  pilotStats,
+  endowmentStats,
+  timelineEvents,
+  financialMetrics,
+  climateMetrics,
+  slideDeck,
+  historicalFinancials,
+  schoolClusters,
+  schools,
+  scaleProjections,
+  environmentalImpact,
+  jobCreation,
+  legalFramework,
+  endowmentProjections,
+  expandedJobs,
+  k12Curriculum,
+  coalitionPartners,
+  fundingSources,
+  transparencyFeatures,
+  accountabilityMechanisms,
+  tribalPartnerships,
+  implementationTimeline,
+  politicalRoadmap,
+  stressTests,
+  tieredCarbonPricing,
+  regenerativeAgriculture,
+  nationwideFoodSecurity,
+  laborTransition,
+  politicalCoalition,
+  globalRegenerationSummary,
+  planetaryBoundaries,
+  calibrationTargets,
+  modelMaturity,
+  historicalClimateData,
+  monteCarloSimulations,
+  scenarioComparisons,
+  optimizationParams,
+  sensitivityAnalysis,
+  type PilotStats,
+  type InsertPilotStats,
+  type EndowmentStats,
+  type InsertEndowmentStats,
+  type TimelineEvent,
+  type InsertTimelineEvent,
+  type FinancialMetric,
+  type InsertFinancialMetrics,
+  type ClimateMetric,
+  type InsertClimateMetrics,
+  type Slide,
+  type InsertSlide,
+  type HistoricalFinancial,
+  type InsertHistoricalFinancial,
+  type SchoolCluster,
+  type InsertSchoolCluster,
+  type School,
+  type InsertSchool,
+  type ScaleProjection,
+  type InsertScaleProjection,
+  type EnvironmentalImpactType,
+  type InsertEnvironmentalImpact,
+  type JobCreationType,
+  type InsertJobCreation,
+  type LegalFrameworkType,
+  type InsertLegalFramework,
+  type EndowmentProjection,
+  type InsertEndowmentProjection,
+  type ExpandedJobs,
+  type InsertExpandedJobs,
+  type K12Curriculum,
+  type InsertK12Curriculum,
+  type CoalitionPartner,
+  type InsertCoalitionPartner,
+  type FundingSource,
+  type InsertFundingSource,
+  type TransparencyFeature,
+  type InsertTransparencyFeature,
+  type AccountabilityMechanism,
+  type InsertAccountabilityMechanism,
+  type TribalPartnership,
+  type InsertTribalPartnership,
+  type ImplementationTimelineType,
+  type InsertImplementationTimeline,
+  type PoliticalRoadmapType,
+  type InsertPoliticalRoadmap,
+  type StressTest,
+  type InsertStressTest,
+  type TieredCarbonPricingType,
+  type InsertTieredCarbonPricing,
+  type RegenerativeAgricultureType,
+  type InsertRegenerativeAgriculture,
+  type NationwideFoodSecurityType,
+  type InsertNationwideFoodSecurity,
+  type LaborTransitionType,
+  type InsertLaborTransition,
+  type PoliticalCoalitionType,
+  type InsertPoliticalCoalition,
+  type GlobalRegenerationSummaryType,
+  type InsertGlobalRegenerationSummary,
+  type PlanetaryBoundaryType,
+  type InsertPlanetaryBoundary,
+  type CalibrationTargetType,
+  type InsertCalibrationTarget,
+  type ModelMaturityType,
+  type InsertModelMaturity,
+  type HistoricalClimateDataType,
+  type InsertHistoricalClimateData,
+  type MonteCarloSimulationType,
+  type InsertMonteCarloSimulation,
+  type ScenarioComparisonType,
+  type InsertScenarioComparison,
+  type OptimizationParamType,
+  type InsertOptimizationParam,
+  type SensitivityAnalysisType,
+  type InsertSensitivityAnalysis,
   globalRegenerationRegions,
-  type GlobalRegenerationRegionType, type InsertGlobalRegenerationRegion,
+  type GlobalRegenerationRegionType,
+  type InsertGlobalRegenerationRegion,
   miningAlternative,
-  type MiningAlternativeType, type InsertMiningAlternative
-} from "@shared/schema";
-import { eq, asc } from "drizzle-orm";
+  type MiningAlternativeType,
+  type InsertMiningAlternative,
+} from '@shared/schema';
+import { eq, asc } from 'drizzle-orm';
 
 export interface IStorage {
   getPilotStats(): Promise<PilotStats | undefined>;
@@ -96,11 +166,15 @@ export interface IStorage {
   getTransparencyFeatures(): Promise<TransparencyFeature[]>;
   createTransparencyFeature(feature: InsertTransparencyFeature): Promise<TransparencyFeature>;
   getAccountabilityMechanisms(): Promise<AccountabilityMechanism[]>;
-  createAccountabilityMechanism(mechanism: InsertAccountabilityMechanism): Promise<AccountabilityMechanism>;
+  createAccountabilityMechanism(
+    mechanism: InsertAccountabilityMechanism,
+  ): Promise<AccountabilityMechanism>;
   getTribalPartnerships(): Promise<TribalPartnership[]>;
   createTribalPartnership(partnership: InsertTribalPartnership): Promise<TribalPartnership>;
   getImplementationTimeline(): Promise<ImplementationTimelineType[]>;
-  createImplementationTimeline(item: InsertImplementationTimeline): Promise<ImplementationTimelineType>;
+  createImplementationTimeline(
+    item: InsertImplementationTimeline,
+  ): Promise<ImplementationTimelineType>;
   getPoliticalRoadmap(): Promise<PoliticalRoadmapType[]>;
   createPoliticalRoadmap(item: InsertPoliticalRoadmap): Promise<PoliticalRoadmapType>;
   getStressTests(): Promise<StressTest[]>;
@@ -108,15 +182,21 @@ export interface IStorage {
   getTieredCarbonPricing(): Promise<TieredCarbonPricingType[]>;
   createTieredCarbonPricing(item: InsertTieredCarbonPricing): Promise<TieredCarbonPricingType>;
   getRegenerativeAgriculture(): Promise<RegenerativeAgricultureType[]>;
-  createRegenerativeAgriculture(item: InsertRegenerativeAgriculture): Promise<RegenerativeAgricultureType>;
+  createRegenerativeAgriculture(
+    item: InsertRegenerativeAgriculture,
+  ): Promise<RegenerativeAgricultureType>;
   getNationwideFoodSecurity(): Promise<NationwideFoodSecurityType | undefined>;
-  createNationwideFoodSecurity(item: InsertNationwideFoodSecurity): Promise<NationwideFoodSecurityType>;
+  createNationwideFoodSecurity(
+    item: InsertNationwideFoodSecurity,
+  ): Promise<NationwideFoodSecurityType>;
   getLaborTransition(): Promise<LaborTransitionType[]>;
   createLaborTransition(item: InsertLaborTransition): Promise<LaborTransitionType>;
   getPoliticalCoalition(): Promise<PoliticalCoalitionType[]>;
   createPoliticalCoalition(item: InsertPoliticalCoalition): Promise<PoliticalCoalitionType>;
   getGlobalRegenerationSummary(): Promise<GlobalRegenerationSummaryType | undefined>;
-  createGlobalRegenerationSummary(item: InsertGlobalRegenerationSummary): Promise<GlobalRegenerationSummaryType>;
+  createGlobalRegenerationSummary(
+    item: InsertGlobalRegenerationSummary,
+  ): Promise<GlobalRegenerationSummaryType>;
   getPlanetaryBoundaries(): Promise<PlanetaryBoundaryType[]>;
   createPlanetaryBoundary(item: InsertPlanetaryBoundary): Promise<PlanetaryBoundaryType>;
   getCalibrationTargets(): Promise<CalibrationTargetType[]>;
@@ -124,7 +204,9 @@ export interface IStorage {
   getModelMaturity(): Promise<ModelMaturityType[]>;
   createModelMaturity(item: InsertModelMaturity): Promise<ModelMaturityType>;
   getHistoricalClimateData(): Promise<HistoricalClimateDataType[]>;
-  createHistoricalClimateData(item: InsertHistoricalClimateData): Promise<HistoricalClimateDataType>;
+  createHistoricalClimateData(
+    item: InsertHistoricalClimateData,
+  ): Promise<HistoricalClimateDataType>;
   getMonteCarloSimulations(): Promise<MonteCarloSimulationType[]>;
   createMonteCarloSimulation(item: InsertMonteCarloSimulation): Promise<MonteCarloSimulationType>;
   getScenarioComparisons(): Promise<ScenarioComparisonType[]>;
@@ -134,7 +216,9 @@ export interface IStorage {
   getSensitivityAnalysis(): Promise<SensitivityAnalysisType[]>;
   createSensitivityAnalysis(item: InsertSensitivityAnalysis): Promise<SensitivityAnalysisType>;
   getGlobalRegenerationRegions(): Promise<GlobalRegenerationRegionType[]>;
-  createGlobalRegenerationRegion(item: InsertGlobalRegenerationRegion): Promise<GlobalRegenerationRegionType>;
+  createGlobalRegenerationRegion(
+    item: InsertGlobalRegenerationRegion,
+  ): Promise<GlobalRegenerationRegionType>;
   getMiningAlternatives(): Promise<MiningAlternativeType[]>;
   createMiningAlternative(item: InsertMiningAlternative): Promise<MiningAlternativeType>;
   isEmpty(): Promise<boolean>;
@@ -151,7 +235,11 @@ export class DatabaseStorage implements IStorage {
       const [newStats] = await db.insert(pilotStats).values(stats).returning();
       return newStats;
     }
-    const [updated] = await db.update(pilotStats).set(stats).where(eq(pilotStats.id, existing.id)).returning();
+    const [updated] = await db
+      .update(pilotStats)
+      .set(stats)
+      .where(eq(pilotStats.id, existing.id))
+      .returning();
     return updated;
   }
   async getEndowmentStats(): Promise<EndowmentStats | undefined> {
@@ -164,7 +252,11 @@ export class DatabaseStorage implements IStorage {
       const [newStats] = await db.insert(endowmentStats).values(stats).returning();
       return newStats;
     }
-    const [updated] = await db.update(endowmentStats).set(stats).where(eq(endowmentStats.id, existing.id)).returning();
+    const [updated] = await db
+      .update(endowmentStats)
+      .set(stats)
+      .where(eq(endowmentStats.id, existing.id))
+      .returning();
     return updated;
   }
   async getTimelineEvents(): Promise<TimelineEvent[]> {
@@ -184,7 +276,11 @@ export class DatabaseStorage implements IStorage {
       const [nm] = await db.insert(financialMetrics).values(metrics).returning();
       return nm;
     }
-    const [up] = await db.update(financialMetrics).set(metrics).where(eq(financialMetrics.id, existing.id)).returning();
+    const [up] = await db
+      .update(financialMetrics)
+      .set(metrics)
+      .where(eq(financialMetrics.id, existing.id))
+      .returning();
     return up;
   }
   async getClimateMetrics(): Promise<ClimateMetric | undefined> {
@@ -197,7 +293,11 @@ export class DatabaseStorage implements IStorage {
       const [nm] = await db.insert(climateMetrics).values(metrics).returning();
       return nm;
     }
-    const [up] = await db.update(climateMetrics).set(metrics).where(eq(climateMetrics.id, existing.id)).returning();
+    const [up] = await db
+      .update(climateMetrics)
+      .set(metrics)
+      .where(eq(climateMetrics.id, existing.id))
+      .returning();
     return up;
   }
   async getSlides(): Promise<Slide[]> {
@@ -208,7 +308,10 @@ export class DatabaseStorage implements IStorage {
     return s;
   }
   async getHistoricalFinancials(): Promise<HistoricalFinancial[]> {
-    return await db.select().from(historicalFinancials).orderBy(asc(historicalFinancials.year), asc(historicalFinancials.quarter));
+    return await db
+      .select()
+      .from(historicalFinancials)
+      .orderBy(asc(historicalFinancials.year), asc(historicalFinancials.quarter));
   }
   async createHistoricalFinancial(data: InsertHistoricalFinancial): Promise<HistoricalFinancial> {
     const [h] = await db.insert(historicalFinancials).values(data).returning();
@@ -248,7 +351,9 @@ export class DatabaseStorage implements IStorage {
   async getEnvironmentalImpacts(): Promise<EnvironmentalImpactType[]> {
     return await db.select().from(environmentalImpact);
   }
-  async createEnvironmentalImpact(impact: InsertEnvironmentalImpact): Promise<EnvironmentalImpactType> {
+  async createEnvironmentalImpact(
+    impact: InsertEnvironmentalImpact,
+  ): Promise<EnvironmentalImpactType> {
     const [i] = await db.insert(environmentalImpact).values(impact).returning();
     return i;
   }
@@ -305,14 +410,18 @@ export class DatabaseStorage implements IStorage {
   async getTransparencyFeatures(): Promise<TransparencyFeature[]> {
     return await db.select().from(transparencyFeatures);
   }
-  async createTransparencyFeature(feature: InsertTransparencyFeature): Promise<TransparencyFeature> {
+  async createTransparencyFeature(
+    feature: InsertTransparencyFeature,
+  ): Promise<TransparencyFeature> {
     const [f] = await db.insert(transparencyFeatures).values(feature).returning();
     return f;
   }
   async getAccountabilityMechanisms(): Promise<AccountabilityMechanism[]> {
     return await db.select().from(accountabilityMechanisms);
   }
-  async createAccountabilityMechanism(mechanism: InsertAccountabilityMechanism): Promise<AccountabilityMechanism> {
+  async createAccountabilityMechanism(
+    mechanism: InsertAccountabilityMechanism,
+  ): Promise<AccountabilityMechanism> {
     const [m] = await db.insert(accountabilityMechanisms).values(mechanism).returning();
     return m;
   }
@@ -326,7 +435,9 @@ export class DatabaseStorage implements IStorage {
   async getImplementationTimeline(): Promise<ImplementationTimelineType[]> {
     return await db.select().from(implementationTimeline);
   }
-  async createImplementationTimeline(item: InsertImplementationTimeline): Promise<ImplementationTimelineType> {
+  async createImplementationTimeline(
+    item: InsertImplementationTimeline,
+  ): Promise<ImplementationTimelineType> {
     const [i] = await db.insert(implementationTimeline).values(item).returning();
     return i;
   }
@@ -347,14 +458,18 @@ export class DatabaseStorage implements IStorage {
   async getTieredCarbonPricing(): Promise<TieredCarbonPricingType[]> {
     return await db.select().from(tieredCarbonPricing);
   }
-  async createTieredCarbonPricing(item: InsertTieredCarbonPricing): Promise<TieredCarbonPricingType> {
+  async createTieredCarbonPricing(
+    item: InsertTieredCarbonPricing,
+  ): Promise<TieredCarbonPricingType> {
     const [c] = await db.insert(tieredCarbonPricing).values(item).returning();
     return c;
   }
   async getRegenerativeAgriculture(): Promise<RegenerativeAgricultureType[]> {
     return await db.select().from(regenerativeAgriculture);
   }
-  async createRegenerativeAgriculture(item: InsertRegenerativeAgriculture): Promise<RegenerativeAgricultureType> {
+  async createRegenerativeAgriculture(
+    item: InsertRegenerativeAgriculture,
+  ): Promise<RegenerativeAgricultureType> {
     const [a] = await db.insert(regenerativeAgriculture).values(item).returning();
     return a;
   }
@@ -362,7 +477,9 @@ export class DatabaseStorage implements IStorage {
     const [n] = await db.select().from(nationwideFoodSecurity).limit(1);
     return n;
   }
-  async createNationwideFoodSecurity(item: InsertNationwideFoodSecurity): Promise<NationwideFoodSecurityType> {
+  async createNationwideFoodSecurity(
+    item: InsertNationwideFoodSecurity,
+  ): Promise<NationwideFoodSecurityType> {
     const [n] = await db.insert(nationwideFoodSecurity).values(item).returning();
     return n;
   }
@@ -384,7 +501,9 @@ export class DatabaseStorage implements IStorage {
     const [g] = await db.select().from(globalRegenerationSummary).limit(1);
     return g;
   }
-  async createGlobalRegenerationSummary(item: InsertGlobalRegenerationSummary): Promise<GlobalRegenerationSummaryType> {
+  async createGlobalRegenerationSummary(
+    item: InsertGlobalRegenerationSummary,
+  ): Promise<GlobalRegenerationSummaryType> {
     const [g] = await db.insert(globalRegenerationSummary).values(item).returning();
     return g;
   }
@@ -412,14 +531,18 @@ export class DatabaseStorage implements IStorage {
   async getHistoricalClimateData(): Promise<HistoricalClimateDataType[]> {
     return await db.select().from(historicalClimateData).orderBy(asc(historicalClimateData.year));
   }
-  async createHistoricalClimateData(item: InsertHistoricalClimateData): Promise<HistoricalClimateDataType> {
+  async createHistoricalClimateData(
+    item: InsertHistoricalClimateData,
+  ): Promise<HistoricalClimateDataType> {
     const [h] = await db.insert(historicalClimateData).values(item).returning();
     return h;
   }
   async getMonteCarloSimulations(): Promise<MonteCarloSimulationType[]> {
     return await db.select().from(monteCarloSimulations);
   }
-  async createMonteCarloSimulation(item: InsertMonteCarloSimulation): Promise<MonteCarloSimulationType> {
+  async createMonteCarloSimulation(
+    item: InsertMonteCarloSimulation,
+  ): Promise<MonteCarloSimulationType> {
     const [m] = await db.insert(monteCarloSimulations).values(item).returning();
     return m;
   }
@@ -440,14 +563,18 @@ export class DatabaseStorage implements IStorage {
   async getSensitivityAnalysis(): Promise<SensitivityAnalysisType[]> {
     return await db.select().from(sensitivityAnalysis).orderBy(asc(sensitivityAnalysis.rank));
   }
-  async createSensitivityAnalysis(item: InsertSensitivityAnalysis): Promise<SensitivityAnalysisType> {
+  async createSensitivityAnalysis(
+    item: InsertSensitivityAnalysis,
+  ): Promise<SensitivityAnalysisType> {
     const [s] = await db.insert(sensitivityAnalysis).values(item).returning();
     return s;
   }
   async getGlobalRegenerationRegions(): Promise<GlobalRegenerationRegionType[]> {
     return await db.select().from(globalRegenerationRegions);
   }
-  async createGlobalRegenerationRegion(item: InsertGlobalRegenerationRegion): Promise<GlobalRegenerationRegionType> {
+  async createGlobalRegenerationRegion(
+    item: InsertGlobalRegenerationRegion,
+  ): Promise<GlobalRegenerationRegionType> {
     const [r] = await db.insert(globalRegenerationRegions).values(item).returning();
     return r;
   }

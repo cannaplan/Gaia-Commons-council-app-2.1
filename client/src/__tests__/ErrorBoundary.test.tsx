@@ -11,7 +11,7 @@ describe('ErrorBoundary', () => {
     render(
       <ErrorBoundary>
         <span>All good</span>
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
     expect(screen.getByText('All good')).toBeInTheDocument();
   });
@@ -22,7 +22,7 @@ describe('ErrorBoundary', () => {
     render(
       <ErrorBoundary>
         <ThrowingComponent />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
     expect(screen.getByText('Something went wrong')).toBeInTheDocument();
     spy.mockRestore();
@@ -33,7 +33,7 @@ describe('ErrorBoundary', () => {
     render(
       <ErrorBoundary fallback={<p>Custom fallback</p>}>
         <ThrowingComponent />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
     expect(screen.getByText('Custom fallback')).toBeInTheDocument();
     spy.mockRestore();
@@ -51,7 +51,7 @@ describe('ErrorBoundary', () => {
     render(
       <ErrorBoundary>
         <ConditionalThrower />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
     expect(screen.getByText('Something went wrong')).toBeInTheDocument();
 
