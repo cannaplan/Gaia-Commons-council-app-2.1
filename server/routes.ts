@@ -13,6 +13,7 @@ const daoSignatures: DAOSignature[] = [];
 
 const DAO_SIGNATURE_GOAL = 120_000; // MN Stat. § 204B.09 — 5% of 2024 turnout
 const DAO_FILING_DEADLINE = new Date("2026-07-01T00:00:00.000Z");
+const MAX_EMAIL_LENGTH = 254; // RFC 5321 maximum email address length
 
 const ACTIVE_PROPOSALS = [
   {
@@ -318,9 +319,8 @@ export async function registerRoutes(
       return res.status(400).json({ message: "name and email are required" });
     }
     const emailLower = email.toLowerCase().trim();
-    // Basic email format validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(emailLower)) {
+    // Basic email format validation (linear-time regex to avoid ReDoS)
+    if (emailLower.length > MAX_EMAIL_LENGTH || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailLower)) {
       return res.status(400).json({ message: "Invalid email address" });
     }
     const sanitizedName = name.trim().slice(0, 200);
