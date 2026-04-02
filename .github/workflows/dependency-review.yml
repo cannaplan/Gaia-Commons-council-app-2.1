@@ -27,3 +27,11 @@ jobs:
           # Also flag licenses that are incompatible with MIT
           deny-licenses: AGPL-3.0-only, GPL-3.0-only
           comment-summary-in-pr: always
+          # Allow GitHub Actions whose license metadata isn't published to npm
+          allow-dependencies-licenses: >-
+            pkg:githubactions/actions/checkout,
+            pkg:githubactions/actions/dependency-review-action,
+            pkg:githubactions/actions/setup-node,
+            pkg:githubactions/actions/upload-artifact,
+            pkg:githubactions/actions/download-artifact,
+            pkg:githubactions/github/codeql-action
