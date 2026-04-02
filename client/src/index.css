@@ -14,32 +14,32 @@
   /* Accent: #FFE082 (vibrant yellow) = 45 100% 75% */
   /* Background: #F7F7F7 = 0 0% 97% */
   /* Text: #333333 = 0 0% 20% */
-  
+
   --background: 0 0% 97%;
   --foreground: 0 0% 20%;
-  
+
   --primary: 122 39% 49%;
   --primary-foreground: 0 0% 100%;
-  
+
   --secondary: 204 72% 74%;
   --secondary-foreground: 204 50% 20%;
-  
+
   --muted: 0 0% 92%;
   --muted-foreground: 0 0% 45%;
-  
+
   --accent: 45 100% 75%;
   --accent-foreground: 45 60% 20%;
-  
+
   --destructive: 0 70% 60%;
   --destructive-foreground: 0 0% 98%;
 
   --border: 0 0% 88%;
   --input: 0 0% 88%;
   --ring: 122 39% 49%;
-  
+
   --card: 0 0% 100%;
   --card-foreground: 0 0% 20%;
-  
+
   --radius: 0.5rem;
 }
 
@@ -49,7 +49,12 @@
     font-family: var(--font-body);
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
     @apply font-bold tracking-tight text-foreground;
   }
@@ -59,7 +64,7 @@
   .glass-panel {
     @apply bg-white/70 backdrop-blur-md border border-white/50 shadow-xl shadow-primary/5;
   }
-  
+
   .card-hover {
     @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/20;
   }
@@ -69,26 +74,26 @@
 .dark {
   --background: 120 10% 10%;
   --foreground: 0 0% 95%;
-  
+
   --primary: 122 39% 45%;
   --primary-foreground: 0 0% 100%;
-  
+
   --secondary: 204 50% 25%;
   --secondary-foreground: 204 72% 90%;
-  
+
   --muted: 120 10% 18%;
   --muted-foreground: 0 0% 65%;
-  
+
   --accent: 45 90% 50%;
   --accent-foreground: 45 60% 95%;
-  
+
   --destructive: 0 70% 55%;
   --destructive-foreground: 0 0% 98%;
 
   --border: 120 10% 22%;
   --input: 120 10% 22%;
   --ring: 122 39% 45%;
-  
+
   --card: 120 10% 14%;
   --card-foreground: 0 0% 95%;
 }
@@ -107,7 +112,7 @@
   nav,
   footer,
   button,
-  [role="button"],
+  [role='button'],
   input,
   select,
   textarea,
@@ -116,13 +121,16 @@
     display: none !important;
   }
 
-  .card, [class*="card"] {
+  .card,
+  [class*='card'] {
     break-inside: avoid;
     page-break-inside: avoid;
     box-shadow: none !important;
   }
 
-  table, [class*="chart"], [class*="Chart"] {
+  table,
+  [class*='chart'],
+  [class*='Chart'] {
     visibility: visible !important;
     width: 100% !important;
     max-width: 100% !important;
@@ -133,7 +141,8 @@
     text-shadow: none !important;
   }
 
-  body, html {
+  body,
+  html {
     margin: 0 !important;
     padding: 0 !important;
   }
@@ -148,11 +157,11 @@
   .mobile-scroll {
     @apply overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0 md:overflow-visible;
   }
-  
+
   .mobile-stack {
     @apply flex flex-col gap-4 sm:flex-row sm:items-center;
   }
-  
+
   .mobile-full {
     @apply w-full sm:w-auto;
   }
@@ -208,7 +217,7 @@
 
 button:focus-visible,
 a:focus-visible,
-[role="button"]:focus-visible {
+[role='button']:focus-visible {
   @apply ring-2 ring-primary ring-offset-2 ring-offset-background;
 }
 

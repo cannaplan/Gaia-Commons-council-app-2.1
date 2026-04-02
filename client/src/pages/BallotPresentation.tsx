@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { Link } from "wouter";
-import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
+import { useState } from 'react';
+import { Link } from 'wouter';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 import {
   ChevronLeft,
   ChevronRight,
@@ -38,7 +38,7 @@ import {
   X,
   Check,
   FlaskConical,
-} from "lucide-react";
+} from 'lucide-react';
 
 interface SlideData {
   id: number;
@@ -55,17 +55,17 @@ export default function BallotPresentation() {
   const slides: SlideData[] = [
     {
       id: 1,
-      title: "One Vote, Forever Fed",
-      subtitle: "Minnesota 2026 Ballot Initiative",
-      bgGradient: "from-emerald-600 via-emerald-500 to-teal-500",
+      title: 'One Vote, Forever Fed',
+      subtitle: 'Minnesota 2026 Ballot Initiative',
+      bgGradient: 'from-emerald-600 via-emerald-500 to-teal-500',
       icon: <Vote className="h-24 w-24" />,
       content: (
         <div className="flex flex-col items-center gap-8">
           <div className="text-center">
             <div className="text-8xl font-black mb-4 drop-shadow-2xl">2026</div>
             <p className="text-2xl opacity-90 max-w-2xl mx-auto">
-              A bold initiative to feed every Minnesota student with fresh, local produce 
-              grown right at their schools - forever.
+              A bold initiative to feed every Minnesota student with fresh, local produce grown
+              right at their schools - forever.
             </p>
           </div>
           <div className="flex gap-6 mt-8">
@@ -87,9 +87,9 @@ export default function BallotPresentation() {
     },
     {
       id: 2,
-      title: "The Problem",
-      subtitle: "Food Insecurity in Minnesota Schools",
-      bgGradient: "from-red-600 via-orange-500 to-amber-500",
+      title: 'The Problem',
+      subtitle: 'Food Insecurity in Minnesota Schools',
+      bgGradient: 'from-red-600 via-orange-500 to-amber-500',
       icon: <Heart className="h-24 w-24" />,
       content: (
         <div className="grid grid-cols-2 gap-8">
@@ -112,7 +112,11 @@ export default function BallotPresentation() {
               <div className="w-72 h-72 rounded-full bg-white/10 flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-7xl font-black">87%</div>
-                  <p className="text-lg mt-2">of school produce<br/>comes from outside MN</p>
+                  <p className="text-lg mt-2">
+                    of school produce
+                    <br />
+                    comes from outside MN
+                  </p>
                 </div>
               </div>
               <div className="absolute -top-4 -right-4 bg-red-500 rounded-full p-4 animate-pulse">
@@ -125,9 +129,9 @@ export default function BallotPresentation() {
     },
     {
       id: 3,
-      title: "Our Solution",
-      subtitle: "School Greenhouses Funded Forever",
-      bgGradient: "from-emerald-600 via-green-500 to-lime-500",
+      title: 'Our Solution',
+      subtitle: 'School Greenhouses Funded Forever',
+      bgGradient: 'from-emerald-600 via-green-500 to-lime-500',
       icon: <Sprout className="h-24 w-24" />,
       content: (
         <div className="flex flex-col items-center gap-8">
@@ -150,10 +154,11 @@ export default function BallotPresentation() {
           </div>
           <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 max-w-3xl text-center">
             <p className="text-xl leading-relaxed">
-              Build greenhouses at all 330 Minnesota school districts, complete with year-round 
-              production of <span className="font-bold text-lime-300">vegetables, berries, fruits, herbs</span>, 
-              and even <span className="font-bold text-yellow-300">exotic citrus trees</span> - all funded 
-              by a perpetual endowment that never runs out.
+              Build greenhouses at all 330 Minnesota school districts, complete with year-round
+              production of{' '}
+              <span className="font-bold text-lime-300">vegetables, berries, fruits, herbs</span>,
+              and even <span className="font-bold text-yellow-300">exotic citrus trees</span> - all
+              funded by a perpetual endowment that never runs out.
             </p>
           </div>
         </div>
@@ -162,8 +167,8 @@ export default function BallotPresentation() {
     {
       id: 4,
       title: "What We'll Grow",
-      subtitle: "100+ Varieties of Fresh Produce",
-      bgGradient: "from-purple-600 via-pink-500 to-rose-500",
+      subtitle: '100+ Varieties of Fresh Produce',
+      bgGradient: 'from-purple-600 via-pink-500 to-rose-500',
       icon: <Apple className="h-24 w-24" />,
       content: (
         <div className="grid grid-cols-4 gap-4">
@@ -236,14 +241,14 @@ export default function BallotPresentation() {
     },
     {
       id: 6,
-      title: "Outdoor Orchards",
-      subtitle: "Traditional Fruit Trees for Each School",
-      bgGradient: "from-green-600 via-emerald-500 to-teal-400",
+      title: 'Outdoor Orchards',
+      subtitle: 'Traditional Fruit Trees for Each School',
+      bgGradient: 'from-green-600 via-emerald-500 to-teal-400',
       icon: <TreePine className="h-24 w-24" />,
       content: (
         <div className="flex flex-col items-center gap-8">
           <p className="text-xl text-center max-w-3xl opacity-90">
-            Every school can have their own outdoor orchard with cold-hardy fruit and nut trees 
+            Every school can have their own outdoor orchard with cold-hardy fruit and nut trees
             native to Minnesota's climate.
           </p>
           <div className="grid grid-cols-3 gap-6 w-full max-w-4xl">
@@ -252,12 +257,24 @@ export default function BallotPresentation() {
                 <Apple className="h-6 w-6" /> Fruit Trees
               </h3>
               <ul className="space-y-2 text-sm">
-                <li className="flex items-center gap-2"><Apple className="h-4 w-4 text-red-300" /> Apple Orchards</li>
-                <li className="flex items-center gap-2"><Apple className="h-4 w-4 text-green-300" /> Pear Trees</li>
-                <li className="flex items-center gap-2"><Cherry className="h-4 w-4 text-red-400" /> Cherry Trees</li>
-                <li className="flex items-center gap-2"><Apple className="h-4 w-4 text-orange-300" /> Peach Trees</li>
-                <li className="flex items-center gap-2"><Apple className="h-4 w-4 text-orange-400" /> Apricot Trees</li>
-                <li className="flex items-center gap-2"><Apple className="h-4 w-4 text-purple-400" /> Plum Trees</li>
+                <li className="flex items-center gap-2">
+                  <Apple className="h-4 w-4 text-red-300" /> Apple Orchards
+                </li>
+                <li className="flex items-center gap-2">
+                  <Apple className="h-4 w-4 text-green-300" /> Pear Trees
+                </li>
+                <li className="flex items-center gap-2">
+                  <Cherry className="h-4 w-4 text-red-400" /> Cherry Trees
+                </li>
+                <li className="flex items-center gap-2">
+                  <Apple className="h-4 w-4 text-orange-300" /> Peach Trees
+                </li>
+                <li className="flex items-center gap-2">
+                  <Apple className="h-4 w-4 text-orange-400" /> Apricot Trees
+                </li>
+                <li className="flex items-center gap-2">
+                  <Apple className="h-4 w-4 text-purple-400" /> Plum Trees
+                </li>
               </ul>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6">
@@ -265,9 +282,15 @@ export default function BallotPresentation() {
                 <TreeDeciduous className="h-6 w-6" /> Nut Trees
               </h3>
               <ul className="space-y-2 text-sm">
-                <li className="flex items-center gap-2"><TreeDeciduous className="h-4 w-4 text-amber-400" /> Hazelnut Groves</li>
-                <li className="flex items-center gap-2"><TreeDeciduous className="h-4 w-4 text-amber-500" /> Walnut Groves</li>
-                <li className="flex items-center gap-2"><TreeDeciduous className="h-4 w-4 text-amber-600" /> Chestnut Groves</li>
+                <li className="flex items-center gap-2">
+                  <TreeDeciduous className="h-4 w-4 text-amber-400" /> Hazelnut Groves
+                </li>
+                <li className="flex items-center gap-2">
+                  <TreeDeciduous className="h-4 w-4 text-amber-500" /> Walnut Groves
+                </li>
+                <li className="flex items-center gap-2">
+                  <TreeDeciduous className="h-4 w-4 text-amber-600" /> Chestnut Groves
+                </li>
               </ul>
               <p className="text-xs mt-4 opacity-70">Heart-healthy fats & protein</p>
             </div>
@@ -276,25 +299,34 @@ export default function BallotPresentation() {
                 <Grape className="h-6 w-6" /> Berry Bushes
               </h3>
               <ul className="space-y-2 text-sm">
-                <li className="flex items-center gap-2"><Grape className="h-4 w-4 text-purple-400" /> Elderberry Bushes</li>
-                <li className="flex items-center gap-2"><Grape className="h-4 w-4 text-indigo-400" /> Aronia Berries</li>
-                <li className="flex items-center gap-2"><Cherry className="h-4 w-4 text-blue-400" /> Serviceberries</li>
+                <li className="flex items-center gap-2">
+                  <Grape className="h-4 w-4 text-purple-400" /> Elderberry Bushes
+                </li>
+                <li className="flex items-center gap-2">
+                  <Grape className="h-4 w-4 text-indigo-400" /> Aronia Berries
+                </li>
+                <li className="flex items-center gap-2">
+                  <Cherry className="h-4 w-4 text-blue-400" /> Serviceberries
+                </li>
               </ul>
               <p className="text-xs mt-4 opacity-70">Highest antioxidants found in nature</p>
             </div>
           </div>
           <div className="bg-black/20 backdrop-blur-lg rounded-2xl p-6 flex items-center gap-4 max-w-3xl">
             <GraduationCap className="h-12 w-12 text-lime-300 flex-shrink-0" />
-            <p className="text-lg">Students learn agriculture, ecology, and sustainability while tending their school orchard</p>
+            <p className="text-lg">
+              Students learn agriculture, ecology, and sustainability while tending their school
+              orchard
+            </p>
           </div>
         </div>
       ),
     },
     {
       id: 7,
-      title: "The Endowment Model",
-      subtitle: "Funded Forever, Never Depleted",
-      bgGradient: "from-blue-600 via-indigo-500 to-purple-500",
+      title: 'The Endowment Model',
+      subtitle: 'Funded Forever, Never Depleted',
+      bgGradient: 'from-blue-600 via-indigo-500 to-purple-500',
       icon: <CircleDollarSign className="h-24 w-24" />,
       content: (
         <div className="flex flex-col items-center gap-8">
@@ -325,9 +357,10 @@ export default function BallotPresentation() {
               <div>
                 <h3 className="text-2xl font-bold mb-2">How It Works</h3>
                 <p className="opacity-90">
-                  Like university endowments, the principal grows tax-free while annual returns 
-                  fund operations. After 50 years: <span className="font-bold text-lime-300">$11.25 billion in total draws</span> while 
-                  principal remains at $5B+.
+                  Like university endowments, the principal grows tax-free while annual returns fund
+                  operations. After 50 years:{' '}
+                  <span className="font-bold text-lime-300">$11.25 billion in total draws</span>{' '}
+                  while principal remains at $5B+.
                 </p>
               </div>
             </div>
@@ -337,9 +370,9 @@ export default function BallotPresentation() {
     },
     {
       id: 8,
-      title: "Jobs Created",
-      subtitle: "Local, Union, Permanent Employment",
-      bgGradient: "from-amber-500 via-orange-500 to-red-500",
+      title: 'Jobs Created',
+      subtitle: 'Local, Union, Permanent Employment',
+      bgGradient: 'from-amber-500 via-orange-500 to-red-500',
       icon: <Briefcase className="h-24 w-24" />,
       content: (
         <div className="grid grid-cols-2 gap-8">
@@ -404,9 +437,9 @@ export default function BallotPresentation() {
     },
     {
       id: 9,
-      title: "vs. Foreign Mining",
+      title: 'vs. Foreign Mining',
       subtitle: "Keep Minnesota's Wealth in Minnesota",
-      bgGradient: "from-slate-700 via-gray-600 to-slate-800",
+      bgGradient: 'from-slate-700 via-gray-600 to-slate-800',
       icon: <Scale className="h-24 w-24" />,
       content: (
         <div className="grid grid-cols-2 gap-8">
@@ -415,14 +448,30 @@ export default function BallotPresentation() {
               <Factory className="h-8 w-8" /> Twin Metals Mining
             </h3>
             <ul className="space-y-3 text-sm">
-              <li className="flex items-center gap-2"><X className="h-4 w-4 text-red-300" /> 100% foreign owned (Chile)</li>
-              <li className="flex items-center gap-2"><X className="h-4 w-4 text-red-300" /> 50% profits to billionaire family</li>
-              <li className="flex items-center gap-2"><X className="h-4 w-4 text-red-300" /> 0.4% gross proceeds tax</li>
-              <li className="flex items-center gap-2"><X className="h-4 w-4 text-red-300" /> ~1,500 temporary jobs</li>
-              <li className="flex items-center gap-2"><X className="h-4 w-4 text-red-300" /> 20-25 year mine lifespan</li>
-              <li className="flex items-center gap-2"><X className="h-4 w-4 text-red-300" /> Ore shipped out of state</li>
-              <li className="flex items-center gap-2"><X className="h-4 w-4 text-red-300" /> MN pays cleanup costs</li>
-              <li className="flex items-center gap-2"><X className="h-4 w-4 text-red-300" /> Threatens Boundary Waters</li>
+              <li className="flex items-center gap-2">
+                <X className="h-4 w-4 text-red-300" /> 100% foreign owned (Chile)
+              </li>
+              <li className="flex items-center gap-2">
+                <X className="h-4 w-4 text-red-300" /> 50% profits to billionaire family
+              </li>
+              <li className="flex items-center gap-2">
+                <X className="h-4 w-4 text-red-300" /> 0.4% gross proceeds tax
+              </li>
+              <li className="flex items-center gap-2">
+                <X className="h-4 w-4 text-red-300" /> ~1,500 temporary jobs
+              </li>
+              <li className="flex items-center gap-2">
+                <X className="h-4 w-4 text-red-300" /> 20-25 year mine lifespan
+              </li>
+              <li className="flex items-center gap-2">
+                <X className="h-4 w-4 text-red-300" /> Ore shipped out of state
+              </li>
+              <li className="flex items-center gap-2">
+                <X className="h-4 w-4 text-red-300" /> MN pays cleanup costs
+              </li>
+              <li className="flex items-center gap-2">
+                <X className="h-4 w-4 text-red-300" /> Threatens Boundary Waters
+              </li>
             </ul>
           </div>
           <div className="bg-green-500/30 backdrop-blur-lg rounded-2xl p-6 border-2 border-green-400/50">
@@ -430,14 +479,30 @@ export default function BallotPresentation() {
               <Sprout className="h-8 w-8" /> Gaia Commons
             </h3>
             <ul className="space-y-3 text-sm">
-              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> 100% Minnesota owned</li>
-              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> 100% reinvested locally</li>
-              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> Revenue stays in communities</li>
-              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> 2,400 permanent jobs</li>
-              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> Forever - perpetual model</li>
-              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> Food stays in Minnesota</li>
-              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> Self-sustaining operations</li>
-              <li className="flex items-center gap-2"><Check className="h-4 w-4 text-green-300" /> Protects natural resources</li>
+              <li className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-green-300" /> 100% Minnesota owned
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-green-300" /> 100% reinvested locally
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-green-300" /> Revenue stays in communities
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-green-300" /> 2,400 permanent jobs
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-green-300" /> Forever - perpetual model
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-green-300" /> Food stays in Minnesota
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-green-300" /> Self-sustaining operations
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-green-300" /> Protects natural resources
+              </li>
             </ul>
           </div>
         </div>
@@ -445,9 +510,9 @@ export default function BallotPresentation() {
     },
     {
       id: 10,
-      title: "330 School Districts",
-      subtitle: "Serving All of Minnesota",
-      bgGradient: "from-blue-600 via-sky-500 to-cyan-400",
+      title: '330 School Districts',
+      subtitle: 'Serving All of Minnesota',
+      bgGradient: 'from-blue-600 via-sky-500 to-cyan-400',
       icon: <MapPin className="h-24 w-24" />,
       content: (
         <div className="flex flex-col items-center gap-6">
@@ -472,29 +537,39 @@ export default function BallotPresentation() {
           <div className="grid grid-cols-3 gap-4 w-full text-sm">
             <div className="bg-white/10 rounded-xl p-4">
               <h4 className="font-bold mb-2">Twin Cities Metro</h4>
-              <p className="text-xs opacity-80">Minneapolis, St. Paul, Bloomington, Eden Prairie, Anoka-Hennepin, Osseo, Rosemount-AV-Eagan...</p>
+              <p className="text-xs opacity-80">
+                Minneapolis, St. Paul, Bloomington, Eden Prairie, Anoka-Hennepin, Osseo,
+                Rosemount-AV-Eagan...
+              </p>
             </div>
             <div className="bg-white/10 rounded-xl p-4">
               <h4 className="font-bold mb-2">Greater Minnesota</h4>
-              <p className="text-xs opacity-80">Rochester, Duluth, St. Cloud, Mankato, Moorhead, Bemidji, Brainerd, Winona...</p>
+              <p className="text-xs opacity-80">
+                Rochester, Duluth, St. Cloud, Mankato, Moorhead, Bemidji, Brainerd, Winona...
+              </p>
             </div>
             <div className="bg-white/10 rounded-xl p-4">
               <h4 className="font-bold mb-2">Tribal Communities</h4>
-              <p className="text-xs opacity-80">Cass Lake-Bena (Leech Lake), Red Lake Nation, Nay Ah Shing (Mille Lacs)</p>
+              <p className="text-xs opacity-80">
+                Cass Lake-Bena (Leech Lake), Red Lake Nation, Nay Ah Shing (Mille Lacs)
+              </p>
             </div>
           </div>
           <div className="bg-gradient-to-r from-emerald-500/30 to-green-500/30 rounded-2xl p-6 flex items-center gap-4">
             <Heart className="h-10 w-10 text-red-300" />
-            <p className="text-lg">Priority: <span className="font-bold">Tribal food sovereignty</span> and high-need communities served first</p>
+            <p className="text-lg">
+              Priority: <span className="font-bold">Tribal food sovereignty</span> and high-need
+              communities served first
+            </p>
           </div>
         </div>
       ),
     },
     {
       id: 11,
-      title: "Land Conservation",
-      subtitle: "10% of Revenue Protects Natural Resources",
-      bgGradient: "from-teal-600 via-cyan-500 to-sky-400",
+      title: 'Land Conservation',
+      subtitle: '10% of Revenue Protects Natural Resources',
+      bgGradient: 'from-teal-600 via-cyan-500 to-sky-400',
       icon: <TreePine className="h-24 w-24" />,
       content: (
         <div className="flex flex-col items-center gap-8">
@@ -535,16 +610,19 @@ export default function BallotPresentation() {
           </div>
           <div className="bg-black/20 backdrop-blur-lg rounded-2xl p-6 flex items-center gap-4">
             <Shield className="h-10 w-10 text-green-300" />
-            <p className="text-lg">All lands held in <span className="font-bold">permanent land trust</span> - never to be sold or developed</p>
+            <p className="text-lg">
+              All lands held in <span className="font-bold">permanent land trust</span> - never to
+              be sold or developed
+            </p>
           </div>
         </div>
       ),
     },
     {
       id: 12,
-      title: "Environmental Impact",
+      title: 'Environmental Impact',
       subtitle: "Healing Minnesota's Land & Water",
-      bgGradient: "from-green-600 via-emerald-500 to-lime-400",
+      bgGradient: 'from-green-600 via-emerald-500 to-lime-400',
       icon: <Leaf className="h-24 w-24" />,
       content: (
         <div className="grid grid-cols-2 gap-8">
@@ -555,7 +633,9 @@ export default function BallotPresentation() {
                 <span className="font-bold text-lg">Water Saved</span>
               </div>
               <div className="text-3xl font-bold">450 Million Gallons/Year</div>
-              <p className="text-sm opacity-70">10x less water than traditional farming (Arizona State research)</p>
+              <p className="text-sm opacity-70">
+                10x less water than traditional farming (Arizona State research)
+              </p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5">
               <div className="flex items-center gap-3 mb-2">
@@ -563,7 +643,9 @@ export default function BallotPresentation() {
                 <span className="font-bold text-lg">CO2 Emissions Avoided</span>
               </div>
               <div className="text-3xl font-bold">6,553 Metric Tons/Year</div>
-              <p className="text-sm opacity-70">Eliminated food transport emissions (EPA methodology)</p>
+              <p className="text-sm opacity-70">
+                Eliminated food transport emissions (EPA methodology)
+              </p>
             </div>
           </div>
           <div className="space-y-4">
@@ -573,7 +655,9 @@ export default function BallotPresentation() {
                 <span className="font-bold text-lg">Truck-Miles Eliminated</span>
               </div>
               <div className="text-3xl font-bold">1.6 Million/Year</div>
-              <p className="text-sm opacity-70">Local food replaces 26,700 tons of imported produce</p>
+              <p className="text-sm opacity-70">
+                Local food replaces 26,700 tons of imported produce
+              </p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-5">
               <div className="flex items-center gap-3 mb-2">
@@ -589,9 +673,9 @@ export default function BallotPresentation() {
     },
     {
       id: 13,
-      title: "Educational Benefits",
-      subtitle: "Learning by Growing",
-      bgGradient: "from-indigo-600 via-violet-500 to-purple-400",
+      title: 'Educational Benefits',
+      subtitle: 'Learning by Growing',
+      bgGradient: 'from-indigo-600 via-violet-500 to-purple-400',
       icon: <GraduationCap className="h-24 w-24" />,
       content: (
         <div className="flex flex-col items-center gap-8">
@@ -599,7 +683,9 @@ export default function BallotPresentation() {
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
               <FlaskConical className="h-12 w-12 mx-auto mb-3 text-cyan-300" />
               <h3 className="font-bold text-lg">STEM Integration</h3>
-              <p className="text-sm opacity-80 mt-2">Biology, chemistry, physics, math - all in one living lab</p>
+              <p className="text-sm opacity-80 mt-2">
+                Biology, chemistry, physics, math - all in one living lab
+              </p>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 text-center">
               <Sprout className="h-12 w-12 mx-auto mb-3 text-green-300" />
@@ -632,16 +718,20 @@ export default function BallotPresentation() {
           </div>
           <div className="bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded-2xl p-6 flex items-center gap-4 max-w-3xl">
             <Users className="h-10 w-10" />
-            <p className="text-lg">Every student participates - from <span className="font-bold">kindergarten seed planting</span> to <span className="font-bold">high school internships</span></p>
+            <p className="text-lg">
+              Every student participates - from{' '}
+              <span className="font-bold">kindergarten seed planting</span> to{' '}
+              <span className="font-bold">high school internships</span>
+            </p>
           </div>
         </div>
       ),
     },
     {
       id: 14,
-      title: "Scaling Beyond Minnesota",
-      subtitle: "A Model for America & the World",
-      bgGradient: "from-blue-700 via-blue-500 to-cyan-400",
+      title: 'Scaling Beyond Minnesota',
+      subtitle: 'A Model for America & the World',
+      bgGradient: 'from-blue-700 via-blue-500 to-cyan-400',
       icon: <Globe className="h-24 w-24" />,
       content: (
         <div className="flex flex-col items-center gap-8">
@@ -693,16 +783,17 @@ export default function BallotPresentation() {
     },
     {
       id: 15,
-      title: "Vote YES in 2026",
-      subtitle: "One Vote to Feed Minnesota Forever",
-      bgGradient: "from-emerald-600 via-green-500 to-lime-400",
+      title: 'Vote YES in 2026',
+      subtitle: 'One Vote to Feed Minnesota Forever',
+      bgGradient: 'from-emerald-600 via-green-500 to-lime-400',
       icon: <Vote className="h-24 w-24" />,
       content: (
         <div className="flex flex-col items-center gap-8">
           <div className="text-center max-w-3xl">
             <p className="text-2xl leading-relaxed mb-8">
-              One vote creates greenhouses at every school. One vote feeds every student fresh, 
-              local produce. One vote keeps Minnesota's wealth in Minnesota - <span className="font-bold text-yellow-300">forever</span>.
+              One vote creates greenhouses at every school. One vote feeds every student fresh,
+              local produce. One vote keeps Minnesota's wealth in Minnesota -{' '}
+              <span className="font-bold text-yellow-300">forever</span>.
             </p>
           </div>
           <div className="grid grid-cols-3 gap-6 w-full max-w-4xl">
@@ -727,9 +818,7 @@ export default function BallotPresentation() {
               VOTE YES on Question 1
             </div>
           </div>
-          <p className="text-lg opacity-80 mt-4">
-            November 2026 • gaiacommons.org
-          </p>
+          <p className="text-lg opacity-80 mt-4">November 2026 • gaiacommons.org</p>
         </div>
       ),
     },
@@ -754,34 +843,46 @@ export default function BallotPresentation() {
   const currentSlideData = slides[currentSlide];
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br ${currentSlideData.bgGradient} text-white overflow-hidden`}>
+    <div
+      className={`min-h-screen bg-gradient-to-br ${currentSlideData.bgGradient} text-white overflow-hidden`}
+    >
       <div className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <Link href="/">
-            <Button variant="ghost" size="sm" className="text-white hover:bg-white/20" data-testid="button-back-dashboard">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-white hover:bg-white/20"
+              data-testid="button-back-dashboard"
+            >
               <Home className="h-4 w-4 mr-2" />
               Dashboard
             </Button>
           </Link>
           <div className="flex items-center gap-2">
-            <span className="text-sm opacity-80">Slide {currentSlide + 1} of {slides.length}</span>
-            <Progress value={((currentSlide + 1) / slides.length) * 100} className="w-32 h-2 bg-white/20" />
+            <span className="text-sm opacity-80">
+              Slide {currentSlide + 1} of {slides.length}
+            </span>
+            <Progress
+              value={((currentSlide + 1) / slides.length) * 100}
+              className="w-32 h-2 bg-white/20"
+            />
           </div>
           <div className="flex gap-2">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={prevSlide} 
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={prevSlide}
               disabled={currentSlide === 0}
               className="text-white hover:bg-white/20 disabled:opacity-30"
               data-testid="button-prev-slide"
             >
               <ChevronLeft className="h-5 w-5" />
             </Button>
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={nextSlide} 
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={nextSlide}
               disabled={currentSlide === slides.length - 1}
               className="text-white hover:bg-white/20 disabled:opacity-30"
               data-testid="button-next-slide"
@@ -798,7 +899,7 @@ export default function BallotPresentation() {
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -100 }}
-          transition={{ duration: 0.4, ease: "easeInOut" }}
+          transition={{ duration: 0.4, ease: 'easeInOut' }}
           className="min-h-screen pt-20 pb-24 px-8 flex flex-col"
         >
           <div className="flex-1 flex flex-col items-center justify-center max-w-6xl mx-auto w-full">
@@ -809,9 +910,7 @@ export default function BallotPresentation() {
                 <p className="text-2xl opacity-90">{currentSlideData.subtitle}</p>
               )}
             </div>
-            <div className="w-full">
-              {currentSlideData.content}
-            </div>
+            <div className="w-full">{currentSlideData.content}</div>
           </div>
         </motion.div>
       </AnimatePresence>
@@ -824,9 +923,7 @@ export default function BallotPresentation() {
                 key={index}
                 onClick={() => goToSlide(index)}
                 className={`w-3 h-3 rounded-full transition-all ${
-                  index === currentSlide 
-                    ? 'bg-white scale-125' 
-                    : 'bg-white/40 hover:bg-white/60'
+                  index === currentSlide ? 'bg-white scale-125' : 'bg-white/40 hover:bg-white/60'
                 }`}
                 data-testid={`slide-dot-${index}`}
               />

@@ -26,22 +26,22 @@ The Gaia Commons Council is building a program to place 1,200 greenhouses at Min
 
 ## Statewide Numbers (Minnesota)
 
-| Metric | Value |
-|--------|-------|
-| Total Schools | ~3,100 |
-| Schools with Greenhouses | 1,200 |
-| Greenhouse Size (avg) | 10,000 sqft |
-| Total Greenhouse Space | 12,000,000 sqft |
-| Hydro Towers | 8,400,000 sqft (150,000 units) |
-| Soil Beds | 3,600,000 sqft (112,500 beds) |
-| Students Served | 900,000 |
-| Permanent Jobs | 2,400 |
-| Capex | $926,000,000 |
-| Annual Revenue | $1,610,000,000 |
-| Endowment | $5B @ 4.5% = $225M/year |
-| CO2 Avoided | 6,553 metric tons/year |
-| Water Saved | 567M gallons/year |
-| Truck-Miles Eliminated | 2.025M/year |
+| Metric                   | Value                          |
+| ------------------------ | ------------------------------ |
+| Total Schools            | ~3,100                         |
+| Schools with Greenhouses | 1,200                          |
+| Greenhouse Size (avg)    | 10,000 sqft                    |
+| Total Greenhouse Space   | 12,000,000 sqft                |
+| Hydro Towers             | 8,400,000 sqft (150,000 units) |
+| Soil Beds                | 3,600,000 sqft (112,500 beds)  |
+| Students Served          | 900,000                        |
+| Permanent Jobs           | 2,400                          |
+| Capex                    | $926,000,000                   |
+| Annual Revenue           | $1,610,000,000                 |
+| Endowment                | $5B @ 4.5% = $225M/year        |
+| CO2 Avoided              | 6,553 metric tons/year         |
+| Water Saved              | 567M gallons/year              |
+| Truck-Miles Eliminated   | 2.025M/year                    |
 
 ## Tech Stack
 

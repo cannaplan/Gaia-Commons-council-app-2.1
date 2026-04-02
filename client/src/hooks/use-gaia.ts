@@ -1,5 +1,5 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { api } from "@shared/routes";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { api } from '@shared/routes';
 
 // Health
 export function useHealth() {
@@ -7,7 +7,7 @@ export function useHealth() {
     queryKey: [api.health.get.path],
     queryFn: async () => {
       const res = await fetch(api.health.get.path);
-      if (!res.ok) throw new Error("Failed to fetch health status");
+      if (!res.ok) throw new Error('Failed to fetch health status');
       return api.health.get.responses[200].parse(await res.json());
     },
     refetchInterval: 30000,
@@ -20,7 +20,7 @@ export function usePilotStats() {
     queryKey: [api.pilot.get.path],
     queryFn: async () => {
       const res = await fetch(api.pilot.get.path);
-      if (!res.ok) throw new Error("Failed to fetch pilot stats");
+      if (!res.ok) throw new Error('Failed to fetch pilot stats');
       return api.pilot.get.responses[200].parse(await res.json());
     },
   });
@@ -32,7 +32,7 @@ export function useEndowmentStats() {
     queryKey: [api.endowment.get.path],
     queryFn: async () => {
       const res = await fetch(api.endowment.get.path);
-      if (!res.ok) throw new Error("Failed to fetch endowment stats");
+      if (!res.ok) throw new Error('Failed to fetch endowment stats');
       return api.endowment.get.responses[200].parse(await res.json());
     },
   });
@@ -44,7 +44,7 @@ export function useTimeline() {
     queryKey: [api.timeline.list.path],
     queryFn: async () => {
       const res = await fetch(api.timeline.list.path);
-      if (!res.ok) throw new Error("Failed to fetch timeline");
+      if (!res.ok) throw new Error('Failed to fetch timeline');
       return api.timeline.list.responses[200].parse(await res.json());
     },
   });
@@ -56,7 +56,7 @@ export function useFinancialMetrics() {
     queryKey: [api.financials.get.path],
     queryFn: async () => {
       const res = await fetch(api.financials.get.path);
-      if (!res.ok) throw new Error("Failed to fetch financial metrics");
+      if (!res.ok) throw new Error('Failed to fetch financial metrics');
       return api.financials.get.responses[200].parse(await res.json());
     },
   });
@@ -68,7 +68,7 @@ export function useClimateMetrics() {
     queryKey: [api.climate.get.path],
     queryFn: async () => {
       const res = await fetch(api.climate.get.path);
-      if (!res.ok) throw new Error("Failed to fetch climate metrics");
+      if (!res.ok) throw new Error('Failed to fetch climate metrics');
       return api.climate.get.responses[200].parse(await res.json());
     },
   });
@@ -80,7 +80,7 @@ export function useSlides() {
     queryKey: [api.slides.list.path],
     queryFn: async () => {
       const res = await fetch(api.slides.list.path);
-      if (!res.ok) throw new Error("Failed to fetch slides");
+      if (!res.ok) throw new Error('Failed to fetch slides');
       return api.slides.list.responses[200].parse(await res.json());
     },
   });
@@ -92,7 +92,7 @@ export function useHistoricalFinancials() {
     queryKey: [api.historicalFinancials.list.path],
     queryFn: async () => {
       const res = await fetch(api.historicalFinancials.list.path);
-      if (!res.ok) throw new Error("Failed to fetch historical financials");
+      if (!res.ok) throw new Error('Failed to fetch historical financials');
       return api.historicalFinancials.list.responses[200].parse(await res.json());
     },
   });
@@ -104,7 +104,7 @@ export function useSchoolClusters() {
     queryKey: [api.schoolClusters.list.path],
     queryFn: async () => {
       const res = await fetch(api.schoolClusters.list.path);
-      if (!res.ok) throw new Error("Failed to fetch school clusters");
+      if (!res.ok) throw new Error('Failed to fetch school clusters');
       return api.schoolClusters.list.responses[200].parse(await res.json());
     },
   });
@@ -116,7 +116,7 @@ export function useSchools() {
     queryKey: [api.schools.list.path],
     queryFn: async () => {
       const res = await fetch(api.schools.list.path);
-      if (!res.ok) throw new Error("Failed to fetch schools");
+      if (!res.ok) throw new Error('Failed to fetch schools');
       return api.schools.list.responses[200].parse(await res.json());
     },
   });
@@ -128,7 +128,7 @@ export function useScaleProjections() {
     queryKey: [api.scaleProjections.list.path],
     queryFn: async () => {
       const res = await fetch(api.scaleProjections.list.path);
-      if (!res.ok) throw new Error("Failed to fetch scale projections");
+      if (!res.ok) throw new Error('Failed to fetch scale projections');
       return api.scaleProjections.list.responses[200].parse(await res.json());
     },
   });
@@ -140,7 +140,7 @@ export function useEnvironmentalImpact() {
     queryKey: [api.environmentalImpact.list.path],
     queryFn: async () => {
       const res = await fetch(api.environmentalImpact.list.path);
-      if (!res.ok) throw new Error("Failed to fetch environmental impact");
+      if (!res.ok) throw new Error('Failed to fetch environmental impact');
       return api.environmentalImpact.list.responses[200].parse(await res.json());
     },
   });
@@ -152,7 +152,7 @@ export function useJobCreation() {
     queryKey: [api.jobCreation.list.path],
     queryFn: async () => {
       const res = await fetch(api.jobCreation.list.path);
-      if (!res.ok) throw new Error("Failed to fetch job creation data");
+      if (!res.ok) throw new Error('Failed to fetch job creation data');
       return api.jobCreation.list.responses[200].parse(await res.json());
     },
   });
@@ -164,7 +164,7 @@ export function useLegalFramework() {
     queryKey: [api.legalFramework.get.path],
     queryFn: async () => {
       const res = await fetch(api.legalFramework.get.path);
-      if (!res.ok) throw new Error("Failed to fetch legal framework");
+      if (!res.ok) throw new Error('Failed to fetch legal framework');
       return api.legalFramework.get.responses[200].parse(await res.json());
     },
   });
@@ -176,7 +176,7 @@ export function useEndowmentProjections() {
     queryKey: [api.endowmentProjections.list.path],
     queryFn: async () => {
       const res = await fetch(api.endowmentProjections.list.path);
-      if (!res.ok) throw new Error("Failed to fetch endowment projections");
+      if (!res.ok) throw new Error('Failed to fetch endowment projections');
       return api.endowmentProjections.list.responses[200].parse(await res.json());
     },
   });
@@ -188,7 +188,7 @@ export function useExpandedJobs() {
     queryKey: [api.expandedJobs.list.path],
     queryFn: async () => {
       const res = await fetch(api.expandedJobs.list.path);
-      if (!res.ok) throw new Error("Failed to fetch expanded jobs");
+      if (!res.ok) throw new Error('Failed to fetch expanded jobs');
       return api.expandedJobs.list.responses[200].parse(await res.json());
     },
   });
@@ -200,7 +200,7 @@ export function useK12Curriculum() {
     queryKey: [api.k12Curriculum.list.path],
     queryFn: async () => {
       const res = await fetch(api.k12Curriculum.list.path);
-      if (!res.ok) throw new Error("Failed to fetch K-12 curriculum");
+      if (!res.ok) throw new Error('Failed to fetch K-12 curriculum');
       return api.k12Curriculum.list.responses[200].parse(await res.json());
     },
   });
@@ -212,7 +212,7 @@ export function useCoalitionPartners() {
     queryKey: [api.coalitionPartners.list.path],
     queryFn: async () => {
       const res = await fetch(api.coalitionPartners.list.path);
-      if (!res.ok) throw new Error("Failed to fetch coalition partners");
+      if (!res.ok) throw new Error('Failed to fetch coalition partners');
       return api.coalitionPartners.list.responses[200].parse(await res.json());
     },
   });
@@ -224,7 +224,7 @@ export function useFundingSources() {
     queryKey: [api.fundingSources.list.path],
     queryFn: async () => {
       const res = await fetch(api.fundingSources.list.path);
-      if (!res.ok) throw new Error("Failed to fetch funding sources");
+      if (!res.ok) throw new Error('Failed to fetch funding sources');
       return api.fundingSources.list.responses[200].parse(await res.json());
     },
   });
@@ -236,7 +236,7 @@ export function useTransparencyFeatures() {
     queryKey: [api.transparencyFeatures.list.path],
     queryFn: async () => {
       const res = await fetch(api.transparencyFeatures.list.path);
-      if (!res.ok) throw new Error("Failed to fetch transparency features");
+      if (!res.ok) throw new Error('Failed to fetch transparency features');
       return api.transparencyFeatures.list.responses[200].parse(await res.json());
     },
   });
@@ -248,7 +248,7 @@ export function useAccountabilityMechanisms() {
     queryKey: [api.accountabilityMechanisms.list.path],
     queryFn: async () => {
       const res = await fetch(api.accountabilityMechanisms.list.path);
-      if (!res.ok) throw new Error("Failed to fetch accountability mechanisms");
+      if (!res.ok) throw new Error('Failed to fetch accountability mechanisms');
       return api.accountabilityMechanisms.list.responses[200].parse(await res.json());
     },
   });
@@ -260,7 +260,7 @@ export function useTribalPartnerships() {
     queryKey: [api.tribalPartnerships.list.path],
     queryFn: async () => {
       const res = await fetch(api.tribalPartnerships.list.path);
-      if (!res.ok) throw new Error("Failed to fetch tribal partnerships");
+      if (!res.ok) throw new Error('Failed to fetch tribal partnerships');
       return api.tribalPartnerships.list.responses[200].parse(await res.json());
     },
   });
@@ -272,7 +272,7 @@ export function useImplementationTimeline() {
     queryKey: [api.implementationTimeline.list.path],
     queryFn: async () => {
       const res = await fetch(api.implementationTimeline.list.path);
-      if (!res.ok) throw new Error("Failed to fetch implementation timeline");
+      if (!res.ok) throw new Error('Failed to fetch implementation timeline');
       return api.implementationTimeline.list.responses[200].parse(await res.json());
     },
   });
@@ -284,7 +284,7 @@ export function usePoliticalRoadmap() {
     queryKey: [api.politicalRoadmap.list.path],
     queryFn: async () => {
       const res = await fetch(api.politicalRoadmap.list.path);
-      if (!res.ok) throw new Error("Failed to fetch political roadmap");
+      if (!res.ok) throw new Error('Failed to fetch political roadmap');
       return api.politicalRoadmap.list.responses[200].parse(await res.json());
     },
   });
@@ -296,7 +296,7 @@ export function useStressTests() {
     queryKey: [api.stressTests.list.path],
     queryFn: async () => {
       const res = await fetch(api.stressTests.list.path);
-      if (!res.ok) throw new Error("Failed to fetch stress tests");
+      if (!res.ok) throw new Error('Failed to fetch stress tests');
       return api.stressTests.list.responses[200].parse(await res.json());
     },
   });
@@ -308,7 +308,7 @@ export function useTieredCarbonPricing() {
     queryKey: [api.tieredCarbonPricing.list.path],
     queryFn: async () => {
       const res = await fetch(api.tieredCarbonPricing.list.path);
-      if (!res.ok) throw new Error("Failed to fetch tiered carbon pricing");
+      if (!res.ok) throw new Error('Failed to fetch tiered carbon pricing');
       return api.tieredCarbonPricing.list.responses[200].parse(await res.json());
     },
   });
@@ -320,7 +320,7 @@ export function useRegenerativeAgriculture() {
     queryKey: [api.regenerativeAgriculture.list.path],
     queryFn: async () => {
       const res = await fetch(api.regenerativeAgriculture.list.path);
-      if (!res.ok) throw new Error("Failed to fetch regenerative agriculture");
+      if (!res.ok) throw new Error('Failed to fetch regenerative agriculture');
       return api.regenerativeAgriculture.list.responses[200].parse(await res.json());
     },
   });
@@ -332,7 +332,7 @@ export function useNationwideFoodSecurity() {
     queryKey: [api.nationwideFoodSecurity.get.path],
     queryFn: async () => {
       const res = await fetch(api.nationwideFoodSecurity.get.path);
-      if (!res.ok) throw new Error("Failed to fetch nationwide food security");
+      if (!res.ok) throw new Error('Failed to fetch nationwide food security');
       return api.nationwideFoodSecurity.get.responses[200].parse(await res.json());
     },
   });
@@ -344,7 +344,7 @@ export function useLaborTransition() {
     queryKey: [api.laborTransition.list.path],
     queryFn: async () => {
       const res = await fetch(api.laborTransition.list.path);
-      if (!res.ok) throw new Error("Failed to fetch labor transition");
+      if (!res.ok) throw new Error('Failed to fetch labor transition');
       return api.laborTransition.list.responses[200].parse(await res.json());
     },
   });
@@ -356,7 +356,7 @@ export function usePoliticalCoalitionData() {
     queryKey: [api.politicalCoalition.list.path],
     queryFn: async () => {
       const res = await fetch(api.politicalCoalition.list.path);
-      if (!res.ok) throw new Error("Failed to fetch political coalition");
+      if (!res.ok) throw new Error('Failed to fetch political coalition');
       return api.politicalCoalition.list.responses[200].parse(await res.json());
     },
   });
@@ -368,7 +368,7 @@ export function useGlobalRegenerationSummary() {
     queryKey: [api.globalRegenerationSummary.get.path],
     queryFn: async () => {
       const res = await fetch(api.globalRegenerationSummary.get.path);
-      if (!res.ok) throw new Error("Failed to fetch global regeneration summary");
+      if (!res.ok) throw new Error('Failed to fetch global regeneration summary');
       return api.globalRegenerationSummary.get.responses[200].parse(await res.json());
     },
   });
@@ -380,7 +380,7 @@ export function usePlanetaryBoundaries() {
     queryKey: [api.planetaryBoundaries.list.path],
     queryFn: async () => {
       const res = await fetch(api.planetaryBoundaries.list.path);
-      if (!res.ok) throw new Error("Failed to fetch planetary boundaries");
+      if (!res.ok) throw new Error('Failed to fetch planetary boundaries');
       return api.planetaryBoundaries.list.responses[200].parse(await res.json());
     },
   });
@@ -392,7 +392,7 @@ export function useCalibrationTargets() {
     queryKey: [api.calibrationTargets.list.path],
     queryFn: async () => {
       const res = await fetch(api.calibrationTargets.list.path);
-      if (!res.ok) throw new Error("Failed to fetch calibration targets");
+      if (!res.ok) throw new Error('Failed to fetch calibration targets');
       return api.calibrationTargets.list.responses[200].parse(await res.json());
     },
   });
@@ -404,7 +404,7 @@ export function useModelMaturity() {
     queryKey: [api.modelMaturity.list.path],
     queryFn: async () => {
       const res = await fetch(api.modelMaturity.list.path);
-      if (!res.ok) throw new Error("Failed to fetch model maturity");
+      if (!res.ok) throw new Error('Failed to fetch model maturity');
       return api.modelMaturity.list.responses[200].parse(await res.json());
     },
   });
@@ -416,7 +416,7 @@ export function useHistoricalClimateData() {
     queryKey: [api.historicalClimateData.list.path],
     queryFn: async () => {
       const res = await fetch(api.historicalClimateData.list.path);
-      if (!res.ok) throw new Error("Failed to fetch historical climate data");
+      if (!res.ok) throw new Error('Failed to fetch historical climate data');
       return api.historicalClimateData.list.responses[200].parse(await res.json());
     },
   });
@@ -428,7 +428,7 @@ export function useMonteCarloSimulations() {
     queryKey: [api.monteCarloSimulations.list.path],
     queryFn: async () => {
       const res = await fetch(api.monteCarloSimulations.list.path);
-      if (!res.ok) throw new Error("Failed to fetch monte carlo simulations");
+      if (!res.ok) throw new Error('Failed to fetch monte carlo simulations');
       return api.monteCarloSimulations.list.responses[200].parse(await res.json());
     },
   });
@@ -440,7 +440,7 @@ export function useScenarioComparisons() {
     queryKey: [api.scenarioComparisons.list.path],
     queryFn: async () => {
       const res = await fetch(api.scenarioComparisons.list.path);
-      if (!res.ok) throw new Error("Failed to fetch scenario comparisons");
+      if (!res.ok) throw new Error('Failed to fetch scenario comparisons');
       return api.scenarioComparisons.list.responses[200].parse(await res.json());
     },
   });
@@ -452,7 +452,7 @@ export function useOptimizationParams() {
     queryKey: [api.optimizationParams.list.path],
     queryFn: async () => {
       const res = await fetch(api.optimizationParams.list.path);
-      if (!res.ok) throw new Error("Failed to fetch optimization params");
+      if (!res.ok) throw new Error('Failed to fetch optimization params');
       return api.optimizationParams.list.responses[200].parse(await res.json());
     },
   });
@@ -464,7 +464,7 @@ export function useSensitivityAnalysis() {
     queryKey: [api.sensitivityAnalysis.list.path],
     queryFn: async () => {
       const res = await fetch(api.sensitivityAnalysis.list.path);
-      if (!res.ok) throw new Error("Failed to fetch sensitivity analysis");
+      if (!res.ok) throw new Error('Failed to fetch sensitivity analysis');
       return api.sensitivityAnalysis.list.responses[200].parse(await res.json());
     },
   });
@@ -476,7 +476,7 @@ export function useGlobalRegenerationRegions() {
     queryKey: [api.globalRegenerationRegions.list.path],
     queryFn: async () => {
       const res = await fetch(api.globalRegenerationRegions.list.path);
-      if (!res.ok) throw new Error("Failed to fetch global regeneration regions");
+      if (!res.ok) throw new Error('Failed to fetch global regeneration regions');
       return api.globalRegenerationRegions.list.responses[200].parse(await res.json());
     },
   });
@@ -488,7 +488,7 @@ export function useMiningAlternatives() {
     queryKey: [api.miningAlternatives.list.path],
     queryFn: async () => {
       const res = await fetch(api.miningAlternatives.list.path);
-      if (!res.ok) throw new Error("Failed to fetch mining alternatives");
+      if (!res.ok) throw new Error('Failed to fetch mining alternatives');
       return api.miningAlternatives.list.responses[200].parse(await res.json());
     },
   });

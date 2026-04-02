@@ -30,7 +30,7 @@ export function ColorSchemeSelector() {
             data-testid={`menu-item-color-${scheme.id}`}
           >
             <div className="flex items-center gap-2">
-              <div 
+              <div
                 className="w-4 h-4 rounded-full border border-border"
                 style={{ backgroundColor: scheme.primary }}
               />

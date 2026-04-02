@@ -1,7 +1,7 @@
-import { motion } from "framer-motion";
-import { TimelineEvent } from "@shared/schema";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CalendarClock } from "lucide-react";
+import { motion } from 'framer-motion';
+import { TimelineEvent } from '@shared/schema';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CalendarClock } from 'lucide-react';
 
 interface TimelineProps {
   events: TimelineEvent[];
@@ -21,10 +21,10 @@ export function Timeline({ events }: TimelineProps) {
       </CardHeader>
       <CardContent className="relative">
         <div className="absolute left-8 top-6 bottom-6 w-0.5 bg-gradient-to-b from-primary/20 via-primary/10 to-transparent" />
-        
+
         <div className="space-y-8 pl-2">
           {sortedEvents.map((event, index) => (
-            <motion.div 
+            <motion.div
               key={event.id}
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
@@ -33,9 +33,11 @@ export function Timeline({ events }: TimelineProps) {
             >
               {/* Dot */}
               <div className="absolute left-[3px] top-1.5 h-3 w-3 rounded-full border-2 border-primary bg-background group-hover:bg-primary transition-colors duration-300 z-10 shadow-sm" />
-              
+
               <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-4">
-                <span className="text-sm font-bold text-primary font-display w-16 shrink-0">{event.year}</span>
+                <span className="text-sm font-bold text-primary font-display w-16 shrink-0">
+                  {event.year}
+                </span>
                 <span className="text-foreground/80 font-medium group-hover:text-foreground transition-colors">
                   {event.event}
                 </span>

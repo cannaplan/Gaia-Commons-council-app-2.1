@@ -17,11 +17,17 @@ vi.mock('../storage', () => ({
     getGlobalRegenerationSummary: vi.fn().mockResolvedValue({ id: 1 }),
     getK12Curriculum: vi.fn().mockResolvedValue([{ id: 1 }]),
     getFundingSources: vi.fn().mockResolvedValue([{ id: 1 }]),
-    getScaleProjections: vi.fn().mockResolvedValue([
-      { id: 1, scale: 'statewide', greenhouses: 1200, schools: 3100, students: 900000 },
-    ]),
-    getPilotStats: vi.fn().mockResolvedValue({ id: 1, students: 5630, sqft: 49250, schools: 6, status: 'live' }),
-    getEndowmentStats: vi.fn().mockResolvedValue({ id: 1, size: '5.0B', annual: '225M', greenhouses: 1200 }),
+    getScaleProjections: vi
+      .fn()
+      .mockResolvedValue([
+        { id: 1, scale: 'statewide', greenhouses: 1200, schools: 3100, students: 900000 },
+      ]),
+    getPilotStats: vi
+      .fn()
+      .mockResolvedValue({ id: 1, students: 5630, sqft: 49250, schools: 6, status: 'live' }),
+    getEndowmentStats: vi
+      .fn()
+      .mockResolvedValue({ id: 1, size: '5.0B', annual: '225M', greenhouses: 1200 }),
     getTimelineEvents: vi.fn().mockResolvedValue([{ id: 1, event: 'test' }]),
     getFinancialMetrics: vi.fn().mockResolvedValue({ id: 1 }),
     getClimateMetrics: vi.fn().mockResolvedValue({ id: 1 }),
@@ -111,9 +117,12 @@ beforeAll(async () => {
 // ── POST /api/dao/signature edge cases ──────────────────────────────────────
 describe('POST /api/dao/signature edge cases', () => {
   it('ignores extra/unexpected fields and still succeeds', async () => {
-    const res = await supertest(app)
-      .post('/api/dao/signature')
-      .send({ name: 'Edge Tester', email: 'edge-extra@example.com', extraField: 'ignored', foo: 42 });
+    const res = await supertest(app).post('/api/dao/signature').send({
+      name: 'Edge Tester',
+      email: 'edge-extra@example.com',
+      extraField: 'ignored',
+      foo: 42,
+    });
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
   });

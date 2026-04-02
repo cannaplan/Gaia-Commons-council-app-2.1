@@ -1,8 +1,8 @@
-import { useState, useId } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useState, useId } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 interface CollapsibleSectionProps {
   title: string;
@@ -20,14 +20,14 @@ export function CollapsibleSection({
   badge,
   defaultOpen = true,
   children,
-  className = "",
+  className = '',
   testId,
 }: CollapsibleSectionProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const contentId = useId();
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" || e.key === " ") {
+    if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       setIsOpen(!isOpen);
     }
@@ -48,10 +48,7 @@ export function CollapsibleSection({
           {icon}
           <span className="text-lg font-semibold flex-1 text-left">{title}</span>
           {badge && <span className="mr-2">{badge}</span>}
-          <motion.div
-            animate={{ rotate: isOpen ? 180 : 0 }}
-            transition={{ duration: 0.2 }}
-          >
+          <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
             <ChevronDown className="h-5 w-5 text-muted-foreground" />
           </motion.div>
         </Button>
@@ -61,10 +58,10 @@ export function CollapsibleSection({
           <motion.div
             id={contentId}
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
+            animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            style={{ overflow: "hidden" }}
+            style={{ overflow: 'hidden' }}
             role="region"
             aria-labelledby={`${testId}-toggle`}
           >

@@ -1,13 +1,13 @@
-import { Share2, Twitter, Facebook, Linkedin, Link2, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Share2, Twitter, Facebook, Linkedin, Link2, Check } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
+} from '@/components/ui/dropdown-menu';
+import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
 
 interface ShareButtonsProps {
   title?: string;
@@ -15,10 +15,10 @@ interface ShareButtonsProps {
   url?: string;
 }
 
-export function ShareButtons({ 
-  title = "Gaia Commons Council - One Vote, Forever Fed",
-  text = "Check out the Gaia Commons Council dashboard for the 2026 ballot initiative bringing sustainable food systems to Minnesota!",
-  url = typeof window !== "undefined" ? window.location.href : ""
+export function ShareButtons({
+  title = 'Gaia Commons Council - One Vote, Forever Fed',
+  text = 'Check out the Gaia Commons Council dashboard for the 2026 ballot initiative bringing sustainable food systems to Minnesota!',
+  url = typeof window !== 'undefined' ? window.location.href : '',
 }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
@@ -34,21 +34,21 @@ export function ShareButtons({
       await navigator.clipboard.writeText(url);
       setCopied(true);
       toast({
-        title: "Link copied!",
-        description: "The link has been copied to your clipboard.",
+        title: 'Link copied!',
+        description: 'The link has been copied to your clipboard.',
       });
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       toast({
-        title: "Failed to copy",
-        description: "Please copy the URL manually.",
-        variant: "destructive",
+        title: 'Failed to copy',
+        description: 'Please copy the URL manually.',
+        variant: 'destructive',
       });
     }
   };
 
   const openShare = (platform: keyof typeof shareUrls) => {
-    window.open(shareUrls[platform], "_blank", "width=600,height=400");
+    window.open(shareUrls[platform], '_blank', 'width=600,height=400');
   };
 
   return (
@@ -60,21 +60,21 @@ export function ShareButtons({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
-        <DropdownMenuItem onClick={() => openShare("twitter")} className="gap-2 cursor-pointer">
+        <DropdownMenuItem onClick={() => openShare('twitter')} className="gap-2 cursor-pointer">
           <Twitter className="h-4 w-4" />
           Twitter / X
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => openShare("facebook")} className="gap-2 cursor-pointer">
+        <DropdownMenuItem onClick={() => openShare('facebook')} className="gap-2 cursor-pointer">
           <Facebook className="h-4 w-4" />
           Facebook
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => openShare("linkedin")} className="gap-2 cursor-pointer">
+        <DropdownMenuItem onClick={() => openShare('linkedin')} className="gap-2 cursor-pointer">
           <Linkedin className="h-4 w-4" />
           LinkedIn
         </DropdownMenuItem>
         <DropdownMenuItem onClick={copyToClipboard} className="gap-2 cursor-pointer">
           {copied ? <Check className="h-4 w-4 text-emerald-500" /> : <Link2 className="h-4 w-4" />}
-          {copied ? "Copied!" : "Copy Link"}
+          {copied ? 'Copied!' : 'Copy Link'}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

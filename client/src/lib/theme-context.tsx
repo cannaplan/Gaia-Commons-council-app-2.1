@@ -9,13 +9,55 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const colorSchemes: { id: ColorScheme; name: string; description: string; primary: string; accent: string }[] = [
-  { id: 'default', name: 'Emerald', description: 'Fresh green theme', primary: '#10b981', accent: '#34d399' },
-  { id: 'forest', name: 'Forest', description: 'Deep woodland greens', primary: '#166534', accent: '#22c55e' },
-  { id: 'ocean', name: 'Ocean', description: 'Calming blue tones', primary: '#0369a1', accent: '#38bdf8' },
-  { id: 'sunset', name: 'Sunset', description: 'Warm amber hues', primary: '#d97706', accent: '#fbbf24' },
-  { id: 'earth', name: 'Earth', description: 'Natural brown tones', primary: '#92400e', accent: '#d97706' },
-  { id: 'lavender', name: 'Lavender', description: 'Soft purple palette', primary: '#7c3aed', accent: '#a78bfa' }
+export const colorSchemes: {
+  id: ColorScheme;
+  name: string;
+  description: string;
+  primary: string;
+  accent: string;
+}[] = [
+  {
+    id: 'default',
+    name: 'Emerald',
+    description: 'Fresh green theme',
+    primary: '#10b981',
+    accent: '#34d399',
+  },
+  {
+    id: 'forest',
+    name: 'Forest',
+    description: 'Deep woodland greens',
+    primary: '#166534',
+    accent: '#22c55e',
+  },
+  {
+    id: 'ocean',
+    name: 'Ocean',
+    description: 'Calming blue tones',
+    primary: '#0369a1',
+    accent: '#38bdf8',
+  },
+  {
+    id: 'sunset',
+    name: 'Sunset',
+    description: 'Warm amber hues',
+    primary: '#d97706',
+    accent: '#fbbf24',
+  },
+  {
+    id: 'earth',
+    name: 'Earth',
+    description: 'Natural brown tones',
+    primary: '#92400e',
+    accent: '#d97706',
+  },
+  {
+    id: 'lavender',
+    name: 'Lavender',
+    description: 'Soft purple palette',
+    primary: '#7c3aed',
+    accent: '#a78bfa',
+  },
 ];
 
 const schemeStyles: Record<ColorScheme, string> = {
@@ -54,7 +96,7 @@ const schemeStyles: Record<ColorScheme, string> = {
     --primary-foreground: 0 0% 100%;
     --accent: 263 70% 72%;
     --accent-foreground: 263 70% 10%;
-  `
+  `,
 };
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
@@ -68,14 +110,14 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const root = document.documentElement;
     const styleId = 'theme-colors';
-    
+
     let styleEl = document.getElementById(styleId) as HTMLStyleElement;
     if (!styleEl) {
       styleEl = document.createElement('style');
       styleEl.id = styleId;
       document.head.appendChild(styleEl);
     }
-    
+
     styleEl.textContent = `
       :root {
         ${schemeStyles[colorScheme]}
@@ -84,7 +126,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         ${schemeStyles[colorScheme]}
       }
     `;
-    
+
     localStorage.setItem('colorScheme', colorScheme);
   }, [colorScheme]);
 

@@ -1,0 +1,9 @@
+dist
+node_modules
+migrations
+attached_assets
+package-lock.json
+*.png
+*.jpg
+*.jpeg
+*.svg

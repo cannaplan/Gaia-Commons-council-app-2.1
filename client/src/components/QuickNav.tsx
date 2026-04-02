@@ -1,11 +1,21 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Menu, X, Home, Banknote, TreePine, Map, Users, 
-  GraduationCap, Building2, Scale, Globe, Calculator,
-  ChevronUp
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Menu,
+  X,
+  Home,
+  Banknote,
+  TreePine,
+  Map,
+  Users,
+  GraduationCap,
+  Building2,
+  Scale,
+  Globe,
+  Calculator,
+  ChevronUp,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface NavItem {
   id: string;
@@ -14,30 +24,38 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { id: "mission", label: "Mission", icon: <Home className="h-4 w-4" /> },
-  { id: "card-pilot-clusters", label: "Pilot Clusters", icon: <TreePine className="h-4 w-4" /> },
-  { id: "card-multi-scale", label: "Scale Deployment", icon: <Scale className="h-4 w-4" /> },
-  { id: "card-funding", label: "Funding Sources", icon: <Banknote className="h-4 w-4" /> },
-  { id: "card-mining-alternative", label: "Mining Alternative", icon: <Building2 className="h-4 w-4" /> },
-  { id: "card-coalition", label: "Coalition Partners", icon: <Users className="h-4 w-4" /> },
-  { id: "card-curriculum", label: "K-12 Curriculum", icon: <GraduationCap className="h-4 w-4" /> },
-  { id: "interactive-map", label: "MN Districts Map", icon: <Map className="h-4 w-4" /> },
-  { id: "global-regeneration", label: "Global Projects", icon: <Globe className="h-4 w-4" /> },
+  { id: 'mission', label: 'Mission', icon: <Home className="h-4 w-4" /> },
+  { id: 'card-pilot-clusters', label: 'Pilot Clusters', icon: <TreePine className="h-4 w-4" /> },
+  { id: 'card-multi-scale', label: 'Scale Deployment', icon: <Scale className="h-4 w-4" /> },
+  { id: 'card-funding', label: 'Funding Sources', icon: <Banknote className="h-4 w-4" /> },
+  {
+    id: 'card-mining-alternative',
+    label: 'Mining Alternative',
+    icon: <Building2 className="h-4 w-4" />,
+  },
+  { id: 'card-coalition', label: 'Coalition Partners', icon: <Users className="h-4 w-4" /> },
+  { id: 'card-curriculum', label: 'K-12 Curriculum', icon: <GraduationCap className="h-4 w-4" /> },
+  { id: 'interactive-map', label: 'MN Districts Map', icon: <Map className="h-4 w-4" /> },
+  { id: 'global-regeneration', label: 'Global Projects', icon: <Globe className="h-4 w-4" /> },
 ];
 
 export function QuickNav() {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
+  const [activeSection, setActiveSection] = useState('');
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 500);
-      
-      const sections = navItems.map(item => ({
-        id: item.id,
-        element: document.querySelector(`[data-testid="${item.id}"]`) || document.getElementById(item.id)
-      })).filter(s => s.element);
+
+      const sections = navItems
+        .map((item) => ({
+          id: item.id,
+          element:
+            document.querySelector(`[data-testid="${item.id}"]`) ||
+            document.getElementById(item.id),
+        }))
+        .filter((s) => s.element);
 
       const scrollPosition = window.scrollY + 150;
 
@@ -54,22 +72,22 @@ export function QuickNav() {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollToSection = (id: string) => {
     const element = document.querySelector(`[data-testid="${id}"]`) || document.getElementById(id);
     if (element) {
       const top = element.getBoundingClientRect().top + window.scrollY - 100;
-      window.scrollTo({ top, behavior: "smooth" });
+      window.scrollTo({ top, behavior: 'smooth' });
     }
     setIsOpen(false);
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -100,7 +118,7 @@ export function QuickNav() {
           className="rounded-full shadow-lg aspect-square p-0"
           onClick={() => setIsOpen(!isOpen)}
           data-testid="button-quick-nav-toggle"
-          aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
           aria-expanded={isOpen}
         >
           {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -126,8 +144,8 @@ export function QuickNav() {
                   onClick={() => scrollToSection(item.id)}
                   className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors hover-elevate ${
                     activeSection === item.id
-                      ? "bg-primary/10 text-primary font-medium"
-                      : "text-foreground/80 hover:bg-muted"
+                      ? 'bg-primary/10 text-primary font-medium'
+                      : 'text-foreground/80 hover:bg-muted'
                   }`}
                   data-testid={`nav-item-${item.id}`}
                 >

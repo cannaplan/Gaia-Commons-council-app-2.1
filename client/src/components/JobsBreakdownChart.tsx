@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import {
   BarChart,
   Bar,
@@ -13,11 +13,11 @@ import {
   PieChart,
   Pie,
   Legend,
-} from "recharts";
-import { Briefcase, Users, HardHat, Building2 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+} from 'recharts';
+import { Briefcase, Users, HardHat, Building2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-type Scale = "pilot" | "statewide" | "national" | "global";
+type Scale = 'pilot' | 'statewide' | 'national' | 'global';
 
 interface JobCategory {
   name: string;
@@ -38,68 +38,68 @@ const scaleData: Record<Scale, ScaleData> = {
     permanentJobs: 18,
     constructionJobs: 76,
     categories: [
-      { name: "Greenhouse Staff", jobs: 12, color: "#10b981", icon: "sprout" },
-      { name: "Educators", jobs: 2, color: "#3b82f6", icon: "graduation" },
-      { name: "Distribution", jobs: 2, color: "#f59e0b", icon: "truck" },
-      { name: "School Staff", jobs: 2, color: "#8b5cf6", icon: "building" },
+      { name: 'Greenhouse Staff', jobs: 12, color: '#10b981', icon: 'sprout' },
+      { name: 'Educators', jobs: 2, color: '#3b82f6', icon: 'graduation' },
+      { name: 'Distribution', jobs: 2, color: '#f59e0b', icon: 'truck' },
+      { name: 'School Staff', jobs: 2, color: '#8b5cf6', icon: 'building' },
     ],
     constructionBreakdown: [
-      { name: "General Construction", jobs: 30, color: "#6b7280", icon: "hammer" },
-      { name: "Electricians", jobs: 15, color: "#f59e0b", icon: "zap" },
-      { name: "Plumbers", jobs: 11, color: "#3b82f6", icon: "droplet" },
-      { name: "HVAC Technicians", jobs: 11, color: "#10b981", icon: "wind" },
-      { name: "Greenhouse Specialists", jobs: 9, color: "#22c55e", icon: "leaf" },
+      { name: 'General Construction', jobs: 30, color: '#6b7280', icon: 'hammer' },
+      { name: 'Electricians', jobs: 15, color: '#f59e0b', icon: 'zap' },
+      { name: 'Plumbers', jobs: 11, color: '#3b82f6', icon: 'droplet' },
+      { name: 'HVAC Technicians', jobs: 11, color: '#10b981', icon: 'wind' },
+      { name: 'Greenhouse Specialists', jobs: 9, color: '#22c55e', icon: 'leaf' },
     ],
   },
   statewide: {
     permanentJobs: 2400,
     constructionJobs: 9260,
     categories: [
-      { name: "Greenhouse Staff", jobs: 1440, color: "#10b981", icon: "sprout" },
-      { name: "Educators", jobs: 240, color: "#3b82f6", icon: "graduation" },
-      { name: "Distribution", jobs: 360, color: "#f59e0b", icon: "truck" },
-      { name: "School Staff", jobs: 360, color: "#8b5cf6", icon: "building" },
+      { name: 'Greenhouse Staff', jobs: 1440, color: '#10b981', icon: 'sprout' },
+      { name: 'Educators', jobs: 240, color: '#3b82f6', icon: 'graduation' },
+      { name: 'Distribution', jobs: 360, color: '#f59e0b', icon: 'truck' },
+      { name: 'School Staff', jobs: 360, color: '#8b5cf6', icon: 'building' },
     ],
     constructionBreakdown: [
-      { name: "General Construction", jobs: 3704, color: "#6b7280", icon: "hammer" },
-      { name: "Electricians", jobs: 1852, color: "#f59e0b", icon: "zap" },
-      { name: "Plumbers", jobs: 1389, color: "#3b82f6", icon: "droplet" },
-      { name: "HVAC Technicians", jobs: 1389, color: "#10b981", icon: "wind" },
-      { name: "Greenhouse Specialists", jobs: 926, color: "#22c55e", icon: "leaf" },
+      { name: 'General Construction', jobs: 3704, color: '#6b7280', icon: 'hammer' },
+      { name: 'Electricians', jobs: 1852, color: '#f59e0b', icon: 'zap' },
+      { name: 'Plumbers', jobs: 1389, color: '#3b82f6', icon: 'droplet' },
+      { name: 'HVAC Technicians', jobs: 1389, color: '#10b981', icon: 'wind' },
+      { name: 'Greenhouse Specialists', jobs: 926, color: '#22c55e', icon: 'leaf' },
     ],
   },
   national: {
     permanentJobs: 250000,
     constructionJobs: 1170000,
     categories: [
-      { name: "Greenhouse Staff", jobs: 156000, color: "#10b981", icon: "sprout" },
-      { name: "Educators", jobs: 26000, color: "#3b82f6", icon: "graduation" },
-      { name: "Distribution", jobs: 39000, color: "#f59e0b", icon: "truck" },
-      { name: "School Staff", jobs: 29000, color: "#8b5cf6", icon: "building" },
+      { name: 'Greenhouse Staff', jobs: 156000, color: '#10b981', icon: 'sprout' },
+      { name: 'Educators', jobs: 26000, color: '#3b82f6', icon: 'graduation' },
+      { name: 'Distribution', jobs: 39000, color: '#f59e0b', icon: 'truck' },
+      { name: 'School Staff', jobs: 29000, color: '#8b5cf6', icon: 'building' },
     ],
     constructionBreakdown: [
-      { name: "General Construction", jobs: 468000, color: "#6b7280", icon: "hammer" },
-      { name: "Electricians", jobs: 234000, color: "#f59e0b", icon: "zap" },
-      { name: "Plumbers", jobs: 175500, color: "#3b82f6", icon: "droplet" },
-      { name: "HVAC Technicians", jobs: 175500, color: "#10b981", icon: "wind" },
-      { name: "Greenhouse Specialists", jobs: 117000, color: "#22c55e", icon: "leaf" },
+      { name: 'General Construction', jobs: 468000, color: '#6b7280', icon: 'hammer' },
+      { name: 'Electricians', jobs: 234000, color: '#f59e0b', icon: 'zap' },
+      { name: 'Plumbers', jobs: 175500, color: '#3b82f6', icon: 'droplet' },
+      { name: 'HVAC Technicians', jobs: 175500, color: '#10b981', icon: 'wind' },
+      { name: 'Greenhouse Specialists', jobs: 117000, color: '#22c55e', icon: 'leaf' },
     ],
   },
   global: {
     permanentJobs: 2000000,
     constructionJobs: 6500000,
     categories: [
-      { name: "Greenhouse Staff", jobs: 1200000, color: "#10b981", icon: "sprout" },
-      { name: "Educators", jobs: 200000, color: "#3b82f6", icon: "graduation" },
-      { name: "Distribution", jobs: 350000, color: "#f59e0b", icon: "truck" },
-      { name: "School Staff", jobs: 250000, color: "#8b5cf6", icon: "building" },
+      { name: 'Greenhouse Staff', jobs: 1200000, color: '#10b981', icon: 'sprout' },
+      { name: 'Educators', jobs: 200000, color: '#3b82f6', icon: 'graduation' },
+      { name: 'Distribution', jobs: 350000, color: '#f59e0b', icon: 'truck' },
+      { name: 'School Staff', jobs: 250000, color: '#8b5cf6', icon: 'building' },
     ],
     constructionBreakdown: [
-      { name: "General Construction", jobs: 2600000, color: "#6b7280", icon: "hammer" },
-      { name: "Electricians", jobs: 1300000, color: "#f59e0b", icon: "zap" },
-      { name: "Plumbers", jobs: 975000, color: "#3b82f6", icon: "droplet" },
-      { name: "HVAC Technicians", jobs: 975000, color: "#10b981", icon: "wind" },
-      { name: "Greenhouse Specialists", jobs: 650000, color: "#22c55e", icon: "leaf" },
+      { name: 'General Construction', jobs: 2600000, color: '#6b7280', icon: 'hammer' },
+      { name: 'Electricians', jobs: 1300000, color: '#f59e0b', icon: 'zap' },
+      { name: 'Plumbers', jobs: 975000, color: '#3b82f6', icon: 'droplet' },
+      { name: 'HVAC Technicians', jobs: 975000, color: '#10b981', icon: 'wind' },
+      { name: 'Greenhouse Specialists', jobs: 650000, color: '#22c55e', icon: 'leaf' },
     ],
   },
 };
@@ -115,10 +115,10 @@ const formatNumber = (value: number): string => {
 };
 
 const scaleLabels: Record<Scale, string> = {
-  pilot: "Pilot (6 Schools)",
-  statewide: "Statewide (1,200 Greenhouses)",
-  national: "National (130K Schools)",
-  global: "Global (1M Schools)",
+  pilot: 'Pilot (6 Schools)',
+  statewide: 'Statewide (1,200 Greenhouses)',
+  national: 'National (130K Schools)',
+  global: 'Global (1M Schools)',
 };
 
 const CustomTooltip = ({ active, payload }: any) => {
@@ -127,9 +127,7 @@ const CustomTooltip = ({ active, payload }: any) => {
     return (
       <div className="bg-background border rounded-lg shadow-lg p-3">
         <p className="font-bold text-foreground">{data.name}</p>
-        <p className="text-sm text-muted-foreground">
-          {formatNumber(data.jobs)} jobs
-        </p>
+        <p className="text-sm text-muted-foreground">{formatNumber(data.jobs)} jobs</p>
       </div>
     );
   }
@@ -140,16 +138,18 @@ interface JobsBreakdownChartProps {
   defaultScale?: Scale;
 }
 
-const validScales: Scale[] = ["pilot", "statewide", "national", "global"];
+const validScales: Scale[] = ['pilot', 'statewide', 'national', 'global'];
 
-export default function JobsBreakdownChart({ defaultScale = "statewide" }: JobsBreakdownChartProps) {
-  const safeDefaultScale = validScales.includes(defaultScale) ? defaultScale : "statewide";
+export default function JobsBreakdownChart({
+  defaultScale = 'statewide',
+}: JobsBreakdownChartProps) {
+  const safeDefaultScale = validScales.includes(defaultScale) ? defaultScale : 'statewide';
   const [scale, setScale] = useState<Scale>(safeDefaultScale);
-  const [viewType, setViewType] = useState<"permanent" | "construction">("permanent");
+  const [viewType, setViewType] = useState<'permanent' | 'construction'>('permanent');
   const data = scaleData[scale] || scaleData.statewide;
 
-  const chartData = viewType === "permanent" ? data.categories : data.constructionBreakdown;
-  const totalJobs = viewType === "permanent" ? data.permanentJobs : data.constructionJobs;
+  const chartData = viewType === 'permanent' ? data.categories : data.constructionBreakdown;
+  const totalJobs = viewType === 'permanent' ? data.permanentJobs : data.constructionJobs;
 
   return (
     <Card className="w-full" data-testid="jobs-breakdown-chart">
@@ -162,8 +162,8 @@ export default function JobsBreakdownChart({ defaultScale = "statewide" }: JobsB
           <div className="flex gap-2">
             <Button
               size="sm"
-              variant={viewType === "permanent" ? "default" : "outline"}
-              onClick={() => setViewType("permanent")}
+              variant={viewType === 'permanent' ? 'default' : 'outline'}
+              onClick={() => setViewType('permanent')}
               data-testid="btn-permanent-jobs"
             >
               <Users className="h-4 w-4 mr-1" />
@@ -171,8 +171,8 @@ export default function JobsBreakdownChart({ defaultScale = "statewide" }: JobsB
             </Button>
             <Button
               size="sm"
-              variant={viewType === "construction" ? "default" : "outline"}
-              onClick={() => setViewType("construction")}
+              variant={viewType === 'construction' ? 'default' : 'outline'}
+              onClick={() => setViewType('construction')}
               data-testid="btn-construction-jobs"
             >
               <HardHat className="h-4 w-4 mr-1" />
@@ -185,7 +185,7 @@ export default function JobsBreakdownChart({ defaultScale = "statewide" }: JobsB
             <Button
               key={s}
               size="sm"
-              variant={scale === s ? "secondary" : "ghost"}
+              variant={scale === s ? 'secondary' : 'ghost'}
               onClick={() => setScale(s)}
               data-testid={`btn-scale-${s}`}
             >
@@ -209,7 +209,7 @@ export default function JobsBreakdownChart({ defaultScale = "statewide" }: JobsB
                 {formatNumber(totalJobs)}
               </span>
               <span className="text-muted-foreground">
-                {viewType === "permanent" ? "permanent jobs" : "construction phase jobs"}
+                {viewType === 'permanent' ? 'permanent jobs' : 'construction phase jobs'}
               </span>
             </div>
 
@@ -223,12 +223,7 @@ export default function JobsBreakdownChart({ defaultScale = "statewide" }: JobsB
                   >
                     <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
                     <XAxis type="number" tickFormatter={(value) => formatNumber(value)} />
-                    <YAxis
-                      dataKey="name"
-                      type="category"
-                      width={120}
-                      tick={{ fontSize: 11 }}
-                    />
+                    <YAxis dataKey="name" type="category" width={120} tick={{ fontSize: 11 }} />
                     <Tooltip content={<CustomTooltip />} />
                     <Bar dataKey="jobs" radius={[0, 4, 4, 0]}>
                       {chartData.map((entry, index) => (
@@ -252,7 +247,7 @@ export default function JobsBreakdownChart({ defaultScale = "statewide" }: JobsB
                       dataKey="jobs"
                       nameKey="name"
                       label={({ name, percent }) =>
-                        `${name.split(" ")[0]} ${(percent * 100).toFixed(0)}%`
+                        `${name.split(' ')[0]} ${(percent * 100).toFixed(0)}%`
                       }
                       labelLine={false}
                     >
@@ -266,7 +261,10 @@ export default function JobsBreakdownChart({ defaultScale = "statewide" }: JobsB
               </div>
             </div>
 
-            <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3" data-testid="container-job-categories">
+            <div
+              className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3"
+              data-testid="container-job-categories"
+            >
               {chartData.slice(0, 4).map((cat, idx) => (
                 <motion.div
                   key={cat.name}
@@ -285,22 +283,21 @@ export default function JobsBreakdownChart({ defaultScale = "statewide" }: JobsB
               ))}
             </div>
 
-            {viewType === "permanent" && scale === "statewide" && (
+            {viewType === 'permanent' && scale === 'statewide' && (
               <div className="mt-4 p-4 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
                 <p className="text-sm text-center">
-                  <strong className="text-emerald-600">100% Union Labor</strong> at{" "}
-                  <strong>$32-35/hr</strong> prevailing wages. All jobs are permanent with
-                  full benefits, funded perpetually by the endowment.
+                  <strong className="text-emerald-600">100% Union Labor</strong> at{' '}
+                  <strong>$32-35/hr</strong> prevailing wages. All jobs are permanent with full
+                  benefits, funded perpetually by the endowment.
                 </p>
               </div>
             )}
 
-            {viewType === "construction" && (
+            {viewType === 'construction' && (
               <div className="mt-4 p-4 bg-amber-500/10 rounded-lg border border-amber-500/20">
                 <p className="text-sm text-center">
-                  <strong className="text-amber-600">Union trades:</strong> IBEW
-                  (electricians), UA (plumbers), SMART (HVAC), UBC (carpenters).
-                  100% local hire priority.
+                  <strong className="text-amber-600">Union trades:</strong> IBEW (electricians), UA
+                  (plumbers), SMART (HVAC), UBC (carpenters). 100% local hire priority.
                 </p>
               </div>
             )}

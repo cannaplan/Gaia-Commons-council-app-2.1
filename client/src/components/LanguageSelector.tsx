@@ -12,7 +12,7 @@ import { languages } from '@/lib/i18n';
 export function LanguageSelector() {
   const { i18n } = useTranslation();
 
-  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+  const currentLanguage = languages.find((lang) => lang.code === i18n.language) || languages[0];
 
   return (
     <DropdownMenu>

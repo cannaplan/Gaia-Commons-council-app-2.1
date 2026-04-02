@@ -1,7 +1,7 @@
-import { useState, useEffect, createContext, useContext } from "react";
-import { Eye, EyeOff } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
+import { useState, useEffect, createContext, useContext } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 interface HighContrastContextType {
   isHighContrast: boolean;
@@ -21,22 +21,22 @@ export function HighContrastProvider({ children }: { children: React.ReactNode }
   const [isHighContrast, setIsHighContrast] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem("highContrast");
-    if (stored === "true") {
+    const stored = localStorage.getItem('highContrast');
+    if (stored === 'true') {
       setIsHighContrast(true);
-      document.documentElement.classList.add("high-contrast");
+      document.documentElement.classList.add('high-contrast');
     }
   }, []);
 
   const toggleHighContrast = () => {
-    setIsHighContrast(prev => {
+    setIsHighContrast((prev) => {
       const newValue = !prev;
       if (newValue) {
-        document.documentElement.classList.add("high-contrast");
-        localStorage.setItem("highContrast", "true");
+        document.documentElement.classList.add('high-contrast');
+        localStorage.setItem('highContrast', 'true');
       } else {
-        document.documentElement.classList.remove("high-contrast");
-        localStorage.setItem("highContrast", "false");
+        document.documentElement.classList.remove('high-contrast');
+        localStorage.setItem('highContrast', 'false');
       }
       return newValue;
     });
@@ -56,10 +56,10 @@ export function HighContrastToggle() {
   const handleToggle = () => {
     toggleHighContrast();
     toast({
-      title: isHighContrast ? "High contrast disabled" : "High contrast enabled",
-      description: isHighContrast 
-        ? "Standard color scheme restored" 
-        : "Enhanced visibility for better readability",
+      title: isHighContrast ? 'High contrast disabled' : 'High contrast enabled',
+      description: isHighContrast
+        ? 'Standard color scheme restored'
+        : 'Enhanced visibility for better readability',
     });
   };
 
@@ -69,14 +69,10 @@ export function HighContrastToggle() {
       size="icon"
       onClick={handleToggle}
       className="relative"
-      title={isHighContrast ? "Disable high contrast" : "Enable high contrast"}
+      title={isHighContrast ? 'Disable high contrast' : 'Enable high contrast'}
       data-testid="button-high-contrast"
     >
-      {isHighContrast ? (
-        <Eye className="h-5 w-5" />
-      ) : (
-        <EyeOff className="h-5 w-5" />
-      )}
+      {isHighContrast ? <Eye className="h-5 w-5" /> : <EyeOff className="h-5 w-5" />}
     </Button>
   );
 }

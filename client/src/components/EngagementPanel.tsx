@@ -1,13 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  MessageSquare, 
-  Mail, 
-  Send, 
-  X,
-  CheckCircle,
-  Share2
-} from 'lucide-react';
+import { MessageSquare, Mail, Send, X, CheckCircle, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -22,7 +15,7 @@ export function FeedbackForm() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -41,9 +34,9 @@ export function FeedbackForm() {
 
   if (!showForm) {
     return (
-      <Button 
-        variant="outline" 
-        size="sm" 
+      <Button
+        variant="outline"
+        size="sm"
         className="gap-2"
         onClick={() => setShowForm(true)}
         data-testid="button-feedback"
@@ -58,9 +51,9 @@ export function FeedbackForm() {
     <Card className="w-full max-w-md">
       <CardHeader className="flex flex-row items-center justify-between gap-2 pb-2">
         <CardTitle className="text-lg">Share Your Feedback</CardTitle>
-        <Button 
-          variant="ghost" 
-          size="icon" 
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={() => setShowForm(false)}
           data-testid="button-close-feedback"
         >
@@ -86,7 +79,9 @@ export function FeedbackForm() {
               className="space-y-3"
             >
               <div className="space-y-1">
-                <Label htmlFor="name" className="text-sm">Name</Label>
+                <Label htmlFor="name" className="text-sm">
+                  Name
+                </Label>
                 <Input
                   id="name"
                   value={formData.name}
@@ -96,7 +91,9 @@ export function FeedbackForm() {
                 />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="email" className="text-sm">Email</Label>
+                <Label htmlFor="email" className="text-sm">
+                  Email
+                </Label>
                 <Input
                   id="email"
                   type="email"
@@ -107,7 +104,9 @@ export function FeedbackForm() {
                 />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="message" className="text-sm">Message</Label>
+                <Label htmlFor="message" className="text-sm">
+                  Message
+                </Label>
                 <Textarea
                   id="message"
                   value={formData.message}
@@ -117,7 +116,12 @@ export function FeedbackForm() {
                   data-testid="input-feedback-message"
                 />
               </div>
-              <Button type="submit" className="w-full" size="sm" data-testid="button-submit-feedback">
+              <Button
+                type="submit"
+                className="w-full"
+                size="sm"
+                data-testid="button-submit-feedback"
+              >
                 <Send className="h-4 w-4 mr-2" />
                 Send Feedback
               </Button>
@@ -137,11 +141,11 @@ export function NewsletterSignup() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    
+
     setSubscribed(true);
     toast({
       title: 'Subscribed!',
-      description: 'You\'ll receive updates about the Gaia Commons initiative.',
+      description: "You'll receive updates about the Gaia Commons initiative.",
     });
     setEmail('');
     setTimeout(() => setSubscribed(false), 3000);
@@ -166,17 +170,13 @@ export function NewsletterSignup() {
           disabled={subscribed}
           data-testid="input-newsletter-email"
         />
-        <Button 
-          type="submit" 
-          size="sm" 
+        <Button
+          type="submit"
+          size="sm"
           disabled={subscribed}
           data-testid="button-newsletter-subscribe"
         >
-          {subscribed ? (
-            <CheckCircle className="h-4 w-4" />
-          ) : (
-            'Subscribe'
-          )}
+          {subscribed ? <CheckCircle className="h-4 w-4" /> : 'Subscribe'}
         </Button>
       </form>
     </div>
@@ -206,12 +206,7 @@ export function SocialShareButtons() {
   return (
     <div className="flex items-center gap-1">
       <span className="text-sm text-muted-foreground mr-1">Share:</span>
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={handleCopyLink}
-        data-testid="button-share-link"
-      >
+      <Button variant="ghost" size="icon" onClick={handleCopyLink} data-testid="button-share-link">
         <Share2 className="h-4 w-4" />
       </Button>
     </div>

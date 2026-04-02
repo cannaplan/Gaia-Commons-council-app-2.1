@@ -1,18 +1,18 @@
-import express, { type Request, Response, NextFunction } from "express";
-import { registerRoutes } from "./routes";
-import { serveStatic } from "./static";
-import { createServer } from "http";
-import { pool } from "./db";
-import rateLimit from "express-rate-limit";
+import express, { type Request, Response, NextFunction } from 'express';
+import { registerRoutes } from './routes';
+import { serveStatic } from './static';
+import { createServer } from 'http';
+import { pool } from './db';
+import rateLimit from 'express-rate-limit';
 
 const app = express();
 const httpServer = createServer(app);
 
-pool.on("error", (err) => {
-  log(`Unexpected database pool error: ${err.message}`, "db");
+pool.on('error', (err) => {
+  log(`Unexpected database pool error: ${err.message}`, 'db');
 });
 
-declare module "http" {
+declare module 'http' {
   interface IncomingMessage {
     rawBody: unknown;
   }
@@ -28,11 +28,11 @@ app.use(
 
 app.use(express.urlencoded({ extended: false }));
 
-export function log(message: string, source = "express") {
-  const formattedTime = new Date().toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    second: "2-digit",
+export function log(message: string, source = 'express') {
+  const formattedTime = new Date().toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    second: '2-digit',
     hour12: true,
   });
 
@@ -50,9 +50,9 @@ app.use((req, res, next) => {
     return originalResJson.apply(res, [bodyJson, ...args]);
   };
 
-  res.on("finish", () => {
+  res.on('finish', () => {
     const duration = Date.now() - start;
-    if (path.startsWith("/api")) {
+    if (path.startsWith('/api')) {
       let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
       if (capturedJsonResponse) {
         logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
@@ -67,12 +67,12 @@ app.use((req, res, next) => {
 
 (async () => {
   const healthLimiter = rateLimit({ windowMs: 60_000, max: 30 });
-  app.get("/health", healthLimiter, async (_req: Request, res: Response) => {
+  app.get('/health', healthLimiter, async (_req: Request, res: Response) => {
     try {
-      await pool.query("SELECT 1");
-      res.status(200).json({ status: "healthy", timestamp: new Date().toISOString() });
+      await pool.query('SELECT 1');
+      res.status(200).json({ status: 'healthy', timestamp: new Date().toISOString() });
     } catch {
-      res.status(503).json({ status: "unhealthy", timestamp: new Date().toISOString() });
+      res.status(503).json({ status: 'unhealthy', timestamp: new Date().toISOString() });
     }
   });
 
@@ -80,7 +80,7 @@ app.use((req, res, next) => {
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
+    const message = err.message || 'Internal Server Error';
 
     res.status(status).json({ message });
     throw err;
@@ -89,10 +89,10 @@ app.use((req, res, next) => {
   // importantly only setup vite in development and after
   // setting up all the other routes so the catch-all route
   // doesn't interfere with the other routes
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === 'production') {
     serveStatic(app);
   } else {
-    const { setupVite } = await import("./vite");
+    const { setupVite } = await import('./vite');
     await setupVite(httpServer, app);
   }
 
@@ -100,11 +100,11 @@ app.use((req, res, next) => {
   // Other ports are firewalled. Default to 5000 if not specified.
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
-  const port = parseInt(process.env.PORT || "5000", 10);
+  const port = parseInt(process.env.PORT || '5000', 10);
   httpServer.listen(
     {
       port,
-      host: "0.0.0.0",
+      host: '0.0.0.0',
       reusePort: true,
     },
     () => {

@@ -66,6 +66,7 @@ Gaia Commons Council is a full-stack dashboard application for tracking pilot pr
 ## Gaia Commons Brand Guidelines
 
 ### Color Scheme
+
 - **Primary**: #4CAF50 (soft earthy green) - buttons, links, accents
 - **Secondary**: #8BC6EC (calming blue) - supporting elements
 - **Accent**: #FFE082 (vibrant yellow) - CTAs and highlights
@@ -73,10 +74,12 @@ Gaia Commons Council is a full-stack dashboard application for tracking pilot pr
 - **Text**: #333333 (dark grey) - readable body text
 
 ### Typography
+
 - **Primary Font**: Roboto (sans-serif) - body and headings
 - **Secondary Font**: Merriweather (serif) - special accents
 
 ### Design Elements
+
 - **Border Radius**: 0.5rem (subtle rounding)
 - **Cards**: White backgrounds on light off-white page
 - **Dark Mode**: Green-tinted dark background with light text
@@ -88,6 +91,7 @@ Preferred communication style: Simple, everyday language.
 ## System Architecture
 
 ### Frontend Architecture
+
 - **Framework**: React 18 with TypeScript
 - **Routing**: Wouter (lightweight React router)
 - **State Management**: TanStack React Query for server state
@@ -97,12 +101,14 @@ Preferred communication style: Simple, everyday language.
 - **Icons**: Lucide React
 
 The frontend follows a component-based architecture with:
+
 - Pages in `client/src/pages/`
 - Reusable components in `client/src/components/`
 - Custom hooks in `client/src/hooks/`
 - shadcn/ui primitives in `client/src/components/ui/`
 
 ### Backend Architecture
+
 - **Runtime**: Node.js with Express
 - **Language**: TypeScript (ESM modules)
 - **API Design**: RESTful endpoints defined in `shared/routes.ts` with Zod validation
@@ -111,22 +117,26 @@ The frontend follows a component-based architecture with:
 The server uses a storage abstraction pattern (`IStorage` interface) in `server/storage.ts` that wraps database operations, making it easier to test and swap implementations.
 
 ### Data Layer
+
 - **Database**: PostgreSQL (configured via `DATABASE_URL` environment variable)
 - **Schema**: Defined in `shared/schema.ts` using Drizzle ORM
-- **Tables**: 
+- **Tables**:
   - `pilot_stats` - Student counts, square footage, school numbers, status
   - `endowment_stats` - Financial size, annual figures, greenhouse counts
   - `timeline_events` - Year and event descriptions for strategic planning
 - **Migrations**: Managed via Drizzle Kit (`drizzle-kit push`)
 
 ### Shared Code
+
 The `shared/` directory contains code used by both frontend and backend:
+
 - `schema.ts` - Database schema definitions and Zod insert schemas
 - `routes.ts` - API contract definitions with paths, methods, and validation schemas
 
 ### Build System
+
 - **Development**: Vite dev server with HMR, proxied through Express
-- **Production Build**: 
+- **Production Build**:
   - Frontend: Vite builds to `dist/public/`
   - Backend: esbuild bundles server to `dist/index.cjs`
 - **Build Script**: Custom `script/build.ts` handles both builds
@@ -134,11 +144,13 @@ The `shared/` directory contains code used by both frontend and backend:
 ## External Dependencies
 
 ### Database
+
 - **PostgreSQL**: Primary database, connection via `DATABASE_URL` environment variable
 - **Drizzle ORM**: Database toolkit for TypeScript with type-safe queries
 - **connect-pg-simple**: PostgreSQL session store (available but session management not currently active)
 
 ### Frontend Libraries
+
 - **@tanstack/react-query**: Async state management and data fetching
 - **Radix UI**: Accessible UI primitives (dialog, dropdown, tooltip, etc.)
 - **Framer Motion**: Animation library for React
@@ -148,12 +160,14 @@ The `shared/` directory contains code used by both frontend and backend:
 - **exceljs**: Excel export functionality
 
 ### Development Tools
+
 - **Vite**: Frontend build tool and dev server
 - **esbuild**: Fast JavaScript bundler for server code
 - **Drizzle Kit**: Database migration and schema management CLI
 - **TypeScript**: Static type checking across the entire codebase
 
 ### Replit-Specific Plugins
+
 - `@replit/vite-plugin-runtime-error-modal`: Error overlay in development
 - `@replit/vite-plugin-cartographer`: Development tooling (dev only)
 - `@replit/vite-plugin-dev-banner`: Development environment indicator (dev only)

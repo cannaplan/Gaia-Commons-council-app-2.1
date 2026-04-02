@@ -1,23 +1,17 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
-import { 
-  Share2, 
-  Copy, 
-  Check, 
-  Mail, 
-  MessageCircle,
-  QrCode,
-  Users
-} from "lucide-react";
-import { SiFacebook, SiX, SiLinkedin, SiReddit } from "react-icons/si";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
+import { Share2, Copy, Check, Mail, MessageCircle, QrCode, Users } from 'lucide-react';
+import { SiFacebook, SiX, SiLinkedin, SiReddit } from 'react-icons/si';
 
-const SHARE_URL = typeof window !== 'undefined' ? window.location.href : 'https://gaia-commons.replit.app';
-const SHARE_TITLE = "One Vote, Forever Fed — 2026 Ballot Initiative";
-const SHARE_TEXT = "Support the Gaia Commons Council 2026 ballot initiative: $5B endowment to feed 900,000 Minnesota students daily through 1,200 school greenhouses (12M sqft). Vote for perpetual food security!";
+const SHARE_URL =
+  typeof window !== 'undefined' ? window.location.href : 'https://gaia-commons.replit.app';
+const SHARE_TITLE = 'One Vote, Forever Fed — 2026 Ballot Initiative';
+const SHARE_TEXT =
+  'Support the Gaia Commons Council 2026 ballot initiative: $5B endowment to feed 900,000 Minnesota students daily through 1,200 school greenhouses (12M sqft). Vote for perpetual food security!';
 
 export function SocialSharing() {
   const [copied, setCopied] = useState(false);
@@ -29,47 +23,47 @@ export function SocialSharing() {
       await navigator.clipboard.writeText(SHARE_URL);
       setCopied(true);
       toast({
-        title: "Link Copied!",
-        description: "Share link copied to clipboard",
+        title: 'Link Copied!',
+        description: 'Share link copied to clipboard',
       });
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       toast({
-        title: "Copy Failed",
-        description: "Please copy the link manually",
-        variant: "destructive",
+        title: 'Copy Failed',
+        description: 'Please copy the link manually',
+        variant: 'destructive',
       });
     }
   };
 
   const shareLinks = [
     {
-      name: "Facebook",
+      name: 'Facebook',
       icon: <SiFacebook className="h-4 w-4" />,
       url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(SHARE_URL)}&quote=${encodeURIComponent(SHARE_TEXT)}`,
     },
     {
-      name: "X",
+      name: 'X',
       icon: <SiX className="h-4 w-4" />,
       url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(SHARE_URL)}&text=${encodeURIComponent(SHARE_TEXT)}`,
     },
     {
-      name: "LinkedIn",
+      name: 'LinkedIn',
       icon: <SiLinkedin className="h-4 w-4" />,
       url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(SHARE_URL)}`,
     },
     {
-      name: "Reddit",
+      name: 'Reddit',
       icon: <SiReddit className="h-4 w-4" />,
       url: `https://reddit.com/submit?url=${encodeURIComponent(SHARE_URL)}&title=${encodeURIComponent(SHARE_TITLE)}`,
     },
     {
-      name: "Email",
+      name: 'Email',
       icon: <Mail className="h-4 w-4" />,
       url: `mailto:?subject=${encodeURIComponent(SHARE_TITLE)}&body=${encodeURIComponent(SHARE_TEXT + '\n\n' + SHARE_URL)}`,
     },
     {
-      name: "SMS",
+      name: 'SMS',
       icon: <MessageCircle className="h-4 w-4" />,
       url: `sms:?body=${encodeURIComponent(SHARE_TEXT + ' ' + SHARE_URL)}`,
     },
@@ -84,11 +78,14 @@ export function SocialSharing() {
       <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-4">
         <Share2 className="h-5 w-5 text-muted-foreground" />
         <CardTitle className="text-lg font-semibold">Share & Spread the Word</CardTitle>
-        <Badge variant="secondary" className="ml-auto">Outreach</Badge>
+        <Badge variant="secondary" className="ml-auto">
+          Outreach
+        </Badge>
       </CardHeader>
       <CardContent>
         <p className="text-sm text-muted-foreground mb-4">
-          Help build the largest political coalition in US history. Share with your network to support food security for every Minnesota student.
+          Help build the largest political coalition in US history. Share with your network to
+          support food security for every Minnesota student.
         </p>
 
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 mb-6">
@@ -98,9 +95,10 @@ export function SocialSharing() {
               variant="outline"
               size="sm"
               className="flex flex-col items-center gap-1"
-              onClick={() => link.url.startsWith('mailto:') || link.url.startsWith('sms:') 
-                ? window.location.href = link.url 
-                : openShare(link.url)
+              onClick={() =>
+                link.url.startsWith('mailto:') || link.url.startsWith('sms:')
+                  ? (window.location.href = link.url)
+                  : openShare(link.url)
               }
               data-testid={`button-share-${link.name.toLowerCase().replace(/[^a-z]/g, '')}`}
             >
@@ -112,12 +110,7 @@ export function SocialSharing() {
 
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="flex-1 flex gap-2">
-            <Input
-              value={SHARE_URL}
-              readOnly
-              className="text-sm"
-              data-testid="input-share-url"
-            />
+            <Input value={SHARE_URL} readOnly className="text-sm" data-testid="input-share-url" />
             <Button
               variant="outline"
               size="icon"
@@ -140,7 +133,10 @@ export function SocialSharing() {
         </div>
 
         {showQR && (
-          <div className="mt-4 p-4 bg-white rounded-lg border border-border/50 flex flex-col items-center" data-testid="qr-code-section">
+          <div
+            className="mt-4 p-4 bg-white rounded-lg border border-border/50 flex flex-col items-center"
+            data-testid="qr-code-section"
+          >
             <div className="w-32 h-32 bg-muted flex items-center justify-center rounded">
               <QrCode className="h-16 w-16 text-muted-foreground" />
             </div>
@@ -152,9 +148,15 @@ export function SocialSharing() {
           <div className="flex items-start gap-3">
             <Users className="h-5 w-5 text-muted-foreground mt-0.5" />
             <div>
-              <p className="font-medium text-foreground text-sm" data-testid="text-coalition-members">Join 101M+ Coalition Members</p>
+              <p
+                className="font-medium text-foreground text-sm"
+                data-testid="text-coalition-members"
+              >
+                Join 101M+ Coalition Members
+              </p>
               <p className="text-xs text-muted-foreground mt-1">
-                Every share helps reach our goal of 58%+ voter support for the 2026 ballot initiative.
+                Every share helps reach our goal of 58%+ voter support for the 2026 ballot
+                initiative.
               </p>
             </div>
           </div>
