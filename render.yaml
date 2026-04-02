@@ -1,0 +1,22 @@
+databases:
+  - name: gaia-commons-db
+    plan: free
+    databaseName: gaia_commons
+    user: gaia_commons_user
+
+services:
+  - type: web
+    name: gaia-commons-council-app
+    runtime: node
+    plan: free
+    buildCommand: npm install --include=dev && npm run db:push && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: gaia-commons-db
+          property: connectionString
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "20"
