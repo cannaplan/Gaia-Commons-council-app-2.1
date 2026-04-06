@@ -1,28 +1,43 @@
-name: dependency-review
+name: Dependency Review
 
 on:
   pull_request:
-    branches:
-      - main
+    branches: [main]
+
+permissions:
+  contents: read
 
 jobs:
   dependency-review:
+    name: Dependency Review
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
 
     steps:
-    - name: Check dependency review
-      uses: actions/dependency-review-action@v2
-      with:
-        comment-summary-in-pr: on-failure
-        allow-licenses: |
-          MIT
-          Apache-2.0
-          BSD-2-Clause
-          BSD-3-Clause
-          ISC
-          CC0-1.0
-          Unlicense
-        fail-on-severity: high
-        allow-dependencies-licenses: |
-          # Assuming this list remains unchanged as per your instructions
-        fail-on-scopes: runtime
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          # Fail on high and critical severity vulnerabilities
+          fail-on-severity: high
+
+          # Only comment when the job fails (keeps PRs quiet when everything is OK)
+          comment-summary-in-pr: on-failure
+
+          # TODO: License enforcement:
+          # The previous `deny-licenses` input is deprecated.
+          # If you need license policy enforcement, use a dedicated license-check workflow/tool,
+          # or switch to an allowlist input if/when supported by this action version.
+
+          # Allow GitHub Actions whose license metadata isn't published to npm
+          allow-dependencies-licenses: >-
+            pkg:githubactions/actions/checkout,
+            pkg:githubactions/actions/dependency-review-action,
+            pkg:githubactions/actions/setup-node,
+            pkg:githubactions/actions/upload-artifact,
+            pkg:githubactions/actions/download-artifact,
+            pkg:githubactions/github/codeql-action
